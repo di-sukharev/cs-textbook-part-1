@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/03/a/Bit.hdl
+// File name: projects/02/ALU.hdl
 
 /**
  * The ALU (Arithmetic Logic Unit).
@@ -42,5 +42,49 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-        // реализация
+        // --- x circuit flags --- start
+        // if «zx» = 1 ? pass false (0000) : x
+        Mux16(a=x, b=false, sel=zx, out=zxMUX);
+        // if «nx» = 1 ? pass !x : x
+        Not16(in=zxMUX, out=zxMUXNOT);
+        Mux16(a=zxMUX, b=zxMUXNOT, sel=nx, out=nxMUX);
+        // --- x circuit flags --- end
+
+        /// --- below as above: doing all same logic for y[16] input as we did for x[16] ---
+
+        // --- y circuit flags --- start
+        // if «zy» = 1 ? pass false (0000) : y
+        Mux16(a=y, b=false, sel=zy, out=zyMUX);
+        // if «ny» = 1 ? pass !y : y
+        Not16(in=zyMUX, out=zyMUXNOT);
+        Mux16(a=zyMUX, b=zyMUXNOT, sel=ny, out=nyMUX);
+        // --- x circuit flags --- end
+
+        // --- middle part --- start
+        // passing «x» and «y» to «x+y» and «x&y» gate, later we will pass it through Mux to have a single out (+ or & result)
+        Add16(a=nxMUX, b=nyMUX, out=xADDy);
+        And16(a=nxMUX, b=nyMUX, out=xANDy);
+        // passing both «x+y» and «x&y» to Mux gate to implement the «f» flag functionality
+        Mux16(a=xANDy, b=xADDy, sel=f, out=outMUXED);
+        // --- middle part --- end
+
+        // negating the «no» flag with
+        Not16(in=outMUXED, out=outNOT);
+        Mux16(
+            a=outMUXED,
+            b=outNOT,
+            sel=no,
+            out=out,
+            out[15]=ng,
+            out[0..7]=outFirst8Bits,
+            out[8..15]=outSecond8bits
+        );
+        // ---
+
+        // --- zr output flags --- start
+        Or8Way(in=outFirst8Bits, out=zrFirst8bits);
+        Or8Way(in=outSecond8bits, out=zrSecond8bits);
+        Or(a=zrFirst8bits, b=zrSecond8bits, out=zrOR);
+        Not(in=zrOR, out=zr);
+        // --- zr output flags --- end
 }

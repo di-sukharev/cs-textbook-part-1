@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/03/a/Bit.hdl
+// File name: projects/02/Adder16.hdl
 
 /**
  * Adds two 16-bit values.
@@ -13,5 +13,20 @@ CHIP Add16 {
     OUT out[16];
 
     PARTS:
-        // реализация
+        HalfAdder(a=a[0], b=b[0], sum=out[0], carry=CAR0);
+        FullAdder(a=CAR0, b=a[1], c=b[1], sum=out[1], carry=CAR1);
+        FullAdder(a=CAR1, b=a[2], c=b[2], sum=out[2], carry=CAR2);
+        FullAdder(a=CAR2, b=a[3], c=b[3], sum=out[3], carry=CAR3);
+        FullAdder(a=CAR3, b=a[4], c=b[4], sum=out[4], carry=CAR4);
+        FullAdder(a=CAR4, b=a[5], c=b[5], sum=out[5], carry=CAR5);
+        FullAdder(a=CAR5, b=a[6], c=b[6], sum=out[6], carry=CAR6);
+        FullAdder(a=CAR6, b=a[7], c=b[7], sum=out[7], carry=CAR7);
+        FullAdder(a=CAR7, b=a[8], c=b[8], sum=out[8], carry=CAR8);
+        FullAdder(a=CAR8, b=a[9], c=b[9], sum=out[9], carry=CAR9);
+        FullAdder(a=CAR9, b=a[10], c=b[10], sum=out[10], carry=CAR10);
+        FullAdder(a=CAR10, b=a[11], c=b[11], sum=out[11], carry=CAR11);
+        FullAdder(a=CAR11, b=a[12], c=b[12], sum=out[12], carry=CAR12);
+        FullAdder(a=CAR12, b=a[13], c=b[13], sum=out[13], carry=CAR13);
+        FullAdder(a=CAR13, b=a[14], c=b[14], sum=out[14], carry=CAR14);
+        FullAdder(a=CAR14, b=a[15], c=b[15], sum=out[15], carry=ignored);
 }

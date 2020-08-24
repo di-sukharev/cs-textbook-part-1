@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/03/a/Bit.hdl
+// File name: projects/01/Mux8Way16.hdl
 
 /**
  * 8-way 16-bit multiplexor.
@@ -18,5 +18,13 @@ CHIP Mux8Way16 {
     OUT out[16];
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+    	Mux16(a=a, b=b, sel=sel[0], out=MUX1);
+        Mux16(a=c, b=d, sel=sel[0], out=MUX2);
+        Mux16(a=MUX1, b=MUX2, sel=sel[1], out=MUX3);
+        
+        Mux16(a=e, b=f, sel=sel[0], out=MUX4);
+        Mux16(a=g, b=h, sel=sel[0], out=MUX5);
+        Mux16(a=MUX4, b=MUX5, sel=sel[1], out=MUX6);
+
+        Mux16(a=MUX3, b=MUX6, sel=sel[2], out=out);
 }
