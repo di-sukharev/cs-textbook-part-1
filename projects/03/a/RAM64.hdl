@@ -10,7 +10,7 @@ CHIP RAM64 {
     OUT out[16];
 
     PARTS:
-         // Routing input to one the addressed RAM
+        // Routing input to one the addressed RAM
         DMux8Way(in=load, sel=address[0..2], a=ram1, b=ram2, c=ram3, d=ram4, e=ram5, f=ram6, g=ram7, h=ram8);
 
         // Memory

@@ -10,5 +10,24 @@ CHIP RAM16K {
     OUT out[16];
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+        // Routing input to one the addressed RAM
+        DMux4Way(in=load, sel=address[0..1], a=ram1, b=ram2, c=ram3, d=ram4);
+
+        // Memory
+        RAM4K(in=in, load=ram1, address=address[2..13], out=out1);
+        RAM4K(in=in, load=ram2, address=address[2..13], out=out2);
+        RAM4K(in=in, load=ram3, address=address[2..13], out=out3);
+        RAM4K(in=in, load=ram4, address=address[2..13], out=out4);
+        // memory
+
+        // Routing output from the addressed RAM
+        Mux4Way16(
+            a=out1,
+            b=out2,
+            c=out3,
+            d=out4,
+            
+            sel=address[0..1],
+            out=out
+        );
 }
