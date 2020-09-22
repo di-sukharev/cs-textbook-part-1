@@ -7,9 +7,23 @@
  */
 
 CHIP PC {
-    IN in[16],load,inc,reset;
+    IN in[16], load, inc, reset;
     OUT out[16];
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+        // incrementing is the least important operation in if/else statement, so it goes first
+        // incrementing input, if inc bit is 1
+        Inc16(in=saved, out=incremented);
+        Mux16(a=in, b=incremented, sel=inc, out=incORin);
+
+        // handling load value is the middle operation in if/else statement, so it goes in the middle
+        // handling load bit behaviour        
+        Mux16(a=incORin, b=in, sel=load, out=loaded);
+
+        // reseting value is the most important operation in if/else statement, so it goes just before the output
+        // reseting input to 0, if reset bit is 1
+        Mux16(a=loaded, b=false, sel=reset, out=result);
+
+        // saving result to register
+        Register(in=result, load=true, out=out, out=saved);
 }

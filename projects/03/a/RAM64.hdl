@@ -10,5 +10,32 @@ CHIP RAM64 {
     OUT out[16];
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+         // Routing input to one the addressed RAM
+        DMux8Way(in=load, sel=address[0..2], a=ram1, b=ram2, c=ram3, d=ram4, e=ram5, f=ram6, g=ram7, h=ram8);
+
+        // Memory
+        RAM8(in=in, load=ram1, address=address[3..5], out=out1);
+        RAM8(in=in, load=ram2, address=address[3..5], out=out2);
+        RAM8(in=in, load=ram3, address=address[3..5], out=out3);
+        RAM8(in=in, load=ram4, address=address[3..5], out=out4);
+        RAM8(in=in, load=ram5, address=address[3..5], out=out5);
+        RAM8(in=in, load=ram6, address=address[3..5], out=out6);
+        RAM8(in=in, load=ram7, address=address[3..5], out=out7);
+        RAM8(in=in, load=ram8, address=address[3..5], out=out8);
+        // memory
+
+        // Routing output from the addressed RAM
+        Mux8Way16(
+            a=out1,
+            b=out2,
+            c=out3,
+            d=out4,
+            e=out5,
+            f=out6,
+            g=out7,
+            h=out8,
+            
+            sel=address[0..2],
+            out=out
+        );
 }

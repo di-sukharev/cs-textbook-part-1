@@ -9,5 +9,6 @@ CHIP Bit {
     OUT out;
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+        Mux(a=saved, b=in, sel=load, out=input);
+        DFF(in=input, out=saved, out=out);
 }

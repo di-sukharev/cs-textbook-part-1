@@ -10,5 +10,32 @@ CHIP RAM8 {
     OUT out[16];
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+        // Routing input to one the addressed registers
+        DMux8Way(in=load, sel=address, a=reg1, b=reg2, c=reg3, d=reg4, e=reg5, f=reg6, g=reg7, h=reg8);
+
+        // memory
+        Register(in=in, load=reg1, out=reg1out);
+        Register(in=in, load=reg2, out=reg2out);
+        Register(in=in, load=reg3, out=reg3out);
+        Register(in=in, load=reg4, out=reg4out);
+        Register(in=in, load=reg5, out=reg5out);
+        Register(in=in, load=reg6, out=reg6out);
+        Register(in=in, load=reg7, out=reg7out);
+        Register(in=in, load=reg8, out=reg8out);
+        // memory
+
+        // Routing output from the addressed regiseter
+        Mux8Way16(
+            a=reg1out,
+            b=reg2out,
+            c=reg3out,
+            d=reg4out,
+            e=reg5out,
+            f=reg6out,
+            g=reg7out,
+            h=reg8out,
+            
+            sel=address,
+            out=out
+        );
 }
