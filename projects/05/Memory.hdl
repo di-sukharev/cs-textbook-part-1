@@ -23,4 +23,17 @@ CHIP Memory {
 
     PARTS:
         // Здесь нужно написать код, который будет работать 🌞
+
+        // RAM addresses: 0 -> 16383
+        DMux4Way(in=load, sel=address[13..14], a=ram, b=rram, c=scrn, d=keybd);
+
+        Or(a=ram, b=rram, out=rr);
+        RAM16K(in=in, load=rr, address=address[0..13], out=r);
+        // 16384 -> 24575
+        Screen(in=in, load=scrn, address=address[0..12], out=sc);
+        
+        // 24576
+        Keyboard(out=k);
+
+        Mux4Way16(a=r, b=r, c=sc, d=k, sel=address[13..14], out=out);
 }

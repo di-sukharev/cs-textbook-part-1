@@ -15,4 +15,10 @@ CHIP Computer {
 
     PARTS:
         // Здесь нужно написать код, который будет работать 🌞
+    
+        Memory(in=outM, load=writeM, address=addressM, out=inM);
+
+        CPU(inM=inM, instruction=instruction, reset=reset, outM=outM, writeM=writeM, addressM=addressM, pc=PCout);
+
+        ROM32K(address=PCout, out=instruction);
 }

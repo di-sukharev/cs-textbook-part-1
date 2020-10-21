@@ -39,12 +39,13 @@ D=M
 @END
 D;JEQ
 
-    (LOOP)
+    (LOOP) // label
 // multiplication as a sum of R0+R0+R0+R0+…
 @R0
 D=M
 @R2
 M=M+D
+
 // i++
 @i
 M=M+1
@@ -56,6 +57,6 @@ D=D-M
 @LOOP
 D;JLT
 
-    (END)
+    (END) // label
 @END
 0;JMP // infinite loop

@@ -34,5 +34,74 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-        // Здесь нужно написать код, который будет работать 🌞
+    // Здесь нужно написать код, который будет работать 🌞
+
+    // handling whether we save to A register new value from instruction A or simply ALU out from A = comp ; jmp
+    Not(in=instruction[15], out=isAinstruction); // if 15 bit is 0 -> it's A instruction, so it is 1 in NOT gate
+    Mux16(a=ALUoutput, b=instruction, sel=isAinstruction, out=ALUoutORnewInstruction);
+
+    // A Register is loaded in 2 cases: A instruction is running or d1 is enabled, d1 = instruction[5]
+    Or(a=isAinstruction, b=instruction[5], out=AregisterLOAD);
+    ARegister(in=ALUoutORnewInstruction, load=AregisterLOAD, out=outA, out[0..14]=addressM);
+    
+    // D register is loaded when d2 bit is enabled and instruction is C, d2 = instruction[4]
+    And(a=instruction[15], b=instruction[4], out=DregisterLOAD);
+    DRegister(in=ALUoutput, load=DregisterLOAD, out=outD);
+
+    // Input Y of the ALU, either A reg value or M reg value
+    And(a=instruction[15], b=instruction[12], out=AorMload);
+    Mux16(a=outA, b=inM, sel=AorMload, out=AorMregister);
+
+    ALU(x=outD,
+        y=AorMregister,
+        zx=instruction[11],
+        nx=instruction[10],
+        zy=instruction[9],
+        ny=instruction[8],
+        f=instruction[7],
+        no=instruction[6],
+        out=outM,
+        out=ALUoutput,
+        zr=zero,
+        ng=negative
+     );
+
+    // if this is the C instruction and dest has M bit which is intsruction[3] -> writeM is enabled
+    And(a=instruction[15], b=instruction[3], out=writeM);
+
+    // PC bits
+    Or(a=zero, b=negative, out=lessORequal);
+    Not(in=negative, out=positive); 
+    Or(a=zero, b=positive, out=moreORequal);
+
+    And(a=instruction[15], b=instruction[0], out=jgt);
+    And(a=jgt, b=positive, out=isGT);
+    
+    And(a=instruction[15], b=instruction[1], out=jeq);
+    And(a=jeq, b=zero, out=isEQ);
+    
+    Or(a=isGT, b=isEQ, out=isGE);
+
+    And(a=instruction[15], b=instruction[2], out=jlt);
+    And(a=jlt, b=negative, out=isLT);
+    
+    Or(a=isLT, b=isEQ, out=isLE);
+
+    And(a=jgt, b=jlt, out=JGTandJLT);
+    Not(in=zero, out=notZERO);
+    And(a=JGTandJLT, b=notZERO, out=isNE);
+
+    Or8Way(
+        in[0]=isGT,
+        in[1]=isEQ,
+        in[2]=isGE,
+        in[3]=isLT,
+        in[4]=isLE,
+        in[5]=isNE,
+        out=PCload
+    );
+
+    // load = f(jump bits, ALU control outputs)
+    // 1. no jump: PC++ <-> jjj=000 --- 2. goto: PC=a <-> jjj=111 --- 3. conditional goto: PC = cond === true ? A : PC++
+    PC(in=outA, load=PCload, inc=true, reset=reset, out[0..14]=pc);
 }
