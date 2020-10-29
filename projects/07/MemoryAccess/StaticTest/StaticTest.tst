@@ -8,10 +8,10 @@ output-file StaticTest.out,
 compare-to StaticTest.cmp,
 output-list RAM[256]%D1.6.1;
 
-set RAM[0] 256,    // initializes the stack pointer
+set RAM[0] 256,
 
-repeat 200 {       // enough cycles to complete the execution
+repeat 200 {
   ticktock;
 }
 
-output;            // the stack base
+output;

@@ -8,10 +8,10 @@ output-file SimpleAdd.out,
 compare-to SimpleAdd.cmp,
 output-list RAM[0]%D2.6.2 RAM[256]%D2.6.2;
 
-set RAM[0] 256,  // initializes the stack pointer 
+set RAM[0] 256,
 
-repeat 60 {      // enough cycles to complete the execution
+repeat 60 {
   ticktock;
 }
 
-output;          // the stack pointer and the stack base
+output;
