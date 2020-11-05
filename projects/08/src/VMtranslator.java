@@ -9,19 +9,18 @@ public class VMtranslator {
 
     /**
      * Return all the .vm files in a directory
-     * 
      * @param dir
      * @return
      */
-    public static ArrayList<File> getVMFiles(File dir) {
+    public static ArrayList<File> getVMFiles(File dir){
 
         File[] files = dir.listFiles();
 
         ArrayList<File> result = new ArrayList<File>();
 
-        for (File f : files) {
+        for (File f:files){
 
-            if (f.getName().endsWith(".vm")) {
+            if (f.getName().endsWith(".vm")){
 
                 result.add(f);
 
@@ -35,16 +34,17 @@ public class VMtranslator {
 
     public static void main(String[] args) {
 
-        // String fileInName =
-        // "/Users/xuchen/Documents/IntroToComputerSystem/nand2tetris/projects/07/MemoryAccess/StaticTest/";
+        //String fileInName = "/Users/xuchen/Documents/IntroToComputerSystem/nand2tetris/projects/07/MemoryAccess/StaticTest/";
 
-        if (args.length != 1) {
+        if (args.length != 1){
 
             System.out.println("Usage:java VMtranslator [filename|directory]");
 
-        } else {
+        }else {
 
-            File fileIn = new File(args[0]);
+            String fileInName = args[0];
+
+            File fileIn = new File(fileInName);
 
             String fileOutPath = "";
 
@@ -56,7 +56,7 @@ public class VMtranslator {
 
             if (fileIn.isFile()) {
 
-                // if it is a single file, see whether it is a vm file
+                //if it is a single file, see whether it is a vm file
                 String path = fileIn.getAbsolutePath();
 
                 if (!Parser.getExt(path).equals(".vm")) {
@@ -71,29 +71,33 @@ public class VMtranslator {
 
             } else if (fileIn.isDirectory()) {
 
-                // if it is a directory get all vm files under this directory
+                //if it is a directory get all vm files under this directory
                 vmFiles = getVMFiles(fileIn);
 
-                // if no vn file in this directory
+                //if no vn file in this directory
                 if (vmFiles.size() == 0) {
 
                     throw new IllegalArgumentException("No vm file in this directory");
 
                 }
 
-                fileOutPath = fileIn.getAbsolutePath() + "/" + fileIn.getName() + ".asm";
+                fileOutPath = fileIn.getAbsolutePath() + "/" +  fileIn.getName() + ".asm";
             }
 
             fileOut = new File(fileOutPath);
             writer = new CodeWriter(fileOut);
 
+            writer.writeInit();
+
             for (File f : vmFiles) {
+
+                writer.setFileName(f);
 
                 Parser parser = new Parser(f);
 
                 int type = -1;
 
-                // start parsing
+                //start parsing
                 while (parser.hasMoreCommands()) {
 
                     parser.advance();
@@ -108,13 +112,37 @@ public class VMtranslator {
 
                         writer.writePushPop(type, parser.arg1(), parser.arg2());
 
+                    } else if (type == Parser.LABEL) {
+
+                        writer.writeLabel(parser.arg1());
+
+                    } else if (type == Parser.GOTO) {
+
+                        writer.writeGoto(parser.arg1());
+
+                    } else if (type == Parser.IF) {
+
+                        writer.writeIf(parser.arg1());
+
+                    } else if (type == Parser.RETURN) {
+
+                        writer.writeReturn();
+
+                    } else if (type == Parser.FUNCTION) {
+
+                        writer.writeFunction(parser.arg1(),parser.arg2());
+
+                    } else if (type == Parser.CALL) {
+
+                        writer.writeCall(parser.arg1(),parser.arg2());
+
                     }
 
                 }
 
             }
 
-            // save file
+            //save file
             writer.close();
 
             System.out.println("File created : " + fileOutPath);
