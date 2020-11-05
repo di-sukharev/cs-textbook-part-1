@@ -20,23 +20,7 @@ CHIP DMux8Way {
     OUT a, b, c, d, e, f, g, h;
 
     PARTS:
-        DMux(in=in,sel=sel[2],a=ao,b=bo);
-
-        DMux(in=ao,sel=sel[1],a=aoo,b=boo);
-        DMux(in=bo,sel=sel[1],a=coo,b=doo);
-
-        DMux(in=aoo,sel=sel[0],a=a,b=b);
-        DMux(in=boo,sel=sel[0],a=c,b=d);
-        DMux(in=coo,sel=sel[0],a=e,b=f);
-        DMux(in=doo,sel=sel[0],a=g,b=h);
-        // ---
-        // DMux(in=in, sel=sel[0], a=ao, b=bo);
-
-        // DMux(in=ao, sel=sel[1], a=aoo, b=boo);
-        // DMux(in=bo, sel=sel[1], a=coo, b=doo); 
-
-        // DMux(in=aoo, sel=sel[2], a=a, b=e); 
-        // DMux(in=coo, sel=sel[2], a=b, b=f); 
-        // DMux(in=boo, sel=sel[2], a=c, b=g);
-        // DMux(in=doo, sel=sel[2], a=d, b=h);
+        DMux(in=in, sel=sel[2], a=c1, b=c2);
+        DMux4Way(in=c1, sel[0]=sel[0], sel[1]=sel[1], a=a, b=b, c=c, d=d);
+        DMux4Way(in=c2, sel[0]=sel[0], sel[1]=sel[1], a=e, b=f, c=g, d=h);
 }
