@@ -79,7 +79,7 @@ M=D
 @Sys.init
 0;JMP
 
-// сюда вернется sys.init функция
+// ⬇ сюда вернется выполнение программы, когда sys.init функция вернет return ⬇
 (RETURN_LABEL0)
 
 // push constant 0
