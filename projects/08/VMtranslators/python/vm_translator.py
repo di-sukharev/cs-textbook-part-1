@@ -28,7 +28,8 @@ class WrapWriterMethods(type):
 
 
 class AsmWriter(metaclass=WrapWriterMethods):
-    vm_segments = {"local": "LCL", "argument": "ARG", "this": "THIS", "that": "THAT"}
+    vm_segments = {"local": "LCL", "argument": "ARG",
+                   "this": "THIS", "that": "THAT"}
     direct_segments = {"temp": 5, "pointer": 3}
     frame_registers = ["LCL", "ARG", "THIS", "THAT"]
 
@@ -210,7 +211,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
             """
 
         else:
-            raise RuntimeError(f"Arith command {segment!r} not implemented")
+            raise RuntimeError(f"Arith command not implemented")
 
     def mangle_label(self, label):
         return f"{self.funcname}${label}"
@@ -396,7 +397,8 @@ def main(file_or_dir):
                 if method is not None:
                     method(*args)
                 else:
-                    raise RuntimeError(f"{vm_file}: unknown command: {command}")
+                    raise RuntimeError(
+                        f"{vm_file}: unknown command: {command}")
 
 
 if __name__ == "__main__":
