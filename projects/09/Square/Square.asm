@@ -1,171 +1,295 @@
+// Writing bootstrap code
+// Initialize stack pointer
 @256
 D=A
 @SP
 M=D
-(Square.new)
-@3
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.new$genlabel$1
+
+// CALL FUNCTION Sys.init with 0 arguments
+@r0
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@0
+D=D-A
 @ARG
 M=D
+@Sys.init
+0;JMP
+(r0)
+
+// Processing ../../../09/Square/Square.vm
+// function Square.new 0
+// FUNCTION Square.new with 0 local variables
+(Square.new)
+
+// push constant 3
+// Push 3 onto the stack
+@3
+D=A
 @SP
-MD=M+1
+A=M
+M=D
+@SP
+M=M+1
+
+// call Memory.alloc 1
+// CALL FUNCTION Memory.alloc with 1 arguments
+@r1
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@1
+D=D-A
+@ARG
 M=D
 @Memory.alloc
 0;JMP
-(Square.new$genlabel$1)
-@3
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@ARG
-D=M
+(r1)
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@0
-D=D+A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@ARG
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@1
-D=D+A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@ARG
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-D=D+A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
+D=A
 @3
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push argument 0
+// Push ARG[0] onto the stack
+@0
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@Square.new$genlabel$2
+@SP
+M=M+1
+
+// pop this 0
+// Pop the stack into THIS[0]
+@0
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push argument 1
+// Push ARG[1] onto the stack
+@1
+D=A
+@ARG
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop this 1
+// Pop the stack into THIS[1]
+@1
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push argument 2
+// Push ARG[2] onto the stack
+@2
+D=A
+@ARG
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop this 2
+// Pop the stack into THIS[2]
+@2
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
+@3
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// call Square.draw 1
+// CALL FUNCTION Square.draw with 1 arguments
+@r2
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.draw
 0;JMP
-(Square.new$genlabel$2)
-@5
+(r2)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -174,32 +298,43 @@ D=M
 @R13
 A=M
 M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
+A=D+A
 D=M
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -221,18 +356,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.dispose 0
+// FUNCTION Square.dispose with 0 local variables
 (Square.dispose)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -241,52 +388,77 @@ D=M
 @R13
 A=M
 M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
+A=D+A
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@Square.dispose$genlabel$3
+@SP
+M=M+1
+
+// call Memory.deAlloc 1
+// CALL FUNCTION Memory.deAlloc with 1 arguments
+@r3
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Memory.deAlloc
 0;JMP
-(Square.dispose$genlabel$3)
-@5
+(r3)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -295,32 +467,40 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -342,18 +522,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.draw 0
+// FUNCTION Square.draw with 0 local variables
 (Square.draw)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -362,55 +554,80 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
-@Square.draw$genlabel$4
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r4
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.draw$genlabel$4)
+(r4)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
 @5
-D=A
+D=D+A
 @R13
 M=D
 @SP
@@ -419,110 +636,160 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@Square.draw$genlabel$5
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r5
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
 M=D
 @Screen.drawRectangle
 0;JMP
-(Square.draw$genlabel$5)
-@5
+(r5)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -531,32 +798,40 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -578,18 +853,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.erase 0
+// FUNCTION Square.erase with 0 local variables
 (Square.erase)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -598,52 +885,74 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.erase$genlabel$6
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r6
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.erase$genlabel$6)
+(r6)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
 @5
-D=A
+D=D+A
 @R13
 M=D
 @SP
@@ -652,110 +961,160 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@Square.erase$genlabel$7
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r7
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
 M=D
 @Screen.drawRectangle
 0;JMP
-(Square.erase$genlabel$7)
-@5
+(r7)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -764,32 +1123,40 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -811,18 +1178,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.incSize 0
+// FUNCTION Square.incSize with 0 local variables
 (Square.incSize)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -831,178 +1210,234 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
+
+// push constant 254
+// Push 254 onto the stack
 @254
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// lt
+// Pop 2 from the stack, compare less than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.incSize$genlabel$8
+@j0
 D;JLT
 @SP
 A=M-1
 M=0
-(Square.incSize$genlabel$8)
-@THIS
-D=M
+@j0end
+0;JMP
+(j0)
+@SP
+A=M-1
+M=-1
+(j0end)
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
+
+// push constant 510
+// Push 510 onto the stack
 @510
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// lt
+// Pop 2 from the stack, compare less than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.incSize$genlabel$9
+@j1
 D;JLT
 @SP
 A=M-1
 M=0
-(Square.incSize$genlabel$9)
+@j1end
+0;JMP
+(j1)
+@SP
+A=M-1
+M=-1
+(j1end)
+
+// and
+// Pop 2 from the stack, AND them together, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D&M
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @Square.incSize$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @Square.incSize$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (Square.incSize$IF_TRUE0)
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.incSize$genlabel$10
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Square.erase
-0;JMP
-(Square.incSize$genlabel$10)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@2
 A=D+A
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@2
+@SP
+M=M+1
+
+// call Square.erase 1
+// CALL FUNCTION Square.erase with 1 arguments
+@r8
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
 @SP
-AM=M-1
+M=M+1
+@LCL
 D=M
-A=A-1
-M=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @THIS
 D=M
-@2
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@Square.erase
+0;JMP
+(r8)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
 D=D+A
 @R13
 M=D
@@ -1012,52 +1447,124 @@ D=M
 @R13
 A=M
 M=D
-@3
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@Square.incSize$genlabel$11
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
+@2
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// pop this 2
+// Pop the stack into THIS[2]
+@2
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
+@3
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// call Square.draw 1
+// CALL FUNCTION Square.draw with 1 arguments
+@r9
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.draw
 0;JMP
-(Square.incSize$genlabel$11)
-@5
+(r9)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -1066,33 +1573,44 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
 (Square.incSize$IF_FALSE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -1114,18 +1632,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.decSize 0
+// FUNCTION Square.decSize with 0 local variables
 (Square.decSize)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -1134,118 +1664,137 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 2
+// Push THIS[2] onto the stack
 @2
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
 @2
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// gt
+// Pop 2 from the stack, compare greater than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.decSize$genlabel$12
+@j2
 D;JGT
 @SP
 A=M-1
 M=0
-(Square.decSize$genlabel$12)
+@j2end
+0;JMP
+(j2)
+@SP
+A=M-1
+M=-1
+(j2end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @Square.decSize$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @Square.decSize$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (Square.decSize$IF_TRUE0)
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.decSize$genlabel$13
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Square.erase
-0;JMP
-(Square.decSize$genlabel$13)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@2
 A=D+A
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@2
+@SP
+M=M+1
+
+// call Square.erase 1
+// CALL FUNCTION Square.erase with 1 arguments
+@r10
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
 @SP
-AM=M-1
+M=M+1
+@LCL
 D=M
-A=A-1
-M=M-D
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @THIS
 D=M
-@2
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@Square.erase
+0;JMP
+(r10)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
 D=D+A
 @R13
 M=D
@@ -1255,52 +1804,124 @@ D=M
 @R13
 A=M
 M=D
-@3
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@Square.decSize$genlabel$14
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
+@2
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// pop this 2
+// Pop the stack into THIS[2]
+@2
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
+@3
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// call Square.draw 1
+// CALL FUNCTION Square.draw with 1 arguments
+@r11
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.draw
 0;JMP
-(Square.decSize$genlabel$14)
-@5
+(r11)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -1309,33 +1930,44 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
 (Square.decSize$IF_FALSE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -1357,18 +1989,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.moveUp 0
+// FUNCTION Square.moveUp with 0 local variables
 (Square.moveUp)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -1377,255 +2021,134 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
 @1
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// gt
+// Pop 2 from the stack, compare greater than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.moveUp$genlabel$15
+@j3
 D;JGT
 @SP
 A=M-1
 M=0
-(Square.moveUp$genlabel$15)
+@j3end
+0;JMP
+(j3)
+@SP
+A=M-1
+M=-1
+(j3end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @Square.moveUp$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @Square.moveUp$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (Square.moveUp$IF_TRUE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.moveUp$genlabel$16
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r12
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.moveUp$genlabel$16)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
+(r12)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@1
 D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@Square.moveUp$genlabel$17
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.drawRectangle
-0;JMP
-(Square.moveUp$genlabel$17)
 @5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@2
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-@THIS
-D=M
-@1
 D=D+A
 @R13
 M=D
@@ -1635,164 +2158,201 @@ D=M
 @R13
 A=M
 M=D
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
 D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-A=M-1
-M=!M
-@Square.moveUp$genlabel$18
-D=A
+@THIS
+A=M+D
+D=M
 @SP
 A=M
 M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.setColor
-0;JMP
-(Square.moveUp$genlabel$18)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
 @SP
 M=M+1
-A=M-1
-M=D
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
 @SP
 M=M+1
-A=M-1
-M=D
-@THIS
-D=M
+
+// push this 2
+// Push THIS[2] onto the stack
 @2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@1
 D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
 @SP
 M=M+1
-A=M-1
-M=D
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@Square.moveUp$genlabel$19
+
+// push constant 1
+// Push 1 onto the stack
+@1
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r13
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
 M=D
 @Screen.drawRectangle
 0;JMP
-(Square.moveUp$genlabel$19)
-@5
+(r13)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -1801,33 +2361,332 @@ D=M
 @R13
 A=M
 M=D
-(Square.moveUp$IF_FALSE0)
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
+@2
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// pop this 1
+// Pop the stack into THIS[1]
+@1
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
+@SP
 A=M-1
+M=!M
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r14
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@Screen.setColor
+0;JMP
+(r14)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
+@1
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r15
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
-A=M-D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
+M=D
+@Screen.drawRectangle
+0;JMP
+(r15)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
+(Square.moveUp$IF_FALSE0)
+
+// push constant 0
+// Push 0 onto the stack
+@0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -1849,18 +2708,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.moveDown 0
+// FUNCTION Square.moveDown with 0 local variables
 (Square.moveDown)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -1869,241 +2740,156 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
+
+// push constant 254
+// Push 254 onto the stack
 @254
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// lt
+// Pop 2 from the stack, compare less than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.moveDown$genlabel$20
+@j4
 D;JLT
 @SP
 A=M-1
 M=0
-(Square.moveDown$genlabel$20)
+@j4end
+0;JMP
+(j4)
+@SP
+A=M-1
+M=-1
+(j4end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @Square.moveDown$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @Square.moveDown$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (Square.moveDown$IF_TRUE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.moveDown$genlabel$21
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r16
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.moveDown$genlabel$21)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
+(r16)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@1
 D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@Square.moveDown$genlabel$22
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.drawRectangle
-0;JMP
-(Square.moveDown$genlabel$22)
 @5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@2
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
 D=D+A
 @R13
 M=D
@@ -2113,192 +2899,157 @@ D=M
 @R13
 A=M
 M=D
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
 D=A
+@THIS
+A=M+D
+D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
 @SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
 A=M-1
-M=!M
-@Square.moveDown$genlabel$23
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
+@1
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r17
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.setColor
-0;JMP
-(Square.moveDown$genlabel$23)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
 A=M
 M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
 @SP
 M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
 @SP
-M=M+1
-A=M-1
-M=D
-@THIS
 D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@1
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@Square.moveDown$genlabel$24
-D=A
-@SP
-A=M
-M=D
 @LCL
-D=M
-@SP
-AM=M+1
 M=D
+@5
+D=D-A
+@4
+D=D-A
 @ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.drawRectangle
 0;JMP
-(Square.moveDown$genlabel$24)
-@5
+(r17)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -2307,33 +3058,376 @@ D=M
 @R13
 A=M
 M=D
-(Square.moveDown$IF_FALSE0)
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
+@2
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// pop this 1
+// Pop the stack into THIS[1]
+@1
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
+@SP
 A=M-1
+M=!M
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r18
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@Screen.setColor
+0;JMP
+(r18)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push constant 1
+// Push 1 onto the stack
+@1
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r19
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
-A=M-D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
+M=D
+@Screen.drawRectangle
+0;JMP
+(r19)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
+(Square.moveDown$IF_FALSE0)
+
+// push constant 0
+// Push 0 onto the stack
+@0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -2355,18 +3449,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.moveLeft 0
+// FUNCTION Square.moveLeft with 0 local variables
 (Square.moveLeft)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -2375,255 +3481,134 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
 @1
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// gt
+// Pop 2 from the stack, compare greater than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.moveLeft$genlabel$25
+@j5
 D;JGT
 @SP
 A=M-1
 M=0
-(Square.moveLeft$genlabel$25)
+@j5end
+0;JMP
+(j5)
+@SP
+A=M-1
+M=-1
+(j5end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @Square.moveLeft$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @Square.moveLeft$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (Square.moveLeft$IF_TRUE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.moveLeft$genlabel$26
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r20
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.moveLeft$genlabel$26)
+(r20)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
 @5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@1
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@Square.moveLeft$genlabel$27
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.drawRectangle
-0;JMP
-(Square.moveLeft$genlabel$27)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@2
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-@THIS
-D=M
-@0
 D=D+A
 @R13
 M=D
@@ -2633,164 +3618,201 @@ D=M
 @R13
 A=M
 M=D
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
 D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-A=M-1
-M=!M
-@Square.moveLeft$genlabel$28
-D=A
+@THIS
+A=M+D
+D=M
 @SP
 A=M
 M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.setColor
-0;JMP
-(Square.moveLeft$genlabel$28)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
 @SP
 M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@1
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
+
+// push this 2
+// Push THIS[2] onto the stack
 @2
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@Square.moveLeft$genlabel$29
+
+// push constant 1
+// Push 1 onto the stack
+@1
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r21
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
 M=D
 @Screen.drawRectangle
 0;JMP
-(Square.moveLeft$genlabel$29)
-@5
+(r21)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -2799,33 +3821,332 @@ D=M
 @R13
 A=M
 M=D
-(Square.moveLeft$IF_FALSE0)
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
+@2
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// pop this 0
+// Pop the stack into THIS[0]
+@0
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
+@SP
 A=M-1
+M=!M
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r22
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@Screen.setColor
+0;JMP
+(r22)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
+@1
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r23
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
-A=M-D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
+M=D
+@Screen.drawRectangle
+0;JMP
+(r23)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
+(Square.moveLeft$IF_FALSE0)
+
+// push constant 0
+// Push 0 onto the stack
+@0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -2847,18 +4168,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function Square.moveRight 0
+// FUNCTION Square.moveRight with 0 local variables
 (Square.moveRight)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -2867,241 +4200,156 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
+
+// push constant 510
+// Push 510 onto the stack
 @510
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// lt
+// Pop 2 from the stack, compare less than, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@Square.moveRight$genlabel$30
+@j6
 D;JLT
 @SP
 A=M-1
 M=0
-(Square.moveRight$genlabel$30)
+@j6end
+0;JMP
+(j6)
+@SP
+A=M-1
+M=-1
+(j6end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @Square.moveRight$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @Square.moveRight$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (Square.moveRight$IF_TRUE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@Square.moveRight$genlabel$31
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r24
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.moveRight$genlabel$31)
+(r24)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
 @5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@1
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@THIS
-D=M
-@2
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@Square.moveRight$genlabel$32
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Screen.drawRectangle
-0;JMP
-(Square.moveRight$genlabel$32)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@THIS
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@2
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@THIS
-D=M
-@0
 D=D+A
 @R13
 M=D
@@ -3111,55 +4359,286 @@ D=M
 @R13
 A=M
 M=D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
+@1
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// push this 1
+// Push THIS[1] onto the stack
+@1
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r25
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
+M=D
+@Screen.drawRectangle
+0;JMP
+(r25)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push this 0
+// Push THIS[0] onto the stack
+@0
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
+@2
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=D+M
+
+// pop this 0
+// Pop the stack into THIS[0]
+@0
+D=A
+@THIS
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
-@Square.moveRight$genlabel$33
+
+// call Screen.setColor 1
+// CALL FUNCTION Screen.setColor with 1 arguments
+@r26
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Screen.setColor
 0;JMP
-(Square.moveRight$genlabel$33)
+(r26)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
 @5
-D=A
+D=D+A
 @R13
 M=D
 @SP
@@ -3168,135 +4647,201 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
+
+// push constant 1
+// Push 1 onto the stack
 @1
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=M-D
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
+D=A
 @THIS
-D=M
-@2
-A=D+A
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push this 2
+// Push THIS[2] onto the stack
+@2
+D=A
+@THIS
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// add
+// Pop 2 from the stack, add, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 M=D+M
-@Square.moveRight$genlabel$34
+
+// call Screen.drawRectangle 4
+// CALL FUNCTION Screen.drawRectangle with 4 arguments
+@r27
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@8
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@4
+D=D-A
+@ARG
 M=D
 @Screen.drawRectangle
 0;JMP
-(Square.moveRight$genlabel$34)
-@5
+(r27)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -3305,33 +4850,44 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
 (Square.moveRight$IF_FALSE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -3353,53 +4909,79 @@ M=D
 @R14
 A=M
 0;JMP
+
+// Processing ../../../09/Square/SquareGame.vm
+// function SquareGame.new 0
+// FUNCTION SquareGame.new with 0 local variables
 (SquareGame.new)
+
+// push constant 2
+// Push 2 onto the stack
 @2
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.new$genlabel$35
+@SP
+M=M+1
+
+// call Memory.alloc 1
+// CALL FUNCTION Memory.alloc with 1 arguments
+@r28
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Memory.alloc
 0;JMP
-(SquareGame.new$genlabel$35)
-@3
+(r28)
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -3408,66 +4990,94 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 30
+// Push 30 onto the stack
 @30
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.new$genlabel$36
+@SP
+M=M+1
+
+// call Square.new 3
+// CALL FUNCTION Square.new with 3 arguments
+@r29
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@7
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@3
+D=D-A
+@ARG
 M=D
 @Square.new
 0;JMP
-(SquareGame.new$genlabel$36)
-@THIS
-D=M
+(r29)
+
+// pop this 0
+// Pop the stack into THIS[0]
 @0
-D=D+A
+D=A
+@THIS
+D=M+D
 @R13
 M=D
 @SP
@@ -3476,16 +5086,23 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// pop this 1
+// Pop the stack into THIS[1]
 @1
-D=D+A
+D=A
+@THIS
+D=M+D
 @R13
 M=D
 @SP
@@ -3494,32 +5111,43 @@ D=M
 @R13
 A=M
 M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
+A=D+A
 D=M
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -3541,18 +5169,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function SquareGame.dispose 0
+// FUNCTION SquareGame.dispose with 0 local variables
 (SquareGame.dispose)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -3561,55 +5201,77 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.dispose$genlabel$37
+@SP
+M=M+1
+
+// call Square.dispose 1
+// CALL FUNCTION Square.dispose with 1 arguments
+@r30
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.dispose
 0;JMP
-(SquareGame.dispose$genlabel$37)
-@5
+(r30)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -3618,52 +5280,77 @@ D=M
 @R13
 A=M
 M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
+A=D+A
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.dispose$genlabel$38
+@SP
+M=M+1
+
+// call Memory.deAlloc 1
+// CALL FUNCTION Memory.deAlloc with 1 arguments
+@r31
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Memory.deAlloc
 0;JMP
-(SquareGame.dispose$genlabel$38)
-@5
+(r31)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -3672,32 +5359,40 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -3719,18 +5414,30 @@ M=D
 @R14
 A=M
 0;JMP
+
+// function SquareGame.moveSquare 0
+// FUNCTION SquareGame.moveSquare with 0 local variables
 (SquareGame.moveSquare)
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
+D=A
+@ARG
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@3
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
 D=A
+@3
+D=D+A
 @R13
 M=D
 @SP
@@ -3739,90 +5446,138 @@ D=M
 @R13
 A=M
 M=D
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 1
+// Push 1 onto the stack
 @1
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.moveSquare$genlabel$39
+@j7
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.moveSquare$genlabel$39)
+@j7end
+0;JMP
+(j7)
+@SP
+A=M-1
+M=-1
+(j7end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @SquareGame.moveSquare$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @SquareGame.moveSquare$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (SquareGame.moveSquare$IF_TRUE0)
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.moveSquare$genlabel$40
+@SP
+M=M+1
+
+// call Square.moveUp 1
+// CALL FUNCTION Square.moveUp with 1 arguments
+@r32
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.moveUp
 0;JMP
-(SquareGame.moveSquare$genlabel$40)
-@5
+(r32)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -3831,91 +5586,142 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
 (SquareGame.moveSquare$IF_FALSE0)
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 2
+// Push 2 onto the stack
 @2
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.moveSquare$genlabel$41
+@j8
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.moveSquare$genlabel$41)
+@j8end
+0;JMP
+(j8)
+@SP
+A=M-1
+M=-1
+(j8end)
+
+// if-goto IF_TRUE1
+// IF-GOTO label: IF_TRUE1
 @SP
 AM=M-1
 D=M
 @SquareGame.moveSquare$IF_TRUE1
 D;JNE
+
+// goto IF_FALSE1
+// GOTO label: IF_FALSE1
 @SquareGame.moveSquare$IF_FALSE1
 0;JMP
+
+// label IF_TRUE1
+// Define label: IF_TRUE1
 (SquareGame.moveSquare$IF_TRUE1)
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.moveSquare$genlabel$42
+@SP
+M=M+1
+
+// call Square.moveDown 1
+// CALL FUNCTION Square.moveDown with 1 arguments
+@r33
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.moveDown
 0;JMP
-(SquareGame.moveSquare$genlabel$42)
-@5
+(r33)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -3924,91 +5730,142 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE1
+// Define label: IF_FALSE1
 (SquareGame.moveSquare$IF_FALSE1)
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 3
+// Push 3 onto the stack
 @3
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.moveSquare$genlabel$43
+@j9
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.moveSquare$genlabel$43)
+@j9end
+0;JMP
+(j9)
+@SP
+A=M-1
+M=-1
+(j9end)
+
+// if-goto IF_TRUE2
+// IF-GOTO label: IF_TRUE2
 @SP
 AM=M-1
 D=M
 @SquareGame.moveSquare$IF_TRUE2
 D;JNE
+
+// goto IF_FALSE2
+// GOTO label: IF_FALSE2
 @SquareGame.moveSquare$IF_FALSE2
 0;JMP
+
+// label IF_TRUE2
+// Define label: IF_TRUE2
 (SquareGame.moveSquare$IF_TRUE2)
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.moveSquare$genlabel$44
+@SP
+M=M+1
+
+// call Square.moveLeft 1
+// CALL FUNCTION Square.moveLeft with 1 arguments
+@r34
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.moveLeft
 0;JMP
-(SquareGame.moveSquare$genlabel$44)
-@5
+(r34)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -4017,238 +5874,141 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE2
+// Define label: IF_FALSE2
 (SquareGame.moveSquare$IF_FALSE2)
-@THIS
-D=M
+
+// push this 1
+// Push THIS[1] onto the stack
 @1
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 4
+// Push 4 onto the stack
 @4
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.moveSquare$genlabel$45
+@j10
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.moveSquare$genlabel$45)
+@j10end
+0;JMP
+(j10)
+@SP
+A=M-1
+M=-1
+(j10end)
+
+// if-goto IF_TRUE3
+// IF-GOTO label: IF_TRUE3
 @SP
 AM=M-1
 D=M
 @SquareGame.moveSquare$IF_TRUE3
 D;JNE
+
+// goto IF_FALSE3
+// GOTO label: IF_FALSE3
 @SquareGame.moveSquare$IF_FALSE3
 0;JMP
+
+// label IF_TRUE3
+// Define label: IF_TRUE3
 (SquareGame.moveSquare$IF_TRUE3)
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.moveSquare$genlabel$46
+@SP
+M=M+1
+
+// call Square.moveRight 1
+// CALL FUNCTION Square.moveRight with 1 arguments
+@r35
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.moveRight
 0;JMP
-(SquareGame.moveSquare$genlabel$46)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-(SquareGame.moveSquare$IF_FALSE3)
-@5
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@SquareGame.moveSquare$genlabel$47
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Sys.wait
-0;JMP
-(SquareGame.moveSquare$genlabel$47)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
+(r35)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
 D=A
-@SP
-M=M+1
-A=M-1
-M=D
 @5
-D=A
-@LCL
-A=M-D
-D=M
-@R14
-M=D
-@SP
-A=M-1
-D=M
-@ARG
-A=M
-M=D
-D=A+1
-@SP
-M=D
-@LCL
-D=M
-@R13
-AM=D-1
-D=M
-@THAT
-M=D
-@R13
-AM=M-1
-D=M
-@THIS
-M=D
-@R13
-AM=M-1
-D=M
-@ARG
-M=D
-@R13
-AM=M-1
-D=M
-@LCL
-M=D
-@R14
-A=M
-0;JMP
-(SquareGame.run)
-@2
-D=A
-@SP
-AM=D+M
-A=A-1
-M=0
-A=A-1
-M=0
-@ARG
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@3
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@0
-D=A
-@SP
-M=M+1
-A=M-1
-M=D
-@LCL
-D=M
-@1
 D=D+A
 @R13
 M=D
@@ -4258,104 +6018,443 @@ D=M
 @R13
 A=M
 M=D
-(SquareGame.run$WHILE_EXP0)
-@LCL
-D=M
-@1
-A=D+A
-D=M
+
+// label IF_FALSE3
+// Define label: IF_FALSE3
+(SquareGame.moveSquare$IF_FALSE3)
+
+// push constant 5
+// Push 5 onto the stack
+@5
+D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
 @SP
-A=M-1
-M=!M
+M=M+1
+
+// call Sys.wait 1
+// CALL FUNCTION Sys.wait with 1 arguments
+@r36
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@Sys.wait
+0;JMP
+(r36)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
+D=A
+@5
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
+@0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
+D=M
+@R14
+M=D
+@SP
+AM=M-1
+D=M
+@ARG
+A=M
+M=D
+@ARG
+D=M+1
+@SP
+M=D
+@R13
+AM=M-1
+D=M
+@THAT
+M=D
+@R13
+AM=M-1
+D=M
+@THIS
+M=D
+@R13
+AM=M-1
+D=M
+@ARG
+M=D
+@R13
+AM=M-1
+D=M
+@LCL
+M=D
+@R14
+A=M
+0;JMP
+
+// function SquareGame.run 2
+// FUNCTION SquareGame.run with 2 local variables
+(SquareGame.run)
+@SP
+A=M
+M=0
+@SP
+M=M+1
+@SP
+A=M
+M=0
+@SP
+M=M+1
+
+// push argument 0
+// Push ARG[0] onto the stack
+@0
+D=A
+@ARG
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop pointer 0
+// Pop the stack into POINTER[0]
+@0
+D=A
+@3
+D=D+A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
+@0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop local 1
+// Pop the stack into LCL[1]
+@1
+D=A
+@LCL
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// label WHILE_EXP0
+// Define label: WHILE_EXP0
+(SquareGame.run$WHILE_EXP0)
+
+// push local 1
+// Push LCL[1] onto the stack
+@1
+D=A
+@LCL
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
+@SP
+A=M-1
+M=!M
+
+// if-goto WHILE_END0
+// IF-GOTO label: WHILE_END0
 @SP
 AM=M-1
 D=M
 @SquareGame.run$WHILE_END0
 D;JNE
+
+// label WHILE_EXP1
+// Define label: WHILE_EXP1
 (SquareGame.run$WHILE_EXP1)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$48
+@j11
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$48)
+@j11end
+0;JMP
+(j11)
+@SP
+A=M-1
+M=-1
+(j11end)
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
+
+// if-goto WHILE_END1
+// IF-GOTO label: WHILE_END1
 @SP
 AM=M-1
 D=M
 @SquareGame.run$WHILE_END1
 D;JNE
-@SquareGame.run$genlabel$49
+
+// call Keyboard.keyPressed 0
+// CALL FUNCTION Keyboard.keyPressed with 0 arguments
+@r37
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@4
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@0
+D=D-A
+@ARG
 M=D
 @Keyboard.keyPressed
 0;JMP
-(SquareGame.run$genlabel$49)
+(r37)
+
+// pop local 0
+// Pop the stack into LCL[0]
+@0
+D=A
+@LCL
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
+@3
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// call SquareGame.moveSquare 1
+// CALL FUNCTION SquareGame.moveSquare with 1 arguments
+@r38
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@1
+D=D-A
+@ARG
+M=D
+@SquareGame.moveSquare
+0;JMP
+(r38)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
+D=A
+@5
 D=D+A
 @R13
 M=D
@@ -4365,111 +6464,99 @@ D=M
 @R13
 A=M
 M=D
-@3
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SquareGame.run$genlabel$50
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@SquareGame.moveSquare
-0;JMP
-(SquareGame.run$genlabel$50)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
+
+// goto WHILE_EXP1
+// GOTO label: WHILE_EXP1
 @SquareGame.run$WHILE_EXP1
 0;JMP
+
+// label WHILE_END1
+// Define label: WHILE_END1
 (SquareGame.run$WHILE_END1)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 81
+// Push 81 onto the stack
 @81
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$51
+@j12
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$51)
+@j12end
+0;JMP
+(j12)
+@SP
+A=M-1
+M=-1
+(j12end)
+
+// if-goto IF_TRUE0
+// IF-GOTO label: IF_TRUE0
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE0
 D;JNE
+
+// goto IF_FALSE0
+// GOTO label: IF_FALSE0
 @SquareGame.run$IF_FALSE0
 0;JMP
+
+// label IF_TRUE0
+// Define label: IF_TRUE0
 (SquareGame.run$IF_TRUE0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
-@LCL
-D=M
+
+// pop local 1
+// Pop the stack into LCL[1]
 @1
-D=D+A
+D=A
+@LCL
+D=M+D
 @R13
 M=D
 @SP
@@ -4478,91 +6565,142 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE0
+// Define label: IF_FALSE0
 (SquareGame.run$IF_FALSE0)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 90
+// Push 90 onto the stack
 @90
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$52
+@j13
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$52)
+@j13end
+0;JMP
+(j13)
+@SP
+A=M-1
+M=-1
+(j13end)
+
+// if-goto IF_TRUE1
+// IF-GOTO label: IF_TRUE1
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE1
 D;JNE
+
+// goto IF_FALSE1
+// GOTO label: IF_FALSE1
 @SquareGame.run$IF_FALSE1
 0;JMP
+
+// label IF_TRUE1
+// Define label: IF_TRUE1
 (SquareGame.run$IF_TRUE1)
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.run$genlabel$53
+@SP
+M=M+1
+
+// call Square.decSize 1
+// CALL FUNCTION Square.decSize with 1 arguments
+@r39
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.decSize
 0;JMP
-(SquareGame.run$genlabel$53)
-@5
+(r39)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -4571,91 +6709,142 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE1
+// Define label: IF_FALSE1
 (SquareGame.run$IF_FALSE1)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 88
+// Push 88 onto the stack
 @88
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$54
+@j14
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$54)
+@j14end
+0;JMP
+(j14)
+@SP
+A=M-1
+M=-1
+(j14end)
+
+// if-goto IF_TRUE2
+// IF-GOTO label: IF_TRUE2
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE2
 D;JNE
+
+// goto IF_FALSE2
+// GOTO label: IF_FALSE2
 @SquareGame.run$IF_FALSE2
 0;JMP
+
+// label IF_TRUE2
+// Define label: IF_TRUE2
 (SquareGame.run$IF_TRUE2)
-@THIS
-D=M
+
+// push this 0
+// Push THIS[0] onto the stack
 @0
-A=D+A
+D=A
+@THIS
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.run$genlabel$55
+@SP
+M=M+1
+
+// call Square.incSize 1
+// CALL FUNCTION Square.incSize with 1 arguments
+@r40
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @Square.incSize
 0;JMP
-(SquareGame.run$genlabel$55)
-@5
+(r40)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -4664,52 +6853,88 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE2
+// Define label: IF_FALSE2
 (SquareGame.run$IF_FALSE2)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 131
+// Push 131 onto the stack
 @131
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$56
+@j15
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$56)
+@j15end
+0;JMP
+(j15)
+@SP
+A=M-1
+M=-1
+(j15end)
+
+// if-goto IF_TRUE3
+// IF-GOTO label: IF_TRUE3
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE3
 D;JNE
+
+// goto IF_FALSE3
+// GOTO label: IF_FALSE3
 @SquareGame.run$IF_FALSE3
 0;JMP
+
+// label IF_TRUE3
+// Define label: IF_TRUE3
 (SquareGame.run$IF_TRUE3)
+
+// push constant 1
+// Push 1 onto the stack
 @1
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// pop this 1
+// Pop the stack into THIS[1]
 @1
-D=D+A
+D=A
+@THIS
+D=M+D
 @R13
 M=D
 @SP
@@ -4718,52 +6943,88 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE3
+// Define label: IF_FALSE3
 (SquareGame.run$IF_FALSE3)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 133
+// Push 133 onto the stack
 @133
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$57
+@j16
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$57)
+@j16end
+0;JMP
+(j16)
+@SP
+A=M-1
+M=-1
+(j16end)
+
+// if-goto IF_TRUE4
+// IF-GOTO label: IF_TRUE4
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE4
 D;JNE
+
+// goto IF_FALSE4
+// GOTO label: IF_FALSE4
 @SquareGame.run$IF_FALSE4
 0;JMP
+
+// label IF_TRUE4
+// Define label: IF_TRUE4
 (SquareGame.run$IF_TRUE4)
+
+// push constant 2
+// Push 2 onto the stack
 @2
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// pop this 1
+// Pop the stack into THIS[1]
 @1
-D=D+A
+D=A
+@THIS
+D=M+D
 @R13
 M=D
 @SP
@@ -4772,52 +7033,88 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE4
+// Define label: IF_FALSE4
 (SquareGame.run$IF_FALSE4)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 130
+// Push 130 onto the stack
 @130
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$58
+@j17
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$58)
+@j17end
+0;JMP
+(j17)
+@SP
+A=M-1
+M=-1
+(j17end)
+
+// if-goto IF_TRUE5
+// IF-GOTO label: IF_TRUE5
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE5
 D;JNE
+
+// goto IF_FALSE5
+// GOTO label: IF_FALSE5
 @SquareGame.run$IF_FALSE5
 0;JMP
+
+// label IF_TRUE5
+// Define label: IF_TRUE5
 (SquareGame.run$IF_TRUE5)
+
+// push constant 3
+// Push 3 onto the stack
 @3
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// pop this 1
+// Pop the stack into THIS[1]
 @1
-D=D+A
+D=A
+@THIS
+D=M+D
 @R13
 M=D
 @SP
@@ -4826,52 +7123,88 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE5
+// Define label: IF_FALSE5
 (SquareGame.run$IF_FALSE5)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 132
+// Push 132 onto the stack
 @132
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$59
+@j18
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$59)
+@j18end
+0;JMP
+(j18)
+@SP
+A=M-1
+M=-1
+(j18end)
+
+// if-goto IF_TRUE6
+// IF-GOTO label: IF_TRUE6
 @SP
 AM=M-1
 D=M
 @SquareGame.run$IF_TRUE6
 D;JNE
+
+// goto IF_FALSE6
+// GOTO label: IF_FALSE6
 @SquareGame.run$IF_FALSE6
 0;JMP
+
+// label IF_TRUE6
+// Define label: IF_TRUE6
 (SquareGame.run$IF_TRUE6)
+
+// push constant 4
+// Push 4 onto the stack
 @4
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@THIS
-D=M
+@SP
+M=M+1
+
+// pop this 1
+// Pop the stack into THIS[1]
 @1
-D=D+A
+D=A
+@THIS
+D=M+D
 @R13
 M=D
 @SP
@@ -4880,88 +7213,136 @@ D=M
 @R13
 A=M
 M=D
+
+// label IF_FALSE6
+// Define label: IF_FALSE6
 (SquareGame.run$IF_FALSE6)
+
+// label WHILE_EXP2
+// Define label: WHILE_EXP2
 (SquareGame.run$WHILE_EXP2)
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
+@SP
+M=M+1
+
+// eq
+// Pop 2 from the stack, compare equality, and put result on the stack.
 @SP
 AM=M-1
 D=M
-A=A-1
+@SP
+A=M-1
 D=M-D
-M=-1
-@SquareGame.run$genlabel$60
+@j19
 D;JEQ
 @SP
 A=M-1
 M=0
-(SquareGame.run$genlabel$60)
+@j19end
+0;JMP
+(j19)
+@SP
+A=M-1
+M=-1
+(j19end)
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
+
+// not
+// Pop 1 from the stack, NOT it, and put result on the stack.
 @SP
 A=M-1
 M=!M
+
+// if-goto WHILE_END2
+// IF-GOTO label: WHILE_END2
 @SP
 AM=M-1
 D=M
 @SquareGame.run$WHILE_END2
 D;JNE
-@SquareGame.run$genlabel$61
+
+// call Keyboard.keyPressed 0
+// CALL FUNCTION Keyboard.keyPressed with 0 arguments
+@r41
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
-M=D
-@4
-D=A
-@SP
-D=M-D
-@ARG
+A=M
 M=D
 @SP
-MD=M+1
+M=M+1
+@SP
+D=M
 @LCL
+M=D
+@5
+D=D-A
+@0
+D=D-A
+@ARG
 M=D
 @Keyboard.keyPressed
 0;JMP
-(SquareGame.run$genlabel$61)
-@LCL
-D=M
+(r41)
+
+// pop local 0
+// Pop the stack into LCL[0]
 @0
-D=D+A
+D=A
+@LCL
+D=M+D
 @R13
 M=D
 @SP
@@ -4970,161 +7351,76 @@ D=M
 @R13
 A=M
 M=D
+
+// push pointer 0
+// Push POINTER[0] onto the stack
+@0
+D=A
 @3
+A=D+A
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@SquareGame.run$genlabel$62
+@SP
+M=M+1
+
+// call SquareGame.moveSquare 1
+// CALL FUNCTION SquareGame.moveSquare with 1 arguments
+@r42
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @SquareGame.moveSquare
 0;JMP
-(SquareGame.run$genlabel$62)
-@5
-D=A
-@R13
-M=D
-@SP
-AM=M-1
-D=M
-@R13
-A=M
-M=D
-@SquareGame.run$WHILE_EXP2
-0;JMP
-(SquareGame.run$WHILE_END2)
-@SquareGame.run$WHILE_EXP0
-0;JMP
-(SquareGame.run$WHILE_END0)
+(r42)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
 D=A
-@SP
-M=M+1
-A=M-1
-M=D
 @5
-D=A
-@LCL
-A=M-D
-D=M
-@R14
-M=D
-@SP
-A=M-1
-D=M
-@ARG
-A=M
-M=D
-D=A+1
-@SP
-M=D
-@LCL
-D=M
-@R13
-AM=D-1
-D=M
-@THAT
-M=D
-@R13
-AM=M-1
-D=M
-@THIS
-M=D
-@R13
-AM=M-1
-D=M
-@ARG
-M=D
-@R13
-AM=M-1
-D=M
-@LCL
-M=D
-@R14
-A=M
-0;JMP
-(Main.main)
-@1
-D=A
-@SP
-AM=D+M
-A=A-1
-M=0
-@Main.main$genlabel$63
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@4
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@SquareGame.new
-0;JMP
-(Main.main$genlabel$63)
-@LCL
-D=M
-@0
 D=D+A
 @R13
 M=D
@@ -5134,55 +7430,226 @@ D=M
 @R13
 A=M
 M=D
-@LCL
-D=M
+
+// goto WHILE_EXP2
+// GOTO label: WHILE_EXP2
+@SquareGame.run$WHILE_EXP2
+0;JMP
+
+// label WHILE_END2
+// Define label: WHILE_END2
+(SquareGame.run$WHILE_END2)
+
+// goto WHILE_EXP0
+// GOTO label: WHILE_EXP0
+@SquareGame.run$WHILE_EXP0
+0;JMP
+
+// label WHILE_END0
+// Define label: WHILE_END0
+(SquareGame.run$WHILE_END0)
+
+// push constant 0
+// Push 0 onto the stack
 @0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@Main.main$genlabel$64
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
+D=M
+@R14
+M=D
+@SP
+AM=M-1
+D=M
+@ARG
+A=M
+M=D
+@ARG
+D=M+1
+@SP
+M=D
+@R13
+AM=M-1
+D=M
+@THAT
+M=D
+@R13
+AM=M-1
+D=M
+@THIS
+M=D
+@R13
+AM=M-1
+D=M
+@ARG
+M=D
+@R13
+AM=M-1
+D=M
+@LCL
+M=D
+@R14
+A=M
+0;JMP
+
+// Processing ../../../09/Square/Main.vm
+// function Main.main 1
+// FUNCTION Main.main with 1 local variables
+(Main.main)
+@SP
+A=M
+M=0
+@SP
+M=M+1
+
+// call SquareGame.new 0
+// CALL FUNCTION SquareGame.new with 0 arguments
+@r43
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@0
+D=D-A
 @ARG
 M=D
-@SP
-MD=M+1
+@SquareGame.new
+0;JMP
+(r43)
+
+// pop local 0
+// Pop the stack into LCL[0]
+@0
+D=A
 @LCL
+D=M+D
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push local 0
+// Push LCL[0] onto the stack
+@0
+D=A
+@LCL
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// call SquareGame.run 1
+// CALL FUNCTION SquareGame.run with 1 arguments
+@r44
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@LCL
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@ARG
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THIS
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@THAT
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
+M=D
+@5
+D=D-A
+@1
+D=D-A
+@ARG
 M=D
 @SquareGame.run
 0;JMP
-(Main.main$genlabel$64)
-@5
+(r44)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -5191,55 +7658,77 @@ D=M
 @R13
 A=M
 M=D
-@LCL
-D=M
+
+// push local 0
+// Push LCL[0] onto the stack
 @0
-A=D+A
+D=A
+@LCL
+A=M+D
 D=M
 @SP
-M=M+1
-A=M-1
+A=M
 M=D
-@Main.main$genlabel$65
+@SP
+M=M+1
+
+// call SquareGame.dispose 1
+// CALL FUNCTION SquareGame.dispose with 1 arguments
+@r45
 D=A
 @SP
 A=M
 M=D
+@SP
+M=M+1
 @LCL
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @ARG
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THIS
 D=M
 @SP
-AM=M+1
+A=M
 M=D
+@SP
+M=M+1
 @THAT
 D=M
 @SP
-AM=M+1
+A=M
+M=D
+@SP
+M=M+1
+@SP
+D=M
+@LCL
 M=D
 @5
-D=A
-@SP
-D=M-D
+D=D-A
+@1
+D=D-A
 @ARG
-M=D
-@SP
-MD=M+1
-@LCL
 M=D
 @SquareGame.dispose
 0;JMP
-(Main.main$genlabel$65)
-@5
+(r45)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
+@0
 D=A
+@5
+D=D+A
 @R13
 M=D
 @SP
@@ -5248,32 +7737,40 @@ D=M
 @R13
 A=M
 M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
+A=M
+M=D
+@SP
 M=M+1
-A=M-1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
 M=D
 @5
-D=A
-@LCL
-A=M-D
+A=D-A
 D=M
 @R14
 M=D
 @SP
-A=M-1
+AM=M-1
 D=M
 @ARG
 A=M
 M=D
-D=A+1
+@ARG
+D=M+1
 @SP
 M=D
-@LCL
-D=M
 @R13
-AM=D-1
+AM=M-1
 D=M
 @THAT
 M=D
@@ -5295,6 +7792,4 @@ M=D
 @R14
 A=M
 0;JMP
-(Main.main$genlabel$66)
-@Main.main$genlabel$66
-0;JMP
+
