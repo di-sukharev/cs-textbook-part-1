@@ -1,0 +1,115 @@
+class Cactus{
+	field int currentPosition;
+	field int groundHeight;
+	
+	field int CACTUS_WIDTH;
+	field int CACTUS_HEIGHT;
+	
+	constructor Cactus new(int _groundHeight){
+		let groundHeight = _groundHeight;
+		
+		let CACTUS_WIDTH = 16; // era 32
+		let CACTUS_HEIGHT = 16; 
+		
+		let currentPosition = 511 - CACTUS_WIDTH;
+		
+		do draw();
+		
+		return this;
+	}
+	
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method int getCurrentPosition(){
+		return currentPosition;
+	}
+	
+	method void draw(){
+		var int x, y;
+		var int location;
+		var int addr;
+		
+		let x = currentPosition;
+		let y = groundHeight - CACTUS_HEIGHT - 1;
+		
+		let location = Utility.xyToScreenMap(x, y);
+		let addr = 16384+location;
+		
+		do Memory.poke(addr+0, 24);
+		do Memory.poke(addr+32, 56);
+		do Memory.poke(addr+64, 58);
+		do Memory.poke(addr+96, 59);
+		do Memory.poke(addr+128, 187);
+		do Memory.poke(addr+160, 443);
+		do Memory.poke(addr+192, 443);
+		do Memory.poke(addr+224, 447);
+		do Memory.poke(addr+256, 446);
+		do Memory.poke(addr+288, 504);
+		do Memory.poke(addr+320, 248);
+		do Memory.poke(addr+352, 56);
+		do Memory.poke(addr+384, 56);
+		do Memory.poke(addr+416, 56);
+		do Memory.poke(addr+448, 56);
+		do Memory.poke(addr+480, 60);
+		return;
+	}
+	
+	method void erase(){
+		var int x, y;
+		var int location;
+		var int addr;
+		
+		let x = currentPosition;
+		let y = groundHeight - CACTUS_HEIGHT - 1;
+		
+		let location = Utility.xyToScreenMap(x, y);
+		let addr = 16384+location;
+		
+		do Memory.poke(addr+0, 0);
+		do Memory.poke(addr+32, 0);
+		do Memory.poke(addr+64, 0);
+		do Memory.poke(addr+96, 0);
+		do Memory.poke(addr+128, 0);
+		do Memory.poke(addr+160, 0);
+		do Memory.poke(addr+192, 0);
+		do Memory.poke(addr+224, 0);
+		do Memory.poke(addr+256, 0);
+		do Memory.poke(addr+288, 0);
+		do Memory.poke(addr+320, 0);
+		do Memory.poke(addr+352, 0);
+		do Memory.poke(addr+384, 0);
+		do Memory.poke(addr+416, 0);
+		do Memory.poke(addr+448, 0);
+		do Memory.poke(addr+480, 0);
+		return;
+	}
+	
+	method int getX(){
+		return currentPosition;
+	}
+	
+	method int getY(){
+		return groundHeight - CACTUS_HEIGHT;
+	}
+	
+	method int getWidth(){
+		return CACTUS_WIDTH;
+	}
+	
+	method int getHeight(){
+		return CACTUS_HEIGHT;
+	}
+	
+	method void move(int speed){
+		do erase();
+
+		let currentPosition = Math.max(currentPosition - speed, 0);
+		
+		do draw();
+		
+		return;
+	}
+}

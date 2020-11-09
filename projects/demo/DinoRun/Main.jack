@@ -1,0 +1,14 @@
+class Main {
+    function void main() {
+		var DinoRunGame game;
+		
+		do LCGRandom.setSeed(Keyboard.readInt("Seed: "));
+		
+		// do LCGRandom.setSeed(300);
+        
+        let game = DinoRunGame.new(10);
+        do game.run();
+        do game.dispose();
+        return;
+    }
+}

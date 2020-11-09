@@ -1,0 +1,159 @@
+class Birb{
+	field int currentPosition;
+	field int heightToGround;
+	
+	field int drawCounter;
+	field int MAX_COUNTER;
+	
+	field int BIRB_WIDTH;
+	field int BIRB_HEIGHT;
+	field int groundHeight;
+	
+	constructor Birb new(int height, int _groundHeight){
+		let heightToGround = height;
+		
+		let groundHeight = _groundHeight;
+		
+		let BIRB_WIDTH = 16;
+		let BIRB_HEIGHT = 16;
+		
+		let currentPosition = 511 - BIRB_WIDTH;
+		
+		let drawCounter = 0;
+		let MAX_COUNTER = 10;
+		
+		do draw();
+		
+		return this;
+	}
+	
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+	
+	method int getCurrentPosition(){
+		return currentPosition;
+	}
+
+	method void _draw1(int addr) {
+		do Memory.poke(addr+0, 32);
+		do Memory.poke(addr+32, 96);
+		do Memory.poke(addr+64, 232);
+		do Memory.poke(addr+96, 460);
+		do Memory.poke(addr+128, 986);
+		do Memory.poke(addr+160, 2015);
+		do Memory.poke(addr+192, 2032);
+		do Memory.poke(addr+224, -32);
+		do Memory.poke(addr+256, 16320);
+		do Memory.poke(addr+288, 7936);
+		do Memory.poke(addr+320, 0);
+		do Memory.poke(addr+352, 0);
+		do Memory.poke(addr+384, 0);
+		do Memory.poke(addr+416, 0);
+		do Memory.poke(addr+448, 0);
+		do Memory.poke(addr+480, 0);
+		return;
+	}
+	
+	method void _draw2(int addr) {
+		do Memory.poke(addr+0, 0);
+		do Memory.poke(addr+32, 0);
+		do Memory.poke(addr+64, 8);
+		do Memory.poke(addr+96, 12);
+		do Memory.poke(addr+128, 26);
+		do Memory.poke(addr+160, 31);
+		do Memory.poke(addr+192, 2032);
+		do Memory.poke(addr+224, -32);
+		do Memory.poke(addr+256, 16320);
+		do Memory.poke(addr+288, 448);
+		do Memory.poke(addr+320, 192);
+		do Memory.poke(addr+352, 64);
+		do Memory.poke(addr+384, 64);
+		do Memory.poke(addr+416, 0);
+		do Memory.poke(addr+448, 0);
+		do Memory.poke(addr+480, 0);
+		return;
+	}
+	
+	method void draw(){
+		var int x, y, location;
+		var int addr;
+		
+		let x = currentPosition;
+		let y = groundHeight - heightToGround;
+		
+		let location = Utility.xyToScreenMap(x, y);
+		let addr = 16384 + location;
+		
+		if(drawCounter < (MAX_COUNTER/2)){
+			do _draw1(addr);
+		}
+		else{
+			do _draw2(addr);
+		}
+		
+		let drawCounter = drawCounter + 1;
+		
+		if(drawCounter = MAX_COUNTER){
+			let drawCounter = 0;
+		}
+	
+		return;
+	}
+	
+	method void erase(){
+		var int x, y, location;
+		var int addr;
+		
+		let x = currentPosition;
+		let y = groundHeight - heightToGround;
+		
+		let location = Utility.xyToScreenMap(x, y);
+		let addr = 16384 + location;
+	
+		do Memory.poke(addr+0, 0);
+		do Memory.poke(addr+32, 0);
+		do Memory.poke(addr+64, 0);
+		do Memory.poke(addr+96, 0);
+		do Memory.poke(addr+128, 0);
+		do Memory.poke(addr+160, 0);
+		do Memory.poke(addr+192, 0);
+		do Memory.poke(addr+224, 0);
+		do Memory.poke(addr+256, 0);
+		do Memory.poke(addr+288, 0);
+		do Memory.poke(addr+320, 0);
+		do Memory.poke(addr+352, 0);
+		do Memory.poke(addr+384, 0);
+		do Memory.poke(addr+416, 0);
+		do Memory.poke(addr+448, 0);
+		do Memory.poke(addr+480, 0);
+		return;
+	}
+	
+	method int getX(){
+		return currentPosition;
+	}
+	
+	method int getY(){
+		return groundHeight - heightToGround;
+	}
+	
+	method int getWidth(){
+		return BIRB_WIDTH;
+	}
+	
+	method int getHeight(){
+		return BIRB_HEIGHT;
+	}
+	
+	method void move(int speed){
+		do erase();
+		
+		let currentPosition = Math.max(currentPosition - speed, 0);
+		
+		do draw();
+		
+		return;
+	}
+}

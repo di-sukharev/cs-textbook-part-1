@@ -1,0 +1,9 @@
+class Utility{
+	function int xyToScreenMap(int x, int y){
+		return (y*32) + (x/16);
+	}
+	
+	function int modulo(int x, int y){
+		return (x-((x/y)*y));
+	}
+}
