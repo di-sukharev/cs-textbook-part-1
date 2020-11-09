@@ -1,88 +1,59 @@
-// устанавливаем значение SP = 256
+// BEGIN BOOTSTRAP
 @256
 D=A
 @SP
 M=D
-
-// сохраняем в стек return адрес строки
-@RETURN_LABEL0
+// 4 C_CALL Sys.init 0
+@Sys.init$ret.1
 D=A
 @SP
 A=M
 M=D
-
-// увеличиваем SP
 @SP
 M=M+1
-
-// сохраняем в стек LCL (как часть frame)
 @LCL
 D=M
 @SP
 A=M
 M=D
-
-// увеличиваем SP
 @SP
 M=M+1
-
-// сохраняем в стек ARG (как часть frame)
 @ARG
 D=M
 @SP
 A=M
 M=D
-
-// увеличиваем SP
 @SP
 M=M+1
-
-// сохраняем в стек THIS (как часть frame)
 @THIS
 D=M
 @SP
 A=M
 M=D
-
-// SP ++
 @SP
 M=M+1
-
-// сохраняем в стек THAT (как часть frame)
 @THAT
 D=M
 @SP
 A=M
 M=D
-
-// SP++
 @SP
 M=M+1
-
-// переключаем ARG на n аргументов назад, здесь n = 0
+@5
+D=A
 @SP
-D=M
-@5 // контекст функции (frame)
-D=D-A
-@0 // n = 0
-D=D-A
-@ARG // переключаем ARG
+D=M-D
+@ARG
 M=D
-
-// переключаем LCL и SP на начало нового контекста (frame)
 @SP
 D=M
 @LCL
 M=D
-
-// переходим к выполнению sys.init функции
 @Sys.init
 0;JMP
-
-// сюда вернется sys.init функция
-(RETURN_LABEL0)
-
-// SimpleFunction.test функция
+(Sys.init$ret.1)
+// END BOOTSTRAP
+// 51 C_FUNCTION SimpleFunction.test 2
 (SimpleFunction.test)
 @0
 D=A
@@ -98,6 +69,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 65 C_PUSH local 0
 @LCL
 D=M
 @0
@@ -108,6 +80,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 75 C_PUSH local 1
 @LCL
 D=M
 @1
@@ -118,14 +91,32 @@ A=M
 M=D
 @SP
 M=M+1
+// 85 add
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-A=A-1
-M=M+D
 @SP
-A=M-1
-M=!M
+M=M-1
+A=M
+D=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 98 not
+@SP
+M=M-1
+A=M
+D=M
+D=!D
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 108 C_PUSH argument 0
 @ARG
 D=M
 @0
@@ -136,11 +127,21 @@ A=M
 M=D
 @SP
 M=M+1
+// 118 add
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-A=A-1
-M=M+D
+@SP
+M=M-1
+A=M
+D=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 131 C_PUSH argument 1
 @ARG
 D=M
 @1
@@ -151,60 +152,71 @@ A=M
 M=D
 @SP
 M=M+1
+// 141 sub
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-A=A-1
-M=M-D
+@SP
+M=M-1
+A=M
+D=M-D
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 154 C_RETURN
 @LCL
 D=M
-@R11
+@R13
 M=D
+@R13
+D=M
 @5
 A=D-A
 D=M
-@R12
-M=D
-@ARG
-D=M
-@0
-D=D+A
-@R13
+@R14
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-@R13
+@ARG
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
-@R11
-D=M-1
-AM=D
+M=D
+@R13
+D=M
+@1
+A=D-A
 D=M
 @THAT
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@2
+A=D-A
 D=M
 @THIS
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@3
+A=D-A
 D=M
 @ARG
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@4
+A=D-A
 D=M
 @LCL
 M=D
-@R12
+@R14
 A=M
 0;JMP

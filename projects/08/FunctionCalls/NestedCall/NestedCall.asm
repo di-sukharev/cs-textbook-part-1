@@ -1,8 +1,10 @@
+// BEGIN BOOTSTRAP
 @256
 D=A
 @SP
 M=D
-@RETURN_LABEL0
+// 4 C_CALL Sys.init 0
+@Sys.init$ret.1
 D=A
 @SP
 A=M
@@ -37,12 +39,10 @@ A=M
 M=D
 @SP
 M=M+1
-@SP
-D=M
 @5
-D=D-A
-@0
-D=D-A
+D=A
+@SP
+D=M-D
 @ARG
 M=D
 @SP
@@ -51,8 +51,11 @@ D=M
 M=D
 @Sys.init
 0;JMP
-(RETURN_LABEL0)
+(Sys.init$ret.1)
+// END BOOTSTRAP
+// 51 C_FUNCTION Sys.init 0
 (Sys.init)
+// 51 C_PUSH constant 4000
 @4000
 D=A
 @SP
@@ -60,16 +63,14 @@ A=M
 M=D
 @SP
 M=M+1
-@THIS
-D=A
-@R13
-M=D
+// 58 C_POP pointer 0
 @SP
-AM=M-1
-D=M
-@R13
+M=M-1
 A=M
+D=M
+@THIS
 M=D
+// 64 C_PUSH constant 5000
 @5000
 D=A
 @SP
@@ -77,17 +78,15 @@ A=M
 M=D
 @SP
 M=M+1
-@THAT
-D=A
-@R13
-M=D
+// 71 C_POP pointer 1
 @SP
-AM=M-1
-D=M
-@R13
+M=M-1
 A=M
+D=M
+@THAT
 M=D
-@RETURN_LABEL1
+// 77 C_CALL Sys.main 0
+@Sys.main$ret.1
 D=A
 @SP
 A=M
@@ -122,12 +121,10 @@ A=M
 M=D
 @SP
 M=M+1
-@SP
-D=M
 @5
-D=D-A
-@0
-D=D-A
+D=A
+@SP
+D=M-D
 @ARG
 M=D
 @SP
@@ -136,22 +133,26 @@ D=M
 M=D
 @Sys.main
 0;JMP
-(RETURN_LABEL1)
-@R5
-D=M
-@6
+(Sys.main$ret.1)
+// 124 C_POP temp 1
+@5
+D=A
+@1
 D=D+A
 @R13
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
 @R13
 A=M
 M=D
-(LOOP)
-@LOOP
+(Sys.init$LOOP)
+// 137 C_GOTO LOOP
+@Sys.init$LOOP
 0;JMP
+// 139 C_FUNCTION Sys.main 5
 (Sys.main)
 @0
 D=A
@@ -188,6 +189,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 174 C_PUSH constant 4001
 @4001
 D=A
 @SP
@@ -195,16 +197,14 @@ A=M
 M=D
 @SP
 M=M+1
-@THIS
-D=A
-@R13
-M=D
+// 181 C_POP pointer 0
 @SP
-AM=M-1
-D=M
-@R13
+M=M-1
 A=M
+D=M
+@THIS
 M=D
+// 187 C_PUSH constant 5001
 @5001
 D=A
 @SP
@@ -212,16 +212,14 @@ A=M
 M=D
 @SP
 M=M+1
-@THAT
-D=A
-@R13
-M=D
+// 194 C_POP pointer 1
 @SP
-AM=M-1
-D=M
-@R13
+M=M-1
 A=M
+D=M
+@THAT
 M=D
+// 200 C_PUSH constant 200
 @200
 D=A
 @SP
@@ -229,6 +227,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 207 C_POP local 1
 @LCL
 D=M
 @1
@@ -236,11 +235,13 @@ D=D+A
 @R13
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
 @R13
 A=M
 M=D
+// 220 C_PUSH constant 40
 @40
 D=A
 @SP
@@ -248,6 +249,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 227 C_POP local 2
 @LCL
 D=M
 @2
@@ -255,11 +257,13 @@ D=D+A
 @R13
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
 @R13
 A=M
 M=D
+// 240 C_PUSH constant 6
 @6
 D=A
 @SP
@@ -267,6 +271,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 247 C_POP local 3
 @LCL
 D=M
 @3
@@ -274,11 +279,13 @@ D=D+A
 @R13
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
 @R13
 A=M
 M=D
+// 260 C_PUSH constant 123
 @123
 D=A
 @SP
@@ -286,7 +293,8 @@ A=M
 M=D
 @SP
 M=M+1
-@RETURN_LABEL2
+// 267 C_CALL Sys.add12 1
+@Sys.add12$ret.1
 D=A
 @SP
 A=M
@@ -321,12 +329,10 @@ A=M
 M=D
 @SP
 M=M+1
+@6
+D=A
 @SP
-D=M
-@5
-D=D-A
-@1
-D=D-A
+D=M-D
 @ARG
 M=D
 @SP
@@ -335,19 +341,22 @@ D=M
 M=D
 @Sys.add12
 0;JMP
-(RETURN_LABEL2)
-@R5
-D=M
+(Sys.add12$ret.1)
+// 314 C_POP temp 0
 @5
+D=A
+@0
 D=D+A
 @R13
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
 @R13
 A=M
 M=D
+// 327 C_PUSH local 0
 @LCL
 D=M
 @0
@@ -358,6 +367,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 337 C_PUSH local 1
 @LCL
 D=M
 @1
@@ -368,6 +378,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 347 C_PUSH local 2
 @LCL
 D=M
 @2
@@ -378,6 +389,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 357 C_PUSH local 3
 @LCL
 D=M
 @3
@@ -388,6 +400,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 367 C_PUSH local 4
 @LCL
 D=M
 @4
@@ -398,79 +411,119 @@ A=M
 M=D
 @SP
 M=M+1
+// 377 add
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-A=A-1
-M=M+D
 @SP
-AM=M-1
-D=M
-A=A-1
-M=M+D
+M=M-1
+A=M
+D=D+M
 @SP
-AM=M-1
-D=M
-A=A-1
-M=M+D
+A=M
+M=D
 @SP
-AM=M-1
+M=M+1
+// 390 add
+@SP
+M=M-1
+A=M
 D=M
-A=A-1
-M=M+D
+@SP
+M=M-1
+A=M
+D=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 403 add
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 416 add
+@SP
+M=M-1
+A=M
+D=M
+@SP
+M=M-1
+A=M
+D=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 429 C_RETURN
 @LCL
 D=M
-@R11
+@R13
 M=D
+@R13
+D=M
 @5
 A=D-A
 D=M
-@R12
-M=D
-@ARG
-D=M
-@0
-D=D+A
-@R13
+@R14
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-@R13
+@ARG
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
-@R11
-D=M-1
-AM=D
+M=D
+@R13
+D=M
+@1
+A=D-A
 D=M
 @THAT
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@2
+A=D-A
 D=M
 @THIS
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@3
+A=D-A
 D=M
 @ARG
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@4
+A=D-A
 D=M
 @LCL
 M=D
-@R12
+@R14
 A=M
 0;JMP
+// 482 C_FUNCTION Sys.add12 0
 (Sys.add12)
+// 482 C_PUSH constant 4002
 @4002
 D=A
 @SP
@@ -478,16 +531,14 @@ A=M
 M=D
 @SP
 M=M+1
-@THIS
-D=A
-@R13
-M=D
+// 489 C_POP pointer 0
 @SP
-AM=M-1
-D=M
-@R13
+M=M-1
 A=M
+D=M
+@THIS
 M=D
+// 495 C_PUSH constant 5002
 @5002
 D=A
 @SP
@@ -495,16 +546,14 @@ A=M
 M=D
 @SP
 M=M+1
-@THAT
-D=A
-@R13
-M=D
+// 502 C_POP pointer 1
 @SP
-AM=M-1
-D=M
-@R13
+M=M-1
 A=M
+D=M
+@THAT
 M=D
+// 508 C_PUSH argument 0
 @ARG
 D=M
 @0
@@ -515,6 +564,7 @@ A=M
 M=D
 @SP
 M=M+1
+// 518 C_PUSH constant 12
 @12
 D=A
 @SP
@@ -522,60 +572,71 @@ A=M
 M=D
 @SP
 M=M+1
+// 525 add
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-A=A-1
-M=M+D
+@SP
+M=M-1
+A=M
+D=D+M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+// 538 C_RETURN
 @LCL
 D=M
-@R11
+@R13
 M=D
+@R13
+D=M
 @5
 A=D-A
 D=M
-@R12
-M=D
-@ARG
-D=M
-@0
-D=D+A
-@R13
+@R14
 M=D
 @SP
-AM=M-1
+M=M-1
+A=M
 D=M
-@R13
+@ARG
 A=M
 M=D
 @ARG
-D=M
+D=M+1
 @SP
-M=D+1
-@R11
-D=M-1
-AM=D
+M=D
+@R13
+D=M
+@1
+A=D-A
 D=M
 @THAT
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@2
+A=D-A
 D=M
 @THIS
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@3
+A=D-A
 D=M
 @ARG
 M=D
-@R11
-D=M-1
-AM=D
+@R13
+D=M
+@4
+A=D-A
 D=M
 @LCL
 M=D
-@R12
+@R14
 A=M
 0;JMP
