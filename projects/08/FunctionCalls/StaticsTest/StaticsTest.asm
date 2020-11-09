@@ -1,10 +1,12 @@
-// BEGIN BOOTSTRAP
+// Writing bootstrap code
+// Initialize stack pointer
 @256
 D=A
 @SP
 M=D
-// 4 C_CALL Sys.init 0
-@Sys.init$ret.1
+
+// CALL FUNCTION Sys.init with 0 arguments
+@r0
 D=A
 @SP
 A=M
@@ -39,59 +41,79 @@ A=M
 M=D
 @SP
 M=M+1
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
 @SP
 D=M
 @LCL
+M=D
+@5
+D=D-A
+@0
+D=D-A
+@ARG
 M=D
 @Sys.init
 0;JMP
-(Sys.init$ret.1)
-// END BOOTSTRAP
-// 51 C_FUNCTION Class1.set 0
+(r0)
+
+// Processing ../../../08/FunctionCalls/StaticsTest/Class1.vm
+// function Class1.set 0
+// FUNCTION Class1.set with 0 local variables
 (Class1.set)
-// 51 C_PUSH argument 0
-@ARG
-D=M
+
+// push argument 0
+// Push ARG[0] onto the stack
 @0
-A=D+A
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 61 C_POP static 0
-@SP
-M=M-1
-A=M
-D=M
-@Class1.0
-M=D
-// 67 C_PUSH argument 1
+D=A
 @ARG
-D=M
-@1
-A=D+A
+A=M+D
 D=M
 @SP
 A=M
 M=D
 @SP
 M=M+1
-// 77 C_POP static 1
-@SP
-M=M-1
-A=M
-D=M
-@Class1.1
+
+// pop static 0
+// Pop the stack into STATIC[0]
+@Class1.0
+D=A
+@R13
 M=D
-// 83 C_PUSH constant 0
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push argument 1
+// Push ARG[1] onto the stack
+@1
+D=A
+@ARG
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop static 1
+// Pop the stack into STATIC[1]
+@Class1.1
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
 @0
 D=A
 @SP
@@ -99,21 +121,20 @@ A=M
 M=D
 @SP
 M=M+1
-// 90 C_RETURN
+
+// return
+// Return to the calling function.
 @LCL
 D=M
 @R13
 M=D
-@R13
-D=M
 @5
 A=D-A
 D=M
 @R14
 M=D
 @SP
-M=M-1
-A=M
+AM=M-1
 D=M
 @ARG
 A=M
@@ -123,39 +144,35 @@ D=M+1
 @SP
 M=D
 @R13
-D=M
-@1
-A=D-A
+AM=M-1
 D=M
 @THAT
 M=D
 @R13
-D=M
-@2
-A=D-A
+AM=M-1
 D=M
 @THIS
 M=D
 @R13
-D=M
-@3
-A=D-A
+AM=M-1
 D=M
 @ARG
 M=D
 @R13
-D=M
-@4
-A=D-A
+AM=M-1
 D=M
 @LCL
 M=D
 @R14
 A=M
 0;JMP
-// 143 C_FUNCTION Class1.get 0
+
+// function Class1.get 0
+// FUNCTION Class1.get with 0 local variables
 (Class1.get)
-// 143 C_PUSH static 0
+
+// push static 0
+// Push STATIC[0] onto the stack
 @Class1.0
 D=M
 @SP
@@ -163,7 +180,9 @@ A=M
 M=D
 @SP
 M=M+1
-// 150 C_PUSH static 1
+
+// push static 1
+// Push STATIC[1] onto the stack
 @Class1.1
 D=M
 @SP
@@ -171,35 +190,29 @@ A=M
 M=D
 @SP
 M=M+1
-// 157 sub
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
 @SP
-M=M-1
-A=M
+AM=M-1
 D=M
 @SP
-M=M-1
-A=M
-D=M-D
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 170 C_RETURN
+A=M-1
+M=M-D
+
+// return
+// Return to the calling function.
 @LCL
 D=M
 @R13
 M=D
-@R13
-D=M
 @5
 A=D-A
 D=M
 @R14
 M=D
 @SP
-M=M-1
-A=M
+AM=M-1
 D=M
 @ARG
 A=M
@@ -209,225 +222,36 @@ D=M+1
 @SP
 M=D
 @R13
-D=M
-@1
-A=D-A
+AM=M-1
 D=M
 @THAT
 M=D
 @R13
-D=M
-@2
-A=D-A
+AM=M-1
 D=M
 @THIS
 M=D
 @R13
-D=M
-@3
-A=D-A
+AM=M-1
 D=M
 @ARG
 M=D
 @R13
-D=M
-@4
-A=D-A
+AM=M-1
 D=M
 @LCL
 M=D
 @R14
 A=M
 0;JMP
-// 223 C_FUNCTION Class2.set 0
-(Class2.set)
-// 223 C_PUSH argument 0
-@ARG
-D=M
-@0
-A=D+A
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 233 C_POP static 0
-@SP
-M=M-1
-A=M
-D=M
-@Class2.0
-M=D
-// 239 C_PUSH argument 1
-@ARG
-D=M
-@1
-A=D+A
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 249 C_POP static 1
-@SP
-M=M-1
-A=M
-D=M
-@Class2.1
-M=D
-// 255 C_PUSH constant 0
-@0
-D=A
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 262 C_RETURN
-@LCL
-D=M
-@R13
-M=D
-@R13
-D=M
-@5
-A=D-A
-D=M
-@R14
-M=D
-@SP
-M=M-1
-A=M
-D=M
-@ARG
-A=M
-M=D
-@ARG
-D=M+1
-@SP
-M=D
-@R13
-D=M
-@1
-A=D-A
-D=M
-@THAT
-M=D
-@R13
-D=M
-@2
-A=D-A
-D=M
-@THIS
-M=D
-@R13
-D=M
-@3
-A=D-A
-D=M
-@ARG
-M=D
-@R13
-D=M
-@4
-A=D-A
-D=M
-@LCL
-M=D
-@R14
-A=M
-0;JMP
-// 315 C_FUNCTION Class2.get 0
-(Class2.get)
-// 315 C_PUSH static 0
-@Class2.0
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 322 C_PUSH static 1
-@Class2.1
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 329 sub
-@SP
-M=M-1
-A=M
-D=M
-@SP
-M=M-1
-A=M
-D=M-D
-@SP
-A=M
-M=D
-@SP
-M=M+1
-// 342 C_RETURN
-@LCL
-D=M
-@R13
-M=D
-@R13
-D=M
-@5
-A=D-A
-D=M
-@R14
-M=D
-@SP
-M=M-1
-A=M
-D=M
-@ARG
-A=M
-M=D
-@ARG
-D=M+1
-@SP
-M=D
-@R13
-D=M
-@1
-A=D-A
-D=M
-@THAT
-M=D
-@R13
-D=M
-@2
-A=D-A
-D=M
-@THIS
-M=D
-@R13
-D=M
-@3
-A=D-A
-D=M
-@ARG
-M=D
-@R13
-D=M
-@4
-A=D-A
-D=M
-@LCL
-M=D
-@R14
-A=M
-0;JMP
-// 395 C_FUNCTION Sys.init 0
+
+// Processing ../../../08/FunctionCalls/StaticsTest/Sys.vm
+// function Sys.init 0
+// FUNCTION Sys.init with 0 local variables
 (Sys.init)
-// 395 C_PUSH constant 6
+
+// push constant 6
+// Push 6 onto the stack
 @6
 D=A
 @SP
@@ -435,7 +259,9 @@ A=M
 M=D
 @SP
 M=M+1
-// 402 C_PUSH constant 8
+
+// push constant 8
+// Push 8 onto the stack
 @8
 D=A
 @SP
@@ -443,8 +269,10 @@ A=M
 M=D
 @SP
 M=M+1
-// 409 C_CALL Class1.set 2
-@Class1.set$ret.1
+
+// call Class1.set 2
+// CALL FUNCTION Class1.set with 2 arguments
+@r1
 D=A
 @SP
 A=M
@@ -479,34 +307,37 @@ A=M
 M=D
 @SP
 M=M+1
-@7
-D=A
-@SP
-D=M-D
-@ARG
-M=D
 @SP
 D=M
 @LCL
 M=D
+@5
+D=D-A
+@2
+D=D-A
+@ARG
+M=D
 @Class1.set
 0;JMP
-(Class1.set$ret.1)
-// 456 C_POP temp 0
-@5
-D=A
+(r1)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
+D=A
+@5
 D=D+A
 @R13
 M=D
 @SP
-M=M-1
-A=M
+AM=M-1
 D=M
 @R13
 A=M
 M=D
-// 469 C_PUSH constant 23
+
+// push constant 23
+// Push 23 onto the stack
 @23
 D=A
 @SP
@@ -514,7 +345,9 @@ A=M
 M=D
 @SP
 M=M+1
-// 476 C_PUSH constant 15
+
+// push constant 15
+// Push 15 onto the stack
 @15
 D=A
 @SP
@@ -522,8 +355,10 @@ A=M
 M=D
 @SP
 M=M+1
-// 483 C_CALL Class2.set 2
-@Class2.set$ret.1
+
+// call Class2.set 2
+// CALL FUNCTION Class2.set with 2 arguments
+@r2
 D=A
 @SP
 A=M
@@ -558,35 +393,38 @@ A=M
 M=D
 @SP
 M=M+1
-@7
-D=A
-@SP
-D=M-D
-@ARG
-M=D
 @SP
 D=M
 @LCL
 M=D
+@5
+D=D-A
+@2
+D=D-A
+@ARG
+M=D
 @Class2.set
 0;JMP
-(Class2.set$ret.1)
-// 530 C_POP temp 0
-@5
-D=A
+(r2)
+
+// pop temp 0
+// Pop the stack into TEMP[0]
 @0
+D=A
+@5
 D=D+A
 @R13
 M=D
 @SP
-M=M-1
-A=M
+AM=M-1
 D=M
 @R13
 A=M
 M=D
-// 543 C_CALL Class1.get 0
-@Class1.get$ret.1
+
+// call Class1.get 0
+// CALL FUNCTION Class1.get with 0 arguments
+@r3
 D=A
 @SP
 A=M
@@ -621,21 +459,23 @@ A=M
 M=D
 @SP
 M=M+1
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
 @SP
 D=M
 @LCL
+M=D
+@5
+D=D-A
+@0
+D=D-A
+@ARG
 M=D
 @Class1.get
 0;JMP
-(Class1.get$ret.1)
-// 590 C_CALL Class2.get 0
-@Class2.get$ret.1
+(r3)
+
+// call Class2.get 0
+// CALL FUNCTION Class2.get with 0 arguments
+@r4
 D=A
 @SP
 A=M
@@ -670,20 +510,216 @@ A=M
 M=D
 @SP
 M=M+1
-@5
-D=A
-@SP
-D=M-D
-@ARG
-M=D
 @SP
 D=M
 @LCL
 M=D
+@5
+D=D-A
+@0
+D=D-A
+@ARG
+M=D
 @Class2.get
 0;JMP
-(Class2.get$ret.1)
+(r4)
+
+// label WHILE
+// Define label: WHILE
 (Sys.init$WHILE)
-// 637 C_GOTO WHILE
+
+// goto WHILE
+// GOTO label: WHILE
 @Sys.init$WHILE
 0;JMP
+
+// Processing ../../../08/FunctionCalls/StaticsTest/Class2.vm
+// function Class2.set 0
+// FUNCTION Class2.set with 0 local variables
+(Class2.set)
+
+// push argument 0
+// Push ARG[0] onto the stack
+@0
+D=A
+@ARG
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop static 0
+// Pop the stack into STATIC[0]
+@Class2.0
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push argument 1
+// Push ARG[1] onto the stack
+@1
+D=A
+@ARG
+A=M+D
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// pop static 1
+// Pop the stack into STATIC[1]
+@Class2.1
+D=A
+@R13
+M=D
+@SP
+AM=M-1
+D=M
+@R13
+A=M
+M=D
+
+// push constant 0
+// Push 0 onto the stack
+@0
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
+D=M
+@R14
+M=D
+@SP
+AM=M-1
+D=M
+@ARG
+A=M
+M=D
+@ARG
+D=M+1
+@SP
+M=D
+@R13
+AM=M-1
+D=M
+@THAT
+M=D
+@R13
+AM=M-1
+D=M
+@THIS
+M=D
+@R13
+AM=M-1
+D=M
+@ARG
+M=D
+@R13
+AM=M-1
+D=M
+@LCL
+M=D
+@R14
+A=M
+0;JMP
+
+// function Class2.get 0
+// FUNCTION Class2.get with 0 local variables
+(Class2.get)
+
+// push static 0
+// Push STATIC[0] onto the stack
+@Class2.0
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// push static 1
+// Push STATIC[1] onto the stack
+@Class2.1
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+// sub
+// Pop 2 from the stack, subtract, and put result on the stack.
+@SP
+AM=M-1
+D=M
+@SP
+A=M-1
+M=M-D
+
+// return
+// Return to the calling function.
+@LCL
+D=M
+@R13
+M=D
+@5
+A=D-A
+D=M
+@R14
+M=D
+@SP
+AM=M-1
+D=M
+@ARG
+A=M
+M=D
+@ARG
+D=M+1
+@SP
+M=D
+@R13
+AM=M-1
+D=M
+@THAT
+M=D
+@R13
+AM=M-1
+D=M
+@THIS
+M=D
+@R13
+AM=M-1
+D=M
+@ARG
+M=D
+@R13
+AM=M-1
+D=M
+@LCL
+M=D
+@R14
+A=M
+0;JMP
+
