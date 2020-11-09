@@ -1,111 +1,54 @@
-@256
-D=A
-@SP
-M=D
+@256 // 0
+D=A // 1
+@SP // 2
+M=D // 3
+@Sys.initRET0 // 4
+D=A // 5
+@SP // 6
+A=M // 7
+M=D // 8
+@SP // 9
+M=M+1 // 10
+@LCL // 11
+D=M // 12
+@SP // 13
+A=M // 14
+M=D // 15
+@SP // 16
+M=M+1 // 17
+@ARG // 18
+D=M // 19
+@SP // 20
+A=M // 21
+M=D // 22
+@SP // 23
+M=M+1 // 24
+@THIS // 25
+D=M // 26
+@SP // 27
+A=M // 28
+M=D // 29
+@SP // 30
+M=M+1 // 31
+@THAT // 32
+D=M // 33
+@SP // 34
+A=M // 35
+M=D // 36
+@SP // 37
+M=M+1 // 38
+@SP // 39
+D=M // 40
+@LCL // 41
+M=D // 42
+@5 // 43
+D=D-A // 44
+@ARG // 45
+M=D // 46
+@Sys.init // 47
+0;JMP // 48
+(Sys.initRET0)
+//////
+// SimpleFunction
+// function SimpleFunction.test 2
 (SimpleFunction.test)
-@2
-D=A
-@SP
-AM=D+M
-A=A-1
-M=0
-A=A-1
-M=0
-@LCL
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@LCL
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@SP
-A=M-1
-M=!M
-@ARG
-D=M
-@0
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=D+M
-@ARG
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-@5
-D=A
-@LCL
-A=M-D
-D=M
-@R14
-M=D
-@SP
-A=M-1
-D=M
-@ARG
-A=M
-M=D
-D=A+1
-@SP
-M=D
-@LCL
-D=M
-@R13
-AM=D-1
-D=M
-@THAT
-M=D
-@R13
-AM=M-1
-D=M
-@THIS
-M=D
-@R13
-AM=M-1
-D=M
-@ARG
-M=D
-@R13
-AM=M-1
-D=M
-@LCL
-M=D
-@R14
-A=M
-0;JMP
-(SimpleFunction.test$genlabel$1)
-@SimpleFunction.test$genlabel$1
-0;JMP
