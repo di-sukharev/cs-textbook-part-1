@@ -15,15 +15,15 @@ CHIP Mux {
 
     PARTS:
         // --- 1 --- по формуле
-        // Not(in=sel, out=NOTsel);
-        // And(a=a, b=NOTsel, out=aANDNOTsel);
-        // And(a=sel, b=b, out=selANDb);
-        // Or(a=aANDNOTsel, b=selANDb, out=out);
+        Not(in=sel, out=NOTsel);
+        And(a=a, b=NOTsel, out=aANDNOTsel);
+        And(a=sel, b=b, out=selANDb);
+        Or(a=aANDNOTsel, b=selANDb, out=out);
         // --- 2 --- подбором через Nand
-        Not(in=sel, out=sNOT);
-        Nand(a=a, b=sNOT, out=aNANDsNOT);
+        // Not(in=sel, out=sNOT);
+        // Nand(a=a, b=sNOT, out=aNANDsNOT);
 
-        Nand(a=b, b=sel, out=aNANDsel);
+        // Nand(a=b, b=sel, out=aNANDsel);
 
-        Nand(a=aNANDsel, b=aNANDsNOT, out=out);
+        // Nand(a=aNANDsel, b=aNANDsNOT, out=out);
 }
