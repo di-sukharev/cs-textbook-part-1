@@ -42,6 +42,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
 
     def write_init(self):
         yield """\
+        // INIT @SP
         @256
         D=A
         @SP
@@ -60,6 +61,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_endless_loop(self):
         loop_label = self.temp_label()
         yield f"""\
+        // ENDLESS LOOP
         ({loop_label})
         @{loop_label}
         0;JMP
@@ -74,9 +76,15 @@ class AsmWriter(metaclass=WrapWriterMethods):
         return f"{self.funcname}$genlabel${self.temp_labels}"
 
     def write_push(self, segment, number):
+
+        yield f"""\
+            // push {segment} {number}
+            """
+
         # read data into D
         if segment == "constant":
             yield f"""\
+            // save {number} into D
             @{number}
             D=A
             """
@@ -84,6 +92,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         elif segment in self.vm_segments:
             register = self.vm_segments[segment]
             yield f"""\
+            // save {register}+{number} into D
             @{register}
             D=M
             @{number}
@@ -95,6 +104,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
             base = self.direct_segments[segment]
             addr = base + int(number)
             yield f"""\
+            // manage {addr} (temp or pointer segment)
             @{addr}
             D=M
             """
@@ -102,6 +112,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         elif segment == "static":
             label = f"{self.filename}.{number}"
             yield f"""\
+            // manage static segment
             @{label}
             D=M
             """
@@ -111,6 +122,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
 
         # push D on stack
         yield """\
+        // push D on stack
         @SP
         M=M+1
         A=M-1
@@ -125,6 +137,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         elif segment in self.vm_segments:
             register = self.vm_segments[segment]
             yield f"""\
+            // pop {segment} {number}
             @{register}
             D=M
             @{number}
@@ -168,6 +181,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         if command in unary_ops:
             sign = unary_ops[command]
             yield f"""\
+            // {command}
             @SP
             A=M-1
             M={sign}M
@@ -225,6 +239,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_goto(self, label):
         label = self.mangle_label(label)
         yield f"""\
+        // goto {label}
         @{label}
         0;JMP
         """
@@ -232,6 +247,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_if(self, label):
         label = self.mangle_label(label)
         yield f"""\
+        // if-goto {label}
         @SP
         AM=M-1
         D=M
@@ -244,6 +260,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         return_address = self.temp_label()
         # push RIP
         yield f"""\
+        // push return address before >> call {name} {num_args}
         @{return_address}
         D=A
         @SP
@@ -251,9 +268,13 @@ class AsmWriter(metaclass=WrapWriterMethods):
         M=D
         """
 
+        yield f"""\
+        // -- save function context before -- >> call {name} {num_args}
+        """
         # save registers
         for reg in self.frame_registers:
             yield f"""\
+            // save segment {reg}
             @{reg}
             D=M
             @SP
@@ -264,6 +285,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         # ARG = SP - num_args - 5, with a twist: SP is off by one now
         arg_shift = num_args + 4
         yield f"""\
+        // ARG = SP - num_args - 5; SP is off by one now
         @{arg_shift}
         D=A
         @SP
@@ -272,8 +294,9 @@ class AsmWriter(metaclass=WrapWriterMethods):
         M=D
         """
 
-        # LCL = SP, fix SP being off by one
-        yield f"""\
+        # LCL = SP; fix SP being off by one
+        yield """\
+        // LCL = SP; fix SP being off by one
         @SP
         MD=M+1
         @LCL
@@ -282,6 +305,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
 
         # goto callee, set up a RIP label
         yield f"""\
+        // goto callee, set up a return label
         @{name}
         0;JMP
         ({return_address})
@@ -291,19 +315,22 @@ class AsmWriter(metaclass=WrapWriterMethods):
         num_vars = int(num_vars)
         self.funcname = name
         yield f"""\
+        // declaring function {name} {num_vars}
         ({name})
         """
 
         if num_vars:
             yield f"""\
+            // initialize LCL segment values
             @{num_vars}
             D=A
             @SP
             AM=D+M
             """
 
-            for _ in range(num_vars):
-                yield """\
+            for r in range(num_vars):
+                yield f"""\
+                // declaring local {r}
                 A=A-1
                 M=0
                 """
@@ -311,6 +338,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_return(self):
         # save RIP in R14
         yield """\
+        // save return address in R14
         @5
         D=A
         @LCL
@@ -323,6 +351,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         # move retval on caller stack, reset SP
         # this can overwrite RIP on stack, but we saved it earlier
         yield """\
+        // move return value on caller stack, reset SP
         @SP
         A=M-1
         D=M
@@ -335,6 +364,9 @@ class AsmWriter(metaclass=WrapWriterMethods):
         """
 
         # pop frame
+        yield """\
+            // pop contexts of previous function
+            """
         first_iteration = True
         for reg in reversed(self.frame_registers):
             if first_iteration:
@@ -358,8 +390,9 @@ class AsmWriter(metaclass=WrapWriterMethods):
             M=D
             """
 
-        # jump RIP. NB: A=M;JMP is undefined behaviour
+        # jump RIP. NB: A=M; JMP is undefined behaviour
         yield """\
+        // jump to return address
         @R14
         A=M
         0;JMP
@@ -403,3 +436,4 @@ def main(file_or_dir):
 
 if __name__ == "__main__":
     main(sys.argv[1])
+    print('Your .asm file compiled 🌞')

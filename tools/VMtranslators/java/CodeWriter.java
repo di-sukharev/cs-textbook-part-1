@@ -55,6 +55,8 @@ public class CodeWriter {
      */
     public void writeArithmetic(String command){
 
+        outPrinter.print("//" + " " + command + "\n");
+
         if (command.equals("add")){
 
             outPrinter.print(arithmeticTemplate1() + "M=M+D\n");
@@ -113,6 +115,8 @@ public class CodeWriter {
 
         if (command == Parser.PUSH){
 
+            outPrinter.print("//" + " " + "push" + " " + segment + " " + index + "\n");
+
             if (segment.equals("constant")){
 
                 outPrinter.print("@" + index + "\n" + "D=A\n@SP\nA=M\nM=D\n@SP\nM=M+1\n");
@@ -152,6 +156,8 @@ public class CodeWriter {
             }
 
         }else if(command == Parser.POP){
+
+            outPrinter.print("//" + " " + "pop" + " " + segment + " " + index + "\n");
 
             if (segment.equals("local")){
 
