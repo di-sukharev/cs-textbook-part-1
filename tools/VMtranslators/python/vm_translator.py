@@ -435,5 +435,6 @@ def main(file_or_dir):
 
 
 if __name__ == "__main__":
+    print(f"Compiling {sys.argv[1]} 🧠")
     main(sys.argv[1])
-    print('Your .asm file compiled 🌞')
+    print("Your .asm file compiled 🌞")
