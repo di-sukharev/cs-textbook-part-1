@@ -6,6 +6,7 @@ EOF = -2
 NO_COMMAND = -1
 DEBUG = False
 
+
 class CommandTypes:
     command = int
 
@@ -129,7 +130,8 @@ class CodeWriter:
         ]
 
         comment = 'Bootstrap'
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_arithmetic(self, command: str):
         i = self.instruction_index
@@ -269,7 +271,8 @@ class CodeWriter:
                 'M=!M'
             ]
 
-        self._write_instructions(comment=command, instructions=asm_instructions)
+        self._write_instructions(
+            comment=command, instructions=asm_instructions)
 
     def write_push_pop(self, command_type: c.command, segment, index):
         asm_instructions = []
@@ -370,7 +373,8 @@ class CodeWriter:
                 ]
 
         comment = f"{command} {segment} {index}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_label(self, label):
         asm_instructions = [
@@ -378,7 +382,8 @@ class CodeWriter:
         ]
 
         comment = f"label {self.current_function_name}${label}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_goto(self, label):
         asm_instructions = [
@@ -387,7 +392,8 @@ class CodeWriter:
         ]
 
         comment = f"goto {self.current_function_name}${label}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_if(self, label):
         asm_instructions = [
@@ -399,7 +405,8 @@ class CodeWriter:
         ]
 
         comment = f"if-goto {self.current_function_name}${label}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_call(self, function_name, n_arguments):
         i = self.instruction_index
@@ -436,7 +443,8 @@ class CodeWriter:
             'A=M-1',
             'M=D',
             'D=A+1',
-            f"@{5+n_arguments}",  # 5 is number of items pushed onto stack preparing for call
+            # 5 is number of items pushed onto stack preparing for call
+            f"@{5+n_arguments}",
             'D=D-A',
             '@ARG',
             'M=D',
@@ -450,7 +458,8 @@ class CodeWriter:
         ]
 
         comment = f"call {function_name} {n_arguments}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_function(self, function_name, n_locals):
         asm_instructions = [
@@ -477,7 +486,8 @@ class CodeWriter:
         self.current_function_name = function_name
 
         comment = f"function {function_name} {n_locals}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def write_return(self):
         frame = 'R14'
@@ -528,7 +538,8 @@ class CodeWriter:
         ]
 
         comment = f"return from {self.current_function_name}"
-        self._write_instructions(comment=comment, instructions=asm_instructions)
+        self._write_instructions(
+            comment=comment, instructions=asm_instructions)
 
     def close(self):
         self._output_file.close()
@@ -542,7 +553,8 @@ class VMTranslator:
         self._writer.write_init()
 
     def parse_file(self, file_name):
-        self._writer.current_file_name = os.path.split(file_name.strip('.vm'))[1]
+        self._writer.current_file_name = os.path.split(
+            file_name.strip('.vm'))[1]
 
         p = Parser(open(file_name, 'r'))
 
@@ -570,10 +582,12 @@ class VMTranslator:
                     self._writer.write_if(p.first_argument)
 
                 elif command_type is c.FUNCTION_COMMAND:
-                    self._writer.write_function(p.first_argument, int(p.second_argument))
+                    self._writer.write_function(
+                        p.first_argument, int(p.second_argument))
 
                 elif command_type is c.CALL_COMMAND:
-                    self._writer.write_call(p.first_argument, int(p.second_argument))
+                    self._writer.write_call(
+                        p.first_argument, int(p.second_argument))
 
                 elif command_type is c.RETURN_COMMAND:
                     self._writer.write_return()

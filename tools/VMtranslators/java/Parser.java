@@ -7,274 +7,287 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by xuchen on 11/3/14.
- * “Handles the parsing of a single .vm file, and encapsulates access to the input code.
- * It reads VM commands, parses them, and provides convenient access to their components.
- * In addition, it removes all white space and comments.”
+ * Created by xuchen on 11/3/14. “Handles the parsing of a single .vm file, and
+ * encapsulates access to the input code. It reads VM commands, parses them, and
+ * provides convenient access to their components. In addition, it removes all
+ * white space and comments.”
  */
 public class Parser {
-    private Scanner cmds;
-    private String currentCmd;
-    public static final int ARITHMETIC = 0;
-    public static final int PUSH = 1;
-    public static final int POP = 2;
-    public static final int LABEL = 3;
-    public static final int GOTO = 4;
-    public static final int IF = 5;
-    public static final int FUNCTION = 6;
-    public static final int RETURN = 7;
-    public static final int CALL = 8;
-    public static final ArrayList<String> arithmeticCmds = new ArrayList<String>();
-    private int argType;
-    private String argument1;
-    private int argument2;
+	private Scanner cmds;
+	private String currentCmd;
+	public static final int ARITHMETIC = 0;
+	public static final int PUSH = 1;
+	public static final int POP = 2;
+	public static final int LABEL = 3;
+	public static final int GOTO = 4;
+	public static final int IF = 5;
+	public static final int FUNCTION = 6;
+	public static final int RETURN = 7;
+	public static final int CALL = 8;
+	public static final ArrayList<String> arithmeticCmds = new ArrayList<String>();
+	private int argType;
+	private String argument1;
+	private int argument2;
 
-    static {
+	static {
 
-        arithmeticCmds.add("add");arithmeticCmds.add("sub");arithmeticCmds.add("neg");arithmeticCmds.add("eq");arithmeticCmds.add("gt");
-        arithmeticCmds.add("lt");arithmeticCmds.add("and");arithmeticCmds.add("or");arithmeticCmds.add("not");
+		arithmeticCmds.add("add");
+		arithmeticCmds.add("sub");
+		arithmeticCmds.add("neg");
+		arithmeticCmds.add("eq");
+		arithmeticCmds.add("gt");
+		arithmeticCmds.add("lt");
+		arithmeticCmds.add("and");
+		arithmeticCmds.add("or");
+		arithmeticCmds.add("not");
 
-    }
+	}
 
-    /**
-     * Opens the input file and get ready to parse it
-     * @param fileIn
-     */
-    public Parser(File fileIn) {
+	/**
+	 * Opens the input file and get ready to parse it
+	 * 
+	 * @param fileIn
+	 */
+	public Parser(File fileIn) {
 
-        argType = -1;
-        argument1 = "";
-        argument2 = -1;
+		argType = -1;
+		argument1 = "";
+		argument2 = -1;
 
-        try {
-            cmds = new Scanner(fileIn);
+		try {
+			cmds = new Scanner(fileIn);
 
-            String preprocessed = "";
-            String line = "";
+			String preprocessed = "";
+			String line = "";
 
-            while(cmds.hasNext()){
+			while (cmds.hasNext()) {
 
-                line = noComments(cmds.nextLine()).trim();
+				line = noComments(cmds.nextLine()).trim();
 
-                if (line.length() > 0) {
-                    preprocessed += line + "\n";
-                }
-            }
+				if (line.length() > 0) {
+					preprocessed += line + "\n";
+				}
+			}
 
-            cmds = new Scanner(preprocessed.trim());
+			cmds = new Scanner(preprocessed.trim());
 
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-        }
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+		}
 
-    }
+	}
 
+	/**
+	 * Are there more command to read
+	 * 
+	 * @return
+	 */
+	public boolean hasMoreCommands() {
 
-    /**
-     * Are there more command to read
-     * @return
-     */
-    public boolean hasMoreCommands(){
+		return cmds.hasNextLine();
+	}
 
-       return cmds.hasNextLine();
-    }
+	/**
+	 * Reads next command from the input and makes it current command Be called only
+	 * when hasMoreCommands() returns true
+	 */
+	public void advance() {
 
-    /**
-     * Reads next command from the input and makes it current command
-     * Be called only when hasMoreCommands() returns true
-     */
-    public void advance(){
+		currentCmd = cmds.nextLine();
+		argument1 = "";// initialize arg1
+		argument2 = -1;// initialize arg2
 
-        currentCmd = cmds.nextLine();
-        argument1 = "";//initialize arg1
-        argument2 = -1;//initialize arg2
+		String[] segs = currentCmd.split(" ");
 
-        String[] segs = currentCmd.split(" ");
+		if (segs.length > 3) {
 
-        if (segs.length > 3){
+			throw new IllegalArgumentException("Too much arguments!");
 
-            throw new IllegalArgumentException("Too much arguments!");
+		}
 
-        }
+		if (arithmeticCmds.contains(segs[0])) {
 
-        if (arithmeticCmds.contains(segs[0])){
+			argType = ARITHMETIC;
+			argument1 = segs[0];
 
-            argType = ARITHMETIC;
-            argument1 = segs[0];
+		} else if (segs[0].equals("return")) {
 
-        }else if (segs[0].equals("return")) {
+			argType = RETURN;
+			argument1 = segs[0];
 
-            argType = RETURN;
-            argument1 = segs[0];
+		} else {
 
-        }else {
+			argument1 = segs[1];
 
-            argument1 = segs[1];
+			if (segs[0].equals("push")) {
 
-            if(segs[0].equals("push")){
+				argType = PUSH;
 
-                argType = PUSH;
+			} else if (segs[0].equals("pop")) {
 
-            }else if(segs[0].equals("pop")){
+				argType = POP;
 
-                argType = POP;
+			} else if (segs[0].equals("label")) {
 
-            }else if(segs[0].equals("label")){
+				argType = LABEL;
 
-                argType = LABEL;
+			} else if (segs[0].equals("if-goto")) {
 
-            }else if(segs[0].equals("if-goto")){
+				argType = IF;
 
-                argType = IF;
+			} else if (segs[0].equals("goto")) {
 
-            }else if (segs[0].equals("goto")){
+				argType = GOTO;
 
-                argType = GOTO;
+			} else if (segs[0].equals("function")) {
 
-            }else if (segs[0].equals("function")){
+				argType = FUNCTION;
 
-                argType = FUNCTION;
+			} else if (segs[0].equals("call")) {
 
-            }else if (segs[0].equals("call")){
+				argType = CALL;
 
-                argType = CALL;
+			} else {
 
-            }else {
+				throw new IllegalArgumentException("Unknown Command Type!");
 
-                throw new IllegalArgumentException("Unknown Command Type!");
+			}
 
-            }
+			if (argType == PUSH || argType == POP || argType == FUNCTION || argType == CALL) {
 
-            if (argType == PUSH || argType == POP || argType == FUNCTION || argType == CALL){
+				try {
 
-                try {
+					argument2 = Integer.parseInt(segs[2]);
 
-                    argument2 = Integer.parseInt(segs[2]);
+				} catch (Exception e) {
 
-                }catch (Exception e){
+					throw new IllegalArgumentException("Argument2 is not an integer!");
 
-                    throw new IllegalArgumentException("Argument2 is not an integer!");
+				}
 
-                }
+			}
+		}
 
-            }
-        }
+	}
 
-    }
+	/**
+	 * Return the type of current command ARITHMETIC is returned for all ARITHMETIC
+	 * type command
+	 * 
+	 * @return
+	 */
+	public int commandType() {
 
-    /**
-     * Return the type of current command
-     * ARITHMETIC is returned for all ARITHMETIC type command
-     * @return
-     */
-    public int commandType(){
+		if (argType != -1) {
 
-        if (argType != -1) {
+			return argType;
 
-            return argType;
+		} else {
 
-        }else {
+			throw new IllegalStateException("No command!");
 
-            throw new IllegalStateException("No command!");
+		}
 
-        }
+	}
 
-    }
+	/**
+	 * Return the first argument of current command When it is ARITHMETIC, return it
+	 * self When it is RETURN, should not to be called
+	 * 
+	 * @return
+	 */
+	public String arg1() {
 
-    /**
-     * Return the first argument of current command
-     * When it is ARITHMETIC, return it self
-     * When it is RETURN, should not to be called
-     * @return
-     */
-    public String arg1(){
+		if (commandType() != RETURN) {
 
-        if (commandType() != RETURN){
+			return argument1;
 
-            return argument1;
+		} else {
 
-        }else {
+			throw new IllegalStateException("Can not get arg1 from a RETURN type command!");
 
-            throw new IllegalStateException("Can not get arg1 from a RETURN type command!");
+		}
 
-        }
+	}
 
-    }
+	/**
+	 * Return the second argument of current command Be called when it is PUSH, POP,
+	 * FUNCTION or CALL
+	 * 
+	 * @return
+	 */
+	public int arg2() {
 
-    /**
-     * Return the second argument of current command
-     * Be called when it is PUSH, POP, FUNCTION or CALL
-     * @return
-     */
-    public int arg2(){
+		if (commandType() == PUSH || commandType() == POP || commandType() == FUNCTION || commandType() == CALL) {
 
-        if (commandType() == PUSH || commandType() == POP || commandType() == FUNCTION || commandType() == CALL){
+			return argument2;
 
-            return argument2;
+		} else {
 
-        }else {
+			throw new IllegalStateException("Can not get arg2!");
 
-            throw new IllegalStateException("Can not get arg2!");
+		}
 
-        }
+	}
 
-    }
+	/**
+	 * Delete comments(String after "//") from a String
+	 * 
+	 * @param strIn
+	 * @return
+	 */
+	public static String noComments(String strIn) {
 
-    /**
-     * Delete comments(String after "//") from a String
-     * @param strIn
-     * @return
-     */
-    public static String noComments(String strIn){
+		int position = strIn.indexOf("//");
 
-        int position = strIn.indexOf("//");
+		if (position != -1) {
 
-        if (position != -1){
+			strIn = strIn.substring(0, position);
 
-            strIn = strIn.substring(0, position);
+		}
 
-        }
+		return strIn;
+	}
 
-        return strIn;
-    }
+	/**
+	 * Delete spaces from a String
+	 * 
+	 * @param strIn
+	 * @return
+	 */
+	public static String noSpaces(String strIn) {
+		String result = "";
 
-    /**
-     * Delete spaces from a String
-     * @param strIn
-     * @return
-     */
-    public static String noSpaces(String strIn){
-        String result = "";
+		if (strIn.length() != 0) {
 
-        if (strIn.length() != 0){
+			String[] segs = strIn.split(" ");
 
-            String[] segs = strIn.split(" ");
+			for (String s : segs) {
+				result += s;
+			}
+		}
 
-            for (String s: segs){
-                result += s;
-            }
-        }
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Get extension from a filename
+	 * 
+	 * @param fileName
+	 * @return
+	 */
+	public static String getExt(String fileName) {
 
-    /**
-     * Get extension from a filename
-     * @param fileName
-     * @return
-     */
-    public static String getExt(String fileName){
+		int index = fileName.lastIndexOf('.');
 
-        int index = fileName.lastIndexOf('.');
+		if (index != -1) {
 
-        if (index != -1){
+			return fileName.substring(index);
 
-            return fileName.substring(index);
+		} else {
 
-        }else {
+			return "";
 
-            return "";
-
-        }
-    }
+		}
+	}
 }
