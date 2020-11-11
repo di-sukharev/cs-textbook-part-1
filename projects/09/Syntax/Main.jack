@@ -1,0 +1,8 @@
+class Main {
+    function void main() {
+
+        do Screen.drawRectangle(5, 50, 60, 55);
+        
+        return;
+    }
+}
