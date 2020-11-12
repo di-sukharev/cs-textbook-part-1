@@ -1,0 +1,35 @@
+class Avatar {
+    
+    field int x, y; // x,y coordinates on the screen
+    field int size; // the width/height of the avatar
+
+    constructor Avatar new(int xCoordinate, yCoordinate) {
+        
+        let x = xCoordinate;
+        let y = yCoordinate;
+        let size = 50;
+
+        return this;
+    }
+
+    method void moveUp() {
+        
+    }
+    
+    method void moveRight() {
+        
+    }
+    
+    method void moveDown() {
+        
+    }
+    
+    method void moveLeft() {
+        
+    }
+
+    method void destroy() {
+        do Memory.deAlloc(this);
+    }
+
+}
