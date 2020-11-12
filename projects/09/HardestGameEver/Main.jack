@@ -2,7 +2,7 @@ class Main {
     function void main() {
 
         var HardestGameEver game;
-        let game = hardestGameEver.new()
+        let game = HardestGameEver.new();
 
         do game.run();
 

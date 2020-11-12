@@ -13,14 +13,19 @@ class HardestGameEver {
     }
 
     method void run() {
+        
+        var boolean doesUserWantToExit;
+        let doesUserWantToExit = false;
 
         do initialize();
 
-        while (~userWantsToExit()) {
-            play();
+        while (~doesUserWantToExit) {
+            do play();
+
+            let doesUserWantToExit = checkIfUserWantsToExit();
         }
 
-        do exit();
+        do destroy();
 
         return;
     }
@@ -30,19 +35,20 @@ class HardestGameEver {
         return;
     }
 
-    method void exit() {
+    method void destroy() {
         // labirinth.destroy();
         do avatar.destroy();
         do Memory.deAlloc(this);
         return;
     }
 
-    method boolean userWantsToExit() {
+    method boolean checkIfUserWantsToExit() {
         var char keyPressed;
-        let keyPressed = Keyboard.keyPressed();
+        var boolean exit;
 
-        var Boolean exit;
+        let keyPressed = Keyboard.keyPressed();
         let exit = false;
+      
         if (keyPressed = 81)  { let exit = true; } // q key
 
         return exit;

@@ -3,7 +3,7 @@ class Avatar {
     field int x, y; // x,y coordinates on the screen
     field int size; // the width/height of the avatar
 
-    constructor Avatar new(int xCoordinate, yCoordinate) {
+    constructor Avatar new(int xCoordinate, int yCoordinate) {
         
         let x = xCoordinate;
         let y = yCoordinate;
@@ -12,24 +12,37 @@ class Avatar {
         return this;
     }
 
+
+    method void render() {
+        do Screen.setColor(true); // set color to black
+        do Screen.drawRectangle(x, y, x + size, y + size);
+
+        return;
+    }
+
     method void moveUp() {
-        
+
+        return;
     }
     
     method void moveRight() {
-        
+
+        return;
     }
     
     method void moveDown() {
-        
+
+        return;
     }
     
     method void moveLeft() {
-        
+
+        return;
     }
 
     method void destroy() {
         do Memory.deAlloc(this);
+        return;
     }
 
 }
