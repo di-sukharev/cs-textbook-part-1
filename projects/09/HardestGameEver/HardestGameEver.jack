@@ -14,12 +14,19 @@ class HardestGameEver {
 
     method void run() {
 
+        do initialize();
+
         while (~userWantsToExit()) {
             play();
         }
 
         do exit();
 
+        return;
+    }
+
+    method void initialize() {
+        do avatar.render();
         return;
     }
 
@@ -45,6 +52,7 @@ class HardestGameEver {
         // do createLabirinth();
         // do createObsticles
         do moveAvatar();
+        return;
     }
 
     method void moveAvatar() {
@@ -71,6 +79,7 @@ class HardestGameEver {
         if (keyPressed = 133) { let direction = 3; }   // down arrow
         if (keyPressed = 130) { let direction = 4; }   // left arrow
 
+        return;
     }
 
 }
