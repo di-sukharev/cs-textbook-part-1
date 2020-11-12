@@ -1,0 +1,75 @@
+class HardestGameEver {
+
+    field Avatar avatar;
+    field Direction direction;
+
+    constructor HardestGameEver new() {
+
+        let avatar = Avatar.new(0,0);
+        let direction = 0;
+
+        return this;
+
+    }
+
+    method void run() {
+
+        while (~userWantsToExit()) {
+            play();
+        }
+
+        do exit();
+
+        return;
+    }
+
+    method void exit() {
+        do avatar.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method boolean userWantsToExit() {
+        var char keyPressed;
+        let keyPressed = Keyboard.keyPressed();
+
+        var Boolean exit;
+        let exit = false;
+        if (keyPressed = 81)  { let exit = true; } // q key
+
+        return exit;
+    }
+
+    method void play() {
+        // do createLabirinth();
+        // do createObsticles
+        do moveAvatar();
+    }
+
+    method void moveAvatar() {
+
+        do defineDirection();
+
+        if (direction = 1) { do square.moveUp(); }
+        if (direction = 2) { do square.moveRight(); }
+        if (direction = 3) { do square.moveDown(); }
+        if (direction = 4) { do square.moveLeft(); }
+        
+        // do Sys.wait(5);  // delays the next movement
+        
+        return;
+    }
+
+    method void defineDirection() {
+        
+        var char keyPressed;        
+        let keyPressed = Keyboard.keyPressed();
+
+        if (keyPressed = 131) { let direction = 1; }   // up arrow
+        if (keyPressed = 132) { let direction = 2; }   // right arrow
+        if (keyPressed = 133) { let direction = 3; }   // down arrow
+        if (keyPressed = 130) { let direction = 4; }   // left arrow
+
+    }
+
+}

@@ -1,0 +1,12 @@
+class Main {
+    function void main() {
+
+        var HardestGameEver game;
+
+        let game = hardestGameEver.new()
+
+        do game.run();
+
+        return;
+    }
+}
