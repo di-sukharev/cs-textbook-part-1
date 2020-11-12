@@ -24,7 +24,8 @@ class HardestGameEver {
     }
 
     method void exit() {
-        do avatar.dispose();
+        // labirinth.destroy();
+        do avatar.destroy();
         do Memory.deAlloc(this);
         return;
     }
@@ -50,10 +51,10 @@ class HardestGameEver {
 
         do defineDirection();
 
-        if (direction = 1) { do square.moveUp(); }
-        if (direction = 2) { do square.moveRight(); }
-        if (direction = 3) { do square.moveDown(); }
-        if (direction = 4) { do square.moveLeft(); }
+        if (direction = 1) { do avatar.moveUp(); }
+        if (direction = 2) { do avatar.moveRight(); }
+        if (direction = 3) { do avatar.moveDown(); }
+        if (direction = 4) { do avatar.moveLeft(); }
         
         // do Sys.wait(5);  // delays the next movement
         
