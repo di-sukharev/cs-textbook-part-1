@@ -32,9 +32,9 @@ class List {
     }
 
     /** Disposes this List by recursively disposing its tail. */
-    method void dispose() {
+    method void destroy() {
         if (~(next = null)) {
-            do next.dispose();
+            do next.destroy();
         }
         // Uses an OS routine to recycle this object.
         do Memory.deAlloc(this);
