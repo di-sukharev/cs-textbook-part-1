@@ -1,0 +1,27 @@
+class Labirinth {
+
+    field Grid grid; // matrix; array of rows/columns where row/column is an array of GridCells
+
+    constructor Labirinth new() {
+        var int rows, cols;
+
+        let rows = 8;
+        let cols = 8;
+
+        let grid = Grid.new(rows, cols);
+
+        return this;
+    }
+
+    method void render() {
+        // do grid.render();
+
+        return;
+    }
+
+    method void destroy() {
+        do grid.destroy();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

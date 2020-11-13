@@ -1,0 +1,34 @@
+class Cell {
+    
+    field int border;
+
+    constructor Cell new() {
+
+        return this;
+    }
+
+    method void generateBorder(int rand) {
+        var Array randomizer;
+
+        let randomizer = Array.new(8);
+
+        let randomizer[0] = 1;
+        let randomizer[1] = 3;
+        let randomizer[2] = 3;
+        let randomizer[3] = 2;
+        let randomizer[4] = 4;
+        let randomizer[5] = 1;
+        let randomizer[6] = 2;
+        let randomizer[7] = 4;
+        
+        let border = randomizer[rand];
+
+        return;
+    }
+
+    method int getBorder() {
+        return border;
+    }
+
+    // methods to generate borders
+}

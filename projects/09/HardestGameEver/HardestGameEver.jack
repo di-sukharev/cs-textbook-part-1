@@ -1,10 +1,12 @@
 class HardestGameEver {
 
     field Avatar avatar;
+    field Labirinth labirinth;
     field Direction direction;
 
     constructor HardestGameEver new() {
-
+        
+        let labirinth = Labirinth.new();
         let avatar = Avatar.new(0,0);
         let direction = 0;
 
@@ -32,13 +34,17 @@ class HardestGameEver {
 
     method void initialize() {
         do avatar.render();
+        do labirinth.render();
+        
         return;
     }
 
     method void destroy() {
-        // labirinth.destroy();
+        do labirinth.destroy();
         do avatar.destroy();
+        
         do Memory.deAlloc(this);
+        
         return;
     }
 
@@ -55,35 +61,34 @@ class HardestGameEver {
     }
 
     method void play() {
-        // do createLabirinth();
-        // do createObsticles
         do moveAvatar();
         return;
     }
 
     method void moveAvatar() {
 
-        do defineDirection();
+        do defineMoveDirection();
 
-        if (direction = 1) { do avatar.moveUp(); }
-        if (direction = 2) { do avatar.moveRight(); }
-        if (direction = 3) { do avatar.moveDown(); }
-        if (direction = 4) { do avatar.moveLeft(); }
+        if (direction = 1) { do avatar.moveLeft(); }
+        if (direction = 2) { do avatar.moveUp(); }
+        if (direction = 3) { do avatar.moveRight(); }
+        if (direction = 4) { do avatar.moveDown(); }
         
-        // do Sys.wait(5);  // delays the next movement
+        do Sys.wait(5);  // delays the next movement
         
         return;
     }
 
-    method void defineDirection() {
+    method void defineMoveDirection() {
         
         var char keyPressed;        
         let keyPressed = Keyboard.keyPressed();
 
-        if (keyPressed = 131) { let direction = 1; }   // up arrow
-        if (keyPressed = 132) { let direction = 2; }   // right arrow
-        if (keyPressed = 133) { let direction = 3; }   // down arrow
-        if (keyPressed = 130) { let direction = 4; }   // left arrow
+        if (keyPressed = 0)   { let direction = 0; }   // no key is pressed
+        if (keyPressed = 130) { let direction = 1; }   // left arrow
+        if (keyPressed = 131) { let direction = 2; }   // up arrow
+        if (keyPressed = 132) { let direction = 3; }   // right arrow
+        if (keyPressed = 133) { let direction = 4; }   // down arrow
 
         return;
     }

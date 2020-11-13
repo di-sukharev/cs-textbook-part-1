@@ -1,11 +1,15 @@
 class Main {
     function void main() {
-
         var HardestGameEver game;
         let game = HardestGameEver.new();
+
+        // do LCGRandom.setSeed(Keyboard.readInt("Seed: "));
+
+        do LCGRandom.setSeed(321);
 
         do game.run();
 
         return;
+
     }
 }
