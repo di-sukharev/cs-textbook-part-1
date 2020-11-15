@@ -1,0 +1,726 @@
+function DinoRunGame.new 0
+push constant 14
+call Memory.alloc 1
+pop pointer 0
+call Screen.clearScreen 0
+pop temp 0
+push constant 200
+pop this 7
+push constant 30
+pop this 8
+push constant 1
+pop this 9
+push constant 50
+pop this 10
+push constant 7
+pop this 12
+push constant 1
+pop this 11
+push constant 50
+pop this 13
+push this 10
+push this 7
+push this 12
+push this 11
+call Dino.new 4
+pop this 0
+push argument 0
+pop this 1
+push constant 0
+pop this 2
+push constant 0
+pop this 3
+push this 9
+call Array.new 1
+pop this 4
+push this 9
+call Array.new 1
+pop this 5
+push constant 0
+pop this 6
+push pointer 0
+call DinoRunGame.newObstacle 1
+pop temp 0
+push constant 0
+push constant 25
+call Output.moveCursor 2
+pop temp 0
+push constant 7
+call String.new 1
+push constant 83
+call String.appendChar 2
+push constant 67
+call String.appendChar 2
+push constant 79
+call String.appendChar 2
+push constant 82
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 58
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push this 2
+call Output.printInt 1
+pop temp 0
+push pointer 0
+return
+function DinoRunGame.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Dino.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function DinoRunGame.gameOver 0
+push argument 0
+pop pointer 0
+push constant 12
+push constant 25
+call Output.moveCursor 2
+pop temp 0
+push constant 9
+call String.new 1
+push constant 71
+call String.appendChar 2
+push constant 65
+call String.appendChar 2
+push constant 77
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 79
+call String.appendChar 2
+push constant 86
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 82
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+call Output.println 0
+pop temp 0
+push constant 0
+return
+function DinoRunGame.cycleObstacle 3
+push argument 0
+pop pointer 0
+push constant 0
+pop local 2
+push constant 0
+push this 5
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push this 4
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Cactus.erase 1
+pop temp 0
+push local 0
+call Cactus.dispose 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push constant 0
+push this 4
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Birb.erase 1
+pop temp 0
+push local 1
+call Birb.dispose 1
+pop temp 0
+label IF_END0
+label WHILE_EXP0
+push local 2
+push this 6
+eq
+push constant 1
+sub
+not
+not
+if-goto WHILE_END0
+push local 2
+push this 4
+add
+push local 2
+push constant 1
+add
+push this 4
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push this 5
+add
+push local 2
+push constant 1
+add
+push this 5
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push local 2
+push this 4
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 2
+push this 5
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 6
+push constant 1
+sub
+pop this 6
+push constant 0
+return
+function DinoRunGame.drawGround 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push constant 0
+push this 7
+push constant 511
+push this 7
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
+function DinoRunGame.newObstacle 1
+push argument 0
+pop pointer 0
+push this 6
+push this 9
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+push constant 1
+call LCGRandom.randRange 2
+pop local 0
+push local 0
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 6
+push this 4
+add
+push this 7
+call Cactus.new 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+goto IF_END1
+label IF_FALSE1
+push this 6
+push this 4
+add
+push this 13
+push this 7
+call Birb.new 2
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+label IF_END1
+push this 6
+push this 5
+add
+push local 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push this 6
+push constant 1
+add
+pop this 6
+label IF_FALSE0
+push constant 0
+return
+function DinoRunGame.handleGame 5
+push argument 0
+pop pointer 0
+push constant 0
+pop local 2
+push constant 0
+pop local 3
+label WHILE_EXP0
+push local 2
+push this 6
+eq
+not
+not
+if-goto WHILE_END0
+push local 2
+push this 5
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 2
+push this 4
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+push this 1
+call Cactus.move 2
+pop temp 0
+push local 0
+call Cactus.getCurrentPosition 1
+push constant 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 3
+label IF_FALSE1
+goto IF_END0
+label IF_FALSE0
+push local 2
+push this 4
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+push this 1
+call Birb.move 2
+pop temp 0
+push local 1
+call Birb.getCurrentPosition 1
+push constant 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push constant 0
+not
+pop local 3
+label IF_FALSE2
+label IF_END0
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push local 3
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call DinoRunGame.cycleObstacle 1
+pop temp 0
+push pointer 0
+call DinoRunGame.newObstacle 1
+pop temp 0
+push this 2
+push constant 1
+add
+pop this 2
+push this 2
+push constant 101
+lt
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push constant 2
+pop local 4
+label IF_FALSE4
+push this 2
+push constant 11
+lt
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 1
+pop local 4
+label IF_FALSE5
+label WHILE_EXP1
+push local 4
+push constant 0
+gt
+not
+if-goto WHILE_END1
+call Output.backSpace 0
+pop temp 0
+push local 4
+push constant 1
+sub
+pop local 4
+goto WHILE_EXP1
+label WHILE_END1
+push this 2
+call Output.printInt 1
+pop temp 0
+push this 2
+push constant 2
+call Utility.modulo 2
+push constant 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 1
+push constant 1
+add
+pop this 1
+label IF_FALSE6
+label IF_FALSE3
+push this 0
+call Dino.isJumping 1
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 0
+call Dino.handleJump 1
+pop temp 0
+label IF_FALSE7
+push this 6
+push constant 0
+gt
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 0
+push this 5
+add
+pop pointer 1
+push that 0
+push constant 0
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push this 0
+push constant 0
+push this 4
+add
+pop pointer 1
+push that 0
+call Dino.isHitCactus 2
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push constant 0
+not
+pop this 3
+label IF_FALSE10
+goto IF_END9
+label IF_FALSE9
+push this 0
+push constant 0
+push this 4
+add
+pop pointer 1
+push that 0
+call Dino.isHitBirb 2
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
+push constant 0
+not
+pop this 3
+label IF_FALSE11
+label IF_END9
+label IF_FALSE8
+push constant 1000
+push this 8
+call Math.divide 2
+call Sys.wait 1
+pop temp 0
+push constant 0
+return
+function DinoRunGame.run 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+push pointer 0
+call DinoRunGame.drawGround 1
+pop temp 0
+push constant 9
+push constant 25
+call Output.moveCursor 2
+pop temp 0
+push constant 8
+call String.new 1
+push constant 83
+call String.appendChar 2
+push constant 80
+call String.appendChar 2
+push constant 65
+call String.appendChar 2
+push constant 67
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 66
+call String.appendChar 2
+push constant 65
+call String.appendChar 2
+push constant 82
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+label WHILE_EXP0
+push local 0
+push constant 32
+eq
+not
+not
+if-goto WHILE_END0
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 9
+push constant 25
+call Output.moveCursor 2
+pop temp 0
+push constant 8
+call String.new 1
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+push constant 32
+call Output.moveCursor 2
+pop temp 0
+push this 2
+call Output.printInt 1
+pop temp 0
+label WHILE_EXP1
+push local 1
+not
+not
+if-goto WHILE_END1
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+push local 1
+not
+and
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call DinoRunGame.handleGame 1
+pop temp 0
+push this 3
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call DinoRunGame.gameOver 1
+pop temp 0
+push constant 0
+not
+pop local 1
+label IF_FALSE0
+goto WHILE_EXP2
+label WHILE_END2
+push local 0
+push constant 140
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+not
+pop local 1
+label IF_FALSE1
+push local 0
+push constant 32
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push this 0
+call Dino.startJump 1
+pop temp 0
+label IF_FALSE2
+push local 0
+push constant 131
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push this 0
+call Dino.increaseJumpStrength 1
+pop temp 0
+label IF_FALSE3
+push local 0
+push constant 133
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 0
+call Dino.decreaseJumpStrength 1
+pop temp 0
+label IF_FALSE4
+push local 0
+push constant 87
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 0
+call Dino.increaseWeight 1
+pop temp 0
+label IF_FALSE5
+push local 0
+push constant 83
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push this 0
+call Dino.decreaseWeight 1
+pop temp 0
+label IF_FALSE6
+push local 0
+push constant 73
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 1
+push constant 1
+add
+pop this 1
+label IF_FALSE7
+push local 0
+push constant 75
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push this 1
+push constant 1
+sub
+push constant 1
+call Math.max 2
+pop this 1
+label IF_FALSE8
+push local 0
+push constant 67
+eq
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
+push pointer 0
+call DinoRunGame.newObstacle 1
+pop temp 0
+label IF_FALSE9
+label WHILE_EXP3
+push local 0
+push constant 0
+eq
+not
+push local 1
+not
+and
+not
+if-goto WHILE_END3
+call Keyboard.keyPressed 0
+pop local 0
+push pointer 0
+call DinoRunGame.handleGame 1
+pop temp 0
+push this 3
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
+push pointer 0
+call DinoRunGame.gameOver 1
+pop temp 0
+push constant 0
+not
+pop local 1
+label IF_FALSE10
+goto WHILE_EXP3
+label WHILE_END3
+goto WHILE_EXP1
+label WHILE_END1
+push constant 0
+return

@@ -1,0 +1,202 @@
+class Dino{
+	field int x;
+	field int currentHeight;
+	field int startHeight;
+	field int jumpStrength;
+	field int weight;
+
+	field boolean jumping;
+	field boolean goingUp;
+	field int currentJumpSpeed;
+
+	field int groundHeight;
+	field int DINO_HEIGHT;
+	field int DINO_WIDTH;
+
+	constructor Dino new(int startX, int _groundHeight, int jStrength, int _weight){
+		let groundHeight = _groundHeight;
+		let DINO_HEIGHT = 16;
+		let DINO_WIDTH = 16;
+
+		let x = startX;
+		let startHeight = groundHeight - DINO_HEIGHT - 1;
+		let currentHeight = startHeight;
+		let jumpStrength = jStrength;
+		let weight = _weight;
+
+		let jumping = false;
+		let goingUp = false;
+		let currentJumpSpeed = 0;
+
+		do draw();
+		return this;
+	}
+
+	method void dispose(){
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void draw() {
+		var int memAddress;
+		let memAddress = 16384 + Utility.xyToScreenMap(x, currentHeight);
+		
+		if((memAddress > 16383) & (memAddress < 24576)){
+			do Memory.poke(memAddress+0, 32256);
+			do Memory.poke(memAddress+32, -768);
+			do Memory.poke(memAddress+64, -256);
+			do Memory.poke(memAddress+96, -256);
+			do Memory.poke(memAddress+128, 3840);
+			do Memory.poke(memAddress+160, 32512);
+			do Memory.poke(memAddress+192, 1921);
+			do Memory.poke(memAddress+224, 8129);
+			do Memory.poke(memAddress+256, 6135);
+			do Memory.poke(memAddress+288, 2047);
+			do Memory.poke(memAddress+320, 2046);
+			do Memory.poke(memAddress+352, 1020);
+			do Memory.poke(memAddress+384, 496);
+			do Memory.poke(memAddress+416, 432);
+			do Memory.poke(memAddress+448, 272);
+			do Memory.poke(memAddress+480, 816);
+		}
+
+		return;
+	}
+
+	method void erase() {
+		var int memAddress;
+		let memAddress = 16384 + Utility.xyToScreenMap(x, currentHeight);
+
+		if((memAddress > 16383) & (memAddress < 24576)){
+			do Memory.poke(memAddress+0, 0);
+			do Memory.poke(memAddress+32, 0);
+			do Memory.poke(memAddress+64, 0);
+			do Memory.poke(memAddress+96, 0);
+			do Memory.poke(memAddress+128, 0);
+			do Memory.poke(memAddress+160, 0);
+			do Memory.poke(memAddress+192, 0);
+			do Memory.poke(memAddress+224, 0);
+			do Memory.poke(memAddress+256, 0);
+			do Memory.poke(memAddress+288, 0);
+			do Memory.poke(memAddress+320, 0);
+			do Memory.poke(memAddress+352, 0);
+			do Memory.poke(memAddress+384, 0);
+			do Memory.poke(memAddress+416, 0);
+			do Memory.poke(memAddress+448, 0);
+			do Memory.poke(memAddress+480, 0);
+		}
+		return;
+	}
+
+	method boolean isJumping(){
+		return jumping;
+	}
+
+	method void increaseJumpStrength(){
+		let jumpStrength = jumpStrength + 1;
+		return;
+	}
+
+	method void decreaseJumpStrength(){
+		let jumpStrength = jumpStrength - 1;
+		return;
+	}
+
+	method void increaseWeight(){
+		let weight = weight + 1;
+		return;
+	}
+
+	method void decreaseWeight(){
+		if(weight > 1){
+			let weight = weight - 1;
+		}
+		return;
+	}
+	
+	method boolean isHitBirb(Birb b){
+		var boolean hit;
+		var int bX;
+		var int bY;
+		var int bWidth;
+		var int bHeight;
+
+		let hit = false;
+		let bX = b.getX();
+		let bY = b.getY();
+		let bWidth = b.getWidth();
+		let bHeight = b.getHeight();
+
+		if((x < (bX+bWidth)) &
+      		((x+DINO_WIDTH) > bX) &
+			(currentHeight < (bY+bHeight)) &
+			((currentHeight+DINO_HEIGHT) > bY)){
+			let hit = true;
+		}
+
+		return hit;
+	}
+
+	method boolean isHitCactus(Cactus c){
+		var boolean hit;
+		var int cX;
+		var int cY;
+		var int cWidth;
+		var int cHeight;
+
+		let hit = false;
+		let cX = c.getX();
+		let cY = c.getY();
+		let cWidth = c.getWidth();
+		let cHeight = c.getHeight();
+
+		if((x < (cX+cWidth)) &
+      		((x+DINO_WIDTH) > cX) &
+			(currentHeight < (cY+cHeight)) &
+			((currentHeight+DINO_HEIGHT) > cY)){
+			let hit = true;
+		}
+
+		return hit;
+	}
+	
+	method int getCurrentHeight(){
+		return currentHeight;
+	}
+
+	method void startJump(){
+		if(~jumping){
+			let jumping = true;
+			let goingUp = true;
+			let currentJumpSpeed = jumpStrength;
+		}
+		return;
+	}
+
+	method void handleJump(){
+		do erase();
+		
+		if(goingUp){
+			let currentHeight = currentHeight - currentJumpSpeed;
+			let currentJumpSpeed = currentJumpSpeed - weight;
+		}
+		else{
+			let currentHeight = currentHeight + currentJumpSpeed;
+			let currentJumpSpeed = currentJumpSpeed + weight;
+		}
+
+		if(~(currentJumpSpeed > 0)){
+			let goingUp = false;
+		}
+		if(currentHeight > startHeight){
+			let currentHeight = startHeight;
+			let jumping = false;
+			let currentJumpSpeed = 0;
+		}
+
+		do draw();
+
+		return;
+	}
+
+}

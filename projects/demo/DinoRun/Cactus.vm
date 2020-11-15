@@ -1,0 +1,305 @@
+function Cactus.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 1
+push constant 16
+pop this 2
+push constant 16
+pop this 3
+push constant 511
+push this 2
+sub
+pop this 0
+push pointer 0
+call Cactus.draw 1
+pop temp 0
+push pointer 0
+return
+function Cactus.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Cactus.getCurrentPosition 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Cactus.draw 4
+push argument 0
+pop pointer 0
+push this 0
+pop local 0
+push this 1
+push this 3
+sub
+push constant 1
+sub
+pop local 1
+push local 0
+push local 1
+call Utility.xyToScreenMap 2
+pop local 2
+push constant 16384
+push local 2
+add
+pop local 3
+push local 3
+push constant 0
+add
+push constant 24
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 32
+add
+push constant 56
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 64
+add
+push constant 58
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 96
+add
+push constant 59
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 128
+add
+push constant 187
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 160
+add
+push constant 443
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 192
+add
+push constant 443
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 224
+add
+push constant 447
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 256
+add
+push constant 446
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 288
+add
+push constant 504
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 320
+add
+push constant 248
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 352
+add
+push constant 56
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 384
+add
+push constant 56
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 416
+add
+push constant 56
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 448
+add
+push constant 56
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 480
+add
+push constant 60
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Cactus.erase 4
+push argument 0
+pop pointer 0
+push this 0
+pop local 0
+push this 1
+push this 3
+sub
+push constant 1
+sub
+pop local 1
+push local 0
+push local 1
+call Utility.xyToScreenMap 2
+pop local 2
+push constant 16384
+push local 2
+add
+pop local 3
+push local 3
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Cactus.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Cactus.getY 0
+push argument 0
+pop pointer 0
+push this 1
+push this 3
+sub
+return
+function Cactus.getWidth 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Cactus.getHeight 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Cactus.move 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Cactus.erase 1
+pop temp 0
+push this 0
+push argument 1
+sub
+push constant 0
+call Math.max 2
+pop this 0
+push pointer 0
+call Cactus.draw 1
+pop temp 0
+push constant 0
+return

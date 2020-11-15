@@ -1,0 +1,447 @@
+function Birb.new 0
+push constant 7
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 1
+push argument 1
+pop this 6
+push constant 16
+pop this 4
+push constant 16
+pop this 5
+push constant 511
+push this 4
+sub
+pop this 0
+push constant 0
+pop this 2
+push constant 10
+pop this 3
+push pointer 0
+call Birb.draw 1
+pop temp 0
+push pointer 0
+return
+function Birb.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Birb.getCurrentPosition 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Birb._draw1 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 0
+add
+push constant 32
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 32
+add
+push constant 96
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 64
+add
+push constant 232
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 96
+add
+push constant 460
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 128
+add
+push constant 986
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 160
+add
+push constant 2015
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 192
+add
+push constant 2032
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 224
+add
+push constant 32
+neg
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 256
+add
+push constant 16320
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 288
+add
+push constant 7936
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Birb._draw2 0
+push argument 0
+pop pointer 0
+push argument 1
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 64
+add
+push constant 8
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 96
+add
+push constant 12
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 128
+add
+push constant 26
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 160
+add
+push constant 31
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 192
+add
+push constant 2032
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 224
+add
+push constant 32
+neg
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 256
+add
+push constant 16320
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 288
+add
+push constant 448
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 320
+add
+push constant 192
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 352
+add
+push constant 64
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 384
+add
+push constant 64
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push argument 1
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Birb.draw 4
+push argument 0
+pop pointer 0
+push this 0
+pop local 0
+push this 6
+push this 1
+sub
+pop local 1
+push local 0
+push local 1
+call Utility.xyToScreenMap 2
+pop local 2
+push constant 16384
+push local 2
+add
+pop local 3
+push this 2
+push this 3
+push constant 2
+call Math.divide 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+push local 3
+call Birb._draw1 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push pointer 0
+push local 3
+call Birb._draw2 2
+pop temp 0
+label IF_END0
+push this 2
+push constant 1
+add
+pop this 2
+push this 2
+push this 3
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 0
+pop this 2
+label IF_FALSE1
+push constant 0
+return
+function Birb.erase 4
+push argument 0
+pop pointer 0
+push this 0
+pop local 0
+push this 6
+push this 1
+sub
+pop local 1
+push local 0
+push local 1
+call Utility.xyToScreenMap 2
+pop local 2
+push constant 16384
+push local 2
+add
+pop local 3
+push local 3
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 3
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Birb.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Birb.getY 0
+push argument 0
+pop pointer 0
+push this 6
+push this 1
+sub
+return
+function Birb.getWidth 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function Birb.getHeight 0
+push argument 0
+pop pointer 0
+push this 5
+return
+function Birb.move 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Birb.erase 1
+pop temp 0
+push this 0
+push argument 1
+sub
+push constant 0
+call Math.max 2
+pop this 0
+push pointer 0
+call Birb.draw 1
+pop temp 0
+push constant 0
+return

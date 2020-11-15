@@ -1,0 +1,286 @@
+class DinoRunGame{
+
+	field Dino dino;
+	field int gameSpeed;
+	field int score;
+	field boolean gOver;
+	
+	field Array obstacles;
+	field Array obstacle_types;  // 0 is Cactus, 1 is Birb
+	field int n_obstacles;
+	
+	field int groundHeight;
+	field int GAME_FPS;
+	field int MAX_OBSTACLES;  // max number of obstacles on screen at any time
+	
+	field int DINO_X;
+	field int DINO_START_WEIGHT;
+	field int DINO_START_JSTRENGTH;
+	
+	field int BIRB_HEIGHT_TO_GROUND;
+	
+	constructor DinoRunGame new(int startGameSpeed){
+	
+		do Screen.clearScreen();
+	
+		let groundHeight = 200;
+		let GAME_FPS = 30;
+		let MAX_OBSTACLES = 1;
+
+		let DINO_X = 50;
+		let DINO_START_JSTRENGTH = 7;
+		let DINO_START_WEIGHT = 1;
+		
+		let BIRB_HEIGHT_TO_GROUND = 50;
+	
+		let dino = Dino.new(DINO_X, groundHeight, DINO_START_JSTRENGTH, DINO_START_WEIGHT);
+		let gameSpeed = startGameSpeed;
+		let score = 0;
+		let gOver = false;
+		
+		let obstacles = Array.new(MAX_OBSTACLES);
+		let obstacle_types = Array.new(MAX_OBSTACLES);
+		
+		let n_obstacles = 0;
+		
+		do newObstacle();
+		
+		do Output.moveCursor(0, 25);
+		do Output.printString("SCORE: ");
+		do Output.printInt(score);
+		
+		return this;
+	}
+	
+	method void dispose(){
+		do dino.dispose();
+
+		do Memory.deAlloc(this);
+		
+		return;
+	}
+	
+	method void gameOver(){
+		do Output.moveCursor(12, 25);
+		do Output.printString("GAME OVER");
+		do Output.println();
+		
+		return;
+	}
+	
+	method void cycleObstacle(){
+		var Cactus c;
+		var Birb b;
+		var int n;
+		let n = 0;
+		
+		if(obstacle_types[0] = 0){
+			let c = obstacles[0];
+			do c.erase();
+			do c.dispose();
+		}
+		else{
+			let b = obstacles[0];
+			do b.erase();
+			do b.dispose();
+		}
+		
+		while(~(n = n_obstacles - 1)){
+			let obstacles[n] = obstacles[n+1];
+			let obstacle_types[n] = obstacle_types[n+1];
+			let n = n + 1;
+		}
+		let obstacles[n] = null;
+		let obstacle_types[n] = null;
+		
+		let n_obstacles = n_obstacles - 1;
+		
+		return;
+	}
+	
+	method void drawGround(){
+		do Screen.setColor(true);
+		do Screen.drawLine(0, groundHeight, 511, groundHeight);
+		
+		return;
+	}
+	
+	method void newObstacle(){
+		var int obstacle_type;
+	
+		if(n_obstacles < MAX_OBSTACLES){
+			let obstacle_type = LCGRandom.randRange(0, 1);
+			
+			if(obstacle_type = 0){
+				let obstacles[n_obstacles] = Cactus.new(groundHeight);
+			}
+			else{
+				let obstacles[n_obstacles] = Birb.new(BIRB_HEIGHT_TO_GROUND, groundHeight);
+			}
+			
+			let obstacle_types[n_obstacles] = obstacle_type;
+			let n_obstacles = n_obstacles + 1;
+		}
+		
+		return;
+	}
+	
+	method void handleGame(){
+		var Cactus c;
+		var Birb b;
+		var int n;
+		var boolean cycle;
+		var int backspaces;
+		
+		let n = 0;
+		let cycle = false;
+		
+		while(~(n = n_obstacles)){
+		
+			if(obstacle_types[n] = 0){
+				let c = obstacles[n];
+				do c.move(gameSpeed);
+				
+				if(c.getCurrentPosition() = 0){
+					let cycle = true;
+				}
+			}
+			else{
+				let b = obstacles[n];
+				do b.move(gameSpeed);
+				
+				if(b.getCurrentPosition() = 0){
+					let cycle = true;
+				}
+			}
+			let n = n + 1;
+		}
+		
+		if(cycle){
+			do cycleObstacle();
+			do newObstacle();
+			let score = score + 1;
+			
+			if(score < 101){
+				let backspaces = 2;
+			}
+			
+			if(score < 11){
+				let backspaces = 1;
+			}
+			
+			while(backspaces > 0){
+				do Output.backSpace();
+				let backspaces = backspaces - 1;
+			}
+			
+			do Output.printInt(score);
+			
+			if(Utility.modulo(score, 2) = 0){			
+				let gameSpeed = gameSpeed + 1;
+			}
+		}
+	
+		if(dino.isJumping()){
+			do dino.handleJump();
+		}
+		
+		if(n_obstacles > 0){
+			if(obstacle_types[0] = 0){
+				if(dino.isHitCactus(obstacles[0])){
+					let gOver = true;
+				}
+			}
+			else{
+				if(dino.isHitBirb(obstacles[0])){
+					let gOver = true;
+				}
+			}
+		}
+		
+		do Sys.wait(1000/GAME_FPS); // 30 FPS
+		return;
+	}
+	
+	method void run(){
+		var char key;
+		var boolean exit;
+		
+		let exit = false;
+		
+		do drawGround();
+		
+		do Output.moveCursor(9, 25);
+		do Output.printString("SPACEBAR");
+		while(~(key = 32)){
+			let key = Keyboard.keyPressed();		
+		}
+		do Output.moveCursor(9, 25);
+		do Output.printString("        ");
+		
+		do Output.moveCursor(0, 32);
+		do Output.printInt(score);
+		
+		while(~exit){
+		
+			while((key = 0) & (~exit)){
+				let key = Keyboard.keyPressed();
+				
+				do handleGame();
+				if(gOver){
+					do gameOver();
+					let exit = true;
+				}
+			}
+			
+			if(key = 140){   // ESC
+				let exit = true;
+			}
+			
+			if(key = 32){   // spacebar
+				do dino.startJump();
+			}
+			
+			if(key = 131){  // up arrow
+				do dino.increaseJumpStrength();
+			}
+			
+			if(key = 133){ // down arrow
+				do dino.decreaseJumpStrength();
+			}
+			
+			if(key = 87){   // W
+				do dino.increaseWeight();
+			}
+			
+			if(key = 83){   // S
+				do dino.decreaseWeight();
+			}
+			
+			if(key = 73){   // I
+				let gameSpeed = gameSpeed + 1;
+			}
+			
+			if(key = 75){   // K
+				let gameSpeed = Math.max(gameSpeed - 1, 1);
+			}
+			
+			if(key = 67){   // C
+				do newObstacle();
+			}
+			
+			while (~(key = 0) & (~exit)) {
+				let key = Keyboard.keyPressed();
+				do handleGame();
+				if(gOver){
+					do gameOver();
+					let exit = true;
+				}
+			}
+			
+		}
+		
+		return;
+	}
+
+}
