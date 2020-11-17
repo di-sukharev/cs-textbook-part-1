@@ -14,7 +14,7 @@ class Labirinth {
     }
 
     method void render() {
-        // do grid.render();
+        do grid.render();
 
         return;
     }

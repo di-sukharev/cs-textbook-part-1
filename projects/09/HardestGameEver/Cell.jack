@@ -1,25 +1,55 @@
 class Cell {
     
     field int border;
+    field int row, col;
+    field int height, width;
 
-    constructor Cell new() {
+    constructor Cell new(
+            int cellRow,
+            int cellColumn,
+            int cellHeight,
+            int cellWidth
+        ) {
+
+        let row = cellRow;
+        let col = cellColumn;
+        
+        let height = cellHeight;
+        let width = cellWidth;
+
+        do _generateBorder();
 
         return this;
     }
 
-    method void generateBorder() {
-
-        // todo genarate random number without the argument rand
-        var Array randomizer;
+    method void _generateBorder() {
         
         let border = LCGRandom.randRange(1, 4);
 
         return;
     }
 
-    method int getBorder() {
-        return border;
+    method void render() {
+        var int x, y; // coordinates of cell on the screen
+
+        let x = row * width;
+        let y = col * height;
+
+        if (x + width = 512) { let x = x-1; }
+        if (y + height = 256) { let y = y-1; }
+
+        if (border = 1) { do Screen.drawLine(x, y, x + width, y); } // top wall
+        if (border = 2) { do Screen.drawLine(x + width, y, x + width, y + height); } // right wall
+        if (border = 3) { do Screen.drawLine(x, y + height, x + width, y + height); } // bottom wall
+        if (border = 4) { do Screen.drawLine(x, y, x, y + height); } // left wall
+
+        return;
     }
 
-    // methods to generate borders
+    method void destroy() {
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
 }

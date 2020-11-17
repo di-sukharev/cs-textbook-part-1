@@ -1,6 +1,6 @@
 class Debugger {
     function void log(String text, int value) {
-        do Output.moveCursor(8, 16);
+        do Output.moveCursor(4, 32);
         do Output.printString(text);
         do Output.printInt(value);
         do Output.println();

@@ -23,54 +23,46 @@ class Grid {
         // fill matrix with rows*cols matrix
         let matrix = Array.new(rows);
 
-        let i = 0;
+        let i = 0; // rows iterator
         while (i < rows) {
         
             let matrix[i] = Array.new(cols);
     
-            let j = 0;
+            let j = 0; // cols iterator
             while (j < cols) {
 
                 let row = matrix[i];
 
-                let row[j] = Cell.new();
+                let row[j] = Cell.new(i, j, cellHeight, cellWidth);
 
-                let cell = row[j];
-
-                do cell.generateBorder();
-                do renderCellInGrid(cell, i, j);
-
-                let j = j + 1;
+                let j = j + 1; // iterate to the next column
             }
-            let i = i + 1;
+            
+            let i = i + 1; // iterate to the next row
         }
 
         return;
     }
 
-    method void renderCellInGrid(Cell cell, int row, int col) {
-        var int x, y; // coordinates of cell on the screen
-        var int wall;
+    method void render() {
+        var Array row;
+        var Cell cell;
+        var int i, j; // matrix rows and cols iterator
 
-        do Debugger.log("row", row);
-        do Debugger.log("col", col);
+        let i = 0; // rows iterator
+        while (i < rows) {
+            let j = 0; // cols iterator
+            while (j < cols) {
+                let row = matrix[i];
+                let cell = row[j];
 
-        let x = row * cellWidth;
-        let y = col * cellHeight;
+                do cell.render();
 
-        let wall = cell.getBorder();
-
-        do Debugger.log("x", x);
-        do Debugger.log("y", y);
-
-        if (x = 448) { let x = 447; }
-        
-        if (y = 224) { let y = 223; }
-
-        if (wall = 1) { do Screen.drawLine(x, y, x + cellWidth, y); } // top wall
-        if (wall = 2) { do Screen.drawLine(x + cellWidth, y, x + cellWidth, y + cellHeight); } // right wall
-        if (wall = 3) { do Screen.drawLine(x, y + cellHeight, x + cellWidth, y + cellHeight); } // bottom wall
-        if (wall = 4) { do Screen.drawLine(x, y, x, y + cellHeight); } // left wall
+                let j = j + 1; // iterate to the next column
+            }
+            
+            let i = i + 1; // iterate to the next row
+        }
 
         return;
     }
