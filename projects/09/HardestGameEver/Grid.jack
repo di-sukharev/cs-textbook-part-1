@@ -16,13 +16,11 @@ class Grid {
     }
 
     method void _createMatrix() {
-        var Array row, col;
+        var Array row;
         var Cell cell;
-        var String str;
-        var int i; // matrix rows iterator
-        var int j; // matrix columns iterator
+        var int i, j; // matrix rows and cols iterator
         
-        // fill matrix with 8x8 matrix, so it cell can be accessed as matrix[3][2]
+        // fill matrix with rows*cols matrix
         let matrix = Array.new(rows);
 
         let i = 0;
@@ -39,15 +37,13 @@ class Grid {
 
                 let cell = row[j];
 
-                do cell.generateBorder(j);
+                do cell.generateBorder();
                 do renderCellInGrid(cell, i, j);
 
                 let j = j + 1;
             }
             let i = i + 1;
         }
-
-        let str = matrix;
 
         return;
     }
@@ -56,10 +52,20 @@ class Grid {
         var int x, y; // coordinates of cell on the screen
         var int wall;
 
-        let x = (row - 1) * cellWidth;
-        let y = (col - 1) * cellHeight;
+        do Debugger.log("row", row);
+        do Debugger.log("col", col);
+
+        let x = row * cellWidth;
+        let y = col * cellHeight;
 
         let wall = cell.getBorder();
+
+        do Debugger.log("x", x);
+        do Debugger.log("y", y);
+
+        if (x = 448) { let x = 447; }
+        
+        if (y = 224) { let y = 223; }
 
         if (wall = 1) { do Screen.drawLine(x, y, x + cellWidth, y); } // top wall
         if (wall = 2) { do Screen.drawLine(x + cellWidth, y, x + cellWidth, y + cellHeight); } // right wall
@@ -70,7 +76,8 @@ class Grid {
     }
 
     method void destroy() {
-        do matrix.dispose();        
+        do matrix.dispose();     
+        // do cells.dispose // memory leak here!!!
         do Memory.deAlloc(this);
         
         return;

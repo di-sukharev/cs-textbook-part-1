@@ -19,21 +19,21 @@ call Grid._createMatrix 1
 pop temp 0
 push pointer 0
 return
-function Grid._createMatrix 6
+function Grid._createMatrix 4
 push argument 0
 pop pointer 0
 push this 1
 call Array.new 1
 pop this 0
 push constant 0
-pop local 4
+pop local 2
 label WHILE_EXP0
-push local 4
+push local 2
 push this 1
 lt
 not
 if-goto WHILE_END0
-push local 4
+push local 2
 push this 0
 add
 push this 2
@@ -43,20 +43,20 @@ pop pointer 1
 push temp 0
 pop that 0
 push constant 0
-pop local 5
+pop local 3
 label WHILE_EXP1
-push local 5
+push local 3
 push this 2
 lt
 not
 if-goto WHILE_END1
-push local 4
+push local 2
 push this 0
 add
 pop pointer 1
 push that 0
 pop local 0
-push local 5
+push local 3
 push local 0
 add
 call Cell.new 0
@@ -64,102 +64,145 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push local 5
+push local 3
 push local 0
 add
 pop pointer 1
 push that 0
-pop local 2
-push local 2
-push local 5
-call Cell.generateBorder 2
+pop local 1
+push local 1
+call Cell.generateBorder 1
 pop temp 0
 push pointer 0
+push local 1
 push local 2
-push local 4
-push local 5
+push local 3
 call Grid.renderCellInGrid 4
 pop temp 0
-push local 5
+push local 3
 push constant 1
 add
-pop local 5
+pop local 3
 goto WHILE_EXP1
 label WHILE_END1
-push local 4
+push local 2
 push constant 1
 add
-pop local 4
+pop local 2
 goto WHILE_EXP0
 label WHILE_END0
-push this 0
-pop local 3
 push constant 0
 return
 function Grid.renderCellInGrid 3
 push argument 0
 pop pointer 0
+push constant 3
+call String.new 1
+push constant 114
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 119
+call String.appendChar 2
 push argument 2
-push constant 1
-sub
+call Debugger.log 2
+pop temp 0
+push constant 3
+call String.new 1
+push constant 99
+call String.appendChar 2
+push constant 111
+call String.appendChar 2
+push constant 108
+call String.appendChar 2
+push argument 3
+call Debugger.log 2
+pop temp 0
+push argument 2
 push this 3
 call Math.multiply 2
-push constant 1
-sub
 pop local 0
 push argument 3
-push constant 1
-sub
 push this 4
 call Math.multiply 2
-push constant 1
-sub
 pop local 1
 push argument 1
 call Cell.getBorder 1
 pop local 2
-push local 2
 push constant 1
+call String.new 1
+push constant 120
+call String.appendChar 2
+push local 0
+call Debugger.log 2
+pop temp 0
+push constant 1
+call String.new 1
+push constant 121
+call String.appendChar 2
+push local 1
+call Debugger.log 2
+pop temp 0
+push local 0
+push constant 448
 eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push local 0
-push local 1
-push local 0
-push this 3
-add
-push local 1
-call Screen.drawLine 4
-pop temp 0
+push constant 447
+pop local 0
 label IF_FALSE0
-push local 2
-push constant 2
+push local 1
+push constant 224
 eq
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push local 0
-push this 3
-add
-push local 1
-push local 0
-push this 3
-add
-push local 1
-push this 4
-add
-call Screen.drawLine 4
-pop temp 0
+push constant 223
+pop local 1
 label IF_FALSE1
 push local 2
-push constant 3
+push constant 1
 eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 push local 0
 push local 1
+push local 0
+push this 3
+add
+push local 1
+call Screen.drawLine 4
+pop temp 0
+label IF_FALSE2
+push local 2
+push constant 2
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 0
+push this 3
+add
+push local 1
+push local 0
+push this 3
+add
+push local 1
+push this 4
+add
+call Screen.drawLine 4
+pop temp 0
+label IF_FALSE3
+push local 2
+push constant 3
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+push local 1
 push this 4
 add
 push local 0
@@ -170,13 +213,13 @@ push this 4
 add
 call Screen.drawLine 4
 pop temp 0
-label IF_FALSE2
+label IF_FALSE4
 push local 2
 push constant 4
 eq
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
 push local 0
 push local 1
 push local 0
@@ -185,7 +228,7 @@ push this 4
 add
 call Screen.drawLine 4
 pop temp 0
-label IF_FALSE3
+label IF_FALSE5
 push constant 0
 return
 function Grid.destroy 0
