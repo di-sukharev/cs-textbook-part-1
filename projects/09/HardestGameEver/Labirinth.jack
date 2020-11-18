@@ -19,6 +19,28 @@ class Labirinth {
         return;
     }
 
+    method void getBlock(int x, int y) {
+        var Cell activeBlock;
+        var int row, col;
+
+        let row = x / grid.getCellWidth();
+        let col = y / grid.getCellHeight();
+
+        // do Debugger.log("x", x);
+        // do Debugger.log("grid.getCellWidth()", grid.getCellWidth());
+        // do Debugger.log("y", y);
+        // do Debugger.log("grid.getCellHeight()", grid.getCellHeight());
+        // do Debugger.log("row", row);
+        // do Debugger.log("col", col);
+
+        let activeBlock = grid.getCell(row, col);
+
+        let x = activeBlock.getX();
+        let y = activeBlock.getY();
+
+        return;
+    }
+
     method void destroy() {
         do grid.destroy();
         do Memory.deAlloc(this);

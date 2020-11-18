@@ -37,7 +37,7 @@ class Grid {
 
                 let j = j + 1; // iterate to the next column
             }
-            
+
             let i = i + 1; // iterate to the next row
         }
 
@@ -65,6 +65,24 @@ class Grid {
         }
 
         return;
+    }
+
+    method Cell getCell(int row, int col) {
+        var Cell cell;
+        var Array row;
+        
+        let row = matrix[row];
+        let cell = row[col];
+
+        return cell;
+    }
+
+    method int getCellWidth() {
+        return cellWidth;
+    }
+    
+    method int getCellHeight() {
+        return cellHeight;
     }
 
     method void destroy() {

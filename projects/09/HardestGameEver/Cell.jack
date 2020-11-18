@@ -3,6 +3,7 @@ class Cell {
     field int border;
     field int row, col;
     field int height, width;
+    field int x, y; // coordinates of cell on the screen
 
     constructor Cell new(
             int cellRow,
@@ -17,9 +18,29 @@ class Cell {
         let height = cellHeight;
         let width = cellWidth;
 
+        do _defineCoordinates();
+
         do _generateBorder();
 
         return this;
+    }
+
+    method void _defineCoordinates() {
+        let x = row * width;
+        let y = col * height;
+
+        if (x + width = 512) { let x = x-1; }
+        if (y + height = 256) { let y = y-1; }
+
+        return;
+    }
+
+    method int getX() {
+        return x;
+    }
+    
+    method int getY() {
+        return y;
     }
 
     method void _generateBorder() {
@@ -30,14 +51,7 @@ class Cell {
     }
 
     method void render() {
-        var int x, y; // coordinates of cell on the screen
-
-        let x = row * width;
-        let y = col * height;
-
-        if (x + width = 512) { let x = x-1; }
-        if (y + height = 256) { let y = y-1; }
-
+       
         if (border = 1) { do Screen.drawLine(x, y, x + width, y); } // top wall
         if (border = 2) { do Screen.drawLine(x + width, y, x + width, y + height); } // right wall
         if (border = 3) { do Screen.drawLine(x, y + height, x + width, y + height); } // bottom wall

@@ -1,8 +1,4 @@
 function Debugger.log 0
-push constant 4
-push constant 32
-call Output.moveCursor 2
-pop temp 0
 push argument 0
 call Output.printString 1
 pop temp 0

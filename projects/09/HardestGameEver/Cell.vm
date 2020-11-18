@@ -1,5 +1,5 @@
 function Cell.new 0
-push constant 5
+push constant 7
 call Memory.alloc 1
 pop pointer 0
 push argument 0
@@ -11,9 +11,61 @@ pop this 3
 push argument 3
 pop this 4
 push pointer 0
+call Cell._defineCoordinates 1
+pop temp 0
+push pointer 0
 call Cell._generateBorder 1
 pop temp 0
 push pointer 0
+return
+function Cell._defineCoordinates 0
+push argument 0
+pop pointer 0
+push this 1
+push this 4
+call Math.multiply 2
+pop this 5
+push this 2
+push this 3
+call Math.multiply 2
+pop this 6
+push this 5
+push this 4
+add
+push constant 512
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 5
+push constant 1
+sub
+pop this 5
+label IF_FALSE0
+push this 6
+push this 3
+add
+push constant 256
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push this 6
+push constant 1
+sub
+pop this 6
+label IF_FALSE1
+push constant 0
+return
+function Cell.getX 0
+push argument 0
+pop pointer 0
+push this 5
+return
+function Cell.getY 0
+push argument 0
+pop pointer 0
+push this 6
 return
 function Cell._generateBorder 0
 push argument 0
@@ -24,111 +76,77 @@ call LCGRandom.randRange 2
 pop this 0
 push constant 0
 return
-function Cell.render 2
+function Cell.render 0
 push argument 0
 pop pointer 0
-push this 1
-push this 4
-call Math.multiply 2
-pop local 0
-push this 2
-push this 3
-call Math.multiply 2
-pop local 1
-push local 0
-push this 4
-add
-push constant 512
+push this 0
+push constant 1
 eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push local 0
-push constant 1
-sub
-pop local 0
-label IF_FALSE0
-push local 1
-push this 3
+push this 5
+push this 6
+push this 5
+push this 4
 add
-push constant 256
+push this 6
+call Screen.drawLine 4
+pop temp 0
+label IF_FALSE0
+push this 0
+push constant 2
 eq
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push local 1
-push constant 1
-sub
-pop local 1
+push this 5
+push this 4
+add
+push this 6
+push this 5
+push this 4
+add
+push this 6
+push this 3
+add
+call Screen.drawLine 4
+pop temp 0
 label IF_FALSE1
 push this 0
-push constant 1
+push constant 3
 eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
-push local 0
-push local 1
-push local 0
+push this 5
+push this 6
+push this 3
+add
+push this 5
 push this 4
 add
-push local 1
+push this 6
+push this 3
+add
 call Screen.drawLine 4
 pop temp 0
 label IF_FALSE2
 push this 0
-push constant 2
+push constant 4
 eq
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
-push local 0
-push this 4
-add
-push local 1
-push local 0
-push this 4
-add
-push local 1
+push this 5
+push this 6
+push this 5
+push this 6
 push this 3
 add
 call Screen.drawLine 4
 pop temp 0
 label IF_FALSE3
-push this 0
-push constant 3
-eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
-push local 0
-push local 1
-push this 3
-add
-push local 0
-push this 4
-add
-push local 1
-push this 3
-add
-call Screen.drawLine 4
-pop temp 0
-label IF_FALSE4
-push this 0
-push constant 4
-eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
-push local 0
-push local 1
-push local 0
-push local 1
-push this 3
-add
-call Screen.drawLine 4
-pop temp 0
-label IF_FALSE5
 push constant 0
 return
 function Cell.destroy 0

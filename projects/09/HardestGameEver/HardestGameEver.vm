@@ -47,6 +47,11 @@ pop temp 0
 push this 1
 call Labirinth.render 1
 pop temp 0
+push this 1
+push constant 123
+push constant 321
+call Labirinth.getBlock 3
+pop temp 0
 push constant 0
 return
 function HardestGameEver.destroy 0

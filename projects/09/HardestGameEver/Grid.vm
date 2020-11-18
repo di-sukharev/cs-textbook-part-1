@@ -130,6 +130,33 @@ goto WHILE_EXP0
 label WHILE_END0
 push constant 0
 return
+function Grid.getCell 2
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop argument 1
+push argument 2
+push argument 1
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+return
+function Grid.getCellWidth 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Grid.getCellHeight 0
+push argument 0
+pop pointer 0
+push this 4
+return
 function Grid.destroy 0
 push argument 0
 pop pointer 0
