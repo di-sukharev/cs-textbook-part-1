@@ -3,7 +3,7 @@ class Cell {
     field int border;
     field int row, col;
     field int height, width;
-    field int x, y; // coordinates of cell on the screen
+    field int x, y; // coordinates of cell left/top corner on the screen
 
     constructor Cell new(
             int cellRow,
@@ -29,8 +29,10 @@ class Cell {
         let x = row * width;
         let y = col * height;
 
-        if (x + width = 512) { let x = x-1; }
-        if (y + height = 256) { let y = y-1; }
+        // max width is 511 px
+        if (x + width = 512) { let width = width-1; }
+        // max width is 255 px
+        if (y + height = 256) { let height = height-1; }
 
         return;
     }
@@ -43,6 +45,18 @@ class Cell {
         return y;
     }
 
+    method int getWidth() {
+        return width;
+    }
+
+    method int getHeight() {
+        return height;
+    }
+
+    method int getBorder() {
+        return border;
+    }
+
     method void _generateBorder() {
         
         let border = LCGRandom.randRange(1, 4);
@@ -52,10 +66,10 @@ class Cell {
 
     method void render() {
        
-        if (border = 1) { do Screen.drawLine(x, y, x + width, y); } // top wall
-        if (border = 2) { do Screen.drawLine(x + width, y, x + width, y + height); } // right wall
-        if (border = 3) { do Screen.drawLine(x, y + height, x + width, y + height); } // bottom wall
-        if (border = 4) { do Screen.drawLine(x, y, x, y + height); } // left wall
+        if (border = 1) { do Screen.drawLine(x, y, x, y + height); } // left wall
+        if (border = 2) { do Screen.drawLine(x, y, x + width, y); } // top wall
+        if (border = 3) { do Screen.drawLine(x + width, y, x + width, y + height); } // right wall
+        if (border = 4) { do Screen.drawLine(x, y + height, x + width, y + height); } // bottom wall
 
         return;
     }

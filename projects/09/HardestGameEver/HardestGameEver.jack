@@ -1,14 +1,16 @@
 class HardestGameEver {
 
     field Avatar avatar;
+    field int avatarSpeed;
     field Labirinth labirinth;
     field Direction direction;
 
     constructor HardestGameEver new() {
         
-        let labirinth = Labirinth.new();
-        let avatar = Avatar.new(0,0);
+        let avatarSpeed = 2;
         let direction = 0;
+        let labirinth = Labirinth.new();
+        let avatar = Avatar.new(0,0, avatarSpeed);
 
         return this;
 
@@ -69,14 +71,49 @@ class HardestGameEver {
 
         do defineMoveDirection();
 
-        if (direction = 1) { do avatar.moveLeft(); }
-        if (direction = 2) { do avatar.moveUp(); }
-        if (direction = 3) { do avatar.moveRight(); }
-        if (direction = 4) { do avatar.moveDown(); }
+        if (direction = 1) { 
+            if (~(isWallLeft())) { do avatar.moveLeft(); }
+        }
+        
+        if (direction = 2) { 
+            if (~(isWallUp())) { do avatar.moveUp(); }
+        }
+        
+        if (direction = 3) { 
+            if (~(isWallRight())) { do avatar.moveRight(); }
+        }
+        
+        if (direction = 4) { 
+            if (~(isWallDown())) { do avatar.moveDown(); }
+        }
         
         do Sys.wait(5);  // delays the next movement
         
         return;
+    }
+
+    method boolean isWallLeft() {
+        var boolean isWall;
+        var int currentX, currentY, nextX, nextY;
+        var Cell currentBlock, nextBlock;
+        var boolean isMovingOutOfCurrentBlock;
+
+        let isWall = false;
+        
+        let currentX = avatar.getX();
+        let currentY = avatar.getY();
+        let currentBlock = labirinth.getBlockFromXY(currentX, currentY);
+
+
+        let nextX = avatar.getX() + avatar.getSpeed();
+        let nextY = avatar.getY() + avatar.getSpeed();
+        let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+        
+        let isMovingOutOfCurrentBlock = (((nextX - currentBlock.getX()) < 0) | ((nextX - currentBlock.getX()) = 0));
+
+        if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 1)) { let isWall = true; }
+
+        return isWall;
     }
 
     method void defineMoveDirection() {

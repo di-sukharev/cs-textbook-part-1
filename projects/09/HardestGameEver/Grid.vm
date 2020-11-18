@@ -1,30 +1,30 @@
 function Grid.new 0
-push constant 5
+push constant 3
 call Memory.alloc 1
 pop pointer 0
 push argument 0
 pop this 1
 push argument 1
 pop this 2
-push constant 256
-push this 1
-call Math.divide 2
-pop this 4
-push constant 512
-push this 2
-call Math.divide 2
-pop this 3
 push pointer 0
 call Grid._createMatrix 1
 pop temp 0
 push pointer 0
 return
-function Grid._createMatrix 4
+function Grid._createMatrix 6
 push argument 0
 pop pointer 0
 push this 1
 call Array.new 1
 pop this 0
+push constant 256
+push this 1
+call Math.divide 2
+pop local 5
+push constant 512
+push this 2
+call Math.divide 2
+pop local 4
 push constant 0
 pop local 2
 label WHILE_EXP0
@@ -61,8 +61,8 @@ push local 0
 add
 push local 2
 push local 3
-push this 4
-push this 3
+push local 5
+push local 4
 call Cell.new 4
 pop temp 0
 pop pointer 1
@@ -150,12 +150,12 @@ return
 function Grid.getCellWidth 0
 push argument 0
 pop pointer 0
-push this 3
+call cell.getWidth 0
 return
 function Grid.getCellHeight 0
 push argument 0
 pop pointer 0
-push this 4
+call cell.getHeight 0
 return
 function Grid.destroy 0
 push argument 0

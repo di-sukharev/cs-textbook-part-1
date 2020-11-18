@@ -37,10 +37,10 @@ eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 5
+push this 4
 push constant 1
 sub
-pop this 5
+pop this 4
 label IF_FALSE0
 push this 6
 push this 3
@@ -50,10 +50,10 @@ eq
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push this 6
+push this 3
 push constant 1
 sub
-pop this 6
+pop this 3
 label IF_FALSE1
 push constant 0
 return
@@ -66,6 +66,21 @@ function Cell.getY 0
 push argument 0
 pop pointer 0
 push this 6
+return
+function Cell.getWidth 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function Cell.getHeight 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Cell.getBorder 0
+push argument 0
+pop pointer 0
+push this 0
 return
 function Cell._generateBorder 0
 push argument 0
@@ -88,9 +103,9 @@ label IF_TRUE0
 push this 5
 push this 6
 push this 5
-push this 4
-add
 push this 6
+push this 3
+add
 call Screen.drawLine 4
 pop temp 0
 label IF_FALSE0
@@ -101,15 +116,11 @@ if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push this 5
-push this 4
-add
 push this 6
 push this 5
 push this 4
 add
 push this 6
-push this 3
-add
 call Screen.drawLine 4
 pop temp 0
 label IF_FALSE1
@@ -120,9 +131,9 @@ if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 push this 5
-push this 6
-push this 3
+push this 4
 add
+push this 6
 push this 5
 push this 4
 add
@@ -140,7 +151,11 @@ goto IF_FALSE3
 label IF_TRUE3
 push this 5
 push this 6
+push this 3
+add
 push this 5
+push this 4
+add
 push this 6
 push this 3
 add

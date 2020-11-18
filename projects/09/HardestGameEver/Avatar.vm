@@ -1,5 +1,5 @@
 function Avatar.new 0
-push constant 3
+push constant 4
 call Memory.alloc 1
 pop pointer 0
 push argument 0
@@ -8,6 +8,8 @@ push argument 1
 pop this 1
 push constant 5
 pop this 2
+push argument 2
+pop this 3
 push pointer 0
 return
 function Avatar.render 0
@@ -56,7 +58,7 @@ add
 call Screen.drawRectangle 4
 pop temp 0
 push this 1
-push constant 2
+push this 3
 sub
 pop this 1
 push constant 0
@@ -101,7 +103,7 @@ add
 call Screen.drawRectangle 4
 pop temp 0
 push this 0
-push constant 2
+push this 3
 add
 pop this 0
 push constant 0
@@ -150,7 +152,7 @@ add
 call Screen.drawRectangle 4
 pop temp 0
 push this 1
-push constant 2
+push this 3
 add
 pop this 1
 push constant 0
@@ -201,7 +203,7 @@ add
 call Screen.drawRectangle 4
 pop temp 0
 push this 0
-push constant 2
+push this 3
 sub
 pop this 0
 push constant 0
@@ -228,4 +230,19 @@ push pointer 0
 call Memory.deAlloc 1
 pop temp 0
 push constant 0
+return
+function Avatar.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Avatar.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Avatar.getSpeed 0
+push argument 0
+pop pointer 0
+push this 3
 return

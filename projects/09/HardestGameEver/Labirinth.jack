@@ -19,8 +19,8 @@ class Labirinth {
         return;
     }
 
-    method void getBlock(int x, int y) {
-        var Cell activeBlock;
+    method Cell getBlockFromXY(int x, int y) {
+        var Cell block;
         var int row, col;
 
         let row = x / grid.getCellWidth();
@@ -33,12 +33,9 @@ class Labirinth {
         // do Debugger.log("row", row);
         // do Debugger.log("col", col);
 
-        let activeBlock = grid.getCell(row, col);
+        let block = grid.getCell(row, col);
 
-        let x = activeBlock.getX();
-        let y = activeBlock.getY();
-
-        return;
+        return block;
     }
 
     method void destroy() {

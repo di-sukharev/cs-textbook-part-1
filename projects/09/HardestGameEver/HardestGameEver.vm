@@ -1,15 +1,18 @@
 function HardestGameEver.new 0
-push constant 3
+push constant 4
 call Memory.alloc 1
 pop pointer 0
-call Labirinth.new 0
+push constant 2
 pop this 1
 push constant 0
-push constant 0
-call Avatar.new 2
-pop this 0
-push constant 0
+pop this 3
+call Labirinth.new 0
 pop this 2
+push constant 0
+push constant 0
+push this 1
+call Avatar.new 3
+pop this 0
 push pointer 0
 return
 function HardestGameEver.run 1
@@ -44,20 +47,15 @@ pop pointer 0
 push this 0
 call Avatar.render 1
 pop temp 0
-push this 1
+push this 2
 call Labirinth.render 1
-pop temp 0
-push this 1
-push constant 123
-push constant 321
-call Labirinth.getBlock 3
 pop temp 0
 push constant 0
 return
 function HardestGameEver.destroy 0
 push argument 0
 pop pointer 0
-push this 1
+push this 2
 call Labirinth.destroy 1
 pop temp 0
 push this 0
@@ -101,50 +99,140 @@ pop pointer 0
 push pointer 0
 call HardestGameEver.defineMoveDirection 1
 pop temp 0
-push this 2
+push this 3
 push constant 1
 eq
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 0
-call Avatar.moveLeft 1
-pop temp 0
-label IF_FALSE0
-push this 2
-push constant 2
-eq
+push pointer 0
+call HardestGameEver.isWallLeft 1
+not
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push this 0
-call Avatar.moveUp 1
+call Avatar.moveLeft 1
 pop temp 0
 label IF_FALSE1
-push this 2
-push constant 3
+label IF_FALSE0
+push this 3
+push constant 2
 eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
-push this 0
-call Avatar.moveRight 1
-pop temp 0
-label IF_FALSE2
-push this 2
-push constant 4
-eq
+push pointer 0
+call HardestGameEver.isWallUp 1
+not
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
 push this 0
-call Avatar.moveDown 1
+call Avatar.moveUp 1
 pop temp 0
 label IF_FALSE3
+label IF_FALSE2
+push this 3
+push constant 3
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call HardestGameEver.isWallRight 1
+not
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 0
+call Avatar.moveRight 1
+pop temp 0
+label IF_FALSE5
+label IF_FALSE4
+push this 3
+push constant 4
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push pointer 0
+call HardestGameEver.isWallDown 1
+not
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push this 0
+call Avatar.moveDown 1
+pop temp 0
+label IF_FALSE7
+label IF_FALSE6
 push constant 5
 call Sys.wait 1
 pop temp 0
 push constant 0
+return
+function HardestGameEver.isWallLeft 8
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push this 0
+call Avatar.getX 1
+pop local 1
+push this 0
+call Avatar.getY 1
+pop local 2
+push this 2
+push local 1
+push local 2
+call Labirinth.getBlockFromXY 3
+pop local 5
+push this 0
+call Avatar.getX 1
+push this 0
+call Avatar.getSpeed 1
+add
+pop local 3
+push this 0
+call Avatar.getY 1
+push this 0
+call Avatar.getSpeed 1
+add
+pop local 4
+push this 2
+push local 3
+push local 4
+call Labirinth.getBlockFromXY 3
+pop local 6
+push local 3
+push local 5
+call Cell.getX 1
+sub
+push constant 0
+lt
+push local 3
+push local 5
+call Cell.getX 1
+sub
+push constant 0
+eq
+or
+pop local 7
+push local 7
+push local 5
+call Cell.getBorder 1
+push constant 1
+eq
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 0
+label IF_FALSE0
+push local 0
 return
 function HardestGameEver.defineMoveDirection 1
 push argument 0
@@ -158,7 +246,7 @@ if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push constant 0
-pop this 2
+pop this 3
 label IF_FALSE0
 push local 0
 push constant 130
@@ -167,7 +255,7 @@ if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
 push constant 1
-pop this 2
+pop this 3
 label IF_FALSE1
 push local 0
 push constant 131
@@ -176,7 +264,7 @@ if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
 push constant 2
-pop this 2
+pop this 3
 label IF_FALSE2
 push local 0
 push constant 132
@@ -185,7 +273,7 @@ if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
 push constant 3
-pop this 2
+pop this 3
 label IF_FALSE3
 push local 0
 push constant 133
@@ -194,7 +282,7 @@ if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
 push constant 4
-pop this 2
+pop this 3
 label IF_FALSE4
 push constant 0
 return
