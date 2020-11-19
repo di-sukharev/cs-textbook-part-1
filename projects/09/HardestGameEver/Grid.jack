@@ -75,9 +75,6 @@ class Grid {
         let row = matrix[row];
         let cell = row[col];
 
-        // do Debugger.log("cellX", cell.getX());
-        // do Debugger.log("cellBord", cell.getBorder());
-
         return cell;
     }
 

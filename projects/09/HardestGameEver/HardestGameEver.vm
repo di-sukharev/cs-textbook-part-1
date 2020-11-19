@@ -287,6 +287,8 @@ push this 1
 add
 push this 2
 add
+push constant 1
+add
 pop local 1
 push this 0
 call Avatar.getY 1
@@ -343,6 +345,8 @@ call Avatar.getY 1
 push this 1
 add
 push this 2
+add
+push constant 1
 add
 pop local 2
 push this 3

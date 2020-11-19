@@ -151,16 +151,19 @@ class HardestGameEver {
         
         let currentBlock = getCurrentBlock();
 
-        let nextX = avatar.getX() + avatarSpeed + avatarSize;
+        let nextX = avatar.getX() + avatarSpeed + avatarSize + 1;
         let nextY = avatar.getY();
-        let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+
+        if (~(nextX > 512)) { // TODO: REMOVE THIS IF
+            let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+            
+            let relativeX = nextX - (currentBlock.getX() + currentBlock.getWidth());
+
+            let isMovingOutOfCurrentBlock = ((relativeX > 0) | (relativeX = 0));
+
+            if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 3)) { let isWall = true; }
+        }
         
-        let relativeX = nextX - (currentBlock.getX() + currentBlock.getWidth());
-
-        let isMovingOutOfCurrentBlock = ((relativeX > 0) | (relativeX = 0));
-
-        if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 3)) { let isWall = true; }
-
         return isWall;
     }
 
@@ -175,7 +178,7 @@ class HardestGameEver {
         let currentBlock = getCurrentBlock();
 
         let nextX = avatar.getX();
-        let nextY = avatar.getY() + avatarSpeed + avatarSize;
+        let nextY = avatar.getY() + avatarSpeed + avatarSize + 1;
         let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
         
         let relativeY = nextY - (currentBlock.getY() + currentBlock.getHeight());
