@@ -61,6 +61,11 @@ class Cell {
         
         let border = LCGRandom.randRange(1, 4);
 
+        // if (border = 1) {
+        //     do Debugger.log("row", row);
+        //     do Debugger.log("col", col);
+        // }
+
         return;
     }
 

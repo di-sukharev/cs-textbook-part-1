@@ -4,11 +4,11 @@ class Avatar {
     field int size; // the width/height of the avatar
     field int speed;
 
-    constructor Avatar new(int initX, int initY, int initSpeed) {
+    constructor Avatar new(int initX, int initY, int initSpeed, int initSize) {
         
         let x = initX;
         let y = initY;
-        let size = 5;
+        let size = initSize;
         let speed = initSpeed;
 
         return this;

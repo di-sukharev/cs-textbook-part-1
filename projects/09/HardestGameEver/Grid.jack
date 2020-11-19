@@ -1,6 +1,7 @@
 class Grid {
     field Array matrix;
     field int rows, cols;
+    field int cellWidth, cellHeight;
 
     constructor Grid new(int r, int c) {
         let rows = r;
@@ -15,7 +16,7 @@ class Grid {
         var Array row;
         var Cell cell;
         var int i, j; // matrix rows and cols iterator
-        var int cellWidth, cellHeight;
+       
         
         // fill matrix with rows*cols matrix
         let matrix = Array.new(rows);
@@ -74,15 +75,18 @@ class Grid {
         let row = matrix[row];
         let cell = row[col];
 
+        // do Debugger.log("cellX", cell.getX());
+        // do Debugger.log("cellBord", cell.getBorder());
+
         return cell;
     }
 
     method int getCellWidth() {
-        return cell.getWidth();
+        return cellWidth;
     }
     
     method int getCellHeight() {
-        return cell.getHeight();
+        return cellHeight;
     }
 
     method void destroy() {

@@ -26,13 +26,6 @@ class Labirinth {
         let row = x / grid.getCellWidth();
         let col = y / grid.getCellHeight();
 
-        // do Debugger.log("x", x);
-        // do Debugger.log("grid.getCellWidth()", grid.getCellWidth());
-        // do Debugger.log("y", y);
-        // do Debugger.log("grid.getCellHeight()", grid.getCellHeight());
-        // do Debugger.log("row", row);
-        // do Debugger.log("col", col);
-
         let block = grid.getCell(row, col);
 
         return block;
