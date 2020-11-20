@@ -15,7 +15,30 @@ return
 function Labirinth.render 0
 push argument 0
 pop pointer 0
+push this 0
+call Grid.render 1
+pop temp 0
 push constant 0
+return
+function Labirinth.getBlockFromXY 3
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+call Grid.getCellWidth 1
+call Math.divide 2
+pop local 1
+push argument 2
+push this 0
+call Grid.getCellHeight 1
+call Math.divide 2
+pop local 2
+push this 0
+push local 1
+push local 2
+call Grid.getCell 3
+pop local 0
+push local 0
 return
 function Labirinth.destroy 0
 push argument 0

@@ -111,7 +111,7 @@ class DinoRunGame{
 		if(n_obstacles < MAX_OBSTACLES){
 			let obstacle_type = LCGRandom.randRange(0, 1);
 			
-			if(obstacle_type = 0){
+			if(obstacle_type = 0) {
 				let obstacles[n_obstacles] = Cactus.new(groundHeight);
 			}
 			else{

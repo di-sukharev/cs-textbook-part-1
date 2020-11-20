@@ -1,6 +1,8 @@
 class Main {
     function void main() {
         var HardestGameEver game;
+        do LCGRandom.setSeed(Keyboard.readInt("Type a symbol to generate the labirinth: "));
+
         let game = HardestGameEver.new();
 
         do game.run();

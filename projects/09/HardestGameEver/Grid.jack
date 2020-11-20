@@ -7,70 +7,88 @@ class Grid {
         let rows = r;
         let cols = c;
 
-        let cellHeight = 256 / rows; // screen is 256 pixels height
-        let cellWidth = 512 / cols; // screen is 512 pixels width
-
         do _createMatrix();
 
         return this;
     }
 
     method void _createMatrix() {
-        var Array row, col;
+        var Array row;
         var Cell cell;
-        var String str;
-        var int i; // matrix rows iterator
-        var int j; // matrix columns iterator
+        var int i, j; // matrix rows and cols iterator
+       
         
-        // fill matrix with 8x8 matrix, so it cell can be accessed as matrix[3][2]
+        // fill matrix with rows*cols matrix
         let matrix = Array.new(rows);
 
-        let i = 0;
+        let cellHeight = 256 / rows; // screen is 256 pixels height
+        let cellWidth = 512 / cols; // screen is 512 pixels width
+
+        let i = 0; // rows iterator
         while (i < rows) {
         
             let matrix[i] = Array.new(cols);
     
-            let j = 0;
+            let j = 0; // cols iterator
             while (j < cols) {
 
                 let row = matrix[i];
 
-                let row[j] = Cell.new();
+                let row[j] = Cell.new(i, j, cellHeight, cellWidth);
 
-                let cell = row[j];
-
-                do cell.generateBorder(j);
-                do renderCellInGrid(cell, i, j);
-
-                let j = j + 1;
+                let j = j + 1; // iterate to the next column
             }
-            let i = i + 1;
-        }
 
-        let str = matrix;
+            let i = i + 1; // iterate to the next row
+        }
 
         return;
     }
 
-    method void renderCellInGrid(Cell cell, int row, int col) {
-        var int x, y; // coordinates of cell on the screen
-        var int wall;
+    method void render() {
+        var Array row;
+        var Cell cell;
+        var int i, j; // matrix rows and cols iterator
 
-        let x = (row - 1) * cellWidth;
-        let y = (col - 1) * cellHeight;
+        let i = 0; // rows iterator
+        while (i < rows) {
+            let j = 0; // cols iterator
+            while (j < cols) {
+                let row = matrix[i];
+                let cell = row[j];
 
-        let wall = cell.getBorder();
+                do cell.render();
 
-        if (wall = 1) { do Screen.drawLine(x, y, x + cellWidth, y); } // top wall
-        if (wall = 2) { do Screen.drawLine(x + cellWidth, y, x + cellWidth, y + cellHeight); } // right wall
-        if (wall = 3) { do Screen.drawLine(x, y + cellHeight, x + cellWidth, y + cellHeight); } // bottom wall
-        if (wall = 4) { do Screen.drawLine(x, y, x, y + cellHeight); } // left wall
+                let j = j + 1; // iterate to the next column
+            }
+            
+            let i = i + 1; // iterate to the next row
+        }
 
         return;
+    }
+
+    method Cell getCell(int row, int col) {
+        var Cell cell;
+        var Array row;
+        
+        let row = matrix[row];
+        let cell = row[col];
+
+        return cell;
+    }
+
+    method int getCellWidth() {
+        return cellWidth;
+    }
+    
+    method int getCellHeight() {
+        return cellHeight;
     }
 
     method void destroy() {
-        do matrix.dispose();        
+        do matrix.dispose();     
+        // do cells.dispose // memory leak here!!!
         do Memory.deAlloc(this);
         
         return;

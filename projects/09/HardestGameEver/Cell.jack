@@ -1,34 +1,83 @@
 class Cell {
     
     field int border;
+    field int row, col;
+    field int height, width;
+    field int x, y; // coordinates of cell left/top corner relative to the screen
 
-    constructor Cell new() {
+    constructor Cell new(
+            int cellRow,
+            int cellColumn,
+            int cellHeight,
+            int cellWidth
+        ) {
+
+        let row = cellRow;
+        let col = cellColumn;
+        
+        let height = cellHeight;
+        let width = cellWidth;
+
+        do _defineCoordinates();
+
+        do _generateBorder();
 
         return this;
     }
 
-    method void generateBorder(int rand) {
-        var Array randomizer;
+    method void _defineCoordinates() {
+        let x = row * width;
+        let y = col * height;
 
-        let randomizer = Array.new(8);
-
-        let randomizer[0] = 1;
-        let randomizer[1] = 3;
-        let randomizer[2] = 3;
-        let randomizer[3] = 2;
-        let randomizer[4] = 4;
-        let randomizer[5] = 1;
-        let randomizer[6] = 2;
-        let randomizer[7] = 4;
-        
-        let border = randomizer[rand];
+        // max width is 511 px
+        if (x + width = 512) { let width = width-1; }
+        // max width is 255 px
+        if (y + height = 256) { let height = height-1; }
 
         return;
+    }
+
+    method int getX() {
+        return x;
+    }
+    
+    method int getY() {
+        return y;
+    }
+
+    method int getWidth() {
+        return width;
+    }
+
+    method int getHeight() {
+        return height;
     }
 
     method int getBorder() {
         return border;
     }
 
-    // methods to generate borders
+    method void _generateBorder() {
+        
+        let border = LCGRandom.randRange(1, 4);
+
+        return;
+    }
+
+    method void render() {
+       
+        if (border = 1) { do Screen.drawLine(x, y, x, y + height); } // left wall
+        if (border = 2) { do Screen.drawLine(x, y, x + width, y); } // top wall
+        if (border = 3) { do Screen.drawLine(x + width, y, x + width, y + height); } // right wall
+        if (border = 4) { do Screen.drawLine(x, y + height, x + width, y + height); } // bottom wall
+
+        return;
+    }
+
+    method void destroy() {
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
 }

@@ -14,9 +14,21 @@ class Labirinth {
     }
 
     method void render() {
-        // do grid.render();
+        do grid.render();
 
         return;
+    }
+
+    method Cell getBlockFromXY(int x, int y) {
+        var Cell block;
+        var int row, col;
+
+        let row = x / grid.getCellWidth();
+        let col = y / grid.getCellHeight();
+
+        let block = grid.getCell(row, col);
+
+        return block;
     }
 
     method void destroy() {
