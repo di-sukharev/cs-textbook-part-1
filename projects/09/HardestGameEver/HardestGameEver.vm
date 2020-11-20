@@ -230,7 +230,7 @@ push argument 0
 pop pointer 0
 push pointer 0
 push constant 1
-call HardestGameEver.isWall 2
+call HardestGameEver._isWall 2
 pop local 0
 push local 0
 return
@@ -239,7 +239,7 @@ push argument 0
 pop pointer 0
 push pointer 0
 push constant 2
-call HardestGameEver.isWall 2
+call HardestGameEver._isWall 2
 pop local 0
 push local 0
 return
@@ -248,7 +248,7 @@ push argument 0
 pop pointer 0
 push pointer 0
 push constant 3
-call HardestGameEver.isWall 2
+call HardestGameEver._isWall 2
 pop local 0
 push local 0
 return
@@ -257,11 +257,11 @@ push argument 0
 pop pointer 0
 push pointer 0
 push constant 4
-call HardestGameEver.isWall 2
+call HardestGameEver._isWall 2
 pop local 0
 push local 0
 return
-function HardestGameEver.isWall 8
+function HardestGameEver._isWall 8
 push argument 0
 pop pointer 0
 push constant 0
@@ -285,6 +285,8 @@ call Avatar.getY 1
 pop local 2
 push this 3
 push local 1
+push constant 10
+sub
 push local 2
 call Labirinth.getBlockFromXY 3
 pop local 6
@@ -306,6 +308,11 @@ push local 5
 call Cell.getBorder 1
 push constant 1
 eq
+push local 6
+call Cell.getBorder 1
+push constant 3
+eq
+or
 and
 if-goto IF_TRUE1
 goto IF_FALSE1
@@ -332,6 +339,8 @@ pop local 2
 push this 3
 push local 1
 push local 2
+push constant 10
+sub
 call Labirinth.getBlockFromXY 3
 pop local 6
 push local 2
@@ -352,6 +361,11 @@ push local 5
 call Cell.getBorder 1
 push constant 2
 eq
+push local 6
+call Cell.getBorder 1
+push constant 4
+eq
+or
 and
 if-goto IF_TRUE3
 goto IF_FALSE3
@@ -373,14 +387,14 @@ push this 1
 add
 push this 2
 add
-push constant 1
-add
 pop local 1
 push this 0
 call Avatar.getY 1
 pop local 2
 push this 3
 push local 1
+push constant 10
+add
 push local 2
 call Labirinth.getBlockFromXY 3
 pop local 6
@@ -405,6 +419,11 @@ push local 5
 call Cell.getBorder 1
 push constant 3
 eq
+push local 6
+call Cell.getBorder 1
+push constant 1
+eq
+or
 and
 if-goto IF_TRUE5
 goto IF_FALSE5
@@ -429,12 +448,12 @@ push this 1
 add
 push this 2
 add
-push constant 1
-add
 pop local 2
 push this 3
 push local 1
 push local 2
+push constant 10
+add
 call Labirinth.getBlockFromXY 3
 pop local 6
 push local 2
@@ -458,6 +477,11 @@ push local 5
 call Cell.getBorder 1
 push constant 4
 eq
+push local 6
+call Cell.getBorder 1
+push constant 2
+eq
+or
 and
 if-goto IF_TRUE7
 goto IF_FALSE7

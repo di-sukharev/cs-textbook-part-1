@@ -111,7 +111,7 @@ class HardestGameEver {
     method boolean isWallLeft() {
         var boolean isWallLeft;
 
-        let isWallLeft = isWall(1);
+        let isWallLeft = _isWall(1);
 
         return isWallLeft;
     }
@@ -119,7 +119,7 @@ class HardestGameEver {
     method boolean isWallUp() {
         var boolean isWallUp;
 
-        let isWallUp = isWall(2);
+        let isWallUp = _isWall(2);
 
         return isWallUp;
     }
@@ -127,7 +127,7 @@ class HardestGameEver {
     method boolean isWallRight() {
         var boolean isWallRight;
 
-        let isWallRight = isWall(3);
+        let isWallRight = _isWall(3);
 
         return isWallRight;
     }
@@ -135,12 +135,12 @@ class HardestGameEver {
     method boolean isWallDown() {
         var boolean isWallDown;
 
-        let isWallDown = isWall(4);
+        let isWallDown = _isWall(4);
 
         return isWallDown;
     }
 
-    method boolean isWall(int direction) {
+    method boolean _isWall(int direction) {
         var boolean isWall;
         var int nextX, nextY, relativeY, relativeX;
         var Cell currentBlock, nextBlock;
@@ -154,50 +154,50 @@ class HardestGameEver {
         if (direction = 1) {
             let nextX = avatar.getX() - avatarSpeed;
             let nextY = avatar.getY();
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+            let nextBlock = labirinth.getBlockFromXY(nextX - 10, nextY);
             
             let relativeX = nextX - currentBlock.getX();
 
             let isMovingOutOfCurrentBlock = ((relativeX < 0) | (relativeX = 0));
 
-            if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 1)) { let isWall = true; }
+            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 1) | (nextBlock.getBorder() = 3))) { let isWall = true; }
         }
 
         // is wall up
         if (direction = 2) {
             let nextX = avatar.getX();
             let nextY = avatar.getY() - avatarSpeed;
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+            let nextBlock = labirinth.getBlockFromXY(nextX, nextY - 10);
             
             let relativeY = nextY - currentBlock.getY();
 
             let isMovingOutOfCurrentBlock = ((relativeY < 0) | (relativeY = 0));
 
-            if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 2)) { let isWall = true; }
+            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 2) | (nextBlock.getBorder() = 4))) { let isWall = true; }
         }
 
         // is wall right
         if (direction = 3) {
-            let nextX = avatar.getX() + avatarSpeed + avatarSize + 1;
+            let nextX = avatar.getX() + avatarSpeed + avatarSize;
             let nextY = avatar.getY();
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+            let nextBlock = labirinth.getBlockFromXY(nextX + 10, nextY);
             
             let relativeX = nextX - (currentBlock.getX() + currentBlock.getWidth());
             let isMovingOutOfCurrentBlock = ((relativeX > 0) | (relativeX = 0));
           
-            if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 3)) { let isWall = true; }
+            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 3) | (nextBlock.getBorder() = 1))) { let isWall = true; }
         }
 
         // is wall down
         if (direction = 4) { 
             let nextX = avatar.getX();
-            let nextY = avatar.getY() + avatarSpeed + avatarSize + 1;
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY);
+            let nextY = avatar.getY() + avatarSpeed + avatarSize;
+            let nextBlock = labirinth.getBlockFromXY(nextX, nextY + 10);
             
             let relativeY = nextY - (currentBlock.getY() + currentBlock.getHeight());
             let isMovingOutOfCurrentBlock = ((relativeY > 0) | (relativeY = 0));
 
-            if (isMovingOutOfCurrentBlock & (currentBlock.getBorder() = 4)) { let isWall = true; }
+            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 4) | (nextBlock.getBorder() = 2))) { let isWall = true; }
         }
 
         return isWall;

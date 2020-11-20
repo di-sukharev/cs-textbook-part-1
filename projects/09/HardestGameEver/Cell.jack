@@ -3,7 +3,7 @@ class Cell {
     field int border;
     field int row, col;
     field int height, width;
-    field int x, y; // coordinates of cell left/top corner on the screen
+    field int x, y; // coordinates of cell left/top corner relative to the screen
 
     constructor Cell new(
             int cellRow,
@@ -60,11 +60,6 @@ class Cell {
     method void _generateBorder() {
         
         let border = LCGRandom.randRange(1, 4);
-
-        // if (border = 1) {
-        //     do Debugger.log("row", row);
-        //     do Debugger.log("col", col);
-        // }
 
         return;
     }
