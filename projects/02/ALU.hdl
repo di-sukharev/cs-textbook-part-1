@@ -44,34 +44,34 @@ CHIP ALU {
     PARTS:
         // --- x circuit flags --- start
         // if «zx» = 1 ? pass false (0000) : x
-        Mux16(a=x, b=false, sel=zx, out=zxMUX);
+        Mux16(a=x, b=false, sel=zx, out=outZX);
         // if «nx» = 1 ? pass !x : x
-        Not16(in=zxMUX, out=zxMUXNOT);
-        Mux16(a=zxMUX, b=zxMUXNOT, sel=nx, out=nxMUX);
+        Not16(in=outZX, out=zxNOT);
+        Mux16(a=outZX, b=zxNOT, sel=nx, out=outNX);
         // --- x circuit flags --- end
 
         /// --- below as above: doing all same logic for y[16] input as we did for x[16] ---
 
         // --- y circuit flags --- start
         // if «zy» = 1 ? pass false (0000) : y
-        Mux16(a=y, b=false, sel=zy, out=zyMUX);
+        Mux16(a=y, b=false, sel=zy, out=outZY);
         // if «ny» = 1 ? pass !y : y
-        Not16(in=zyMUX, out=zyMUXNOT);
-        Mux16(a=zyMUX, b=zyMUXNOT, sel=ny, out=nyMUX);
+        Not16(in=outZY, out=zyNOT);
+        Mux16(a=outZY, b=zyNOT, sel=ny, out=outNY);
         // --- x circuit flags --- end
 
         // --- middle part --- start
         // passing «x» and «y» to «x+y» and «x&y» gate, later we will pass it through Mux to have a single out (+ or & result)
-        Add16(a=nxMUX, b=nyMUX, out=xADDy);
-        And16(a=nxMUX, b=nyMUX, out=xANDy);
+        Add16(a=outNX, b=outNY, out=xADDy);
+        And16(a=outNX, b=outNY, out=xANDy);
         // passing both «x+y» and «x&y» to Mux gate to implement the «f» flag functionality
-        Mux16(a=xANDy, b=xADDy, sel=f, out=outMUXED);
+        Mux16(a=xANDy, b=xADDy, sel=f, out=ADDorAND);
         // --- middle part --- end
 
         // negating the «no» flag with
-        Not16(in=outMUXED, out=outNOT);
+        Not16(in=ADDorAND, out=outNOT);
         Mux16(
-            a=outMUXED,
+            a=ADDorAND,
             b=outNOT,
             sel=no,
             out=out,
