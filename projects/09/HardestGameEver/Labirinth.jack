@@ -5,8 +5,8 @@ class Labirinth {
     constructor Labirinth new() {
         var int rows, cols;
 
-        let rows = 8;
-        let cols = 8;
+        let rows = 16;
+        let cols = 16;
 
         let grid = Grid.new(rows, cols);
 

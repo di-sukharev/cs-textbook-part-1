@@ -1,17 +1,27 @@
 class HardestGameEver {
 
-    field Avatar avatar;
-    field int avatarSpeed;
-    field int avatarSize;
+    field Avatar player;
+    
+    field Avatar hunter;
+    
     field Labirinth labirinth;
-    field Cell currentBlock;
 
     constructor HardestGameEver new() {
-        
-        let avatarSpeed = 2;
-        let avatarSize = 5;
+        var int playerSpeed;
+        var int playerSize;
+
+        var int hunterSpeed;
+        var int hunterSize;
+
+        let playerSpeed = 2;
+        let playerSize = 5;
+        let player = Avatar.new(0,0, playerSpeed, playerSize);
+
+        let hunterSpeed = playerSpeed * 2;
+        let hunterSize = playerSize * 2;
+        let hunter = Avatar.new(0,0, hunterSpeed, hunterSize);
+
         let labirinth = Labirinth.new();
-        let avatar = Avatar.new(0,0, avatarSpeed, avatarSize);
 
         return this;
 
@@ -36,7 +46,7 @@ class HardestGameEver {
     }
 
     method void initialize() {
-        do avatar.render();
+        do player.render();
         do labirinth.render();
         
         return;
@@ -44,7 +54,7 @@ class HardestGameEver {
 
     method void destroy() {
         do labirinth.destroy();
-        do avatar.destroy();
+        do player.destroy();
         
         do Memory.deAlloc(this);
         
@@ -64,37 +74,32 @@ class HardestGameEver {
     }
 
     method void play() {
-        do moveAvatar();
+        do movePlayer();
+        // do moveHunter();
         return;
     }
 
-    method void moveAvatar() {
+    method void movePlayer() {
         var int direction;
 
-        let direction = getDirection();
+        let direction = _getPlayerDirection();
 
-        if ((direction = 1)) {
-            if (~(isWallLeft())) { do avatar.moveLeft(); }
-        }
-        
-        if (direction = 2)  {
-            if (~(isWallUp())) { do avatar.moveUp(); }
-        }
-        
-        if (direction = 3)  {
-            if (~(isWallRight())) { do avatar.moveRight(); }
-        }
-        
-        if (direction = 4)  {
-            if (~(isWallDown())) { do avatar.moveDown(); }
-        }
-        
-        do Sys.wait(5);  // delays the next movement
+        do Moover.move(labirinth, player, direction);
         
         return;
     }
 
-    method int getDirection() {
+    method void moveHunter() {
+        var int direction;
+
+        let direction = _getHunterDirection();
+
+        do Moover.move(labirinth, hunter, direction);
+        
+        return;
+    }
+
+    method int _getPlayerDirection() {
         var int direction;
         var char keyPressed;        
         let keyPressed = Keyboard.keyPressed();
@@ -108,110 +113,12 @@ class HardestGameEver {
         return direction;
     }
 
-    method boolean isWallLeft() {
-        var boolean isWallLeft;
+    method int _getHunterDirection() {
+        var int direction;
 
-        let isWallLeft = _isWall(1);
+        let direction = LCGRandom.randRange(1, 4);
 
-        return isWallLeft;
-    }
-
-    method boolean isWallUp() {
-        var boolean isWallUp;
-
-        let isWallUp = _isWall(2);
-
-        return isWallUp;
-    }
-
-    method boolean isWallRight() {
-        var boolean isWallRight;
-
-        let isWallRight = _isWall(3);
-
-        return isWallRight;
-    }
-
-    method boolean isWallDown() {
-        var boolean isWallDown;
-
-        let isWallDown = _isWall(4);
-
-        return isWallDown;
-    }
-
-    method boolean _isWall(int direction) {
-        var boolean isWall;
-        var int nextX, nextY, relativeY, relativeX;
-        var Cell currentBlock, nextBlock;
-        var boolean isMovingOutOfCurrentBlock;
-
-        let isWall = false;
-        
-        let currentBlock = getCurrentBlock();
-
-        // is wall left
-        if (direction = 1) {
-            let nextX = avatar.getX() - avatarSpeed;
-            let nextY = avatar.getY();
-            let nextBlock = labirinth.getBlockFromXY(nextX - 10, nextY);
-            
-            let relativeX = nextX - currentBlock.getX();
-
-            let isMovingOutOfCurrentBlock = ((relativeX < 0) | (relativeX = 0));
-
-            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 1) | (nextBlock.getBorder() = 3))) { let isWall = true; }
-        }
-
-        // is wall up
-        if (direction = 2) {
-            let nextX = avatar.getX();
-            let nextY = avatar.getY() - avatarSpeed;
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY - 10);
-            
-            let relativeY = nextY - currentBlock.getY();
-
-            let isMovingOutOfCurrentBlock = ((relativeY < 0) | (relativeY = 0));
-
-            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 2) | (nextBlock.getBorder() = 4))) { let isWall = true; }
-        }
-
-        // is wall right
-        if (direction = 3) {
-            let nextX = avatar.getX() + avatarSpeed + avatarSize;
-            let nextY = avatar.getY();
-            let nextBlock = labirinth.getBlockFromXY(nextX + 10, nextY);
-            
-            let relativeX = nextX - (currentBlock.getX() + currentBlock.getWidth());
-            let isMovingOutOfCurrentBlock = ((relativeX > 0) | (relativeX = 0));
-          
-            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 3) | (nextBlock.getBorder() = 1))) { let isWall = true; }
-        }
-
-        // is wall down
-        if (direction = 4) { 
-            let nextX = avatar.getX();
-            let nextY = avatar.getY() + avatarSpeed + avatarSize;
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY + 10);
-            
-            let relativeY = nextY - (currentBlock.getY() + currentBlock.getHeight());
-            let isMovingOutOfCurrentBlock = ((relativeY > 0) | (relativeY = 0));
-
-            if (isMovingOutOfCurrentBlock & ((currentBlock.getBorder() = 4) | (nextBlock.getBorder() = 2))) { let isWall = true; }
-        }
-
-        return isWall;
-    }
-
-    method Cell getCurrentBlock() {
-        var int currentX, currentY;
-        
-        let currentX = avatar.getX();
-        let currentY = avatar.getY();
-
-        let currentBlock = labirinth.getBlockFromXY(currentX, currentY);
-
-        return currentBlock;
+        return direction;
     }
 
 }

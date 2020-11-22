@@ -2,9 +2,9 @@ function Labirinth.new 2
 push constant 1
 call Memory.alloc 1
 pop pointer 0
-push constant 8
+push constant 16
 pop local 0
-push constant 8
+push constant 16
 pop local 1
 push local 0
 push local 1

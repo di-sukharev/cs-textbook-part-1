@@ -246,3 +246,8 @@ push argument 0
 pop pointer 0
 push this 3
 return
+function Avatar.getSize 0
+push argument 0
+pop pointer 0
+push this 2
+return

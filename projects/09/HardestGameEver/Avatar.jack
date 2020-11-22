@@ -83,4 +83,8 @@ class Avatar {
         return speed;
     }
 
+    method int getSize() {
+        return size;
+    }
+
 }
