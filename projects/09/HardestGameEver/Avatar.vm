@@ -1,5 +1,5 @@
 function Avatar.new 0
-push constant 4
+push constant 5
 call Memory.alloc 1
 pop pointer 0
 push argument 0
@@ -8,8 +8,10 @@ push argument 1
 pop this 1
 push argument 3
 pop this 2
-push argument 2
+push argument 4
 pop this 3
+push argument 2
+pop this 4
 push pointer 0
 return
 function Avatar.render 0
@@ -25,7 +27,7 @@ push this 0
 push this 2
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
@@ -45,20 +47,22 @@ call Screen.setColor 1
 pop temp 0
 push this 0
 push this 1
-push this 2
+push this 3
 add
+push this 4
 push constant 1
+sub
 sub
 push this 0
 push this 2
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
 push this 1
-push this 3
+push this 4
 sub
 pop this 1
 push constant 0
@@ -71,7 +75,9 @@ push this 0
 push this 2
 add
 push this 1
+push this 4
 push constant 1
+sub
 add
 call Screen.drawRectangle 4
 pop temp 0
@@ -95,15 +101,17 @@ pop temp 0
 push this 0
 push this 1
 push this 0
+push this 4
 push constant 1
+sub
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
 push this 0
-push this 3
+push this 4
 add
 pop this 0
 push constant 0
@@ -113,14 +121,16 @@ pop temp 0
 push this 0
 push this 2
 add
+push this 4
 push constant 1
+sub
 sub
 push this 1
 push this 0
 push this 2
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
@@ -131,7 +141,7 @@ function Avatar.moveDown 0
 push argument 0
 pop pointer 0
 push this 1
-push this 2
+push this 3
 add
 push constant 254
 lt
@@ -147,12 +157,14 @@ push this 0
 push this 2
 add
 push this 1
+push this 4
 push constant 1
+sub
 add
 call Screen.drawRectangle 4
 pop temp 0
 push this 1
-push this 3
+push this 4
 add
 pop this 1
 push constant 0
@@ -161,15 +173,17 @@ call Screen.setColor 1
 pop temp 0
 push this 0
 push this 1
-push this 2
+push this 3
 add
+push this 4
 push constant 1
+sub
 sub
 push this 0
 push this 2
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
@@ -191,19 +205,21 @@ pop temp 0
 push this 0
 push this 2
 add
+push this 4
 push constant 1
+sub
 sub
 push this 1
 push this 0
 push this 2
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
 push this 0
-push this 3
+push this 4
 sub
 pop this 0
 push constant 0
@@ -213,10 +229,12 @@ pop temp 0
 push this 0
 push this 1
 push this 0
+push this 4
 push constant 1
+sub
 add
 push this 1
-push this 2
+push this 3
 add
 call Screen.drawRectangle 4
 pop temp 0
@@ -244,10 +262,15 @@ return
 function Avatar.getSpeed 0
 push argument 0
 pop pointer 0
-push this 3
+push this 4
 return
-function Avatar.getSize 0
+function Avatar.getWidth 0
 push argument 0
 pop pointer 0
 push this 2
+return
+function Avatar.getHeight 0
+push argument 0
+pop pointer 0
+push this 3
 return

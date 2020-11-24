@@ -67,6 +67,16 @@ push argument 0
 pop pointer 0
 push this 6
 return
+function Cell.getRow 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Cell.getCol 0
+push argument 0
+pop pointer 0
+push this 2
+return
 function Cell.getWidth 0
 push argument 0
 pop pointer 0

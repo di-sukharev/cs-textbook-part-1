@@ -157,6 +157,16 @@ push argument 0
 pop pointer 0
 push this 4
 return
+function Grid.getRows 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Grid.getCols 0
+push argument 0
+pop pointer 0
+push this 2
+return
 function Grid.destroy 0
 push argument 0
 pop pointer 0
