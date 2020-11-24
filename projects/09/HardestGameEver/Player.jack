@@ -1,0 +1,75 @@
+class Player {
+    field Avatar avatar;
+    field Moover moover;
+
+    field int speed, width, height;
+
+    constructor Player new(Labirinth labirinth) {
+        var int startPositionX, startPositionY;
+        var Cell startBlock;
+
+        let startBlock = labirinth.getBlockFromRowCol(0, 0);
+
+        let speed = 2;
+        let width = 5;
+        let height = 5;
+
+        let startPositionX = startBlock.getX() + (startBlock.getWidth() / 2) - (width / 2);
+        let startPositionY = startBlock.getY() + (startBlock.getHeight() / 2) - (height / 2);
+        let avatar = Avatar.new(startPositionX, startPositionY, speed, width, height);
+        let moover = Moover.new(labirinth, avatar);
+
+        return this;
+    }
+
+    method void render() {
+        do avatar.render();
+
+        return;
+    }
+
+    method void move() {
+        var int direction;
+
+        let direction = _getPlayerDirection();
+
+        do moover.move(direction);
+        
+        return;
+    }
+
+    method int _getPlayerDirection() {
+        var int direction;
+        var char keyPressed;        
+        let keyPressed = Keyboard.keyPressed();
+
+        if (keyPressed = 0)   { let direction = 0; }   // no key is pressed
+        if (keyPressed = 130) { let direction = 1; }   // left arrow
+        if (keyPressed = 131) { let direction = 2; }   // up arrow
+        if (keyPressed = 132) { let direction = 3; }   // right arrow
+        if (keyPressed = 133) { let direction = 4; }   // down arrow
+
+        return direction;
+    }
+
+    method void destroy() {
+        do avatar.destroy();
+        
+        do Memory.deAlloc(this);
+        
+        return;
+    }
+
+
+    method int getSpeed() {
+        return speed;
+    }
+    
+    method int getWidth() {
+        return width;
+    }
+    
+    method int getHeight() {
+        return height;
+    }
+}

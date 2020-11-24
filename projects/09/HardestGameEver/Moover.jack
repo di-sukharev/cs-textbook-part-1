@@ -40,7 +40,6 @@ class Moover {
 
     method void moveToClosestBlock() {
         var boolean isWallInThatDirection, hasMovedToTheCenterOfTheClosestBlock;
-        
 
         if (~startedMovingToClosestBlock) {
             let isWallInThatDirection = true;
@@ -132,7 +131,7 @@ class Moover {
         if (direction = 3) {
             let nextX = avatar.getX() + avatar.getSpeed() + avatar.getWidth();
             let nextY = avatar.getY();
-            let nextBlock = labirinth.getBlockFromXY(nextX + 10, nextY);
+            let nextBlock = labirinth.getBlockFromXY(nextX + 5, nextY);
             
             let relativeX = nextX - (currentBlock.getX() + currentBlock.getWidth());
             let isMovingOutOfCurrentBlock = ((relativeX > 0) | (relativeX = 0));
@@ -144,7 +143,7 @@ class Moover {
         if (direction = 4) { 
             let nextX = avatar.getX();
             let nextY = avatar.getY() + avatar.getSpeed() + avatar.getHeight();
-            let nextBlock = labirinth.getBlockFromXY(nextX, nextY + 10);
+            let nextBlock = labirinth.getBlockFromXY(nextX, nextY + 5);
             
             let relativeY = nextY - (currentBlock.getY() + currentBlock.getHeight());
             let isMovingOutOfCurrentBlock = ((relativeY > 0) | (relativeY = 0));
