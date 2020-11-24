@@ -1,30 +1,47 @@
 class HardestGameEver {
 
     field Avatar player;
+    field Moover playerMoover;
     
     field Avatar hunter;
-    
+    field Moover hunterMoover;
+
     field Labirinth labirinth;
 
     constructor HardestGameEver new() {
         var int playerSpeed;
         var int playerSize;
-
+        var int playerStartPositionX, playerStartPositionY;
+    
         var int hunterSpeed;
-        var int hunterSize;
+        var int hunterWidth, hunterHeight;
+        var int hunterStartPositionX, hunterStartPositionY;
+
+        var int labirinthRows, labirinthCols;
+        var Cell startBlock;
+
+        let labirinthRows = 16;
+        let labirinthCols = 16;
+
+        let labirinth = Labirinth.new(labirinthRows, labirinthCols);
+        let startBlock = labirinth.getBlockFromRowCol(0, 0);
 
         let playerSpeed = 2;
         let playerSize = 5;
-        let player = Avatar.new(0,0, playerSpeed, playerSize);
+        let playerStartPositionX = startBlock.getX() + (startBlock.getWidth() / 2) - (playerSize / 2);
+        let playerStartPositionY = startBlock.getY() + (startBlock.getHeight() / 2) - (playerSize / 2);
+        let player = Avatar.new(playerStartPositionX, playerStartPositionY, playerSpeed, playerSize, playerSize);
+        let playerMoover = Moover.new(labirinth, player);
 
         let hunterSpeed = playerSpeed * 2;
-        let hunterSize = playerSize * 2;
-        let hunter = Avatar.new(0,0, hunterSpeed, hunterSize);
-
-        let labirinth = Labirinth.new();
+        let hunterWidth = playerSize * 2;
+        let hunterHeight = playerSize * 2;
+        let hunterStartPositionX = startBlock.getX() + (startBlock.getWidth() / 2) - (hunterWidth / 2);
+        let hunterStartPositionY = startBlock.getY() + (startBlock.getHeight() / 2) - (hunterHeight / 2);
+        let hunter = Avatar.new(hunterStartPositionX, hunterStartPositionY, hunterSpeed, hunterWidth, hunterHeight);
+        let hunterMoover = Moover.new(labirinth, hunter);
 
         return this;
-
     }
 
     method void run() {
@@ -75,7 +92,8 @@ class HardestGameEver {
 
     method void play() {
         do movePlayer();
-        // do moveHunter();
+        do moveHunter();
+        
         return;
     }
 
@@ -84,17 +102,17 @@ class HardestGameEver {
 
         let direction = _getPlayerDirection();
 
-        do Moover.move(labirinth, player, direction);
+        do playerMoover.move(direction);
         
         return;
     }
 
     method void moveHunter() {
-        var int direction;
+        // var int direction;
 
-        let direction = _getHunterDirection();
+        // let direction = _getHunterDirection();
 
-        do Moover.move(labirinth, hunter, direction);
+        do hunterMoover.moveToClosestBlock();
         
         return;
     }
