@@ -45,6 +45,14 @@ class Cell {
         return y;
     }
 
+    method int getRow() {
+        return row;
+    }
+    
+    method int getCol() {
+        return col;
+    }
+
     method int getWidth() {
         return width;
     }
