@@ -2,11 +2,7 @@ class Labirinth {
 
     field Grid grid; // matrix; array of rows/columns where row/column is an array of GridCells
 
-    constructor Labirinth new() {
-        var int rows, cols;
-
-        let rows = 16;
-        let cols = 16;
+    constructor Labirinth new(int rows, int cols) {
 
         let grid = Grid.new(rows, cols);
 
@@ -26,9 +22,26 @@ class Labirinth {
         let row = x / grid.getCellWidth();
         let col = y / grid.getCellHeight();
 
-        let block = grid.getCell(row, col);
+        let block = getBlockFromRowCol(row, col);
 
         return block;
+    }
+
+    method Cell getBlockFromRowCol(int row, int col) {
+        var Cell block;
+
+        if ((row < 0) | (col < 0) | (row > grid.getRows()) | (col > grid.getCols())) { let block = null; }
+        else { let block = grid.getCell(row, col); }
+
+        return block;
+    }
+
+    method int getBlockWidth() {
+        return grid.getCellWidth();
+    }
+    
+    method int getBlockHeight() {
+        return grid.getCellHeight();
     }
 
     method void destroy() {
