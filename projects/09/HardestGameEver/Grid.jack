@@ -86,6 +86,14 @@ class Grid {
         return cellHeight;
     }
 
+    method int getRows() {
+        return rows;
+    }
+    
+    method int getCols() {
+        return cols;
+    }
+
     method void destroy() {
         do matrix.dispose();     
         // do cells.dispose // memory leak here!!!
