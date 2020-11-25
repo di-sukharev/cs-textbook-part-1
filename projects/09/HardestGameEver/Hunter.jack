@@ -65,12 +65,11 @@ class Hunter {
     }
 
     method boolean _hasHunterMoved() {
-        var boolean hasMoved;
+        var boolean centerOfAvatarIsInCenterOfTheNextBlock;
 
         let currentCell = labirinth.getCurrentCell(avatar);
 
-        // TODO: simplify
-        let hasMoved =
+        let centerOfAvatarIsInCenterOfTheNextBlock =
             (currentCell = nextBlock)
             & ((avatar.getX() + (avatar.getWidth() / 2)) = (nextBlock.getX() + (nextBlock.getWidth() / 2)))
             & ((avatar.getY() + (avatar.getHeight() / 2)) = (nextBlock.getY() + (nextBlock.getHeight() / 2)));
