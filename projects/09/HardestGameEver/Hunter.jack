@@ -74,7 +74,7 @@ class Hunter {
             & ((avatar.getX() + (avatar.getWidth() / 2)) = (nextBlock.getX() + (nextBlock.getWidth() / 2)))
             & ((avatar.getY() + (avatar.getHeight() / 2)) = (nextBlock.getY() + (nextBlock.getHeight() / 2)));
 
-        return hasMoved;
+        return centerOfAvatarIsInCenterOfTheNextBlock;
     }
 
     method void destroy() {
