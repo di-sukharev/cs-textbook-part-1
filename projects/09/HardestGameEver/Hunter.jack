@@ -2,40 +2,80 @@ class Hunter {
 
     field Avatar avatar;
     field Moover moover;
+    field Labirinth labirinth;
 
     field int speed, width, height;
 
-    constructor Hunter new(Labirinth labirinth) {
-        var int startPositionX, startPositionY;
+    field int direction;
+    field boolean isMoving;
+
+    field Cell currentCell, nextBlock;
+
+    constructor Hunter new(Labirinth usedLabirinth) {
+        var int centerOfBlockX, centerOfBlockY;
         var Cell startBlock;
 
-        let startBlock = labirinth.getBlockFromRowCol(0, 0);
+        let labirinth = usedLabirinth;
 
-        let speed = 4;
+        let startBlock = labirinth.getCellFromRowCol(0, 0);
+
+        let speed = 2;
         
         let width = 10;
         let height = 10;
 
-        let startPositionX = startBlock.getX() + (startBlock.getWidth() / 2) - (width / 2);
-        let startPositionY = startBlock.getY() + (startBlock.getHeight() / 2) - (height / 2);
-        let avatar = Avatar.new(startPositionX, startPositionY, speed, width, height);
+        let centerOfBlockX = startBlock.getX() + (startBlock.getWidth() / 2) - (width / 2);
+        let centerOfBlockY = startBlock.getY() + (startBlock.getHeight() / 2) - (height / 2);
+        let avatar = Avatar.new(centerOfBlockX, centerOfBlockY, speed, width, height);
         let moover = Moover.new(labirinth, avatar);
 
         return this;
     }
 
     method void move() {
-        do moover.moveToClosestBlock();
-        
+        if (~isMoving) { do _setHunterDirection(); let isMoving = true; }
+
+        do moover.move(direction);
+
+        if (_hasHunterMoved()) { let isMoving = false; }
+
         return;
     }
 
-    method int _getHunterDirection() {
-        var int direction;
+    method void _setHunterDirection() {
+        var boolean isWallInThatDirection;
 
-        let direction = LCGRandom.randRange(1, 4);
+        let isWallInThatDirection = true;
 
-        return direction;
+        let currentCell = labirinth.getCurrentCell(avatar);
+
+        while(isWallInThatDirection) {
+            let direction = LCGRandom.randRange(1,4);
+            let nextBlock = labirinth.getCellFromDirection(avatar, direction);
+            
+            if (~(nextBlock = null)) {
+                let isWallInThatDirection = (
+                    (currentCell.getBorder() = direction)
+                    | (nextBlock.getBorder() = labirinth.getParallelWall(direction))
+                    );
+            }
+        }
+
+        return;
+    }
+
+    method boolean _hasHunterMoved() {
+        var boolean hasMoved;
+
+        let currentCell = labirinth.getCurrentCell(avatar);
+
+        // TODO: simplify
+        let hasMoved =
+            (currentCell = nextBlock)
+            & ((avatar.getX() + (avatar.getWidth() / 2)) = (nextBlock.getX() + (nextBlock.getWidth() / 2)))
+            & ((avatar.getY() + (avatar.getHeight() / 2)) = (nextBlock.getY() + (nextBlock.getHeight() / 2)));
+
+        return hasMoved;
     }
 
     method void destroy() {

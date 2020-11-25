@@ -8,6 +8,5 @@ class Main {
         do game.run();
 
         return;
-
     }
 }

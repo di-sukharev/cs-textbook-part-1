@@ -1,22 +1,26 @@
 class Player {
+    
     field Avatar avatar;
     field Moover moover;
-
+    field Labirinth labirinth;
+    
     field int speed, width, height;
 
-    constructor Player new(Labirinth labirinth) {
-        var int startPositionX, startPositionY;
+    constructor Player new(Labirinth l) {
+        var int centerOfBlockX, centerOfBlockY;
         var Cell startBlock;
 
-        let startBlock = labirinth.getBlockFromRowCol(0, 0);
+        let labirinth = l;
+
+        let startBlock = labirinth.getCellFromRowCol(0, 0);
 
         let speed = 2;
         let width = 5;
         let height = 5;
 
-        let startPositionX = startBlock.getX() + (startBlock.getWidth() / 2) - (width / 2);
-        let startPositionY = startBlock.getY() + (startBlock.getHeight() / 2) - (height / 2);
-        let avatar = Avatar.new(startPositionX, startPositionY, speed, width, height);
+        let centerOfBlockX = startBlock.getX() + (startBlock.getWidth() / 2) - (width / 2);
+        let centerOfBlockY = startBlock.getY() + (startBlock.getHeight() / 2) - (height / 2);
+        let avatar = Avatar.new(centerOfBlockX, centerOfBlockY, speed, width, height);
         let moover = Moover.new(labirinth, avatar);
 
         return this;
@@ -34,13 +38,14 @@ class Player {
         let direction = _getPlayerDirection();
 
         do moover.move(direction);
-        
+
         return;
     }
 
     method int _getPlayerDirection() {
         var int direction;
-        var char keyPressed;        
+        var char keyPressed;  
+
         let keyPressed = Keyboard.keyPressed();
 
         if (keyPressed = 0)   { let direction = 0; }   // no key is pressed
@@ -59,7 +64,6 @@ class Player {
         
         return;
     }
-
 
     method int getSpeed() {
         return speed;
