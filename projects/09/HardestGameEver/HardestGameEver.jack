@@ -7,10 +7,6 @@ class HardestGameEver {
     field Labirinth labirinth;
 
     constructor HardestGameEver new() {    
-        var int hunterSpeed;
-        var int hunterWidth, hunterHeight;
-        var int hunterStartPositionX, hunterStartPositionY;
-
         let labirinth = Labirinth.new();
 
         let player = Player.new(labirinth);
