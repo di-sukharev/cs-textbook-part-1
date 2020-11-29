@@ -25,7 +25,7 @@
     (RESTART)
     @SCREEN
 D=A
-@0
+@screenRow
 M=D	//PUT SCREEN START LOCATION IN RAM0
 
 ///////////////////////////
@@ -41,31 +41,31 @@ D;JEQ	//ELSE JUMP TO WHITEN
 0;JMP
 ///////////////////////////
     (BLACK)
-@1
+@color
 M=-1	//WHAT TO FILL SCREEN WITH (-1=11111111111111)
 @CHANGE
 0;JMP
 
     (WHITE)
-@1
+@color
 M=0	//WHAT TO FILL SCREEN WITH
     @CHANGE
 0;JMP
 //////////////////////////
     (CHANGE)
-@1	//CHECK WHAT TO FILL SCREEN WITH
+@color	//CHECK WHAT TO FILL SCREEN WITH
 D=M	//D CONTAINS BLACK OR WHITE
 
-@0
+@screenRow
 A=M	//GET ADRESS OF SCREEN PIXEL TO FILL
 M=D	//FILL IT
 
-@0
+@screenRow
 D=M+1	//INC TO NEXT PIXEL
 @KBD
 D=A-D	//KBD-SCREEN=A
 
-@0
+@screenRow
 M=M+1	//INC TO NEXT PIXEL
 
     @CHANGE
