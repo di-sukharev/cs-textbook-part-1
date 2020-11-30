@@ -28,7 +28,6 @@ class Math {
         let bits[13] = 8192;
         let bits[14] = 16384;
         let bits[15] = 16384+16384; // with 32768, compiler return error 'Integer constant too big'
-        
         return;
     }
 
@@ -42,25 +41,27 @@ class Math {
     
     /** Returns the absolute value of x. */
     function int abs(int x) {
-        if( x < 0 ) { let x = -x; }
+        if( x < 0 ) {
+            let x = -x;
+        }
         return x;
     }
 
     /** Returns the product of x and y. */
     function int multiply(int x, int y) {
         var int sum, shiftedX;
-        var int i;
+        var int j;
         
         let sum = 0;
         let shiftedX = x;
-        let i = 0;
-        while( i < 16 ) {   // 16-bit numbers
-            if(Math.bit(y, i)) { let sum = sum + shiftedX; }
-
+        let j = 0;
+        while( j < 16 ) {   // 16-bit numbers
+            if(Math.bit(y, j)) {
+                let sum = sum + shiftedX;
+            }
             let shiftedX = shiftedX + shiftedX;
-            let i = i + 1;
+            let j = j + 1;
         }
-
         return sum;
     }
     
@@ -70,6 +71,8 @@ class Math {
         var int q;
         var int result;
         
+        let isXnegative = x < 0;
+        let isYnegative = y < 0;
         let x = Math.abs(x);
         let y = Math.abs(y);
 
@@ -79,9 +82,6 @@ class Math {
 
         if( x-(2*q*y) < y ) { let result = q+q; }
         else { let result = q+q+1; }
-        
-        let isXnegative = x < 0;
-        let isYnegative = y < 0;
         
         if( isXnegative | isYnegative ) { let result = -result; }
         
