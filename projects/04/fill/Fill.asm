@@ -23,53 +23,58 @@
 // Здесь нужно написать код, который будет работать 🌞
 
     (RESTART)
-    @SCREEN
+@SCREEN
 D=A
 @screenRow
-M=D	//PUT SCREEN START LOCATION IN RAM0
+M=D
 
-///////////////////////////
-    (KBDCHECK)
+/////////////////////////// CHECK IF USER PRESSED A KEY AND GOTO SELECT COLOR
+    (KEYBOARD_CHECK)
 @KBD
 D=M
-@BLACK
-D;JGT	//JUMP IF ANY KBD KEYS ARE PRESSED
-@WHITE
-D;JEQ	//ELSE JUMP TO WHITEN
 
-    @KBDCHECK
-0;JMP
-///////////////////////////
-    (BLACK)
-@color
-M=-1	//WHAT TO FILL SCREEN WITH (-1=11111111111111)
-@CHANGE
+@SELECT_BLACK_COLOR
+D;JGT	// Goto select black color
+
+@SELECT_WHITE_COLOR
+D;JEQ	// Goto select color
+
+@KEYBOARD_CHECK // Endlessly repeat keyboard check
 0;JMP
 
-    (WHITE)
+/////////////////////////// SELECT BLACK OR WHITE COLOR
+    (SELECT_BLACK_COLOR)
 @color
-M=0	//WHAT TO FILL SCREEN WITH
-    @CHANGE
+M=-1	// -1=11111111111111, -1 means make all pixels black
+@PAINT_SCREEN
 0;JMP
+
+    (SELECT_WHITE_COLOR)
+@color
+M=0	// 0 means make all pixels white
+
+@PAINT_SCREEN
+0;JMP
+
 //////////////////////////
-    (CHANGE)
-@color	//CHECK WHAT TO FILL SCREEN WITH
-D=M	//D CONTAINS BLACK OR WHITE
+    (PAINT_SCREEN)
+@color	// CHECK WHAT TO FILL SCREEN WITH
+D=M	// D CONTAINS BLACK OR WHITE
 
 @screenRow
-A=M	//GET ADRESS OF SCREEN PIXEL TO FILL
-M=D	//FILL IT
+A=M	// GET ADRESS OF SCREEN PIXEL TO FILL
+M=D	// FILL IT
 
 @screenRow
-D=M+1	//INC TO NEXT PIXEL
+D=M+1	// INC TO NEXT PIXEL
 @KBD
-D=A-D	//KBD-SCREEN=A
+D=A-D	// KBD-SCREEN=A
 
 @screenRow
-M=M+1	//INC TO NEXT PIXEL
+M=M+1	// INC TO NEXT PIXEL
 
-    @CHANGE
-D;JGT	//IF A=0 EXIT AS THE WHOLE SCREEN IS BLACK
+    @PAINT_SCREEN
+D;JGT	// IF A=0 EXIT AS THE WHOLE SCREEN IS BLACK
 /////////////////////////
     @RESTART
 0;JMP
