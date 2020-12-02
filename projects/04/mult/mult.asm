@@ -6,56 +6,28 @@
 // Multiplies R0 and R1 and stores the result in R2.
 // (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
 
-// ⬇ pseudo-code ⬇
+// ⬇ как программировать ⬇
 
-// i = 0
-// R2 = 0
-// while (i < R1)
-//     R2 = R2 + R0
-//     i++
-// END
+// пока R1 не равно нулю: R2=R0+R2, уменьшить R1 на единицу
+// в результате R1 станет 0, а R2 станет результатом сложения R0+R0+R0+…
 
-// ⬆ pseudo-code ⬆
+// ⬆ как программировать ⬆
 
 // Здесь нужно написать код, который будет работать 🌞
 
-// set i = 0 as a variable, our loop counter
-@i
-M=0
-
-// Set R2 = 0
-@R2
-M=0
-
-// if R0 == 0, then 0 * R1 = 0, so R2 = 0 as it is here, so we goto END
-@R0
-D=M
-@END
-D;JEQ
-
-// if R1 == 0, then R0 * 0 = 0, so R2 = 0 as it is here, so we goto END
-@R1
-D=M
-@END
-D;JEQ
-
     (LOOP) // label
-// multiplication as a sum of R0+R0+R0+R0+…
+// multiplication as a sum of R0+R0+R0+R0+… R1 times
 @R0
 D=M
 @R2
 M=M+D
 
-// i++
-@i
-M=M+1
-
-// goto LOOP if i <= R1
-D=M
 @R1
-D=D-M
+M=M-1
+
+D=M
 @LOOP
-D;JLT
+D;JGT
 
     (END) // label
 @END
