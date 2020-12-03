@@ -7,37 +7,33 @@
  * A basic math library.
  */
 class Math {
-    static int bits;
+    static int twoToThePowerOf;
     
     /** Initializes the library. */
     function void init() {
-        let bits = Array.new(16);
-        let bits[0] = 1;
-        let bits[1] = 2;
-        let bits[2] = 4;
-        let bits[3] = 8;
-        let bits[4] = 16;
-        let bits[5] = 32;
-        let bits[6] = 64;
-        let bits[7] = 128;
-        let bits[8] = 256;
-        let bits[9] = 512;
-        let bits[10] = 1024;
-        let bits[11] = 2048;
-        let bits[12] = 4096;
-        let bits[13] = 8192;
-        let bits[14] = 16384;
-        let bits[15] = 16384+16384; // with 32768, compiler return error 'Integer constant too big'
+        let twoToThePowerOf = Array.new(16);
+        let twoToThePowerOf[0] = 1;
+        let twoToThePowerOf[1] = 2;
+        let twoToThePowerOf[2] = 4;
+        let twoToThePowerOf[3] = 8;
+        let twoToThePowerOf[4] = 16;
+        let twoToThePowerOf[5] = 32;
+        let twoToThePowerOf[6] = 64;
+        let twoToThePowerOf[7] = 128;
+        let twoToThePowerOf[8] = 256;
+        let twoToThePowerOf[9] = 512;
+        let twoToThePowerOf[10] = 1024;
+        let twoToThePowerOf[11] = 2048;
+        let twoToThePowerOf[12] = 4096;
+        let twoToThePowerOf[13] = 8192;
+        let twoToThePowerOf[14] = 16384;
+        let twoToThePowerOf[15] = 16384+16384; // with 32768, compiler return error 'Integer constant too big'
         
         return;
     }
 
     function boolean bit(int x, int n) {
-        return ~((x & bits[n]) = 0);
-    }
-    
-    function int twoToThePowerOf(int power) {
-        return bits[power];
+        return ~((x & Math.twoToThePowerOf[n]) = 0);
     }
     
     /** Returns the absolute value of x. */
@@ -106,7 +102,7 @@ class Math {
         let i = 7; // = #bits / 2 - 1
 
         while( ~(i < 0) ) {
-            let temp = y + Math.twoToThePowerOf(i);
+            let temp = y + Math.twoToThePowerOf[i];
             let temp_squared = temp * temp;
 
             // in case of overflow
