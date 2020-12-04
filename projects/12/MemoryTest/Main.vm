@@ -122,5 +122,30 @@ pop temp 0
 push local 2
 call Array.dispose 1
 pop temp 0
+push constant 14000
+call Array.new 1
+pop local 2
+push constant 0
+push local 2
+add
+push constant 499
+push local 3
+add
+pop pointer 1
+push that 0
+push constant 90
+sub
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8005
+push constant 0
+push local 2
+add
+pop pointer 1
+push that 0
+call Memory.poke 2
+pop temp 0
 push constant 0
 return
