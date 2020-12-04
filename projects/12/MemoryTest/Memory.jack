@@ -111,7 +111,9 @@ class Memory {
 
         // Step 1 register back, point to the object base, where [SIZE] is stored.
         // So, now object[SIZE] is pointing to object[0] where size was stored during allocation.
-        let object = object - 1; // point to SIZE header
+        let object = object - 1;
+        // reduce object[SIZE] by 1, because we will use this register for setting NEXT header
+        let object[SIZE] = object[SIZE] - 1;
         let object[NEXT] = null; // set NEXT header
 
         // find list segment
