@@ -71,10 +71,10 @@ class Screen {
         var int x, y, dx, dy, temp;
 
         // if line coordinates are: from 'right' to 'left'
-        if (x > x2) {
+        if (x1 > x2) {
             // swap the coordinates to: from 'left' to 'right'
-            let temp = x; let x = x2; let x2 = temp;
-            let temp = y; let y = y2; let y2 = temp;
+            let temp = x1; let x1 = x2; let x2 = temp;
+            let temp = y1; let y1 = y2; let y2 = temp;
         }
 
         let x = x1;
@@ -128,7 +128,7 @@ class Screen {
     	while (((right < dx) | (right = dx)) & ((down < dy) | (down = dy))) {
 		    do Screen.drawPixel(x + right, y + down);
 
-            let diff = right*dy + -(down*dx);
+            let diff = right*dy + -(down*dx);  // compiler bugs when using '(a*b) - (c*d)', fix with 'a + -(b)'
 
             if (diff < 0) { let right=right+1; let diff=diff+dy; }
             else { let down=down+1; let diff=diff-dx; }
@@ -140,12 +140,6 @@ class Screen {
     function void drawNorthEastLine(int x, int y, int dx, int dy) {
         var int right, up, diff;
 
-        do Output.printInt(x);
-        do Output.printInt(y);
-        do Output.println();
-        do Output.printInt(dx);
-        do Output.printInt(dy);
-
         let right = 0; // pixels we went right
 	    let up = 0; // pixels we went up
 	    let diff = 0; // are we overshooting or undershooting the line coordinates
@@ -153,7 +147,7 @@ class Screen {
     	while (((right < dx) | (right = dx)) & ((up > dy) | (up = dy))) {
 		    do Screen.drawPixel(x + right, y + up);
 
-            let diff = right*dy + -(up*dx);
+            let diff = (right*dy) + -(up*dx); // compiler bugs when using '(a*b) - (c*d)', fix with 'a + -(b)'
 
             if (diff < 0) { let up=up-1; let diff=diff-dx; }
             else { let right=right+1; let diff=diff+dy; }
@@ -165,9 +159,9 @@ class Screen {
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      * and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
-        while( ~(y1 > y2) ) {
+        while(~(y1 > y2)) {
             do Screen.drawHorizontalLine(x1, y1, x2);
-            let y1 = y1 + 10;
+            let y1 = y1 + 1;
         }
         
         return;
@@ -175,15 +169,13 @@ class Screen {
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
     function void drawCircle(int x, int y, int r) {
-        var int a, b, dy, rSQRD, dySQRD, side;
+        var int a, b, dy, dx;
 
         let dy = -r;
-        let rSQRD = r * r;
-        let dySQRD = dy * dy;
 
         while (dy < r) {
-            let side = Math.sqrt(rSQRD - dySQRD);
-            do Screen.drawHorizontalLine(x - side, y + dy, x + side);
+            let dx = Math.sqrt((r * r) - (dy * dy));
+            do Screen.drawHorizontalLine(x - dx, y + dy, x + dx);
             let dy = dy + 1;
         }
         
