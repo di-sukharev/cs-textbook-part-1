@@ -46,10 +46,10 @@ class Screen {
     function void drawPixel(int x, int y) {
         var int address, value, bit;
 
-        let address = (32 * y) + (x / 16);
+        let address = (32 * y) + (x / 16); // find the pixel row in RAM
 
         let bit = Math.mod(x, 16); // find the remainder of x/16
-        let bit = Math.twoToThePowerOf(bit); // generate
+        let bit = Math.twoToThePowerOf(bit); // find the exact bit in the pixel row
 
         let value = screen[address]; // 16384 is the SCREEN MEMORY MAP base address
         

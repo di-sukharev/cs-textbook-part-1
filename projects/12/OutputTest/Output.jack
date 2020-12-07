@@ -15,12 +15,28 @@
  * as a small filled square, indicates where the next character will be displayed.
  */
 class Output {
+    static Array screen;
 
     // Character map for displaying characters
     static Array charMaps; 
 
+    static Array grid;
+
+    static int X, Y;
+
+    static Array cursor; // cursor[X] = column, cursor[Y] = row
+
     /** Initializes the screen, and locates the cursor at the screen's top-left. */
     function void init() {
+        let screen = 16384;
+
+        let X = 0;
+        let Y = 1;
+
+        let cursor[X] = 0;
+        let cursor[Y] = 0;
+
+        return;
     }
 
     // Initializes the character map array
@@ -137,15 +153,16 @@ class Output {
         do Output.create(125,7,12,12,12,56,12,12,12,7,0,0);    // }
         do Output.create(126,38,45,25,0,0,0,0,0,0,0,0);        // ~
 
-	return;
+	    
+        return;
     }
 
     // Creates the character map array of the given character index, using the given values.
     function void create(int index, int a, int b, int c, int d, int e,
                          int f, int g, int h, int i, int j, int k) {
-	var Array map;
+        var Array map;
 
-	let map = Array.new(11);
+        let map = Array.new(11); // 11 rows in every char cell
         let charMaps[index] = map;
 
         let map[0] = a;
@@ -167,37 +184,106 @@ class Output {
     // If the given character is invalid or non-printable, returns the
     // character map of a black square.
     function Array getMap(char c) {
-        if ((c < 32) | (c > 126)) {
-            let c = 0;
-        }
+        if ((c < 32) | (c > 126)) { let c = 0; }
+
         return charMaps[c];
     }
 
     /** Moves the cursor to the j-th column of the i-th row,
      *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
+
+        let cursor[X] = j;
+        let cursor[Y] = i;
+
+        return;
     }
 
     /** Displays the given character at the cursor location,
      *  and advances the cursor one column forward. */
     function void printChar(char c) {
+        var int address, bit, value, map, i;
+        var Array bitmap;
+
+        // find the pixel row in RAM
+        let address = (32 * cursor[Y] * 11) + (cursor[X] / 2); // 11 rows, 8 cols
+        // define if the char in first or second 8-bit part of the row
+        let bit = Math.mod(cursor[X], 16); // find the remainder of x/16
+        let bit = Math.twoToThePowerOf(bit); // find the exact bit in the pixel row
+
+        let map = Output.getMap(c);
+
+        let value = screen[address];
+
+        let i = 0;
+        while (i < 11) {
+            let bitmap = map[i];
+            if (bit < 8) { let bitmap = bitmap * 256; }
+
+            let screen[address] = screen[address] | map;
+
+            let address = address + 32; // next row down below
+            let i = i + 1;
+        }
+
+        // Advance the cursor
+        if( cursor[X] = 63 ) { do Output.println(); }
+        else { let cursor[X] = cursor[X] + 1; }
+
+        return;
     }
 
     /** displays the given string starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printString(String s) {
+        var int i;
+
+        let i = 0;
+
+        while( i < s.length() ) {
+            do Output.printChar(s.charAt(i));
+            let i = i + 1;
+        }
+
+        return;
     }
 
     /** Displays the given integer starting at the cursor location,
      *  and advances the cursor appropriately. */
     function void printInt(int i) {
+        var String s;
+
+        let s = String.new(10);
+
+        do s.setInt(i);
+        do Output.printString(s);
+        do s.dispose();
+
+        return;
     }
 
     /** Advances the cursor to the beginning of the next line. */
     function void println() {
+        let cursor[X] = 0;
+        
+        if(cursor[Y] < 22) { let cursor[Y] = cursor[Y] + 1; }
+        else { let cursor[Y] = 0; }
+
+        return;
     }
 
     /** Moves the cursor one column back. */
     function void backSpace() {
+        if( cursor[X] = 0 ) {
+            if( ~(cursor[Y] = 0) ) {
+                let cursor[X] = 63;
+                let cursor[Y] = cursor[Y] - 1;
+            }
+        }
+        else {
+            let cursor[X] = cursor[X] - 1;
+        }
+        
+        return;
     }
 }

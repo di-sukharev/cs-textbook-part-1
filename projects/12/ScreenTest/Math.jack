@@ -27,7 +27,7 @@ class Math {
         let bits[12] = 4096;
         let bits[13] = 8192;
         let bits[14] = 16384;
-        let bits[15] = 16384+16384; // with 32768, compiler return error 'Integer constant too big'
+        let bits[15] = 16384+16384; // with 32768 compiler returns the error: 'Integer constant too big'
         
         return;
     }
