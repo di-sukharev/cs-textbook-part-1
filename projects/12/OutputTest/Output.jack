@@ -20,21 +20,16 @@ class Output {
     // Character map for displaying characters
     static Array charMaps; 
 
-    static Array grid;
-
-    static int X, Y;
-
-    static Array cursor; // cursor[X] = column, cursor[Y] = row
+    static int cursorX, cursorY;
 
     /** Initializes the screen, and locates the cursor at the screen's top-left. */
     function void init() {
         let screen = 16384;
 
-        let X = 0;
-        let Y = 1;
+        let cursorX = 0;
+        let cursorY = 0;
 
-        let cursor[X] = 0;
-        let cursor[Y] = 0;
+        do Output.initMap();
 
         return;
     }
@@ -87,7 +82,7 @@ class Output {
         do Output.create(64,30,51,51,59,59,59,27,3,30,0,0);  // @
         do Output.create(63,30,51,51,24,12,12,0,12,12,0,0);  // ?
 
-        do Output.create(65,0,0,0,0,0,0,0,0,0,0,0);          // A ** TO BE FILLED **
+        do Output.create(65,12,12,30,18,18,34,62,98,51,0,0);          // A ** TO BE FILLED **
         do Output.create(66,31,51,51,51,31,51,51,51,31,0,0); // B
         do Output.create(67,28,54,35,3,3,3,35,54,28,0,0);    // C
         do Output.create(68,15,27,51,51,51,51,51,27,15,0,0); // D
@@ -193,8 +188,8 @@ class Output {
      *  and erases the character displayed there. */
     function void moveCursor(int i, int j) {
 
-        let cursor[X] = j;
-        let cursor[Y] = i;
+        let cursorX = j;
+        let cursorY = i;
 
         return;
     }
@@ -202,34 +197,31 @@ class Output {
     /** Displays the given character at the cursor location,
      *  and advances the cursor one column forward. */
     function void printChar(char c) {
-        var int address, bit, value, map, i;
-        var Array bitmap;
-
-        // find the pixel row in RAM
-        let address = (32 * cursor[Y] * 11) + (cursor[X] / 2); // 11 rows, 8 cols
-        // define if the char in first or second 8-bit part of the row
-        let bit = Math.mod(cursor[X], 16); // find the remainder of x/16
-        let bit = Math.twoToThePowerOf(bit); // find the exact bit in the pixel row
-
+        var Array map;
+        var int address, mask, bitmap,i;
+        
+        // Get the character bitmap
         let map = Output.getMap(c);
-
-        let value = screen[address];
-
+        let address = (cursorY*32*11) + (cursorX/2);
+        let mask = cursorX & 1;
+        
+        // Print the character
         let i = 0;
-        while (i < 11) {
+        while( i < 11 ) {
             let bitmap = map[i];
-            if (bit < 8) { let bitmap = bitmap * 256; }
-
-            let screen[address] = screen[address] | map;
-
-            let address = address + 32; // next row down below
+            
+            if( mask = 1 ) { let bitmap = bitmap * 256; }
+            
+            let screen[address] = screen[address] | bitmap; 
+            
+            let address = address + 32;
             let i = i + 1;
         }
-
+        
         // Advance the cursor
-        if( cursor[X] = 63 ) { do Output.println(); }
-        else { let cursor[X] = cursor[X] + 1; }
-
+        if( cursorX = 63 ) { do Output.println(); }
+        else { do Output.moveCursor(cursorY, cursorX+1); }
+        
         return;
     }
 
@@ -263,25 +255,19 @@ class Output {
     }
 
     /** Advances the cursor to the beginning of the next line. */
-    function void println() {
-        let cursor[X] = 0;
-        
-        if(cursor[Y] < 22) { let cursor[Y] = cursor[Y] + 1; }
-        else { let cursor[Y] = 0; }
+    function void println() {        
+        if( cursorY < 22 ) { do Output.moveCursor(cursorY + 1, 0); }
+        else { do Output.moveCursor(0, 0); }
 
         return;
     }
 
     /** Moves the cursor one column back. */
     function void backSpace() {
-        if( cursor[X] = 0 ) {
-            if( ~(cursor[Y] = 0) ) {
-                let cursor[X] = 63;
-                let cursor[Y] = cursor[Y] - 1;
-            }
-        }
-        else {
-            let cursor[X] = cursor[X] - 1;
+        if( cursorX = 0 ) {
+            if( ~(cursorY = 0) ) { do Output.moveCursor(cursorY - 1, 63); }
+        } else {
+            do Output.moveCursor(cursorY, cursorX - 1);
         }
         
         return;
