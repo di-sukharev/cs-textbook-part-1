@@ -7,7 +7,7 @@ function VMtranslator(fileName, outputFileName) {
   var contents = fs.readFileSync(fileName, "utf8");
   let tokens = tokenizer(contents);
   let output = transformer(tokens, fileName);
-  fs.writeFile(`./${outputFileName}.asm`, output, () => {});
+  fs.writeFile(`./${outputFileName}.asm`, output, () => { });
 }
 
 module.exports = VMtranslator;
