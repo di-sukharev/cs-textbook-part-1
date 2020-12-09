@@ -7,11 +7,28 @@ const INSTRUCTIONS = {
 };
 
 class Assembler {
-    static symbolTable;
+    variablesTable = {
+        R0: 0,
+        R1: 1,
+        R2: 2,
+        R3: 3,
+        R4: 4,
+        R5: 5,
+        R6: 6,
+        R7: 7,
+        R8: 8,
+        R9: 9,
+        R10: 10,
+        R11: 11,
+        R12: 12,
+        R13: 13,
+        R14: 14,
+        R15: 15,
+    };
+
+    labelsTable = {};
 
     constructor() {
-        this.symbolTable = {}; // todo: maybe move this somewhere?
-
         return this;
     }
 
@@ -23,29 +40,39 @@ class Assembler {
 
         const hack = this.parse(file);
 
-        console.log({ hack });
-
         fs.writeFile(`${outputFileName}.hack`, hack, () => {});
     }
 
     parse(file) {
-        const removeComments = (line) => !line.includes("//");
         const removeWhitespaces = (line) => !!line;
-        const clear = (line) => removeComments(line) & removeWhitespaces(line);
-        const toHack = (asm) => this.translate(asm);
+        const removeComments = (line) =>
+            (line.includes("//")
+                ? line.slice(0, line.indexOf("//"))
+                : line
+            ).trim(); // TODO: make more elegant
 
         const instructions = file
             .split("\r\n")
-            .filter(clear)
-            .map(toHack) // todo: make this more elegant, remove toHack
+            .map(removeComments)
+            .filter(removeWhitespaces)
+            .filter(this.createLablesTable.bind(this)) // todo: remove bind(this)
+            .map(this.translate.bind(this)) // todo: remove bind(this)
             .join("\n");
 
         return instructions;
     }
 
-    translate(instruction) {
-        // console.log({ instruction, type: this.getType(instruction) });
+    createLablesTable(instruction, lineNumber) {
+        if (!instruction.includes("(")) return true;
 
+        const [isLabel, label] = instruction.match(/\((.*)\)/i);
+
+        if (isLabel) this.labelsTable[label] = lineNumber + 1;
+
+        return false;
+    }
+
+    translate(instruction) {
         switch (this.getType(instruction)) {
             case INSTRUCTIONS.A:
                 return this.translateA(instruction);
@@ -68,7 +95,14 @@ class Assembler {
             return "000000000000000".slice(bin.length) + bin;
         };
 
-        return `0${decToBin(instruction.slice(1))}`;
+        let value = instruction.slice(1);
+
+        if (typeof value === "string")
+            value = this.labelsTable[value] || this.variablesTable[value];
+
+        const hack = `0${decToBin(value)}`;
+
+        return;
     }
 
     translateC(instruction) {
@@ -77,19 +111,7 @@ class Assembler {
 
         const hack = `111${this.comp(cmp)}${this.dest(dst)}${this.jump(jmp)}`;
 
-        console.log({ C: instruction, hack });
-
         return hack;
-    }
-
-    translateL(instruction) {
-        /*  Проходим первый раз:
-            1. Переносим все лейбы в таблицу
-        */
-        /*  Проходим второй раз, когда натыкаемся на @symbol:
-            1. меняем symbol на лейбл, если он есть в таблице
-            2. или (если это переменная) создаем ее и/или заменяем
-        */
     }
 
     dest(symbols) {
