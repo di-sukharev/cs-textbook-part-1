@@ -17,33 +17,36 @@ class Assembler {
 
     assemble(inputFileName, outputFileName) {
         if (!outputFileName)
-            outputFileName = /\w*(?=\.asm)/i.exec(inputFileName);
+            outputFileName = /.*(?=\.asm)/i.exec(inputFileName);
 
         const file = fs.readFileSync(inputFileName, "utf8");
 
         const hack = this.parse(file);
 
-        // fs.writeFile(`./${outputFileName}.hack`, hack, () => { });
+        console.log({ hack });
+
+        fs.writeFile(`${outputFileName}.hack`, hack, () => {});
     }
 
     parse(file) {
         const removeComments = (line) => !line.includes("//");
         const removeWhitespaces = (line) => !!line;
+        const clear = (line) => removeComments(line) & removeWhitespaces(line);
+        const toHack = (asm) => this.translate(asm);
 
         const instructions = file
-            .split("\n")
-            .filter(removeComments)
-            .filter(removeWhitespaces);
-
-        instructions.map(this.translate);
-
-        instructions.join("\n");
+            .split("\r\n")
+            .filter(clear)
+            .map(toHack) // todo: make this more elegant, remove toHack
+            .join("\n");
 
         return instructions;
     }
 
     translate(instruction) {
-        switch (getType(instruction)) {
+        // console.log({ instruction, type: this.getType(instruction) });
+
+        switch (this.getType(instruction)) {
             case INSTRUCTIONS.A:
                 return this.translateA(instruction);
             case INSTRUCTIONS.C:
@@ -60,16 +63,21 @@ class Assembler {
     }
 
     translateA(instruction) {
-        const decToBin = (dec) => (dec >>> 0).toString(2);
+        const decToBin = (dec) => {
+            const bin = (+dec).toString(2);
+            return "000000000000000".slice(bin.length) + bin;
+        };
 
-        return `0${decToBin(instruction)}`;
+        return `0${decToBin(instruction.slice(1))}`;
     }
 
     translateC(instruction) {
         const [dstcmp, jmp] = instruction.split(";");
         const [dst, cmp] = dstcmp.split("=");
 
-        const hack = `111${this.dest(dst)}${this.comp(cmp)}${this.jump(jmp)}`;
+        const hack = `111${this.comp(cmp)}${this.dest(dst)}${this.jump(jmp)}`;
+
+        console.log({ C: instruction, hack });
 
         return hack;
     }
@@ -87,14 +95,15 @@ class Assembler {
     dest(symbols) {
         // prettier-ignore
         switch (symbols) {
-            case "":    return '000';
-            case "M":   return '001';
-            case "D":   return '010';
-            case "MD":  return '011';
-            case "A":   return '100';
-            case "AM":  return '101';
-            case "AD":  return '110';
-            case "AMD": return '111';
+            case "M":       return '001';
+            case "D":       return '010';
+            case "MD":      return '011';
+            case "A":       return '100';
+            case "AM":      return '101';
+            case "AD":      return '110';
+            case "AMD":     return '111';
+            case "":        return '000';
+            case undefined: return '000';
         }
     }
 
@@ -102,48 +111,50 @@ class Assembler {
         // prettier-ignore
         switch (symbols) {
             // a = 0
-            case "0":   return '0101010';
-            case "1":   return '0111111';
-            case "-1":  return '0111010';
-            case "D":   return '0001100';
-            case "A":   return '0110000';
-            case "!D":  return '0001101';
-            case "!A":  return '0110001';
-            case "-D":  return '0001111';
-            case "-A":  return '0110011';
-            case "D+1": return '0011111';
-            case "A+1": return '0110111';
-            case "D-1": return '0001110';
-            case "A-1": return '0110010';
-            case "D+A": return '0000010';
-            case "D-A": return '0010011';
-            case "A-D": return '0000111';
-            case "D&A": return '0000000';
-            case "D|A": return '0010101';
+            case "0":       return '0101010';
+            case "1":       return '0111111';
+            case "-1":      return '0111010';
+            case "D":       return '0001100';
+            case "A":       return '0110000';
+            case "!D":      return '0001101';
+            case "!A":      return '0110001';
+            case "-D":      return '0001111';
+            case "-A":      return '0110011';
+            case "D+1":     return '0011111';
+            case "A+1":     return '0110111';
+            case "D-1":     return '0001110';
+            case "A-1":     return '0110010';
+            case "D+A":     return '0000010';
+            case "D-A":     return '0010011';
+            case "A-D":     return '0000111';
+            case "D&A":     return '0000000';
+            case "D|A":     return '0010101';
             // a = 1
-            case "M":   return '1110000';
-            case "!M":  return '1110001';
-            case "-M":  return '1110011';
-            case "M+1": return '1110111';
-            case "M-1": return '1110010';
-            case "D-M": return '1000010';
-            case "M-D": return '1000111';
-            case "D&M": return '1000000';
-            case "D|M": return '1010101';
+            case "M":       return '1110000';
+            case "!M":      return '1110001';
+            case "-M":      return '1110011';
+            case "M+1":     return '1110111';
+            case "M-1":     return '1110010';
+            case "D-M":     return '1000010';
+            case "M-D":     return '1000111';
+            case "D&M":     return '1000000';
+            case "D|M":     return '1010101';
+            case undefined: return '';
         }
     }
 
     jump(symbols) {
         // prettier-ignore
         switch (symbols) {
-            case "":    return '000';
-            case "JGT": return '001';
-            case "JEQ": return '010';
-            case "JGE": return '011';
-            case "JLT": return '100';
-            case "JNE": return '101';
-            case "JLE": return '110';
-            case "JMP": return '111';
+            case "JGT":     return '001';
+            case "JEQ":     return '010';
+            case "JGE":     return '011';
+            case "JLT":     return '100';
+            case "JNE":     return '101';
+            case "JLE":     return '110';
+            case "JMP":     return '111';
+            case "":        return '000';
+            case undefined: return '000';
         }
     }
 }

@@ -1,4 +1,4 @@
-// const Assembler = require("./Assembler.js");
+const Assembler = require("./Assembler.js");
 
 var [inputFile, outputFile] = process.argv.slice(2);
 console.log("args: ", { inputFile, outputFile });
