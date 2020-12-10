@@ -1,7 +1,12 @@
 const Assembler = require("./Assembler.js");
 const { performance } = require("perf_hooks");
 
-var [nodeExecPath, currentPath, inputFile, outputFile] = process.argv;
+var [
+    nodeExecPath,
+    currentPath,
+    inputFile,
+    outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
+] = process.argv;
 console.log("args: ", {
     inputFile,
     outputFile:

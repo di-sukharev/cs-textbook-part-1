@@ -1,5 +1,7 @@
 fs = require("fs");
 
+const DEBUG = false;
+
 const INSTRUCTIONS = {
     A: "ADDRESS",
     C: "COMPUTE",
@@ -46,14 +48,11 @@ class Assembler {
     }
 
     assemble(inputFileName, outputFileName) {
-        if (!outputFileName)
-            outputFileName = /.*(?=\.asm)/i.exec(inputFileName);
-
         const file = fs.readFileSync(inputFileName, "utf8");
 
         const binary = this._compile(file);
 
-        fs.writeFileSync(`${outputFileName}.hack`, binary);
+        fs.writeFileSync(outputFileName, binary);
     }
 
     _compile(file) {
@@ -63,50 +62,38 @@ class Assembler {
                 : line
             ).trim();
         const removeWhitespaces = (line) => !!line;
-        const removeLabels = (line) => !line.includes("(");
 
         const instructions = file
             .split("\r\n")
             .map(removeComments)
             .filter(removeWhitespaces);
 
-        instructions.forEach(this._initLabelsAndVariables.bind(this));
+        // this two loops can be done in a single one,
+        // but I made them separate for simplicity
+        // instructions.forEach(this._initLabel.bind(this));
+        // instructions.forEach(this._initVariable.bind(this));
 
         const compiled = instructions
-            .filter(removeLabels)
+            .filter(this._initLabel.bind(this))
             .map(this._asmToBin.bind(this))
             .join("\n");
+
+        if (DEBUG)
+            console.log({ LABELS: this.LABELS, VARIABLES: this.VARIABLES });
 
         return compiled;
     }
 
-    _initLabelsAndVariables(instruction, lineNumber) {
-        switch (this.getType(instruction)) {
-            case INSTRUCTIONS.A:
-                return this._initVariable(instruction);
-            case INSTRUCTIONS.L:
-                return this._initLabel(instruction, lineNumber + 1);
-        }
-    }
-
-    _initVariable(instruction) {
-        let value = instruction.slice(1);
-
-        const alreadyExists = this.VARIABLES[value] !== undefined;
-        if (alreadyExists) return;
-
-        const isNewVariable = !!value.match(/^[a-z][a-zA-Z0-9]+$/);
-
-        if (isNewVariable) {
-            this.VARIABLES[value] = this.freeVariableAddress;
-            this.freeVariableAddress++;
-        }
-    }
-
     _initLabel(instruction, lineNumber) {
-        const [_, group] = instruction.match(/\((.*)\)/i);
+        if (this.getType(instruction) !== INSTRUCTIONS.L) return true;
 
-        this.LABELS[group] = lineNumber;
+        const [_, value] = instruction.match(/\((.*)\)/i);
+
+        this.LABELS[value] = lineNumber;
+
+        console.log({ instruction, lineNumber });
+
+        return false;
     }
 
     _asmToBin(instruction) {
@@ -129,15 +116,27 @@ class Assembler {
         const fillWith15Bits = (bin) =>
             "000000000000000".slice(bin.length) + bin;
 
-        let value = instruction.slice(1);
+        let value = this._getValueOfInstructionA(instruction);
 
-        // it's a variable or label
-        if (value.match(/\D+/i))
-            value = this.LABELS[value] || this.VARIABLES[value];
+        const valueHasCharacters = value.match(/\D+/i);
+        //todo: refactor this scary ternary ???
+        if (valueHasCharacters)
+            value =
+                this.LABELS[value] !== undefined
+                    ? this.LABELS[value]
+                    : this.VARIABLES[value] !== undefined
+                    ? this.VARIABLES[value]
+                    : this._initVariable(value);
 
         const hack = `0${fillWith15Bits(decToBin(value))}`;
 
         return hack;
+    }
+
+    _initVariable(value) {
+        this.VARIABLES[value] = this.freeVariableAddress;
+        this.freeVariableAddress++;
+        return this.VARIABLES[value];
     }
 
     _translateC(instruction) {
@@ -215,6 +214,10 @@ class Assembler {
             case "":        return '000';
             default:        return '000';
         }
+    }
+
+    _getValueOfInstructionA(instruction) {
+        return instruction.slice(1);
     }
 }
 
