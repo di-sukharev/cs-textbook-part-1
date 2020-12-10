@@ -7,8 +7,8 @@ const INSTRUCTIONS = {
 };
 
 class Assembler {
-    freeVariableAddress = 16;
-    variablesTable = {
+    freeVariableAddress = 16; // we start storing variables at 16th register M[16] … M[256]
+    VARIABLES = {
         // pre-defined vars
         R0: 0,
         R1: 1,
@@ -26,13 +26,18 @@ class Assembler {
         R13: 13,
         R14: 14,
         R15: 15,
+        // IO
         SCREEN: 16384,
         KBD: 24578,
+        // VM
         SP: 0,
-        // TODO: add VM vars
+        LCL: 1,
+        ARG: 2,
+        THIS: 3,
+        THAT: 4,
     };
 
-    labelsTable = {};
+    LABELS = {};
 
     constructor() {
         return this;
@@ -44,75 +49,78 @@ class Assembler {
 
         const file = fs.readFileSync(inputFileName, "utf8");
 
-        const assembled = this.parse(file);
+        const binary = this.parse(file);
 
-        fs.writeFile(`${outputFileName}.hack`, assembled, () => {});
+        fs.writeFile(`${outputFileName}.hack`, binary, () => {});
     }
 
     parse(file) {
-        const removeWhitespaces = (line) => !!line;
         const removeComments = (line) =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
                 : line
-            ).trim(); // TODO: make more elegant
+            ).trim();
+        const removeWhitespaces = (line) => !!line;
+        const removeLabels = (line) => !line.includes("(");
 
         const instructions = file
             .split("\r\n")
             .map(removeComments)
-            .filter(removeWhitespaces)
-            .filter(this.initLabelsAndVariables.bind(this)) // todo: remove bind(this)
-            .map(this.translate.bind(this)) // todo: remove bind(this)
+            .filter(removeWhitespaces);
+
+        instructions.forEach(this._initLabelsAndVariables.bind(this));
+
+        const parsed = instructions
+            .filter(removeLabels)
+            .map(this._translate.bind(this))
             .join("\n");
 
-        return instructions;
+        return parsed;
     }
 
     // todo: refactor, and change this filter() to smth else
-    initLabelsAndVariables(instruction, lineNumber) {
-        // variable
-        if (instruction.includes("@")) {
-            let value = instruction.slice(1);
-            // pre-defined
-            if (this.variablesTable[value] !== undefined) return true;
-
-            // lowercase is a variable, need to init its value in the variablesTable
-            if (value.match(/[a-z]+/)) {
-                this.variablesTable[value] = this.freeVariableAddress;
-                this.freeVariableAddress++;
-            }
-
-            // all variables will be changed later
-            return true;
-        }
-
-        // its a (LABEL)
-        if (instruction.includes("(")) {
-            const [isLabel, label] = instruction.match(/\((.*)\)/i);
-
-            if (isLabel) this.labelsTable[label] = lineNumber + 1;
-
-            return false;
-        }
-
-        return true;
-    }
-
-    translate(instruction) {
+    _initLabelsAndVariables(instruction, lineNumber) {
         switch (this.getType(instruction)) {
             case INSTRUCTIONS.A:
-                return this.translateA(instruction);
+                return this._initVariable(instruction);
+            case INSTRUCTIONS.L:
+                return this._initLabel(instruction, lineNumber + 1);
+        }
+    }
+
+    _initVariable(instruction) {
+        let value = instruction.slice(1);
+        // if its a pre-defined do nothing
+        if (this.VARIABLES[value] !== undefined) return;
+
+        // lowercase is a variable, need to init its value in the VARIABLES
+        if (value.match(/[a-z]+/)) {
+            this.VARIABLES[value] = this.freeVariableAddress;
+            this.freeVariableAddress++;
+        }
+    }
+
+    _initLabel(instruction, lineNumber) {
+        const label = /\((.*)\)/i.exec(instruction);
+        this.LABELS[label] = lineNumber;
+    }
+
+    _translate(instruction) {
+        switch (this.getType(instruction)) {
+            case INSTRUCTIONS.A:
+                return this._translateA(instruction);
             case INSTRUCTIONS.C:
-                return this.translateC(instruction);
+                return this._translateC(instruction);
         }
     }
 
     getType(instruction) {
         if (instruction.includes("@")) return INSTRUCTIONS.A;
+        else if (instruction.includes("(")) return INSTRUCTIONS.L;
         else return INSTRUCTIONS.C;
     }
 
-    translateA(instruction) {
+    _translateA(instruction) {
         const decToBin = (dec) => (+dec).toString(2);
         const fillWith15Bits = (bin) =>
             "000000000000000".slice(bin.length) + bin;
@@ -121,27 +129,27 @@ class Assembler {
 
         // it's a variable or label
         if (value.match(/\D+/i))
-            value = this.labelsTable[value] || this.variablesTable[value];
+            value = this.LABELS[value] || this.VARIABLES[value];
 
         const hack = `0${fillWith15Bits(decToBin(value))}`;
 
         return hack;
     }
 
-    translateC(instruction) {
+    _translateC(instruction) {
         const [dstcmp, jmp] = instruction.split(";");
         const [dst, cmp] = dstcmp.includes("=")
             ? dstcmp.split("=")
             : [undefined, dstcmp];
 
-        console.log({ instruction, dst, cmp, jmp });
-
-        const hack = `111${this.dest(dst)}${this.comp(cmp)}${this.jump(jmp)}`;
+        const hack = `111${this._dest(dst)}${this._comp(cmp)}${this._jump(
+            jmp
+        )}`;
 
         return hack;
     }
 
-    dest(symbols) {
+    _dest(symbols) {
         // prettier-ignore
         switch (symbols) {
             case "M":   return '001';
@@ -156,7 +164,7 @@ class Assembler {
         }
     }
 
-    comp(symbols) {
+    _comp(symbols) {
         // prettier-ignore
         switch (symbols) {
             // a = 0
@@ -192,7 +200,7 @@ class Assembler {
         }
     }
 
-    jump(symbols) {
+    _jump(symbols) {
         // prettier-ignore
         switch (symbols) {
             case "JGT":     return '001';
