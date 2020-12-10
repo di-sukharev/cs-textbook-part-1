@@ -7,7 +7,9 @@ const INSTRUCTIONS = {
 };
 
 class Assembler {
-    freeVariableAddress = 16; // we start storing variables at 16th register M[16] … M[256]
+    // we start storing variables at 16th register. From M[16] to M[256].
+    freeVariableAddress = 16;
+
     VARIABLES = {
         // pre-defined vars
         R0: 0,
@@ -49,12 +51,12 @@ class Assembler {
 
         const file = fs.readFileSync(inputFileName, "utf8");
 
-        const binary = this.parse(file);
+        const binary = this._compile(file);
 
-        fs.writeFile(`${outputFileName}.hack`, binary, () => {});
+        fs.writeFileSync(`${outputFileName}.hack`, binary);
     }
 
-    parse(file) {
+    _compile(file) {
         const removeComments = (line) =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
@@ -70,15 +72,14 @@ class Assembler {
 
         instructions.forEach(this._initLabelsAndVariables.bind(this));
 
-        const parsed = instructions
+        const compiled = instructions
             .filter(removeLabels)
-            .map(this._translate.bind(this))
+            .map(this._asmToBin.bind(this))
             .join("\n");
 
-        return parsed;
+        return compiled;
     }
 
-    // todo: refactor, and change this filter() to smth else
     _initLabelsAndVariables(instruction, lineNumber) {
         switch (this.getType(instruction)) {
             case INSTRUCTIONS.A:
@@ -90,22 +91,25 @@ class Assembler {
 
     _initVariable(instruction) {
         let value = instruction.slice(1);
-        // if its a pre-defined do nothing
-        if (this.VARIABLES[value] !== undefined) return;
 
-        // lowercase is a variable, need to init its value in the VARIABLES
-        if (value.match(/[a-z]+/)) {
+        const alreadyExists = this.VARIABLES[value] !== undefined;
+        if (alreadyExists) return;
+
+        const isNewVariable = !!value.match(/^[a-z][a-zA-Z0-9]+$/);
+
+        if (isNewVariable) {
             this.VARIABLES[value] = this.freeVariableAddress;
             this.freeVariableAddress++;
         }
     }
 
     _initLabel(instruction, lineNumber) {
-        const label = /\((.*)\)/i.exec(instruction);
-        this.LABELS[label] = lineNumber;
+        const [_, group] = instruction.match(/\((.*)\)/i);
+
+        this.LABELS[group] = lineNumber;
     }
 
-    _translate(instruction) {
+    _asmToBin(instruction) {
         switch (this.getType(instruction)) {
             case INSTRUCTIONS.A:
                 return this._translateA(instruction);
@@ -142,14 +146,11 @@ class Assembler {
             ? dstcmp.split("=")
             : [undefined, dstcmp];
 
-        const hack = `111${this._dest(dst)}${this._comp(cmp)}${this._jump(
-            jmp
-        )}`;
-
-        return hack;
+        return `111${this._comp(cmp)}${this._dest(dst)}${this._jump(jmp)}`;
     }
 
     _dest(symbols) {
+        // if (symbols && symbols.length >= 2) console.log({ symbols });
         // prettier-ignore
         switch (symbols) {
             case "M":   return '001';
@@ -192,6 +193,7 @@ class Assembler {
             case "-M":  return '1110011';
             case "M+1": return '1110111';
             case "M-1": return '1110010';
+            case "D+M": return '1000010';
             case "D-M": return '1000010';
             case "M-D": return '1000111';
             case "D&M": return '1000000';
