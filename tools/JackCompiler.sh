@@ -32,4 +32,5 @@ else
 	fi
 	echo Compiling "$arg1"
 	java -classpath "${CLASSPATH}:bin/classes:bin/lib/Hack.jar:bin/lib/Compilers.jar" Hack.Compiler.JackCompiler "$arg1"
+	echo Compiled "🌞"
 fi

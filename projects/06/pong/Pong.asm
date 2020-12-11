@@ -1,3 +1,8 @@
+// The Pong game program was originally written in the high-level Jack language.
+// The Jack code was then translated by the Jack compiler into VM code.
+// The VM code was then translated by the VM translator into the Hack
+// assembly code shown here.
+
 @256
 D=A
 @SP
@@ -4571,9 +4576,6 @@ M=D
 M=M+1
 A=M-1
 M=0
-
-
-
 @SP
 AM=M-1
 D=M

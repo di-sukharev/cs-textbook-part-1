@@ -1,6 +1,6 @@
 fs = require("fs");
 
-const DEBUG = false;
+const DEBUG = true;
 
 const INSTRUCTIONS = {
     A: "ADDRESS",
@@ -41,6 +41,8 @@ class Assembler {
         THAT: 4,
     };
 
+    labelsCount = 0;
+
     LABELS = {};
 
     constructor() {
@@ -62,21 +64,16 @@ class Assembler {
                 : line
             ).trim();
         const removeWhitespaces = (line) => !!line;
+        const intoLines = "\r\n";
+        const inFile = "\n";
 
-        const instructions = file
-            .split("\r\n")
+        const compiled = file
+            .split(intoLines)
             .map(removeComments)
-            .filter(removeWhitespaces);
-
-        // this two loops can be done in a single one,
-        // but I made them separate for simplicity
-        // instructions.forEach(this._initLabel.bind(this));
-        // instructions.forEach(this._initVariable.bind(this));
-
-        const compiled = instructions
-            .filter(this._initLabel.bind(this))
+            .filter(removeWhitespaces)
+            .filter(this._initAndRemoveLabels.bind(this))
             .map(this._asmToBin.bind(this))
-            .join("\n");
+            .join(inFile);
 
         if (DEBUG)
             console.log({ LABELS: this.LABELS, VARIABLES: this.VARIABLES });
@@ -84,14 +81,14 @@ class Assembler {
         return compiled;
     }
 
-    _initLabel(instruction, lineNumber) {
+    _initAndRemoveLabels(instruction, lineNumber) {
         if (this.getType(instruction) !== INSTRUCTIONS.L) return true;
 
         const [_, value] = instruction.match(/\((.*)\)/i);
 
-        this.LABELS[value] = lineNumber;
+        this.LABELS[value] = lineNumber - this.labelsCount;
 
-        console.log({ instruction, lineNumber });
+        this.labelsCount++;
 
         return false;
     }
@@ -115,12 +112,13 @@ class Assembler {
         const decToBin = (dec) => (+dec).toString(2);
         const fillWith15Bits = (bin) =>
             "000000000000000".slice(bin.length) + bin;
+        const getValueOfInstructionA = (instruction) => instruction.slice(1);
 
-        let value = this._getValueOfInstructionA(instruction);
+        let value = getValueOfInstructionA(instruction);
 
-        const valueHasCharacters = value.match(/\D+/i);
+        const isLabelOrVariable = value.match(/\D+/i);
         //todo: refactor this scary ternary ???
-        if (valueHasCharacters)
+        if (isLabelOrVariable)
             value =
                 this.LABELS[value] !== undefined
                     ? this.LABELS[value]
@@ -214,10 +212,6 @@ class Assembler {
             case "":        return '000';
             default:        return '000';
         }
-    }
-
-    _getValueOfInstructionA(instruction) {
-        return instruction.slice(1);
     }
 }
 
