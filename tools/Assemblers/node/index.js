@@ -7,6 +7,7 @@ var [
     inputFile,
     outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
 ] = process.argv;
+
 console.log("args: ", {
     inputFile,
     outputFile:

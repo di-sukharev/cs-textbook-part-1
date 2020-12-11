@@ -1,6 +1,8 @@
+const { throws } = require("assert");
+
 fs = require("fs");
 
-const DEBUG = true;
+const DEBUG = false;
 
 const INSTRUCTIONS = {
     A: "ADDRESS",
@@ -138,12 +140,33 @@ class Assembler {
     }
 
     _translateC(instruction) {
-        const [dstcmp, jmp] = instruction.split(";");
+        const { comp, dest, jump } = this._separateC(instruction);
+
+        this._validateC({ comp, dest, jump }, instruction);
+
+        return `111${comp}${dest}${jump}`;
+    }
+
+    _separateC(instruction) {
+        const [dstcmp, jmp = null] = instruction.split(";");
         const [dst, cmp] = dstcmp.includes("=")
             ? dstcmp.split("=")
-            : [undefined, dstcmp];
+            : [null, dstcmp];
 
-        return `111${this._comp(cmp)}${this._dest(dst)}${this._jump(jmp)}`;
+        const comp = this._comp(cmp);
+        const dest = this._dest(dst);
+        const jump = this._jump(jmp);
+
+        return { comp, dest, jump };
+    }
+
+    _validateC({ comp, dest, jump }, instruction) {
+        if (comp === null)
+            throw Error(`unknown comp in instruction: "${instruction}"`);
+        if (dest === null)
+            throw Error(`unknown dest in instruction "${instruction}"`);
+        if (jump === null)
+            throw Error(`unknown jump in instruction "${instruction}"`);
     }
 
     _dest(symbols) {
@@ -157,8 +180,8 @@ class Assembler {
             case "AM":  return '101';
             case "AD":  return '110';
             case "AMD": return '111';
-            case "":    return '000';
-            default:    return '000';
+            case null:  return '000';
+            default:    return null;
         }
     }
 
@@ -195,7 +218,8 @@ class Assembler {
             case "M-D": return '1000111';
             case "D&M": return '1000000';
             case "D|M": return '1010101';
-            default:    return '';
+            case null:  return '';
+            default:    return null;
         }
     }
 
@@ -209,8 +233,8 @@ class Assembler {
             case "JNE":     return '101';
             case "JLE":     return '110';
             case "JMP":     return '111';
-            case "":        return '000';
-            default:        return '000';
+            case null:      return '000';
+            default:        return null;
         }
     }
 }
