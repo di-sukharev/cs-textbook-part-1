@@ -54,12 +54,12 @@ class Assembler {
     assemble(inputFileName, outputFileName) {
         const file = fs.readFileSync(inputFileName, "utf8");
 
-        const binary = this._compile(file);
+        const binary = this._parse(file);
 
         fs.writeFileSync(outputFileName, binary);
     }
 
-    _compile(file) {
+    _parse(file) {
         const removeComments = (line) =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
@@ -69,7 +69,7 @@ class Assembler {
         const intoLines = "\r\n";
         const inFile = "\n";
 
-        const compiled = file
+        const parsed = file
             .split(intoLines)
             .map(removeComments)
             .filter(removeWhitespaces)
@@ -80,7 +80,7 @@ class Assembler {
         if (DEBUG)
             console.log({ LABELS: this.LABELS, VARIABLES: this.VARIABLES });
 
-        return compiled;
+        return parsed;
     }
 
     _initAndRemoveLabels(instruction, lineNumber) {
