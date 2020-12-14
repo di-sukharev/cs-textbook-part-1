@@ -8,7 +8,7 @@ var [
     outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
 ] = process.argv;
 
-console.log("args: ", {
+console.info("args: ", {
     inputFile,
     outputFile:
         outputFile ||
@@ -17,9 +17,9 @@ console.log("args: ", {
 
 const assembler = new Assembler();
 
-console.log("Assembling ⏳");
+console.info("Assembling ⏳");
 const started = performance.now();
 assembler.assemble(inputFile, outputFile);
 const finished = performance.now();
 
-console.log(`Ready 🌞 took ${(finished - started).toFixed(2)} milliseconds`);
+console.info(`Assembled 🌞 took ${(finished - started).toFixed(2)} ms`);
