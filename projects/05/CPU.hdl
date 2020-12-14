@@ -70,36 +70,22 @@ CHIP CPU {
     And(a=instruction[15], b=instruction[3], out=writeM);
 
     // PC bits
-    Or(a=zero, b=negative, out=lessORequal);
-    Not(in=negative, out=positive); 
-    Or(a=zero, b=positive, out=moreORequal);
+    Not(in=zr, out=notZR);
+    Not(in=ng, out=notNG);
+    And(a=notZR, b=notNG, out=positive);
 
-    And(a=instruction[15], b=instruction[0], out=jgt);
-    And(a=jgt, b=positive, out=isGT);
-    
-    And(a=instruction[15], b=instruction[1], out=jeq);
-    And(a=jeq, b=zero, out=isEQ);
-    
-    Or(a=isGT, b=isEQ, out=isGE);
+    And(a=instruction[0], b=instruction[15], out=jump1);
+    And(a=instruction[1], b=instruction[15], out=jump2);
+    And(a=instruction[2], b=instruction[15], out=jump3);
 
-    And(a=instruction[15], b=instruction[2], out=jlt);
-    And(a=jlt, b=negative, out=isLT);
-    
-    Or(a=isLT, b=isEQ, out=isLE);
+    And(a=jump1, b=positive, out=JGT);
+    And(a=jump2, b=zr, out=JEQ);
+    And(a=jump3, b=ng, out=JLT);
 
-    And(a=jgt, b=jlt, out=JGTandJLT);
-    Not(in=zero, out=notZERO);
-    And(a=JGTandJLT, b=notZERO, out=isNE);
+    Or(a=JGT, b=JEQ, out=JGE);
+    Or(a=JGE, b=JLT, out=PCload);
 
-    Or8Way(
-        in[0]=isGT,
-        in[1]=isEQ,
-        in[2]=isGE,
-        in[3]=isLT,
-        in[4]=isLE,
-        in[5]=isNE,
-        out=PCload
-    );
+    PC(in=outAreg, load=PCload, inc=true, reset=reset, out[0..14]=pc);
 
     // load = f(jump bits, ALU control outputs)
     // 1. no jump: PC++ <-> jjj=000 --- 2. goto: PC=a <-> jjj=111 --- 3. conditional goto: PC = cond === true ? A : PC++
