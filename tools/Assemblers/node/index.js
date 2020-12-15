@@ -1,9 +1,9 @@
 const Assembler = require("./Assembler.js");
 const { performance } = require("perf_hooks");
 
-var [
+const [
     nodeExecPath,
-    currentPath,
+    thisFilePath,
     inputFile,
     outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
 ] = process.argv;
@@ -14,6 +14,9 @@ console.info("args: ", {
         outputFile ||
         "is going to be generated automatically in the same folder",
 });
+
+if (!inputFile.endsWith(".asm"))
+    throw Error("Only .asm file can be assembled into .hack");
 
 const assembler = new Assembler();
 
