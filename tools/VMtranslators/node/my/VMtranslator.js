@@ -10,6 +10,7 @@ const INSTRUCTION = {
 };
 
 const SEGMENTS = {
+    pointer: "pointer",
     constant: "constant",
     argument: "argument",
     local: "local",
@@ -29,29 +30,31 @@ class VMtranslator {
     }
 
     translate(inputDirectoryName) {
-        fs.readdirSync(inputDirectoryName).forEach((fileName) => {
-            if (!fileName.includes(".vm")) return;
+        const isVMfile = (fileName) => fileName.endsWith(".vm");
 
-            const [
-                fileNameWithExtension,
-                fileNameWithoutExtension,
-            ] = fileName.match(/(.+).vm$/);
+        fs.readdirSync(inputDirectoryName)
+            .filter(isVMfile)
+            .forEach((fileName) => {
+                const [
+                    fileNameWithExtension,
+                    fileNameWithoutExtension,
+                ] = fileName.match(/(.+).vm$/);
 
-            const file = fs.readFileSync(
-                `${inputDirectoryName}/${fileNameWithExtension}`,
-                "utf8"
-            );
+                const vmFile = fs.readFileSync(
+                    `${inputDirectoryName}/${fileNameWithExtension}`,
+                    "utf8"
+                );
 
-            const assembly = this._translate(file);
+                const assemblyFile = this._translate(vmFile);
 
-            fs.writeFileSync(
-                `${inputDirectoryName}/${fileNameWithoutExtension}.test.asm`,
-                assembly
-            );
-        });
+                fs.writeFileSync(
+                    `${inputDirectoryName}/${fileNameWithoutExtension}.my.asm`,
+                    assemblyFile
+                );
+            });
     }
 
-    _translate(file) {
+    _translate(vmFile) {
         const removeComments = (line) =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
@@ -61,7 +64,7 @@ class VMtranslator {
         const intoLines = "\r\n";
         const intoFile = "\n";
 
-        const result = file
+        const assemblyFile = vmFile
             .split(intoLines)
             .map(removeComments)
             .filter(removeWhitespaces)
@@ -70,25 +73,25 @@ class VMtranslator {
 
         if (DEBUG) console.log({ DEBUG });
 
-        return result;
+        return assemblyFile;
     }
 
-    _vmToAsm(instruction) {
-        let asm = `// ${instruction} \n`;
+    _vmToAsm(vmInstruction) {
+        let asmInstructions = `// ${vmInstruction} \n`; // start with comment
 
-        switch (this._getType(instruction)) {
+        switch (this._getType(vmInstruction)) {
             case INSTRUCTION.PUSH:
-                asm += this._translatePush(instruction);
+                asmInstructions += this._translatePush(vmInstruction);
                 break;
             case INSTRUCTION.POP:
-                asm += this._translatePop(instruction);
+                asmInstructions += this._translatePop(vmInstruction);
                 break;
             case INSTRUCTION.AL:
-                asm += this._translateAL(instruction);
+                asmInstructions += this._translateAL(vmInstruction);
                 break;
         }
 
-        return asm;
+        return asmInstructions;
     }
 
     _getType(instruction) {
@@ -112,20 +115,32 @@ class VMtranslator {
             case SEGMENTS.this:
                 return this._pushSegment(SEGMENTS.THIS, value);
             case SEGMENTS.temp:
-                return this._pushSegment(SEGMENTS.TEMP, value);
+                return this._pushSegment(SEGMENTS.TEMP, +value + 5);
+            case SEGMENTS.static:
+                return this._pushStatic(+value + 16);
+            case SEGMENTS.pointer:
+                return this._pushPointer(
+                    value === "0" ? SEGMENTS.THIS : SEGMENTS.THAT
+                );
         }
     }
 
-    _advanceSP = () => {
-        return breakLines`@SP A=M M=D @SP M=M+1`;
-    };
+    _advanceSP = breakLines`@SP A=M M=D @SP M=M+1`;
 
     _pushConstant(value) {
-        return breakLines`@${value} D=A ${this._advanceSP()}`;
+        return breakLines`@${value} D=A ${this._advanceSP}`;
     }
 
     _pushSegment(segment, value) {
-        return breakLines`@${segment} D=M @${value} A=D+A D=M ${this._advanceSP()}`;
+        return breakLines`@${segment} D=M @${value} A=D+A D=M ${this._advanceSP}`;
+    }
+
+    _pushPointer(segment) {
+        return breakLines`@${segment} D=M ${this._advanceSP}`;
+    }
+
+    _pushStatic(value) {
+        return breakLines`@${value} D=M ${this._advanceSP}`;
     }
 
     _translatePop(instruction) {
@@ -141,12 +156,28 @@ class VMtranslator {
             case SEGMENTS.this:
                 return this._popSegment(SEGMENTS.THIS, value);
             case SEGMENTS.temp:
-                return this._popSegment(SEGMENTS.TEMP, value);
+                return this._popSegment(SEGMENTS.TEMP, +value + 5);
+            case SEGMENTS.static:
+                return this._popStatic(+value + 16);
+            case SEGMENTS.pointer:
+                return this._popPointer(
+                    value === "0" ? SEGMENTS.THIS : SEGMENTS.THAT
+                );
         }
     }
 
+    _moveDtoSP = breakLines`@R13 M=D @SP AM=M-1 D=M @R13 A=M M=D`;
+
     _popSegment(segment, value) {
-        return breakLines`@${segment} D=M @${value} D=D+A @R13 M=D @SP AM=M-1 D=M @R13 A=M M=D`;
+        return breakLines`@${segment} D=M @${value} D=D+A ${this._moveDtoSP}`;
+    }
+
+    _popPointer(segment) {
+        return breakLines`@${segment} D=A ${this._moveDtoSP}`;
+    }
+
+    _popStatic(value) {
+        return breakLines`@${value} D=A ${this._moveDtoSP}`;
     }
 
     _translateAL(instruction) {
@@ -158,16 +189,14 @@ class VMtranslator {
         }
     }
 
-    _getLastTwoStackValues = () => {
-        return breakLines`@SP AM=M-1 D=M A=A-1`;
-    };
+    _getLastTwoStackValuesInMandD = breakLines`@SP AM=M-1 D=M A=A-1`;
 
     _translateAdd() {
-        return breakLines`${this._getLastTwoStackValues()} M=M+D`;
+        return breakLines`${this._getLastTwoStackValuesInMandD} M=M+D`;
     }
 
     _translateSub() {
-        return breakLines`${this._getLastTwoStackValues()} M=M-D`;
+        return breakLines`${this._getLastTwoStackValuesInMandD} M=M-D`;
     }
 }
 
