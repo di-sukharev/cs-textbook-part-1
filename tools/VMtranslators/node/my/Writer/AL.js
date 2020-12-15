@@ -51,11 +51,11 @@ class AL {
     }
 
     _translateAND() {
-        return breakLines`@SP AM=M-1 D=M A=A-1 M=D&M`;
+        return breakLines`${this._SPtoMD} M=D&M`;
     }
 
     _translateOR() {
-        return breakLines`@SP AM=M-1 D=M A=A-1 M=D|M`;
+        return breakLines`${this._SPtoMD} M=D|M`;
     }
 
     _translateNOT() {
