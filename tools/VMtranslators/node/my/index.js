@@ -3,9 +3,7 @@ const { performance } = require("perf_hooks");
 
 var [nodeExecPath, currentPath, inputDirectoryName] = process.argv;
 
-console.log("args: ", {
-    inputDirectoryName,
-});
+console.log("args: ", { inputDirectoryName });
 
 const translator = new VMtranslator();
 
