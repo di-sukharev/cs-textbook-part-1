@@ -1,8 +1,10 @@
 module.exports = {
-    INSTRUCTION: {
+    INSTRUCTION_TYPE: {
         POP: "pop",
         PUSH: "push",
         AL: "arithmetic-logical",
+        GOTO: "goto",
+        CALL: "function-calling",
     },
 
     SEGMENTS: {

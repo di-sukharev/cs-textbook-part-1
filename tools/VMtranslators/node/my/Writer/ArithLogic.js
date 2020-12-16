@@ -1,6 +1,6 @@
 const { breakLines } = require("../tools");
 
-const OPS = {
+const ARITH_LOGIC_OPS = {
     add: "add",
     sub: "sub",
     eq: "eq",
@@ -19,23 +19,23 @@ class ArithLogic {
 
     translate(instruction) {
         switch (instruction) {
-            case OPS.add:
+            case ARITH_LOGIC_OPS.add:
                 return this._translateADD();
-            case OPS.sub:
+            case ARITH_LOGIC_OPS.sub:
                 return this._translateSUB();
-            case OPS.eq:
+            case ARITH_LOGIC_OPS.eq:
                 return this._translateJump("JNE");
-            case OPS.lt:
+            case ARITH_LOGIC_OPS.lt:
                 return this._translateJump("JGE");
-            case OPS.gt:
+            case ARITH_LOGIC_OPS.gt:
                 return this._translateJump("JLE");
-            case OPS.neg:
+            case ARITH_LOGIC_OPS.neg:
                 return this._translateNEG();
-            case OPS.not:
+            case ARITH_LOGIC_OPS.not:
                 return this._translateNOT();
-            case OPS.or:
+            case ARITH_LOGIC_OPS.or:
                 return this._translateOR();
-            case OPS.and:
+            case ARITH_LOGIC_OPS.and:
                 return this._translateAND();
         }
     }
@@ -75,4 +75,4 @@ class ArithLogic {
     }
 }
 
-module.exports = { AL: ArithLogic, OPS };
+module.exports = { AL: ArithLogic, ARITH_LOGIC_OPS };

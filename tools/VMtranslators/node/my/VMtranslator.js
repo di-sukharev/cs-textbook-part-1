@@ -1,7 +1,9 @@
 const fs = require("fs");
-const { INSTRUCTION } = require("./constants.js");
+const { INSTRUCTION_TYPE } = require("./constants.js");
 const Writer = require("./Writer/index.js");
-const { OPS } = require("./Writer/ArithLogic.js");
+const { ARITH_LOGIC_OPS } = require("./Writer/ArithLogic.js");
+const { BRANCHING_OPS } = require("./Writer/Brancher.js");
+const { CALLER_OPS } = require("./Writer/Caller.js");
 
 const DEBUG = false;
 
@@ -63,24 +65,40 @@ class VMtranslator {
         let asmInstructions = `// ${vmInstruction} \n`; // start with comment
 
         switch (this._getType(vmInstruction)) {
-            case INSTRUCTION.PUSH:
+            case INSTRUCTION_TYPE.PUSH:
                 asmInstructions += this.writer.push(vmInstruction);
                 break;
-            case INSTRUCTION.POP:
+            case INSTRUCTION_TYPE.POP:
                 asmInstructions += this.writer.pop(vmInstruction);
                 break;
-            case INSTRUCTION.AL:
+            case INSTRUCTION_TYPE.AL:
                 asmInstructions += this.writer.arithLogic(vmInstruction);
+                break;
+            case INSTRUCTION_TYPE.BRANCHING:
+                asmInstructions += this.writer.brancher(vmInstruction);
+                break;
+            case INSTRUCTION_TYPE.CALL:
+                asmInstructions += this.writer.func(vmInstruction);
                 break;
         }
 
         return asmInstructions;
     }
 
+    // todo: check where to save this vars better
     _getType(instruction) {
-        if (instruction.includes("pop")) return INSTRUCTION.POP;
-        else if (instruction.includes("push")) return INSTRUCTION.PUSH;
-        else if (Object.keys(OPS).includes(instruction)) return INSTRUCTION.AL;
+        if (instruction.includes("pop")) return INSTRUCTION_TYPE.POP;
+
+        if (instruction.includes("push")) return INSTRUCTION_TYPE.PUSH;
+
+        if (Object.values(BRANCHING_OPS).includes(instruction))
+            return INSTRUCTION_TYPE.GOTO;
+
+        if (Object.values(ARITH_LOGIC_OPS).includes(instruction))
+            return INSTRUCTION_TYPE.AL;
+
+        if (Object.values(CALLER_OPS).includes(instruction))
+            return INSTRUCTION_TYPE.CALL;
     }
 }
 
