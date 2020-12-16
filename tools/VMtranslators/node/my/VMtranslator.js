@@ -1,6 +1,7 @@
 const fs = require("fs");
 const { INSTRUCTION } = require("./constants");
 const Writer = require("./Writer");
+const { OPS } = require("./Writer/ArithLogic");
 
 const DEBUG = false;
 
@@ -78,8 +79,8 @@ class VMtranslator {
 
     _getType(instruction) {
         if (instruction.includes("pop")) return INSTRUCTION.POP;
-        if (instruction.includes("push")) return INSTRUCTION.PUSH;
-        else return INSTRUCTION.AL;
+        else if (instruction.includes("push")) return INSTRUCTION.PUSH;
+        else if (Object.keys(OPS).includes(instruction)) return INSTRUCTION.AL;
     }
 }
 

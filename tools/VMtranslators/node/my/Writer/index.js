@@ -1,6 +1,6 @@
 const Pusher = require("./Pusher");
 const Popper = require("./Popper");
-const AL = require("./ArithLogic");
+const { AL } = require("./ArithLogic");
 
 class Writer {
     constructor() {
@@ -22,6 +22,13 @@ class Writer {
     arithLogic(instruction) {
         return this.AL.translate(instruction);
     }
+
+    // if-goto
+    // goto
+    // label
+    // call
+    // func
+    // return
 }
 
 module.exports = Writer;

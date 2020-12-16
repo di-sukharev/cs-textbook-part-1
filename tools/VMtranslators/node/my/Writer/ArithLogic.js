@@ -1,5 +1,17 @@
 const { breakLines } = require("../tools");
 
+const OPS = {
+    add: "add",
+    sub: "sub",
+    eq: "eq",
+    lt: "lt",
+    gt: "gt",
+    neg: "neg",
+    not: "not",
+    or: "or",
+    and: "and",
+};
+
 class ArithLogic {
     constructor() {
         return this;
@@ -7,23 +19,23 @@ class ArithLogic {
 
     translate(instruction) {
         switch (instruction) {
-            case "add":
+            case OPS.add:
                 return this._translateADD();
-            case "sub":
+            case OPS.sub:
                 return this._translateSUB();
-            case "eq":
+            case OPS.eq:
                 return this._translateJump("JNE");
-            case "lt":
+            case OPS.lt:
                 return this._translateJump("JGE");
-            case "gt":
+            case OPS.gt:
                 return this._translateJump("JLE");
-            case "neg":
+            case OPS.neg:
                 return this._translateNEG();
-            case "not":
+            case OPS.not:
                 return this._translateNOT();
-            case "or":
+            case OPS.or:
                 return this._translateOR();
-            case "and":
+            case OPS.and:
                 return this._translateAND();
         }
     }
@@ -63,4 +75,4 @@ class ArithLogic {
     }
 }
 
-module.exports = ArithLogic;
+module.exports = { AL: ArithLogic, OPS };
