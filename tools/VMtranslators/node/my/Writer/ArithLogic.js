@@ -1,6 +1,6 @@
 const { breakLines } = require("../tools");
 
-class AL {
+class ArithLogic {
     constructor() {
         return this;
     }
@@ -63,4 +63,4 @@ class AL {
     }
 }
 
-module.exports = AL;
+module.exports = ArithLogic;

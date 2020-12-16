@@ -69,7 +69,7 @@ class VMtranslator {
                 asmInstructions += this.writer.pop(vmInstruction);
                 break;
             case INSTRUCTION.AL:
-                asmInstructions += this.writer.al(vmInstruction);
+                asmInstructions += this.writer.arithLogic(vmInstruction);
                 break;
         }
 
