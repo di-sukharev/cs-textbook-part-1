@@ -1,9 +1,9 @@
-// INIT @SP
+// INIT @SP | write_init
 @256
 D=A
 @SP
 M=D
-// declaring function SimpleFunction.test 2
+// declaring function SimpleFunction.test 2 | write_function
 (SimpleFunction.test)
 // initialize LCL segment values
 @2
@@ -16,8 +16,7 @@ M=0
 // declaring local 1
 A=A-1
 M=0
-// push local 0
-// save LCL+0 into D
+// push local 0 | write_push
 @LCL
 D=M
 @0
@@ -28,8 +27,7 @@ D=M
 M=M+1
 A=M-1
 M=D
-// push local 1
-// save LCL+1 into D
+// push local 1 | write_push
 @LCL
 D=M
 @1
@@ -45,12 +43,11 @@ AM=M-1
 D=M
 A=A-1
 M=D+M
-// not
+// not | write_arith
 @SP
 A=M-1
 M=!M
-// push argument 0
-// save ARG+0 into D
+// push argument 0 | write_push
 @ARG
 D=M
 @0
@@ -66,8 +63,7 @@ AM=M-1
 D=M
 A=A-1
 M=D+M
-// push argument 1
-// save ARG+1 into D
+// push argument 1 | write_push
 @ARG
 D=M
 @1
@@ -83,7 +79,7 @@ AM=M-1
 D=M
 A=A-1
 M=M-D
-// save return address in R14
+// save return address in R14 | write_return
 @5
 D=A
 @LCL
@@ -128,7 +124,7 @@ M=D
 @R14
 A=M
 0;JMP
-// ENDLESS LOOP
+// write_endless_loop
 (SimpleFunction.test$genlabel$1)
 @SimpleFunction.test$genlabel$1
 0;JMP

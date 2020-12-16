@@ -1,9 +1,9 @@
-// INIT @SP
+// INIT @SP | write_init
 @256
 D=A
 @SP
 M=D
-// push return address before >> call Sys.init 0
+// push return address before >> call Sys.init 0 | write_call
 @$nofile.$nofunction$genlabel$1
 D=A
 @SP
@@ -35,7 +35,7 @@ D=M
 AM=M+1
 M=D
 // ARG = SP - num_args - 5; SP is off by one now
-@4
+@4 // arg_shift = num_args + 4, num_args=0
 D=A
 @SP
 D=M-D
@@ -50,14 +50,13 @@ M=D
 @Sys.init
 0;JMP
 ($nofile.$nofunction$genlabel$1)
-// ENDLESS LOOP
+// write_endless_loop
 ($nofile.$nofunction$genlabel$2)
 @$nofile.$nofunction$genlabel$2
 0;JMP
-// declaring function Sys.init 0
+// declaring function Sys.init 0 | write_function
 (Sys.init)
-// push constant 4000
-// save 4000 into D
+// push constant 4000 | write_push
 @4000
 D=A
 // push D on stack
@@ -65,8 +64,10 @@ D=A
 M=M+1
 A=M-1
 M=D
+// pop pointer 0 | write_pop
 @3
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -75,8 +76,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 5000
-// save 5000 into D
+// push constant 5000 | write_push
 @5000
 D=A
 // push D on stack
@@ -84,8 +84,10 @@ D=A
 M=M+1
 A=M-1
 M=D
+// pop pointer 1 | write_pop
 @4
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -94,7 +96,7 @@ D=M
 @R13
 A=M
 M=D
-// push return address before >> call Sys.main 0
+// push return address before >> call Sys.main 0 | write_call
 @Sys.init$genlabel$3
 D=A
 @SP
@@ -126,7 +128,7 @@ D=M
 AM=M+1
 M=D
 // ARG = SP - num_args - 5; SP is off by one now
-@4
+@4 // arg_shift = num_args + 4, num_args=0
 D=A
 @SP
 D=M-D
@@ -141,8 +143,10 @@ M=D
 @Sys.main
 0;JMP
 (Sys.init$genlabel$3)
+// pop temp 1 | write_pop
 @6
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -151,11 +155,12 @@ D=M
 @R13
 A=M
 M=D
+// write_label
 (Sys.init$LOOP)
-// goto Sys.init$LOOP
+// goto Sys.init$LOOP | write_goto
 @Sys.init$LOOP
 0;JMP
-// declaring function Sys.main 5
+// declaring function Sys.main 5 | write_function
 (Sys.main)
 // initialize LCL segment values
 @5
@@ -177,8 +182,7 @@ M=0
 // declaring local 4
 A=A-1
 M=0
-// push constant 4001
-// save 4001 into D
+// push constant 4001 | write_push
 @4001
 D=A
 // push D on stack
@@ -186,8 +190,10 @@ D=A
 M=M+1
 A=M-1
 M=D
+// pop pointer 0 | write_pop
 @3
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -196,8 +202,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 5001
-// save 5001 into D
+// push constant 5001 | write_push
 @5001
 D=A
 // push D on stack
@@ -205,8 +210,10 @@ D=A
 M=M+1
 A=M-1
 M=D
+// pop pointer 1 | write_pop
 @4
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -215,8 +222,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 200
-// save 200 into D
+// push constant 200 | write_push
 @200
 D=A
 // push D on stack
@@ -224,11 +230,12 @@ D=A
 M=M+1
 A=M-1
 M=D
-// pop local 1
+// pop local 1 | write_pop
 @LCL
 D=M
 @1
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -237,8 +244,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 40
-// save 40 into D
+// push constant 40 | write_push
 @40
 D=A
 // push D on stack
@@ -246,11 +252,12 @@ D=A
 M=M+1
 A=M-1
 M=D
-// pop local 2
+// pop local 2 | write_pop
 @LCL
 D=M
 @2
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -259,8 +266,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 6
-// save 6 into D
+// push constant 6 | write_push
 @6
 D=A
 // push D on stack
@@ -268,11 +274,12 @@ D=A
 M=M+1
 A=M-1
 M=D
-// pop local 3
+// pop local 3 | write_pop
 @LCL
 D=M
 @3
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -281,8 +288,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 123
-// save 123 into D
+// push constant 123 | write_push
 @123
 D=A
 // push D on stack
@@ -290,7 +296,7 @@ D=A
 M=M+1
 A=M-1
 M=D
-// push return address before >> call Sys.add12 1
+// push return address before >> call Sys.add12 1 | write_call
 @Sys.main$genlabel$4
 D=A
 @SP
@@ -322,7 +328,7 @@ D=M
 AM=M+1
 M=D
 // ARG = SP - num_args - 5; SP is off by one now
-@5
+@5 // arg_shift = num_args + 4, num_args=1
 D=A
 @SP
 D=M-D
@@ -337,8 +343,10 @@ M=D
 @Sys.add12
 0;JMP
 (Sys.main$genlabel$4)
+// pop temp 0 | write_pop
 @5
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -347,8 +355,7 @@ D=M
 @R13
 A=M
 M=D
-// push local 0
-// save LCL+0 into D
+// push local 0 | write_push
 @LCL
 D=M
 @0
@@ -359,8 +366,7 @@ D=M
 M=M+1
 A=M-1
 M=D
-// push local 1
-// save LCL+1 into D
+// push local 1 | write_push
 @LCL
 D=M
 @1
@@ -371,8 +377,7 @@ D=M
 M=M+1
 A=M-1
 M=D
-// push local 2
-// save LCL+2 into D
+// push local 2 | write_push
 @LCL
 D=M
 @2
@@ -383,8 +388,7 @@ D=M
 M=M+1
 A=M-1
 M=D
-// push local 3
-// save LCL+3 into D
+// push local 3 | write_push
 @LCL
 D=M
 @3
@@ -395,8 +399,7 @@ D=M
 M=M+1
 A=M-1
 M=D
-// push local 4
-// save LCL+4 into D
+// push local 4 | write_push
 @LCL
 D=M
 @4
@@ -427,7 +430,7 @@ AM=M-1
 D=M
 A=A-1
 M=D+M
-// save return address in R14
+// save return address in R14 | write_return
 @5
 D=A
 @LCL
@@ -472,10 +475,9 @@ M=D
 @R14
 A=M
 0;JMP
-// declaring function Sys.add12 0
+// declaring function Sys.add12 0 | write_function
 (Sys.add12)
-// push constant 4002
-// save 4002 into D
+// push constant 4002 | write_push
 @4002
 D=A
 // push D on stack
@@ -483,8 +485,10 @@ D=A
 M=M+1
 A=M-1
 M=D
+// pop pointer 0 | write_pop
 @3
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -493,8 +497,7 @@ D=M
 @R13
 A=M
 M=D
-// push constant 5002
-// save 5002 into D
+// push constant 5002 | write_push
 @5002
 D=A
 // push D on stack
@@ -502,8 +505,10 @@ D=A
 M=M+1
 A=M-1
 M=D
+// pop pointer 1 | write_pop
 @4
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -512,8 +517,7 @@ D=M
 @R13
 A=M
 M=D
-// push argument 0
-// save ARG+0 into D
+// push argument 0 | write_push
 @ARG
 D=M
 @0
@@ -524,8 +528,7 @@ D=M
 M=M+1
 A=M-1
 M=D
-// push constant 12
-// save 12 into D
+// push constant 12 | write_push
 @12
 D=A
 // push D on stack
@@ -538,7 +541,7 @@ AM=M-1
 D=M
 A=A-1
 M=D+M
-// save return address in R14
+// save return address in R14 | write_return
 @5
 D=A
 @LCL
