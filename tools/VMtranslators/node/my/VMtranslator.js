@@ -1,7 +1,7 @@
 const fs = require("fs");
-const { INSTRUCTION } = require("./constants");
-const Writer = require("./Writer");
-const { OPS } = require("./Writer/ArithLogic");
+const { INSTRUCTION } = require("./constants.js");
+const Writer = require("./Writer/index.js");
+const { OPS } = require("./Writer/ArithLogic.js");
 
 const DEBUG = false;
 

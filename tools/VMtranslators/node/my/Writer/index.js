@@ -1,6 +1,6 @@
-const Pusher = require("./Pusher");
-const Popper = require("./Popper");
-const { AL } = require("./ArithLogic");
+const Pusher = require("./Pusher.js");
+const Popper = require("./Popper.js");
+const { AL } = require("./ArithLogic.js");
 
 class Writer {
     constructor() {

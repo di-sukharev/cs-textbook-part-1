@@ -1,5 +1,5 @@
-const { SEGMENTS } = require("../constants");
-const { breakLines } = require("../tools");
+const { SEGMENTS } = require("../constants.js");
+const { breakLines } = require("../tools.js");
 
 class Pusher {
     constructor() {
