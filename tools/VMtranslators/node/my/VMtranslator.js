@@ -49,12 +49,15 @@ class VMtranslator {
         const intoLines = "\r\n";
         const intoFile = "\n";
 
-        const assemblyFile = vmFile
-            .split(intoLines)
-            .map(removeComments)
-            .filter(removeWhitespaces)
-            .map(this._vmToAsm.bind(this))
-            .join(intoFile);
+        const assemblyFile =
+            this.writer.init() +
+            "\n" + // todo: more elegant \n
+            vmFile
+                .split(intoLines)
+                .map(removeComments)
+                .filter(removeWhitespaces)
+                .map(this._vmToAsm.bind(this))
+                .join(intoFile);
 
         if (DEBUG) console.log({ DEBUG });
 

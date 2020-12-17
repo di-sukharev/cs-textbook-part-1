@@ -3,6 +3,7 @@ const Popper = require("./Popper.js");
 const { Brancher } = require("./Brancher.js");
 const { Caller } = require("./Caller.js");
 const { AL } = require("./ArithLogic.js");
+const { breakLines } = require("../tools.js");
 
 class Writer {
     constructor() {
@@ -16,6 +17,10 @@ class Writer {
     }
 
     // todo: refactor this method into OPS.forEach(translate) or like OPS[op].translate(instruction)
+    init() {
+        return breakLines`@256 D=A @SP M=D`;
+    }
+
     push(instruction) {
         return this.pusher.translate(instruction);
     }
