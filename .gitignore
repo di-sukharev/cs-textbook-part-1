@@ -1,3 +1,4 @@
+*.dat
 projects/06/*/*.hack
 projects/09/*/*.vm
 projects/12/*/*.vm
