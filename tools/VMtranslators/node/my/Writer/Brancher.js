@@ -1,3 +1,5 @@
+const { breakLines } = require("../tools");
+
 // todo: maybe BRANCHING_TYPE rename? and rename other contants?
 const BRANCHING_OPS = {
     label: "label",
@@ -23,11 +25,17 @@ class Brancher {
         }
     }
 
-    _translateLabel(value) {}
+    _translateLabel(label) {
+        return breakLines`(${label})`;
+    }
 
-    _translateGoto(value) {}
+    _translateGoto(label) {
+        return breakLines`@${label} 0;JMP`;
+    }
 
-    _translateIf(value) {}
+    _translateIf(label) {
+        return breakLines`@SP AM=M-1 D=M @${label} D;JNE`;
+    }
 }
 
 module.exports = { BRANCHING_OPS, Brancher };
