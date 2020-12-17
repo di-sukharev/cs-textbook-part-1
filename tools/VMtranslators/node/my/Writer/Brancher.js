@@ -15,13 +15,19 @@ class Brancher {
 
         switch (operation) {
             case BRANCHING_OPS.label:
-                return console.log(value);
+                return this._translateLabel(value);
             case BRANCHING_OPS.goto:
-                return console.log(value);
+                return this._translateGoto(value);
             case BRANCHING_OPS.ifgoto:
-                return console.log(value);
+                return this._translateIf(value);
         }
     }
+
+    _translateLabel(value) {}
+
+    _translateGoto(value) {}
+
+    _translateIf(value) {}
 }
 
 module.exports = { BRANCHING_OPS, Brancher };
