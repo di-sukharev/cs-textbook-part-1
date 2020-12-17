@@ -11,17 +11,23 @@ class Caller {
     }
 
     translate(instruction) {
-        const [operation, value] = instruction.split(" ");
+        const [operation, value, rest] = instruction.split(" ");
 
         switch (operation) {
             case CALLER_OPS.call:
-                return console.log(value);
+                return this._translateCall(value, rest);
             case CALLER_OPS.function:
-                return console.log(value);
+                return this._translateFunction(value, rest);
             case CALLER_OPS.return:
-                return console.log(value);
+                return this._translateReturn(value);
         }
     }
+
+    _translateCall(name, args) {}
+
+    _translateFunction(name, localVars) {}
+
+    _translateReturn(value) {}
 }
 
 module.exports = { CALLER_OPS, Caller };
