@@ -78,10 +78,10 @@ class VMtranslator {
                 asmInstructions += this.writer.arithLogic(vmInstruction);
                 break;
             case INSTRUCTION_TYPE.BRANCHING:
-                asmInstructions += this.writer.brancher(vmInstruction);
+                asmInstructions += this.writer.branching(vmInstruction);
                 break;
             case INSTRUCTION_TYPE.CALL:
-                asmInstructions += this.writer.func(vmInstruction);
+                asmInstructions += this.writer.call(vmInstruction);
                 break;
         }
 
