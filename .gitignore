@@ -1,3 +1,4 @@
+node_modules
 *.dat
 projects/06/*/*.hack
 projects/09/*/*.vm
