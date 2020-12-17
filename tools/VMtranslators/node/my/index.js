@@ -1,6 +1,7 @@
 const VMtranslator = require("./VMtranslator.js");
 const { performance } = require("perf_hooks");
 
+// eslint-disable-next-line no-unused-vars
 const [nodeExecPath, thisFilePath, inputDirectoryName] = process.argv;
 
 console.log("args: ", { inputDirectoryName });

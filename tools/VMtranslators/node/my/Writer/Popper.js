@@ -7,6 +7,7 @@ class Popper {
     }
 
     translate(instruction) {
+        // eslint-disable-next-line no-unused-vars
         const [pop, segment, value] = instruction.split(" ");
 
         switch (segment) {

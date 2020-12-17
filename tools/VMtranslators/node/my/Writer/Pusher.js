@@ -7,6 +7,7 @@ class Pusher {
     }
 
     translate(instruction) {
+        // eslint-disable-next-line no-unused-vars
         const [push, segment, value] = instruction.split(" ");
 
         switch (segment) {
