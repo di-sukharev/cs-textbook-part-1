@@ -1,0 +1,35 @@
+class Game {
+    
+    function void play() {
+        var boolean userWantsToExit;
+        var Avatar player;
+
+        let player = Avatar.new(0, 0);
+
+        let userWantsToExit = false;
+        while (~userWantsToExit) {
+            do player.move();
+            
+            let userWantsToExit = Game.checkIfUserWantsToExit();
+        }
+        
+        do Game.stop();
+
+        return;
+    }
+
+    function boolean checkIfUserWantsToExit() {
+        var boolean userHasClickedTheESC;
+
+        let userHasClickedTheESC = (Keyboard.keyPressed() = 140);
+
+        return userHasClickedTheESC;
+    }
+
+    function void stop() {
+
+        do Output.printString("game stoped");
+
+        return;
+    }
+}

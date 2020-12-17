@@ -1,0 +1,9 @@
+class Main {
+    function void main() {
+        do Game.play();
+        
+        do Sys.halt();
+
+        return;
+    }
+}
