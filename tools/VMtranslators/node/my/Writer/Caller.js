@@ -26,11 +26,9 @@ class Caller {
     }
 
     _translateCall(name, args) {
-        // LCL = SP; fix SP being off by one
-        const fixSP = () => breakLines`@SP MD=M+1 @LCL M=D`;
-
-        // arg_shift = num_args + 4, num_args=1
-        const shiftArg = () => breakLines`@${args + 4} D=A @SP D=M-D @ARG M=D`;
+        // save return address to SP
+        const pushRIP = () =>
+            breakLines`@Main.fibonacci$genlabel$4 D=A @SP A=M M=D`;
 
         // save segments on stack
         const pushSegments = () =>
@@ -38,21 +36,31 @@ class Caller {
                 (res, seg) => (res += breakLines`@${seg} D=A @SP A=M M=D`)
             );
 
-        const pushRIP = () =>
-            breakLines`@Main.fibonacci$genlabel$4 D=A @SP A=M M=D`;
+        // arg_shift = num_args + 4, num_args=1
+        const shiftArg = () => breakLines`@${args + 4} D=A @SP D=M-D @ARG M=D`;
+
+        // LCL = SP; adjust LCL with SP
+        const adjustLCLtoSP = () => breakLines`@SP MD=M+1 @LCL M=D`;
 
         // goto callee, set up a return label
-        const gotoCallee = () =>
-            breakLines`@Main.fibonacci 0;JMP (Main.fibonacci$genlabel$4)`;
+        const gotoCallee = () => breakLines`@Main.fibonacci 0;JMP`;
 
-        return breakLines`${pushRIP()} ${pushSegments()} ${shiftArg()} ${fixSP()} ${gotoCallee()}`;
+        // create the return label
+        const createRIPlabel = () => breakLines`(Main.fibonacci$genlabel$4)`;
+
+        return breakLines`${pushRIP()} ${pushSegments()} ${shiftArg()} ${adjustLCLtoSP()} ${gotoCallee()} ${createRIPlabel()}`;
     }
 
     _translateFunction(name, localVars) {
         return `(${name})`;
     }
 
-    _translateReturn(value) {}
+    _translateReturn(value) {
+        // return to the caller the value computed by the callee
+        // recycle the memory resources
+        // Reinstate the caller's state and memory segments
+        // Jump to the return address in the callers code
+    }
 }
 
 module.exports = { CALLER_OPS, Caller };
