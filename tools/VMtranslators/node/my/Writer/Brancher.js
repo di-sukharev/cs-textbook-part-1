@@ -25,16 +25,21 @@ class Brancher {
         }
     }
 
+    // todo mpve all to Caller, there is fileName and funcName already available
+    _genLabel(label) {
+        return `${fileName}.${functionName}$${label}`;
+    }
+
     _translateLabel(label) {
-        return breakLines`(${label})`;
+        return breakLines`(${this._genLabel(label)})`;
     }
 
     _translateGoto(label) {
-        return breakLines`@${label} 0;JMP`;
+        return breakLines`@${this._genLabel(label)} 0;JMP`;
     }
 
     _translateIf(label) {
-        return breakLines`@SP AM=M-1 D=M @${label} D;JNE`;
+        return breakLines`@SP AM=M-1 D=M @${this._genLabel(label)} D;JNE`;
     }
 }
 

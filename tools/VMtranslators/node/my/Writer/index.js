@@ -18,7 +18,8 @@ class Writer {
 
     // todo: refactor this method into OPS.forEach(translate) or like OPS[op].translate(instruction)
     init() {
-        return breakLines`@256 D=A @SP M=D`;
+        const initSP = breakLines`@256 D=A @SP M=D`;
+        return breakLines`${initSP} ${this.call("Sys.init 0")}`;
     }
 
     push(instruction) {
