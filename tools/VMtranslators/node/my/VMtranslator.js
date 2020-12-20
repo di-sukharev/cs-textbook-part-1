@@ -17,7 +17,7 @@ class VMtranslator {
     translate(inputDirectoryName) {
         const isVMfile = (fileName) => fileName.endsWith(".vm");
 
-        let assemblyFile;
+        let assemblyFile = this.writer.init() + "\n";
 
         const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
@@ -48,15 +48,12 @@ class VMtranslator {
         const intoLines = "\r\n";
         const intoFile = "\n";
 
-        const assemblyFile =
-            this.writer.init() +
-            "\n" + // todo: more elegant \n
-            vmFile
-                .split(intoLines)
-                .map(removeComments)
-                .filter(removeWhitespaces)
-                .map(this._vmToAsm.bind(this))
-                .join(intoFile);
+        const assemblyFile = vmFile
+            .split(intoLines)
+            .map(removeComments)
+            .filter(removeWhitespaces)
+            .map(this._vmToAsm.bind(this))
+            .join(intoFile);
 
         if (DEBUG) console.log({ DEBUG });
 
@@ -76,7 +73,7 @@ class VMtranslator {
             case INSTRUCTION_TYPE.AL:
                 asmInstructions += this.writer.arithLogic(vmInstruction);
                 break;
-            case INSTRUCTION_TYPE.BRANCHING:
+            case INSTRUCTION_TYPE.GOTO:
                 asmInstructions += this.writer.branching(vmInstruction);
                 break;
             case INSTRUCTION_TYPE.CALL:
@@ -89,17 +86,19 @@ class VMtranslator {
 
     // todo: check where to save this vars better
     _getType(instruction) {
-        if (instruction.includes("pop")) return INSTRUCTION_TYPE.POP;
+        const [operation] = instruction.split(" ");
 
-        if (instruction.includes("push")) return INSTRUCTION_TYPE.PUSH;
+        if (operation === INSTRUCTION_TYPE.POP) return INSTRUCTION_TYPE.POP;
 
-        if (Object.values(BRANCHING_OPS).includes(instruction))
+        if (operation === INSTRUCTION_TYPE.PUSH) return INSTRUCTION_TYPE.PUSH;
+
+        if (Object.values(BRANCHING_OPS).includes(operation))
             return INSTRUCTION_TYPE.GOTO;
 
-        if (Object.values(ARITH_LOGIC_OPS).includes(instruction))
+        if (Object.values(ARITH_LOGIC_OPS).includes(operation))
             return INSTRUCTION_TYPE.AL;
 
-        if (Object.values(CALLER_OPS).includes(instruction))
+        if (Object.values(CALLER_OPS).includes(operation))
             return INSTRUCTION_TYPE.CALL;
     }
 }

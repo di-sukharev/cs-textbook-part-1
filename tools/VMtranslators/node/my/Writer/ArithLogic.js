@@ -52,9 +52,22 @@ class ArithLogic {
 
     _jumpCounter = 0;
 
+    // todo mpve all to Caller, there is fileName and funcName already available
+    _genLabel(label) {
+        return `${this.fileName}.${this.functionName}$${label}`;
+    }
+
     _translateJump(jmp) {
-        const instruction = breakLines`${this._SPtoMD} D=M-D @FALSE${this._jumpCounter} D;${jmp} @SP A=M-1 M=-1 @CONTINUE${this._jumpCounter} 0;JMP (FALSE${this._jumpCounter}) @SP A=M-1 M=0 (CONTINUE${this._jumpCounter})`;
+        const instruction = breakLines`${this._SPtoMD} D=M-D @${this._genLabel(
+            "FALSE"
+        )}${this._jumpCounter} D;${jmp} @SP A=M-1 M=-1 @${this._genLabel(
+            "CONTINUE"
+        )}${this._jumpCounter} 0;JMP (${this._genLabel("FALSE")}${
+            this._jumpCounter
+        }) @SP A=M-1 M=0 (${this._genLabel("CONTINUE")}${this._jumpCounter})`;
+
         this._jumpCounter++;
+
         return instruction;
     }
 

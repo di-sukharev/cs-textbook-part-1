@@ -19,7 +19,7 @@ class Writer {
     // todo: refactor this method into OPS.forEach(translate) or like OPS[op].translate(instruction)
     init() {
         const initSP = breakLines`@256 D=A @SP M=D`;
-        return breakLines`${initSP} ${this.call("Sys.init 0")}`;
+        return breakLines`${initSP} ${this.call("call Sys.init 0")}`;
     }
 
     push(instruction) {
@@ -35,6 +35,7 @@ class Writer {
     }
 
     branching(instruction) {
+        console.log({ instruction });
         return this.brancher.translate(instruction);
     }
 

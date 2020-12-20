@@ -9,7 +9,7 @@ const CALLER_OPS = {
 
 class Caller {
     constructor() {
-        this.currentFunction = "noFunction";
+        this.currentFunction = "initialization";
         this.i = 0;
 
         return this;
@@ -30,14 +30,16 @@ class Caller {
 
     _translateFunction(funcName, localVars) {
         // initialize LCL segment values
-        const generatedLCLvars = breakLines`@${localVars} D=A @SP AM=D+M ${"A=A-1 M=0 "
-            .repeat(localVars)
-            .trim()}`;
+        const generatedLCLvars =
+            localVars > 0
+                ? ` @${localVars} D=A @SP AM=D+M ${"A=A-1 M=0 "
+                      .repeat(localVars)
+                      .trim()}`
+                : "";
 
         this.currentFunction = funcName;
-        this.i = 0;
 
-        return `(${funcName}) ${generatedLCLvars}`;
+        return breakLines`(${funcName})${generatedLCLvars}`;
     }
 
     _translateCall(name, argsCount) {
@@ -46,7 +48,8 @@ class Caller {
 
         // save segments on stack
         const pushSegments = ["LCL", "ARG", "THIS", "THAT"].reduce(
-            (res, seg) => (res += breakLines`@${seg} D=A @SP A=M M=D`)
+            (res, seg) => breakLines`${res} @${seg} D=A @SP AM=M+1 M=D`,
+            ""
         );
 
         // arg_shift = argsCount + segments.length, segments.length = 4
