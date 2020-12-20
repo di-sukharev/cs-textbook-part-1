@@ -1,0 +1,98 @@
+function HardestGameEver.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+call Labirinth.new 0
+pop this 2
+push this 2
+call Player.new 1
+pop this 0
+push this 2
+call Hunter.new 1
+pop this 1
+push pointer 0
+return
+function HardestGameEver.run 1
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+push pointer 0
+call HardestGameEver.initialize 1
+pop temp 0
+label WHILE_EXP0
+push local 0
+not
+not
+if-goto WHILE_END0
+push pointer 0
+call HardestGameEver.play 1
+pop temp 0
+push pointer 0
+call HardestGameEver.checkIfUserWantsToExit 1
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+call HardestGameEver.destroy 1
+pop temp 0
+push constant 0
+return
+function HardestGameEver.initialize 0
+push argument 0
+pop pointer 0
+push this 0
+call Player.render 1
+pop temp 0
+push this 2
+call Labirinth.render 1
+pop temp 0
+push constant 0
+return
+function HardestGameEver.checkIfUserWantsToExit 2
+push argument 0
+pop pointer 0
+call Keyboard.keyPressed 0
+pop local 0
+push constant 0
+pop local 1
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+label IF_FALSE0
+push local 1
+return
+function HardestGameEver.play 0
+push argument 0
+pop pointer 0
+push this 0
+call Player.move 1
+pop temp 0
+push this 1
+call Hunter.move 1
+pop temp 0
+push constant 0
+return
+function HardestGameEver.destroy 0
+push argument 0
+pop pointer 0
+push this 2
+call Labirinth.destroy 1
+pop temp 0
+push this 0
+call Player.destroy 1
+pop temp 0
+push this 1
+call Hunter.destroy 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

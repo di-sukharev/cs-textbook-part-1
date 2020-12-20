@@ -1,0 +1,180 @@
+function Grid.new 0
+push constant 5
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 1
+push argument 1
+pop this 2
+push pointer 0
+call Grid._createMatrix 1
+pop temp 0
+push pointer 0
+return
+function Grid._createMatrix 4
+push argument 0
+pop pointer 0
+push this 1
+call Array.new 1
+pop this 0
+push constant 256
+push this 1
+call Math.divide 2
+pop this 4
+push constant 512
+push this 2
+call Math.divide 2
+pop this 3
+push constant 0
+pop local 2
+label WHILE_EXP0
+push local 2
+push this 1
+lt
+not
+if-goto WHILE_END0
+push local 2
+push this 0
+add
+push this 2
+call Array.new 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+pop local 3
+label WHILE_EXP1
+push local 3
+push this 2
+lt
+not
+if-goto WHILE_END1
+push local 2
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 3
+push local 0
+add
+push local 2
+push local 3
+push this 4
+push this 3
+call Cell.new 4
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 3
+push constant 1
+add
+pop local 3
+goto WHILE_EXP1
+label WHILE_END1
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Grid.render 4
+push argument 0
+pop pointer 0
+push constant 0
+pop local 2
+label WHILE_EXP0
+push local 2
+push this 1
+lt
+not
+if-goto WHILE_END0
+push constant 0
+pop local 3
+label WHILE_EXP1
+push local 3
+push this 2
+lt
+not
+if-goto WHILE_END1
+push local 2
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 3
+push local 0
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 1
+call Cell.render 1
+pop temp 0
+push local 3
+push constant 1
+add
+pop local 3
+goto WHILE_EXP1
+label WHILE_END1
+push local 2
+push constant 1
+add
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Grid.getCell 2
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop argument 1
+push argument 2
+push argument 1
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+return
+function Grid.getCellWidth 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Grid.getCellHeight 0
+push argument 0
+pop pointer 0
+push this 4
+return
+function Grid.getRows 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Grid.getCols 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Grid.destroy 0
+push argument 0
+pop pointer 0
+push this 0
+call Array.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

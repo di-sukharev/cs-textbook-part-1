@@ -3,8 +3,12 @@ class Game {
     function void play() {
         var boolean userWantsToExit;
         var Avatar player;
+        var Labirinth labirinth;
 
         let player = Avatar.new(0, 0);
+        let labirinth = Labirinth.new();
+
+        do labirinth.render();
 
         let userWantsToExit = false;
         while (~userWantsToExit) {

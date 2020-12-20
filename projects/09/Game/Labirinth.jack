@@ -1,0 +1,22 @@
+class Labirinth {
+
+    field Grid grid;
+
+    constructor Labirinth new() {
+        var int rows, cols;
+
+        let rows = 16;
+        let cols = 16;
+
+        let grid = Grid.new(rows, cols);
+
+        return this;
+    }
+
+    method void render() {
+        do grid.render();
+
+        return;
+    }
+
+}
