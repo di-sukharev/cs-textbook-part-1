@@ -20,9 +20,9 @@ class Popper {
             case SEGMENTS.this:
                 return this._popSegment(SEGMENTS.THIS, value);
             case SEGMENTS.temp:
-                return this._popSegment(SEGMENTS.TEMP, +value + 5);
+                return this._popSegment(SEGMENTS.TEMP, +value + 5); // temp segment is starting from RAM[5]
             case SEGMENTS.static:
-                return this._popStatic(+value + 16);
+                return this._popStatic(+value + 16); // static segment is starting from RAM[16]
             case SEGMENTS.pointer:
                 return this._popPointer(
                     value === "0" ? SEGMENTS.THIS : SEGMENTS.THAT

@@ -2,6 +2,7 @@
 D=A
 @SP
 M=D
+undefined
 // function Sys.init 0 
 undefined
 // push constant 4 
@@ -15,7 +16,7 @@ M=M+1
 // call Main.fibonacci 1 
 undefined
 // label WHILE 
-(WHILE)
+(undefined.undefined$WHILE)
 // goto WHILE 
-@WHILE
+@undefined.undefined$WHILE
 0;JMP

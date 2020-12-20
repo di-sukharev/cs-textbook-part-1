@@ -27,7 +27,7 @@ class Brancher {
 
     // todo mpve all to Caller, there is fileName and funcName already available
     _genLabel(label) {
-        return `${fileName}.${functionName}$${label}`;
+        return `${this.fileName}.${this.functionName}$${label}`;
     }
 
     _translateLabel(label) {

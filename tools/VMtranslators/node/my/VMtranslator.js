@@ -17,26 +17,25 @@ class VMtranslator {
     translate(inputDirectoryName) {
         const isVMfile = (fileName) => fileName.endsWith(".vm");
 
+        let assemblyFile;
+
+        const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
+
         fs.readdirSync(inputDirectoryName)
             .filter(isVMfile)
             .forEach((fileName) => {
-                const [
-                    fileNameWithExtension,
-                    fileNameWithoutExtension,
-                ] = fileName.match(/(.+).vm$/);
-
                 const vmFile = fs.readFileSync(
-                    `${inputDirectoryName}/${fileNameWithExtension}`,
+                    `${inputDirectoryName}/${fileName}`,
                     "utf8"
                 );
 
-                const assemblyFile = this._translate(vmFile);
-
-                fs.writeFileSync(
-                    `${inputDirectoryName}/${fileNameWithoutExtension}.my.asm`,
-                    assemblyFile
-                );
+                assemblyFile += this._translate(vmFile);
             });
+
+        fs.writeFileSync(
+            `${inputDirectoryName}/${targetDirectoryName}.my.asm`,
+            assemblyFile
+        );
     }
 
     _translate(vmFile) {
