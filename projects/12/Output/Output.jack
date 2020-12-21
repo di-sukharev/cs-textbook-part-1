@@ -247,7 +247,7 @@ class Output {
 
         let s = String.new(10);
 
-        do s.setInt(i);
+        do s.setInt(i); // "".setInt(123) => "123"
         do Output.printString(s);
         do s.dispose();
 
