@@ -49,7 +49,7 @@ class Keyboard {
     function char readChar() {
         var char c;
      
-        while (Keyboard.keyPressed() = 0) { /* do nothing, while no key is pressed */}
+        while (Keyboard.keyPressed() = 0) { /* do nothing, while no key is pressed */ }
         let c = Keyboard.keyPressed();
         while (~(Keyboard.keyPressed() = 0)) { /* do nothing, waiting for key to be released */}
         

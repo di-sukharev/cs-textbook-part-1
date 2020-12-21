@@ -104,7 +104,7 @@ class String {
     }
 
     /*  Sets this string to hold a representation of the given value.
-        e.g setInt(31284) returns "31284"
+        e.g setInt(-31284) returns "-31284"
     */
     method void setInt(int val) {
         let length = 0;
