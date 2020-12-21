@@ -103,13 +103,15 @@ class String {
         return c - 48;
     }
 
-    /*  Sets this string to hold a representation of the given value. */
+    /*  Sets this string to hold a representation of the given value.
+        e.g setInt(31284) returns "31284"
+    */
     method void setInt(int val) {
         let length = 0;
 
         if (val < 0) {
             let val = -val;
-            do appendChar(45);
+            do appendChar(45); // 45 is - symbol (minus)
         }
 
         do setIntHelper(val);
