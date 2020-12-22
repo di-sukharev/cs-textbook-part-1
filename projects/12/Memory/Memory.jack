@@ -22,7 +22,7 @@ class Memory {
     function void init() {
 
         let heapBase = 2048;
-        let heapEnd = 16384; // MAY BE 16383
+        let heapEnd = 16384;
 
         let memory = 0;
         let freeList = heapBase;
@@ -76,7 +76,7 @@ class Memory {
         return block;
     }
     
-    // /** Implementing first search strategy. */
+    /** Implementing first search strategy. */
     function Array findPossibleSegmentInList(int size) {
         var Array currentSegment;
 
@@ -87,7 +87,7 @@ class Memory {
         return currentSegment;
     }
 
-    // /** Slicing block of size from the bottom of a given segment */
+    /** Slicing block of size from the bottom of a given segment */
     function int sliceBlockFromSegment(Array segment, int size) {
         var int baseAddress;
         var int reducedSize;
