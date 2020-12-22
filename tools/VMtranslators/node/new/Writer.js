@@ -13,7 +13,7 @@ class Writer {
     // todo: move somewhere, rewrite using callback
     _i = 0;
     _getI = () => {
-        return this.i++;
+        return this._i++;
     };
 
     // todo: move this _genLabel somewhere
@@ -28,6 +28,11 @@ class Writer {
     _SPtoD = "@SP AM=M-1 D=M";
     _goBack = "A=A-1";
     _SPtoDandGoBack = `${this._SPtoD} ${this._goBack}`;
+
+    init() {
+        const initSP = breakLines`@256 D=A @SP M=D`;
+        return breakLines`${initSP} ${this.call("Sys.init", 0)}`;
+    }
 
     pop(segment, value) {
         const _moveDtoSP = `@R13 M=D ${this._SPtoD} @R13 A=M M=D`;

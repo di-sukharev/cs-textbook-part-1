@@ -1,6 +1,5 @@
 const fs = require("fs");
-const { INSTRUCTION_TYPE } = require("./constants.js");
-const Writer = require("./Writer/index.js");
+const Writer = require("./Writer.js");
 
 const DEBUG = false;
 
@@ -30,7 +29,7 @@ class VMtranslator {
             });
 
         fs.writeFileSync(
-            `${inputDirectoryName}/${targetDirectoryName}.my.asm`,
+            `${inputDirectoryName}/${targetDirectoryName}.new.asm`,
             assemblyFile
         );
     }
