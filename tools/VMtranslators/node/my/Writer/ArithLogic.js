@@ -52,7 +52,7 @@ class ArithLogic {
 
     _jumpCounter = 0;
 
-    // todo mpve all to Caller, there is fileName and funcName already available
+    // todo move all to Caller, there is fileName and funcName already available
     _genLabel(label) {
         return `${this.fileName}.${this.functionName}$${label}`;
     }

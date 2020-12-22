@@ -10,10 +10,32 @@ const CONSTANTS = {
 };
 
 class Writer {
-    constructor() {}
+    constructor() {
+        return this;
+    }
+
+    // todo: move somewhere, rewrite using callback
+    _i = 0;
+    _getI = () => {
+        return this.i++;
+    };
+
+    // todo: move this _genLabel somewhere
+    fileName = "noFile";
+    functionName = "noFunction";
+    _genLabel(label) {
+        return `${this.fileName}.${this.functionName}$${label}`;
+    }
+
+    _advanceSP = "@SP A=M M=D @SP M=M+1";
+
+    // todo: move this instructions
+    _SPtoD = "@SP AM=M-1 D=M";
+    _goBack = "A=A-1";
+    _SPtoDandGoBack = `${this._SPtoD} ${this._goBack}`;
 
     pop(segment, value) {
-        const _moveDtoSP = "@R13 M=D @SP AM=M-1 D=M @R13 A=M M=D";
+        const _moveDtoSP = `@R13 M=D ${this._SPtoD} @R13 A=M M=D`;
 
         const popSegment = (seg, val) =>
             breakLines`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
@@ -37,14 +59,13 @@ class Writer {
     }
 
     push(segment, value) {
-        const _advanceSP = "@SP A=M M=D @SP M=M+1";
-
-        const pushConstant = (val) => breakLines`@${val} D=A ${_advanceSP}`;
+        const pushConstant = (val) =>
+            breakLines`@${val} D=A ${this._advanceSP}`;
         const pushSegment = (seg, val) =>
-            breakLines`@${seg} D=M @${val} A=D+A D=M ${_advanceSP}`;
+            breakLines`@${seg} D=M @${val} A=D+A D=M ${this._advanceSP}`;
 
-        const pushPointer = (seg) => breakLines`@${seg} D=M ${_advanceSP}`;
-        const pushStatic = (val) => breakLines`@${val} D=M ${_advanceSP}`;
+        const pushPointer = (seg) => breakLines`@${seg} D=M ${this._advanceSP}`;
+        const pushStatic = (val) => breakLines`@${val} D=M ${this._advanceSP}`;
 
         switch (segment) {
             case "constant":
@@ -63,15 +84,41 @@ class Writer {
         }
     }
 
-    add() {}
-    sub() {}
-    eq() {}
-    lt() {}
-    gt() {}
-    neg() {}
-    not() {}
-    or() {}
-    and() {}
+    add() {
+        return breakLines`${this._SPtoDandGoBack} M=M+D`;
+    }
+    sub() {
+        return breakLines`${this._SPtoDandGoBack} M=M-D`;
+    }
+
+    _translateJump(jmp) {
+        const continueLabel = `${this._genLabel("CONTINUE")}.${this._getI()}`;
+
+        const instruction = breakLines`${this._SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
+
+        return instruction;
+    }
+    eq() {
+        return this._translateJump("JEQ");
+    }
+    lt() {
+        return this._translateJump("JLT");
+    }
+    gt() {
+        return this._translateJump("JGT");
+    }
+    neg() {
+        return breakLines`D=0 @SP A=M-1 M=D-M`;
+    }
+    not() {
+        return breakLines`@SP A=M-1 M=!M`;
+    }
+    or() {
+        return breakLines`${this._SPtoD} M=D|M`;
+    }
+    and() {
+        return breakLines`${this._SPtoD} M=D&M`;
+    }
 
     label() {}
     goto() {}
