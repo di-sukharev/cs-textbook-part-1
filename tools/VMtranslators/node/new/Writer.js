@@ -5,6 +5,13 @@ const {
     getStaticAddress,
 } = require("./tools");
 
+const SEGMENTS = {
+    argument: "ARG",
+    local: "LCL",
+    this: "THIS",
+    that: "THAT",
+};
+
 class Writer {
     constructor() {
         return this;
@@ -48,7 +55,7 @@ class Writer {
             case "local":
             case "this":
             case "that":
-                return popSegment(segment, value);
+                return popSegment(SEGMENTS[segment], value);
             case "temp":
                 return popSegment("R5", getTempAddress(value));
             case "pointer":
@@ -74,7 +81,7 @@ class Writer {
             case "local":
             case "this":
             case "that":
-                return pushSegment(segment, value);
+                return pushSegment(SEGMENTS[segment], value);
             case "temp":
                 return pushSegment("R5", getTempAddress(value));
             case "pointer":
