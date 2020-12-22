@@ -1,9 +1,5 @@
 const fs = require("fs");
-const { INSTRUCTION_TYPE } = require("./constants.js");
-const Writer = require("./Writer/index.js");
-const { ARITH_LOGIC_OPS } = require("./Writer/ArithLogic.js");
-const { BRANCHING_OPS } = require("./Writer/Brancher.js");
-const { CALLER_OPS } = require("./Writer/Caller.js");
+const Writer = require("./Writer.js");
 
 const DEBUG = false;
 
@@ -33,7 +29,7 @@ class VMtranslator {
             });
 
         fs.writeFileSync(
-            `${inputDirectoryName}/${targetDirectoryName}.my.asm`,
+            `${inputDirectoryName}/${targetDirectoryName}.new.asm`,
             assemblyFile
         );
     }
@@ -63,43 +59,11 @@ class VMtranslator {
     _vmToAsm(vmInstruction) {
         let asmInstructions = `// ${vmInstruction} \n`; // start with comment
 
-        switch (this._getType(vmInstruction)) {
-            case INSTRUCTION_TYPE.PUSH:
-                asmInstructions += this.writer.push(vmInstruction);
-                break;
-            case INSTRUCTION_TYPE.POP:
-                asmInstructions += this.writer.pop(vmInstruction);
-                break;
-            case INSTRUCTION_TYPE.AL:
-                asmInstructions += this.writer.arithLogic(vmInstruction);
-                break;
-            case INSTRUCTION_TYPE.GOTO:
-                asmInstructions += this.writer.branching(vmInstruction);
-                break;
-            case INSTRUCTION_TYPE.CALL:
-                asmInstructions += this.writer.call(vmInstruction);
-                break;
-        }
+        const [operation, arg1, arg2] = vmInstruction.split(" ");
+
+        asmInstructions += this.writer[operation](arg1, arg2);
 
         return asmInstructions;
-    }
-
-    // todo: check where to save this vars better
-    _getType(instruction) {
-        const [operation] = instruction.split(" ");
-
-        if (operation === INSTRUCTION_TYPE.POP) return INSTRUCTION_TYPE.POP;
-
-        if (operation === INSTRUCTION_TYPE.PUSH) return INSTRUCTION_TYPE.PUSH;
-
-        if (Object.values(BRANCHING_OPS).includes(operation))
-            return INSTRUCTION_TYPE.GOTO;
-
-        if (Object.values(ARITH_LOGIC_OPS).includes(operation))
-            return INSTRUCTION_TYPE.AL;
-
-        if (Object.values(CALLER_OPS).includes(operation))
-            return INSTRUCTION_TYPE.CALL;
     }
 }
 
