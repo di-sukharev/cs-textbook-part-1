@@ -23,7 +23,7 @@ class Writer {
     // todo: move this _genLabel somewhere
     currentFunction = "noFunction";
     _genLabel(label) {
-        return `${this.fileName}.${this.currentFunction}$${label}`;
+        return `$${this.currentFunction}$${label}`;
     }
 
     _advanceSP = "@SP A=M M=D @SP M=M+1";
@@ -123,7 +123,35 @@ class Writer {
     goto() {}
     "if-goto"() {}
 
-    call() {}
+    call(funcName, argsCount) {
+        const segments = ["LCL", "ARG", "THIS", "THAT"];
+
+        const RIP = `${this.currentFunction}$return.${this._getI()}`;
+        // save return address to SP
+        const pushRIP = breakLines`@${RIP} D=A @SP A=M M=D`;
+
+        // save segments on stack
+        const pushSegments = segments.reduce(
+            (res, seg) => breakLines`${res} @${seg} D=A @SP AM=M+1 M=D`,
+            ""
+        );
+
+        // arg_shift = argsCount + segments.length, segments.length = 4
+        const argShift = argsCount + segments.length;
+        const shiftArg = breakLines`@${argShift} D=A @SP D=M-D @ARG M=D`;
+
+        // LCL = SP; adjust LCL with SP
+        const adjustLCLtoSP = breakLines`@SP MD=M+1 @LCL M=D`;
+
+        // goto callee, set up a return label
+        const gotoCallee = breakLines`@${funcName} 0;JMP`;
+
+        // create the return label
+        const createRIPlabel = breakLines`(${RIP})`;
+
+        return breakLines`${pushRIP} ${pushSegments} ${shiftArg} ${adjustLCLtoSP} ${gotoCallee} ${createRIPlabel}`;
+    }
+
     function(funcName, localVars) {
         const repeated = "A=A-1 M=0 ".repeat(localVars).trim();
 
@@ -134,6 +162,7 @@ class Writer {
 
         return breakLines`(${funcName})${generatedLCLvars}`;
     }
+
     return() {
         // return to the caller the value computed by the callee: place the return value on args[0]
         // recycle the memory resources by moving SP to ARG[1], just after the return value
