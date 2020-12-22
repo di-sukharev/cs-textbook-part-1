@@ -9,22 +9,22 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
@@ -41,6 +41,9 @@ M=D
 @Sys.init
 0;JMP
 (noFunction$return.0)
+(endlessloop)
+@endlessloop
+0;JMP
 //initialization-end
 
 // function Sys.init 0
@@ -50,10 +53,9 @@ M=D
 @4000
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 0
 @THIS
@@ -71,10 +73,9 @@ M=D
 @5000
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 1
 @THAT
@@ -95,26 +96,26 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
-@04
+@4
 D=A
 @SP
 D=M-D
@@ -129,10 +130,8 @@ M=D
 (Sys.init$return.1)
 
 // pop temp 1
-@R5
-D=M
 @6
-D=D+A
+D=A
 @R13
 M=D
 @SP
@@ -170,10 +169,9 @@ M=0
 @4001
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 0
 @THIS
@@ -191,10 +189,9 @@ M=D
 @5001
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 1
 @THAT
@@ -212,10 +209,9 @@ M=D
 @200
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop local 1
 @LCL
@@ -235,10 +231,9 @@ M=D
 @40
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop local 2
 @LCL
@@ -258,10 +253,9 @@ M=D
 @6
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop local 3
 @LCL
@@ -281,10 +275,9 @@ M=D
 @123
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // call Sys.add12 1
 @Sys.main$return.2
@@ -293,26 +286,26 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
-@14
+@5
 D=A
 @SP
 D=M-D
@@ -327,10 +320,8 @@ M=D
 (Sys.main$return.2)
 
 // pop temp 0
-@R5
-D=M
 @5
-D=D+A
+D=A
 @R13
 M=D
 @SP
@@ -347,10 +338,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push local 1
 @LCL
@@ -359,10 +349,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push local 2
 @LCL
@@ -371,10 +360,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push local 3
 @LCL
@@ -383,10 +371,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push local 4
 @LCL
@@ -395,10 +382,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // add
 @SP
@@ -478,10 +464,9 @@ A=M
 @4002
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 0
 @THIS
@@ -499,10 +484,9 @@ M=D
 @5002
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 1
 @THAT
@@ -523,19 +507,17 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push constant 12
 @12
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // add
 @SP

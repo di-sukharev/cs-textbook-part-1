@@ -10,13 +10,10 @@ const breakLines = (strings, ...placeholders) => {
 
 const getTHISorTHAT = (value) => (value === "0" ? "THIS" : "THAT");
 
-const getStaticAddress = (addr) => +addr + 16;
-
 const getTempAddress = (addr) => +addr + 5;
 
 module.exports = {
     breakLines,
     getTHISorTHAT,
-    getStaticAddress,
     getTempAddress,
 };

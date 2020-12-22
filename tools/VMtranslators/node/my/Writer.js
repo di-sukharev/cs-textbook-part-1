@@ -1,9 +1,4 @@
-const {
-    breakLines,
-    getTHISorTHAT,
-    getTempAddress,
-    getStaticAddress,
-} = require("./tools");
+const { breakLines, getTHISorTHAT, getTempAddress } = require("./tools");
 
 const SEGMENTS = {
     argument: "ARG",
@@ -24,9 +19,11 @@ class Writer {
     };
 
     // todo: move this _genLabel somewhere
+    currentFile = "noFile";
     currentFunction = "noFunction";
+    _getFileAndFunction = () => `${this.currentFile}.${this.currentFunction}`;
     _genLabel(label) {
-        return `$${this.currentFunction}$${label}`;
+        return `$${this._getFileAndFunction()}$${label}`;
     }
 
     _advanceSP = "@SP M=M+1 A=M-1 M=D";
@@ -48,9 +45,11 @@ class Writer {
 
         const popSegment = (seg, val) =>
             breakLines`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
+        const popTemp = (val) => breakLines`@${val} D=A ${_moveDtoSP}`;
 
         const popPointer = (seg) => breakLines`@${seg} D=A ${_moveDtoSP}`;
-        const popStatic = (val) => breakLines`@${val} D=A ${_moveDtoSP}`;
+        const popStatic = (val) =>
+            breakLines`@${this.currentFile}.${val} D=A ${_moveDtoSP}`;
 
         switch (segment) {
             case "argument":
@@ -59,11 +58,11 @@ class Writer {
             case "that":
                 return popSegment(SEGMENTS[segment], value);
             case "temp":
-                return popSegment("R5", getTempAddress(value));
+                return popTemp(getTempAddress(value));
             case "pointer":
                 return popPointer(getTHISorTHAT(value));
             case "static":
-                return popStatic(getStaticAddress(value));
+                return popStatic(value);
         }
     }
 
@@ -72,9 +71,12 @@ class Writer {
             breakLines`@${val} D=A ${this._advanceSP}`;
         const pushSegment = (seg, val) =>
             breakLines`@${seg} D=M @${val} A=D+A D=M ${this._advanceSP}`;
+        const pushTemp = (val) =>
+            breakLines`@${val} A=A D=M ${this._advanceSP}`;
 
         const pushPointer = (seg) => breakLines`@${seg} D=M ${this._advanceSP}`;
-        const pushStatic = (val) => breakLines`@${val} D=M ${this._advanceSP}`;
+        const pushStatic = (val) =>
+            breakLines`@${this.currentFile}.${val} D=M ${this._advanceSP}`;
 
         switch (segment) {
             case "constant":
@@ -85,11 +87,11 @@ class Writer {
             case "that":
                 return pushSegment(SEGMENTS[segment], value);
             case "temp":
-                return pushSegment("R5", getTempAddress(value));
+                return pushTemp(getTempAddress(value));
             case "pointer":
                 return pushPointer(getTHISorTHAT(value));
             case "static":
-                return pushStatic(getStaticAddress(value));
+                return pushStatic(value);
         }
     }
 
@@ -142,7 +144,7 @@ class Writer {
     call(funcName, argsCount) {
         const segments = ["LCL", "ARG", "THIS", "THAT"];
 
-        const RIP = `${this.currentFunction}$return.${this._getI()}`;
+        const RIP = `${this._getFileAndFunction()}$return.${this._getI()}`;
         // save return address to SP
         const pushRIP = breakLines`@${RIP} D=A @SP A=M M=D`;
 
@@ -168,15 +170,18 @@ class Writer {
         return breakLines`${pushRIP} ${pushSegments} ${shiftArg} ${adjustLCLtoSP} ${gotoCallee} ${createRIPlabel}`;
     }
 
-    function(funcName, localVars) {
+    function(name, localVars) {
         const repeated = "A=A-1 M=0 ".repeat(localVars).trim();
 
         const generatedLCLvars =
             localVars > 0 ? ` @${localVars} D=A @SP AM=D+M ${repeated}` : "";
 
-        this.currentFunction = funcName;
+        const [fileName, functionName] = name.split(".");
 
-        return breakLines`(${funcName})${generatedLCLvars}`;
+        this.currentFunction = functionName;
+        this.currentFile = fileName;
+
+        return breakLines`(${name})${generatedLCLvars}`;
     }
 
     return() {
