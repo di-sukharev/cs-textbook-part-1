@@ -43,7 +43,7 @@ M=D
 // function Main.fibonacci 0 
 (Main.fibonacci)
 // push argument 0 
-@argument
+@ARG
 D=M
 @0
 A=D+A
@@ -86,7 +86,7 @@ D;JNE
 // label IF_TRUE 
 ($Main.fibonacci$IF_TRUE)
 // push argument 0 
-@argument
+@ARG
 D=M
 @0
 A=D+A
@@ -141,7 +141,7 @@ A=M
 // label IF_FALSE 
 ($Main.fibonacci$IF_FALSE)
 // push argument 0 
-@argument
+@ARG
 D=M
 @0
 A=D+A
@@ -205,7 +205,7 @@ M=D
 0;JMP
 (Main.fibonacci$return.2)
 // push argument 0 
-@argument
+@ARG
 D=M
 @0
 A=D+A
