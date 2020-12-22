@@ -423,7 +423,7 @@ def main(file_or_dir):
         call_sys_init = False
     else:
         inputs = list(path.glob("*.vm"))
-        asm_path = path / (path.name + ".asm")
+        asm_path = path / (path.name + ".py.asm")
         call_sys_init = any(vm_file.name == "Sys.vm" for vm_file in inputs)
     with contextlib.closing(AsmWriter(asm_path, call_sys_init)) as writer:
         for vm_file in inputs:
