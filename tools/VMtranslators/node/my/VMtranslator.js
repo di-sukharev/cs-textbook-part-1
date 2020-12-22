@@ -57,7 +57,7 @@ class VMtranslator {
     }
 
     _vmToAsm(vmInstruction) {
-        let asmInstructions = `// ${vmInstruction} \n`; // start with comment
+        let asmInstructions = `\n// ${vmInstruction}\n`;
 
         const [operation, arg1, arg2] = vmInstruction.split(" ");
 

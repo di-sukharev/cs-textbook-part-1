@@ -37,7 +37,7 @@ class Writer {
     _SPtoDandGoBack = `${this._SPtoD} ${this._goBack}`;
 
     init() {
-        const initSP = breakLines`@256 D=A @SP M=D`;
+        const initSP = `@256 D=A @SP M=D`;
         return breakLines`${initSP} ${this.call("Sys.init", 0)}`;
     }
 
@@ -182,15 +182,15 @@ class Writer {
         // recycle the memory resources by moving SP to ARG[1], just after the return value
         // Reinstate the caller's state and memory segments: ARG LCL THIS THAT
         // Jump to the return address in the callers code
-        const gotoReturnAddress = `@returnAddress A=M 0;JMP`;
+        const gotoReturnAddress = "@returnAddress A=M 0;JMP";
 
         // save return address in @returnAddress
-        const getReturnAddress = breakLines`@5 D=A @LCL A=M-D D=M @returnAddress M=D`;
+        const getReturnAddress = "@5 D=A @LCL A=M-D D=M @returnAddress M=D";
 
         // move return value on caller stack, reset SP
-        const getReturnValue = breakLines`@SP A=M-1 D=M @ARG A=M M=D D=A+1 @SP M=D`;
+        const getReturnValue = "@SP A=M-1 D=M @ARG A=M M=D D=A+1 @SP M=D";
 
-        const restoreSegment = breakLines`M=D @R13 AM=M-1 D=M`;
+        const restoreSegment = "M=D @R13 AM=M-1 D=M";
         // pop contexts of previous function
         const restoreContext = breakLines`@LCL D=M @R13 AM=D-1 D=M @THAT ${restoreSegment} @THIS ${restoreSegment} @ARG ${restoreSegment} @LCL M=D`;
 
