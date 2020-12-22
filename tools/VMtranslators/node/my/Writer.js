@@ -29,7 +29,7 @@ class Writer {
         return `$${this.currentFunction}$${label}`;
     }
 
-    _advanceSP = "@SP A=M M=D @SP M=M+1";
+    _advanceSP = "@SP M=M+1 A=M-1 M=D";
 
     // todo: move this instructions somewhere to tools or else?
     _SPtoD = "@SP AM=M-1 D=M";
@@ -39,7 +39,8 @@ class Writer {
     init() {
         const initSP = `@256 D=A @SP M=D`;
         const SysInit = this.call("Sys.init", 0);
-        return breakLines`//initialization-start ${initSP} ${SysInit} //initialization-end`;
+        const endlessLoop = "(endlessloop) @endlessloop 0;JMP";
+        return breakLines`//initialization-start ${initSP} ${SysInit} ${endlessLoop} //initialization-end`;
     }
 
     pop(segment, value) {
@@ -147,12 +148,12 @@ class Writer {
 
         // save segments on stack
         const pushSegments = segments.reduce(
-            (res, seg) => breakLines`${res} @${seg} D=A @SP AM=M+1 M=D`,
+            (res, seg) => breakLines`${res} @${seg} D=M @SP AM=M+1 M=D`,
             ""
         );
 
         // arg_shift = argsCount + segments.length, segments.length = 4
-        const argShift = argsCount + segments.length;
+        const argShift = +argsCount + segments.length;
         const shiftArg = breakLines`@${argShift} D=A @SP D=M-D @ARG M=D`;
 
         // LCL = SP; adjust LCL with SP

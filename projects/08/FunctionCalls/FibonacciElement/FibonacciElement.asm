@@ -9,22 +9,22 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
@@ -41,6 +41,9 @@ M=D
 @Sys.init
 0;JMP
 (noFunction$return.0)
+(endlessloop)
+@endlessloop
+0;JMP
 //initialization-end
 
 // function Main.fibonacci 0
@@ -53,19 +56,17 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push constant 2
 @2
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // lt
 @SP
@@ -102,10 +103,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // return
 @5
@@ -160,19 +160,17 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push constant 2
 @2
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // sub
 @SP
@@ -188,26 +186,26 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
-@14
+@5
 D=A
 @SP
 D=M-D
@@ -228,19 +226,17 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push constant 1
 @1
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // sub
 @SP
@@ -256,26 +252,26 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
-@14
+@5
 D=A
 @SP
 D=M-D
@@ -345,10 +341,9 @@ A=M
 @4
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // call Main.fibonacci 1
 @Sys.init$return.4
@@ -357,26 +352,26 @@ D=A
 A=M
 M=D
 @LCL
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @ARG
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THIS
-D=A
+D=M
 @SP
 AM=M+1
 M=D
 @THAT
-D=A
+D=M
 @SP
 AM=M+1
 M=D
-@14
+@5
 D=A
 @SP
 D=M-D
