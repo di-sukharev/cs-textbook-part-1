@@ -134,7 +134,25 @@ class Writer {
 
         return breakLines`(${funcName})${generatedLCLvars}`;
     }
-    return() {}
+    return() {
+        // return to the caller the value computed by the callee: place the return value on args[0]
+        // recycle the memory resources by moving SP to ARG[1], just after the return value
+        // Reinstate the caller's state and memory segments: ARG LCL THIS THAT
+        // Jump to the return address in the callers code
+        const gotoReturnAddress = `@returnAddress A=M 0;JMP`;
+
+        // save return address in @returnAddress
+        const getReturnAddress = breakLines`@5 D=A @LCL A=M-D D=M @returnAddress M=D`;
+
+        // move return value on caller stack, reset SP
+        const getReturnValue = breakLines`@SP A=M-1 D=M @ARG A=M M=D D=A+1 @SP M=D`;
+
+        const restoreSegment = breakLines`M=D @R13 AM=M-1 D=M`;
+        // pop contexts of previous function
+        const restoreContext = breakLines`@LCL D=M @R13 AM=D-1 D=M @THAT ${restoreSegment} @THIS ${restoreSegment} @ARG ${restoreSegment} @LCL M=D`;
+
+        return breakLines`${getReturnAddress} ${getReturnValue} ${restoreContext} ${gotoReturnAddress}`;
+    }
 }
 
 module.exports = Writer;
