@@ -21,15 +21,14 @@ class Writer {
     };
 
     // todo: move this _genLabel somewhere
-    fileName = "noFile";
-    functionName = "noFunction";
+    currentFunction = "noFunction";
     _genLabel(label) {
-        return `${this.fileName}.${this.functionName}$${label}`;
+        return `${this.fileName}.${this.currentFunction}$${label}`;
     }
 
     _advanceSP = "@SP A=M M=D @SP M=M+1";
 
-    // todo: move this instructions
+    // todo: move this instructions somewhere to tools or else?
     _SPtoD = "@SP AM=M-1 D=M";
     _goBack = "A=A-1";
     _SPtoDandGoBack = `${this._SPtoD} ${this._goBack}`;
@@ -125,7 +124,16 @@ class Writer {
     "if-goto"() {}
 
     call() {}
-    function() {}
+    function(funcName, localVars) {
+        const repeated = "A=A-1 M=0 ".repeat(localVars).trim();
+
+        const generatedLCLvars =
+            localVars > 0 ? ` @${localVars} D=A @SP AM=D+M ${repeated}` : "";
+
+        this.currentFunction = funcName;
+
+        return breakLines`(${funcName})${generatedLCLvars}`;
+    }
     return() {}
 }
 
