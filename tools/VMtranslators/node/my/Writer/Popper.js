@@ -30,7 +30,7 @@ class Popper {
         }
     }
 
-    _moveDtoSP = breakLines`@R13 M=D @SP AM=M-1 D=M @R13 A=M M=D`;
+    _moveDtoSP = `@R13 M=D @SP AM=M-1 D=M @R13 A=M M=D`;
 
     _popSegment(segment, value) {
         return breakLines`@${segment} D=M @${value} D=D+A ${this._moveDtoSP}`;
