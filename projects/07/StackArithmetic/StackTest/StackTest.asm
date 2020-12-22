@@ -6,6 +6,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 17
 @17
 D=A
@@ -14,24 +15,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // eq
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE0
-D;JNE
-@SP
-A=M-1
 M=-1
-@CONTINUE0
-0;JMP
-(FALSE0)
+@$noFunction$CONTINUE.1
+D;JEQ
 @SP
 A=M-1
 M=0
-(CONTINUE0)
+($noFunction$CONTINUE.1)
+
 // push constant 17
 @17
 D=A
@@ -40,6 +38,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 16
 @16
 D=A
@@ -48,24 +47,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // eq
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE1
-D;JNE
-@SP
-A=M-1
 M=-1
-@CONTINUE1
-0;JMP
-(FALSE1)
+@$noFunction$CONTINUE.2
+D;JEQ
 @SP
 A=M-1
 M=0
-(CONTINUE1)
+($noFunction$CONTINUE.2)
+
 // push constant 16
 @16
 D=A
@@ -74,6 +70,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 17
 @17
 D=A
@@ -82,24 +79,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // eq
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE2
-D;JNE
-@SP
-A=M-1
 M=-1
-@CONTINUE2
-0;JMP
-(FALSE2)
+@$noFunction$CONTINUE.3
+D;JEQ
 @SP
 A=M-1
 M=0
-(CONTINUE2)
+($noFunction$CONTINUE.3)
+
 // push constant 892
 @892
 D=A
@@ -108,6 +102,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 891
 @891
 D=A
@@ -116,24 +111,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // lt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE3
-D;JGE
-@SP
-A=M-1
 M=-1
-@CONTINUE3
-0;JMP
-(FALSE3)
+@$noFunction$CONTINUE.4
+D;JLT
 @SP
 A=M-1
 M=0
-(CONTINUE3)
+($noFunction$CONTINUE.4)
+
 // push constant 891
 @891
 D=A
@@ -142,6 +134,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 892
 @892
 D=A
@@ -150,24 +143,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // lt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE4
-D;JGE
-@SP
-A=M-1
 M=-1
-@CONTINUE4
-0;JMP
-(FALSE4)
+@$noFunction$CONTINUE.5
+D;JLT
 @SP
 A=M-1
 M=0
-(CONTINUE4)
+($noFunction$CONTINUE.5)
+
 // push constant 891
 @891
 D=A
@@ -176,6 +166,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 891
 @891
 D=A
@@ -184,24 +175,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // lt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE5
-D;JGE
-@SP
-A=M-1
 M=-1
-@CONTINUE5
-0;JMP
-(FALSE5)
+@$noFunction$CONTINUE.6
+D;JLT
 @SP
 A=M-1
 M=0
-(CONTINUE5)
+($noFunction$CONTINUE.6)
+
 // push constant 32767
 @32767
 D=A
@@ -210,6 +198,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 32766
 @32766
 D=A
@@ -218,24 +207,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // gt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE6
-D;JLE
-@SP
-A=M-1
 M=-1
-@CONTINUE6
-0;JMP
-(FALSE6)
+@$noFunction$CONTINUE.7
+D;JGT
 @SP
 A=M-1
 M=0
-(CONTINUE6)
+($noFunction$CONTINUE.7)
+
 // push constant 32766
 @32766
 D=A
@@ -244,6 +230,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 32767
 @32767
 D=A
@@ -252,24 +239,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // gt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE7
-D;JLE
-@SP
-A=M-1
 M=-1
-@CONTINUE7
-0;JMP
-(FALSE7)
+@$noFunction$CONTINUE.8
+D;JGT
 @SP
 A=M-1
 M=0
-(CONTINUE7)
+($noFunction$CONTINUE.8)
+
 // push constant 32766
 @32766
 D=A
@@ -278,6 +262,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 32766
 @32766
 D=A
@@ -286,24 +271,21 @@ A=M
 M=D
 @SP
 M=M+1
+
 // gt
 @SP
 AM=M-1
 D=M
 A=A-1
 D=M-D
-@FALSE8
-D;JLE
-@SP
-A=M-1
 M=-1
-@CONTINUE8
-0;JMP
-(FALSE8)
+@$noFunction$CONTINUE.9
+D;JGT
 @SP
 A=M-1
 M=0
-(CONTINUE8)
+($noFunction$CONTINUE.9)
+
 // push constant 57
 @57
 D=A
@@ -312,6 +294,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 31
 @31
 D=A
@@ -320,6 +303,7 @@ A=M
 M=D
 @SP
 M=M+1
+
 // push constant 53
 @53
 D=A
@@ -328,12 +312,14 @@ A=M
 M=D
 @SP
 M=M+1
+
 // add
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
 // push constant 112
 @112
 D=A
@@ -342,23 +328,27 @@ A=M
 M=D
 @SP
 M=M+1
+
 // sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
+
 // neg
 D=0
 @SP
 A=M-1
 M=D-M
+
 // and
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M&D
+M=D&M
+
 // push constant 82
 @82
 D=A
@@ -367,12 +357,14 @@ A=M
 M=D
 @SP
 M=M+1
+
 // or
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M|D
+M=D|M
+
 // not
 @SP
 A=M-1

@@ -1,3 +1,4 @@
+//initialization-start
 @256
 D=A
 @SP
@@ -40,6 +41,7 @@ M=D
 @Sys.init
 0;JMP
 (noFunction$return.0)
+//initialization-end
 
 // function Main.fibonacci 0
 (Main.fibonacci)

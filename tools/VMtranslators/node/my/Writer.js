@@ -38,7 +38,8 @@ class Writer {
 
     init() {
         const initSP = `@256 D=A @SP M=D`;
-        return breakLines`${initSP} ${this.call("Sys.init", 0)}`;
+        const SysInit = this.call("Sys.init", 0);
+        return breakLines`//initialization-start ${initSP} ${SysInit} //initialization-end`;
     }
 
     pop(segment, value) {
@@ -121,10 +122,10 @@ class Writer {
         return breakLines`@SP A=M-1 M=!M`;
     }
     or() {
-        return breakLines`${this._SPtoD} M=D|M`;
+        return breakLines`${this._SPtoDandGoBack} M=D|M`;
     }
     and() {
-        return breakLines`${this._SPtoD} M=D&M`;
+        return breakLines`${this._SPtoDandGoBack} M=D&M`;
     }
 
     label(label) {
