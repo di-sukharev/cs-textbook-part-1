@@ -5,10 +5,6 @@ const {
     getStaticAddress,
 } = require("./tools");
 
-const CONSTANTS = {
-    TEMP_SEG: "R5",
-};
-
 class Writer {
     constructor() {
         return this;
@@ -49,7 +45,7 @@ class Writer {
             case "that":
                 return popSegment(segment, value);
             case "temp":
-                return popSegment(CONSTANTS.TEMP_SEG, getTempAddress(value));
+                return popSegment("R5", getTempAddress(value));
             case "pointer":
                 return popPointer(getTHISorTHAT(value));
             case "static":
@@ -75,7 +71,7 @@ class Writer {
             case "that":
                 return pushSegment(segment, value);
             case "temp":
-                return pushSegment(CONSTANTS.TEMP_SEG, getTempAddress(value));
+                return pushSegment("R5", getTempAddress(value));
             case "pointer":
                 return pushPointer(getTHISorTHAT(value));
             case "static":
@@ -119,9 +115,15 @@ class Writer {
         return breakLines`${this._SPtoD} M=D&M`;
     }
 
-    label() {}
-    goto() {}
-    "if-goto"() {}
+    label(label) {
+        return breakLines`(${this._genLabel(label)})`;
+    }
+    goto(label) {
+        return breakLines`@${this._genLabel(label)} 0;JMP`;
+    }
+    "if-goto"(label) {
+        return breakLines`@SP AM=M-1 D=M @${this._genLabel(label)} D;JNE`;
+    }
 
     call(funcName, argsCount) {
         const segments = ["LCL", "ARG", "THIS", "THAT"];
