@@ -29,7 +29,7 @@ class VMtranslator {
             });
 
         fs.writeFileSync(
-            `${inputDirectoryName}/${targetDirectoryName}.new.asm`,
+            `${inputDirectoryName}/${targetDirectoryName}.asm`,
             assemblyFile
         );
     }
