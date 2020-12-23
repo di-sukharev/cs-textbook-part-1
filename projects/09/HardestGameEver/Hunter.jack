@@ -13,23 +13,29 @@ class Hunter {
 
     constructor Hunter new(Labirinth usedLabirinth) {
         var int centerOfBlockX, centerOfBlockY;
-        var Cell startBlock;
+        var Cell startCell;
 
         let labirinth = usedLabirinth;
 
-        let startBlock = labirinth.getCellFromRowCol(0, 0);
+        let startCell = labirinth.getCellFromRowCol(0, 0);
 
         let speed = 2;
         
         let width = 10;
         let height = 10;
 
-        let centerOfBlockX = startBlock.getX() + (startBlock.getWidth() / 2) - (width / 2);
-        let centerOfBlockY = startBlock.getY() + (startBlock.getHeight() / 2) - (height / 2);
+        let centerOfBlockX = startCell.getX() + (startCell.getWidth() / 2) - (width / 2);
+        let centerOfBlockY = startCell.getY() + (startCell.getHeight() / 2) - (height / 2);
         let avatar = Avatar.new(centerOfBlockX, centerOfBlockY, speed, width, height);
         let moover = Moover.new(labirinth, avatar);
 
         return this;
+    }
+
+    method void render() {
+        do avatar.render();
+
+        return;
     }
 
     method void move() {
