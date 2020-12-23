@@ -1,6 +1,4 @@
-const { throws } = require("assert");
-
-fs = require("fs");
+const fs = require("fs");
 
 const DEBUG = false;
 
@@ -86,6 +84,7 @@ class Assembler {
     _initAndRemoveLabels(instruction, lineNumber) {
         if (this.getType(instruction) !== INSTRUCTIONS.L) return true;
 
+        // eslint-disable-next-line no-unused-vars
         const [_, value] = instruction.match(/\((.*)\)/i);
 
         this.LABELS[value] = lineNumber - this.labelsCount;

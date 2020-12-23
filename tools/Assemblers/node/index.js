@@ -2,7 +2,9 @@ const Assembler = require("./Assembler.js");
 const { performance } = require("perf_hooks");
 
 const [
+    // eslint-disable-next-line no-unused-vars
     nodeExecPath,
+    // eslint-disable-next-line no-unused-vars
     thisFilePath,
     inputFile,
     outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
