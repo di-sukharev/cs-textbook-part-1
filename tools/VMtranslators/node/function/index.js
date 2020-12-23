@@ -12,5 +12,5 @@ const started = performance.now();
 translateDirectory(inputDirectoryName);
 const finished = performance.now();
 
-console.info(graffiti);
 console.info(`Translated 🌞 took ${(finished - started).toFixed(2)} ms`);
+console.log(graffiti);
