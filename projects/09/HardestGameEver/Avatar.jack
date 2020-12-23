@@ -25,7 +25,6 @@ class Avatar {
 
     method void moveUp() {
         if (y > 1) {
-      
             do Screen.setColor(false);
             do Screen.drawRectangle(x, (y + height) - (speed - 1), x + width, y + height);
             let y = y - speed;
