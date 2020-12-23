@@ -1,0 +1,104 @@
+class Grid {
+    field Array matrix;
+    field int rows, cols;
+    field int cellWidth, cellHeight;
+
+    constructor Grid new(int r, int c) {
+        let rows = r;
+        let cols = c;
+
+        do _createMatrix();
+
+        return this;
+    }
+
+    method void _createMatrix() {
+        var Array row;
+        var Cell cell;
+        var int i, j; // matrix rows and cols iterator
+       
+        
+        // fill matrix with rows*cols matrix
+        let matrix = Array.new(rows);
+
+        let cellHeight = 256 / rows; // screen is 256 pixels height
+        let cellWidth = 512 / cols; // screen is 512 pixels width
+
+        let i = 0; // rows iterator
+        while (i < rows) {
+        
+            let matrix[i] = Array.new(cols);
+    
+            let j = 0; // cols iterator
+            while (j < cols) {
+
+                let row = matrix[i];
+
+                let row[j] = Cell.new(i, j, cellHeight, cellWidth);
+
+                let j = j + 1; // iterate to the next column
+            }
+
+            let i = i + 1; // iterate to the next row
+        }
+
+        return;
+    }
+
+    method void render() {
+        var Array row;
+        var Cell cell;
+        var int i, j; // matrix rows and cols iterator
+
+        let i = 0; // rows iterator
+        while (i < rows) {
+            let j = 0; // cols iterator
+            while (j < cols) {
+                let row = matrix[i];
+                let cell = row[j];
+
+                do cell.render();
+
+                let j = j + 1; // iterate to the next column
+            }
+            
+            let i = i + 1; // iterate to the next row
+        }
+
+        return;
+    }
+
+    method Cell getCell(int row, int col) {
+        var Cell cell;
+        var Array row;
+        
+        let row = matrix[row];
+        let cell = row[col];
+
+        return cell;
+    }
+
+    method int getCellWidth() {
+        return cellWidth;
+    }
+    
+    method int getCellHeight() {
+        return cellHeight;
+    }
+
+    method int getRows() {
+        return rows;
+    }
+    
+    method int getCols() {
+        return cols;
+    }
+
+    method void destroy() {
+        do matrix.dispose();     
+        // do cells.dispose // memory leak here!!!
+        do Memory.deAlloc(this);
+        
+        return;
+    }
+}

@@ -1,0 +1,102 @@
+class Moover {
+
+    field Labirinth labirinth;
+    field Avatar avatar;
+
+    constructor Moover new(Labirinth usedLabirinth, Avatar usedAvatar) {
+        let labirinth = usedLabirinth;
+        let avatar = usedAvatar;
+
+        return this;
+    }
+
+    method void move(int direction) {
+        var boolean canMove, isGoingLeft, isGoingUp, isGoingRight, isGoingDown, isMoving;
+        
+        let isMoving = ~(direction = 0);
+
+        if (isMoving) {
+            
+            let canMove = ~(_isWall(direction));
+
+            let isGoingLeft = (direction = 1);
+            let isGoingUp = (direction = 2);
+            let isGoingRight = (direction = 3);
+            let isGoingDown = (direction = 4);
+
+            if (isGoingLeft & canMove)  { do avatar.moveLeft(); }
+            if (isGoingUp & canMove)    { do avatar.moveUp(); }
+            if (isGoingRight & canMove) { do avatar.moveRight(); }
+            if (isGoingDown & canMove)  { do avatar.moveDown(); }
+            
+            do Sys.wait(5);  // delays the next movement to 5ms; 5ms = 5/1000 of a second
+        
+        }
+
+        return;
+    }
+
+    method boolean _isWall(int direction) {
+        var boolean isWall;
+        var int nextX, nextY, relativeY, relativeX;
+        var Cell currentCell, nextBlock;
+        var boolean isMovingOutOfCurrentBlock;
+
+        let isWall = false;
+        
+        let currentCell = labirinth.getCurrentCell(avatar);
+
+        // is wall left
+        if (direction = 1) {
+            let nextX = avatar.getX() - avatar.getSpeed();
+            let nextY = avatar.getY();
+            let nextBlock = labirinth.getCellFromXY(nextX - 5, nextY);
+            
+            let relativeX = nextX - currentCell.getX();
+
+            let isMovingOutOfCurrentBlock = ((relativeX < 0) | (relativeX = 0));
+
+            if (isMovingOutOfCurrentBlock & ((currentCell.getBorder() = 1) | (nextBlock.getBorder() = 3))) { let isWall = true; }
+        }
+
+        // is wall up
+        if (direction = 2) {
+            let nextX = avatar.getX();
+            let nextY = avatar.getY() - avatar.getSpeed();
+            let nextBlock = labirinth.getCellFromXY(nextX, nextY - 5);
+            
+            let relativeY = nextY - currentCell.getY();
+
+            let isMovingOutOfCurrentBlock = ((relativeY < 0) | (relativeY = 0));
+
+            if (isMovingOutOfCurrentBlock & ((currentCell.getBorder() = 2) | (nextBlock.getBorder() = 4))) { let isWall = true; }
+        }
+
+        // is wall right
+        if (direction = 3) {
+            let nextX = avatar.getX() + avatar.getSpeed() + avatar.getWidth();
+            let nextY = avatar.getY();
+            let nextBlock = labirinth.getCellFromXY(nextX + 5, nextY);
+            
+            let relativeX = nextX - (currentCell.getX() + currentCell.getWidth());
+            let isMovingOutOfCurrentBlock = ((relativeX > 0) | (relativeX = 0));
+          
+            if (isMovingOutOfCurrentBlock & ((currentCell.getBorder() = 3) | (nextBlock.getBorder() = 1))) { let isWall = true; }
+        }
+
+        // is wall down
+        if (direction = 4) { 
+            let nextX = avatar.getX();
+            let nextY = avatar.getY() + avatar.getSpeed() + avatar.getHeight();
+            let nextBlock = labirinth.getCellFromXY(nextX, nextY + 5);
+            
+            let relativeY = nextY - (currentCell.getY() + currentCell.getHeight());
+            let isMovingOutOfCurrentBlock = ((relativeY > 0) | (relativeY = 0));
+
+            if (isMovingOutOfCurrentBlock & ((currentCell.getBorder() = 4) | (nextBlock.getBorder() = 2))) { let isWall = true; }
+        }
+
+        return isWall;
+    }
+
+}

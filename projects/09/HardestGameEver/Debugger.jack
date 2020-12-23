@@ -1,0 +1,10 @@
+class Debugger {
+    function void log(String text, int value) {
+
+        do Output.printString(text);
+        do Output.printInt(value);
+        do Output.println();
+
+        return;
+    }
+}

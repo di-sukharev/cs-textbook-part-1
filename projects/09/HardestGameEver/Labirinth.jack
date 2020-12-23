@@ -1,0 +1,105 @@
+class Labirinth {
+
+    field Grid grid; // matrix; array of rows/columns, where row/column is an array of GridCells
+
+    constructor Labirinth new() {
+        var int rows, cols;
+
+        let rows = 16;
+        let cols = 16;
+
+        let grid = Grid.new(rows, cols);
+
+        return this;
+    }
+
+    method void render() {
+        do grid.render();
+
+        return;
+    }
+
+    method Cell getCellFromXY(int x, int y) {
+        var Cell cell;
+        var int row, col;
+
+        let row = x / grid.getCellWidth();
+        let col = y / grid.getCellHeight();
+
+        let cell = getCellFromRowCol(row, col);
+
+        return cell;
+    }
+
+    method Cell getCellFromRowCol(int row, int col) {
+        var Cell cell;
+
+        if ((row < 0) | (col < 0) | (row > grid.getRows()) | (col > grid.getCols())) { let cell = null; }
+        else { let cell = grid.getCell(row, col); }
+
+        return cell;
+    }
+
+    method Cell getCellFromDirection(Avatar avatar, int direction) {
+        var int nextRow, nextCol;
+        var Cell currentCell, nextBlock;
+
+        let currentCell = getCurrentCell(avatar);
+
+        if (direction = 1) {
+            let nextRow = currentCell.getRow() - 1;
+            let nextCol = currentCell.getCol();
+            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+        }
+        
+        if (direction = 2) {
+            let nextRow = currentCell.getRow();
+            let nextCol = currentCell.getCol() - 1;
+            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+        }
+        
+        if (direction = 3) {
+            let nextRow = currentCell.getRow() + 1;
+            let nextCol = currentCell.getCol();
+            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+        }
+        
+        if (direction = 4) {
+            let nextRow = currentCell.getRow();
+            let nextCol = currentCell.getCol() + 1;
+            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+        }
+        
+        return nextBlock;
+    }
+
+    method Cell getCurrentCell(Avatar avatar) {
+        var int currentX, currentY;
+        var Cell currentCell;
+
+        let currentX = avatar.getX() + (avatar.getWidth() / 2);
+        let currentY = avatar.getY() + (avatar.getHeight() / 2);
+
+        let currentCell = getCellFromXY(currentX, currentY);
+
+        return currentCell;
+    }
+
+    method int getParallelWall(int wall) {
+        var int parallelWall;
+
+        if (wall = 1) { let parallelWall = 3 ; }
+        if (wall = 3) { let parallelWall = 1 ; }
+        
+        if (wall = 2) { let parallelWall = 4 ; }
+        if (wall = 4) { let parallelWall = 2 ; }
+
+        return parallelWall;
+    }
+
+    method void destroy() {
+        do grid.destroy();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

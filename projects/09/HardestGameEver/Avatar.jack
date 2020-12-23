@@ -1,0 +1,95 @@
+class Avatar {
+
+    field int x, y; // x,y coordinates on the screen
+    field int width, height; // the width/height of the avatar
+    field int speed;
+
+    constructor Avatar new(int initX, int initY, int initSpeed, int initWidth, int initHeight) {
+        
+        let x = initX;
+        let y = initY;
+        let width = initWidth;
+        let height = initHeight;
+        let speed = initSpeed;
+
+        return this;
+    }
+
+
+    method void render() {
+        do Screen.setColor(true); // set color to black
+        do Screen.drawRectangle(x, y, x + width, y + height);
+
+        return;
+    }
+
+    method void moveUp() {
+        if (y > 1) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, (y + height) - (speed - 1), x + width, y + height);
+            let y = y - speed;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + width, y + (speed - 1));
+        }
+        return;
+    }
+    
+    method void moveRight() {
+        if ((x + width) < 510) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + (speed - 1), y + height);
+            let x = x + speed;
+            do Screen.setColor(true);
+            do Screen.drawRectangle((x + width) - (speed - 1), y, x + width, y + height);
+        }
+        return;
+    }
+    
+    method void moveDown() {
+        if ((y + height) < 254) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle(x, y, x + width, y + (speed - 1));
+            let y = y + speed;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, (y + height) - (speed - 1), x + width, y + height);
+        }
+        return;
+    }
+    
+    method void moveLeft() {
+        if (x > 1) {
+            do Screen.setColor(false);
+            do Screen.drawRectangle((x + width) - (speed - 1), y, x + width, y + height);
+            let x = x - speed;
+            do Screen.setColor(true);
+            do Screen.drawRectangle(x, y, x + (speed - 1), y + height);
+        }
+        return;
+    }
+
+    method void destroy() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getX() {
+        return x;
+    }
+    
+    method int getY() {
+        return y;
+    }
+ 
+    method int getSpeed() {
+        return speed;
+    }
+
+    method int getWidth() {
+        return width;
+    }
+    
+    method int getHeight() {
+        return height;
+    }
+
+}

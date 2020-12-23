@@ -1,0 +1,72 @@
+class HardestGameEver {
+
+    field Player player;
+    
+    field Hunter hunter;
+
+    field Labirinth labirinth;
+
+    constructor HardestGameEver new() {    
+        let labirinth = Labirinth.new();
+
+        let player = Player.new(labirinth);
+
+        let hunter = Hunter.new(labirinth);
+
+        return this;
+    }
+
+    method void run() {
+        
+        var boolean doesUserWantToExit;
+        let doesUserWantToExit = false;
+
+        do initialize();
+
+        while (~doesUserWantToExit) {
+            do play();
+
+            let doesUserWantToExit = checkIfUserWantsToExit();
+        }
+
+        do destroy();
+
+        return;
+    }
+
+    method void initialize() {
+        do player.render();
+        do labirinth.render();
+        
+        return;
+    }
+
+    method boolean checkIfUserWantsToExit() {
+        var char keyPressed;
+        var boolean exit;
+
+        let keyPressed = Keyboard.keyPressed();
+        let exit = false;
+      
+        if (keyPressed = 81)  { let exit = true; } // q key
+
+        return exit;
+    }
+
+    method void play() {
+        do player.move();
+        do hunter.move();
+        
+        return;
+    }
+
+    method void destroy() {
+        do labirinth.destroy();
+        do player.destroy();
+        do hunter.destroy();
+        
+        do Memory.deAlloc(this);
+        
+        return;
+    }
+}

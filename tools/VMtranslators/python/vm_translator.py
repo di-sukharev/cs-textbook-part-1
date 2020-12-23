@@ -42,7 +42,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
 
     def write_init(self):
         yield """\
-        // INIT @SP
+        // INIT @SP | write_init
         @256
         D=A
         @SP
@@ -61,7 +61,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_endless_loop(self):
         loop_label = self.temp_label()
         yield f"""\
-        // ENDLESS LOOP
+        // write_endless_loop
         ({loop_label})
         @{loop_label}
         0;JMP
@@ -78,13 +78,12 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_push(self, segment, number):
 
         yield f"""\
-            // push {segment} {number}
+            // push {segment} {number} | write_push
             """
 
         # read data into D
         if segment == "constant":
             yield f"""\
-            // save {number} into D
             @{number}
             D=A
             """
@@ -92,7 +91,6 @@ class AsmWriter(metaclass=WrapWriterMethods):
         elif segment in self.vm_segments:
             register = self.vm_segments[segment]
             yield f"""\
-            // save {register}+{number} into D
             @{register}
             D=M
             @{number}
@@ -104,7 +102,6 @@ class AsmWriter(metaclass=WrapWriterMethods):
             base = self.direct_segments[segment]
             addr = base + int(number)
             yield f"""\
-            // manage {addr} (temp or pointer segment)
             @{addr}
             D=M
             """
@@ -112,7 +109,6 @@ class AsmWriter(metaclass=WrapWriterMethods):
         elif segment == "static":
             label = f"{self.filename}.{number}"
             yield f"""\
-            // manage static segment
             @{label}
             D=M
             """
@@ -130,14 +126,19 @@ class AsmWriter(metaclass=WrapWriterMethods):
         """
 
     def write_pop(self, segment, number):
+        
+        yield f"""\
+            // pop {segment} {number} | write_pop
+            """
+
         # compute address of pop target and put it in D
         if segment == "constant":
             raise RuntimeError("Can't pop constant segment")
 
+
         elif segment in self.vm_segments:
             register = self.vm_segments[segment]
             yield f"""\
-            // pop {segment} {number}
             @{register}
             D=M
             @{number}
@@ -164,6 +165,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
 
         # Write D to R13, pop from stack, write to *R13
         yield """\
+        // Write D to R13, pop from stack, write to *R13
         @R13
         M=D
         @SP
@@ -181,7 +183,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         if command in unary_ops:
             sign = unary_ops[command]
             yield f"""\
-            // {command}
+            // {command} | write_arith
             @SP
             A=M-1
             M={sign}M
@@ -233,13 +235,14 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_label(self, label):
         label = self.mangle_label(label)
         yield f"""\
+        // write_label
         ({label})
         """
 
     def write_goto(self, label):
         label = self.mangle_label(label)
         yield f"""\
-        // goto {label}
+        // goto {label} | write_goto
         @{label}
         0;JMP
         """
@@ -247,7 +250,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_if(self, label):
         label = self.mangle_label(label)
         yield f"""\
-        // if-goto {label}
+        // if-goto {label} | write_if
         @SP
         AM=M-1
         D=M
@@ -260,7 +263,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         return_address = self.temp_label()
         # push RIP
         yield f"""\
-        // push return address before >> call {name} {num_args}
+        // push return address before >> call {name} {num_args} | write_call
         @{return_address}
         D=A
         @SP
@@ -286,7 +289,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         arg_shift = num_args + 4
         yield f"""\
         // ARG = SP - num_args - 5; SP is off by one now
-        @{arg_shift}
+        @{arg_shift} // arg_shift = num_args + 4, num_args={num_args}
         D=A
         @SP
         D=M-D
@@ -315,7 +318,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
         num_vars = int(num_vars)
         self.funcname = name
         yield f"""\
-        // declaring function {name} {num_vars}
+        // declaring function {name} {num_vars} | write_function
         ({name})
         """
 
@@ -338,7 +341,7 @@ class AsmWriter(metaclass=WrapWriterMethods):
     def write_return(self):
         # save RIP in R14
         yield """\
-        // save return address in R14
+        // save return address in R14 | write_return
         @5
         D=A
         @LCL
@@ -420,7 +423,7 @@ def main(file_or_dir):
         call_sys_init = False
     else:
         inputs = list(path.glob("*.vm"))
-        asm_path = path / (path.name + ".asm")
+        asm_path = path / (path.name + ".py.asm")
         call_sys_init = any(vm_file.name == "Sys.vm" for vm_file in inputs)
     with contextlib.closing(AsmWriter(asm_path, call_sys_init)) as writer:
         for vm_file in inputs:
