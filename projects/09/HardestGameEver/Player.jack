@@ -7,7 +7,7 @@ class Player {
     field int speed, width, height;
 
     constructor Player new(Labirinth l) {
-        var int centerOfBlockX, centerOfBlockY;
+        var int centerOfCellX, centerOfCellY;
         var Cell startCell;
 
         let labirinth = l;
@@ -18,9 +18,9 @@ class Player {
         let width = 5;
         let height = 5;
 
-        let centerOfBlockX = startCell.getX() + (startCell.getWidth() / 2) - (width / 2);
-        let centerOfBlockY = startCell.getY() + (startCell.getHeight() / 2) - (height / 2);
-        let avatar = Avatar.new(centerOfBlockX, centerOfBlockY, speed, width, height);
+        let centerOfCellX = startCell.getX() + (startCell.getWidth() / 2) - (width / 2);
+        let centerOfCellY = startCell.getY() + (startCell.getHeight() / 2) - (height / 2);
+        let avatar = Avatar.new(centerOfCellX, centerOfCellY, speed, width, height);
         let moover = Moover.new(labirinth, avatar);
 
         return this;

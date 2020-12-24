@@ -42,35 +42,35 @@ class Labirinth {
 
     method Cell getCellFromDirection(Avatar avatar, int direction) {
         var int nextRow, nextCol;
-        var Cell currentCell, nextBlock;
+        var Cell currentCell, nextCell;
 
         let currentCell = getCurrentCell(avatar);
 
         if (direction = 1) {
             let nextRow = currentCell.getRow() - 1;
             let nextCol = currentCell.getCol();
-            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
         }
         
         if (direction = 2) {
             let nextRow = currentCell.getRow();
             let nextCol = currentCell.getCol() - 1;
-            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
         }
         
         if (direction = 3) {
             let nextRow = currentCell.getRow() + 1;
             let nextCol = currentCell.getCol();
-            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
         }
         
         if (direction = 4) {
             let nextRow = currentCell.getRow();
             let nextCol = currentCell.getCol() + 1;
-            let nextBlock = getCellFromRowCol(nextRow, nextCol);
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
         }
         
-        return nextBlock;
+        return nextCell;
     }
 
     method Cell getCurrentCell(Avatar avatar) {

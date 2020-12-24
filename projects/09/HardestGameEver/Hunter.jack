@@ -9,10 +9,10 @@ class Hunter {
     field int direction;
     field boolean isMoving;
 
-    field Cell currentCell, nextBlock;
+    field Cell currentCell, nextCell;
 
     constructor Hunter new(Labirinth usedLabirinth) {
-        var int centerOfBlockX, centerOfBlockY;
+        var int centerOfCellX, centerOfCellY;
         var Cell startCell;
 
         let labirinth = usedLabirinth;
@@ -24,9 +24,9 @@ class Hunter {
         let width = 10;
         let height = 10;
 
-        let centerOfBlockX = startCell.getX() + (startCell.getWidth() / 2) - (width / 2);
-        let centerOfBlockY = startCell.getY() + (startCell.getHeight() / 2) - (height / 2);
-        let avatar = Avatar.new(centerOfBlockX, centerOfBlockY, speed, width, height);
+        let centerOfCellX = startCell.getX() + (startCell.getWidth() / 2) - (width / 2);
+        let centerOfCellY = startCell.getY() + (startCell.getHeight() / 2) - (height / 2);
+        let avatar = Avatar.new(centerOfCellX, centerOfCellY, speed, width, height);
         let moover = Moover.new(labirinth, avatar);
 
         return this;
@@ -57,12 +57,12 @@ class Hunter {
 
         while(isWallInThatDirection) {
             let direction = LCGRandom.randRange(1,4);
-            let nextBlock = labirinth.getCellFromDirection(avatar, direction);
+            let nextCell = labirinth.getCellFromDirection(avatar, direction);
             
-            if (~(nextBlock = null)) {
+            if (~(nextCell = null)) {
                 let isWallInThatDirection = (
                     (currentCell.getBorder() = direction)
-                    | (nextBlock.getBorder() = labirinth.getParallelWall(direction))
+                    | (nextCell.getBorder() = labirinth.getParallelWall(direction))
                     );
             }
         }
@@ -71,16 +71,16 @@ class Hunter {
     }
 
     method boolean _hasHunterMoved() {
-        var boolean centerOfAvatarIsInCenterOfTheNextBlock;
+        var boolean centerOfAvatarIsInCenterOfTheNextCell;
 
         let currentCell = labirinth.getCurrentCell(avatar);
 
-        let centerOfAvatarIsInCenterOfTheNextBlock =
-            (currentCell = nextBlock)
-            & ((avatar.getX() + (avatar.getWidth() / 2)) = (nextBlock.getX() + (nextBlock.getWidth() / 2)))
-            & ((avatar.getY() + (avatar.getHeight() / 2)) = (nextBlock.getY() + (nextBlock.getHeight() / 2)));
+        let centerOfAvatarIsInCenterOfTheNextCell =
+            (currentCell = nextCell)
+            & ((avatar.getX() + (avatar.getWidth() / 2)) = (nextCell.getX() + (nextCell.getWidth() / 2)))
+            & ((avatar.getY() + (avatar.getHeight() / 2)) = (nextCell.getY() + (nextCell.getHeight() / 2)));
 
-        return centerOfAvatarIsInCenterOfTheNextBlock;
+        return centerOfAvatarIsInCenterOfTheNextCell;
     }
 
     method void destroy() {
