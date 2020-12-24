@@ -1,18 +1,18 @@
 class Game {
     
-    function void play() {
+    static Player player;
+    static Hunter hunter;
+
+    function void run() {
         var boolean userWantsToExit;
         var Avatar player;
         var Labirinth labirinth;
 
-        let player = Avatar.new(0, 0);
-        let labirinth = Labirinth.new();
-
-        do labirinth.render();
+        do Game.init();
 
         let userWantsToExit = false;
         while (~userWantsToExit) {
-            do player.move();
+            do Game.play();
             
             let userWantsToExit = Game.checkIfUserWantsToExit();
         }
@@ -22,17 +22,36 @@ class Game {
         return;
     }
 
+    function void init() {
+        let labirinth = Labirinth.new();
+        let player = Player.new(labirinth);
+        let hunter = Hunter.new(labirinth);
+        
+        do labirinth.render();
+        do player.render();
+        do hunter.render();
+
+        return;
+    }
+
+    function void play() {
+        do player.move();
+        do hunter.move();
+    }
+
     function boolean checkIfUserWantsToExit() {
         var boolean userHasClickedTheESC;
 
-        let userHasClickedTheESC = (Keyboard.keyPressed() = 140);
+        let userHasClickedTheESC = (Keyboard.keyPressed() = 140); // keycode 140 is ESC button
 
         return userHasClickedTheESC;
     }
 
     function void stop() {
 
-        do Output.printString("game stoped");
+        // todo: clear screen
+        // todo: move cursor to center
+        do Output.printString("GAME ENDED");
 
         return;
     }

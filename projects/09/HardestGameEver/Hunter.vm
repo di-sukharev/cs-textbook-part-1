@@ -9,7 +9,7 @@ push constant 0
 push constant 0
 call Labirinth.getCellFromRowCol 3
 pop local 2
-push constant 2
+push constant 4
 pop this 3
 push constant 10
 pop this 4
@@ -51,6 +51,14 @@ push this 0
 call Moover.new 2
 pop this 1
 push pointer 0
+return
+function Hunter.render 0
+push argument 0
+pop pointer 0
+push this 0
+call Avatar.render 1
+pop temp 0
+push constant 0
 return
 function Hunter.move 0
 push argument 0

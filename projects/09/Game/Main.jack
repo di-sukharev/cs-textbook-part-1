@@ -1,9 +1,9 @@
 class Main {
     function void main() {
 
-        do LCGRandom.setSeed(Keyboard.readInt("Seed: "));
+        do LCGRandom.setSeed(Keyboard.readInt("Choose level: "));
         
-        do Game.play();
+        do Game.run();
         
         do Sys.halt();
 

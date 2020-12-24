@@ -19,7 +19,7 @@ class Hunter {
 
         let startCell = labirinth.getCellFromRowCol(0, 0);
 
-        let speed = 2;
+        let speed = 4;
         
         let width = 10;
         let height = 10;

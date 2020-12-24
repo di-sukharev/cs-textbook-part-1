@@ -19,4 +19,73 @@ class Labirinth {
         return;
     }
 
+    method Cell getCellFromRowCol(int row, int col) {
+        var Cell cell;
+
+        if (
+            (row < 0) | (col < 0) | // predicate
+            (row > grid.getRows()) |
+            (col > grid.getCols())
+            ) { let cell = null; } // consequent
+        else { let cell = grid.getCell(row, col); } // alternative
+
+        return cell;
+    }
+
+    method Cell getCellFromDirection(Avatar avatar, int direction) {
+        var int nextRow, nextCol;
+        var Cell currentCell, nextCell;
+
+        let currentCell = getCurrentCell(avatar);
+
+        if (direction = 1) {
+            let nextRow = currentCell.getRow();
+            let nextCol = currentCell.getCol() - 1;
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
+        }
+
+        if (direction = 2) {
+            let nextRow = currentCell.getRow() - 1;
+            let nextCol = currentCell.getCol();
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
+        }
+
+        if (direction = 3) {
+            let nextRow = currentCell.getRow();
+            let nextCol = currentCell.getCol() + 1;
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
+        }
+
+        if (direction = 4) {
+            let nextRow = currentCell.getRow() + 1;
+            let nextCol = currentCell.getCol();
+            let nextCell = getCellFromRowCol(nextRow, nextCol);
+        }
+
+        return nextCell;
+    }
+
+    method Cell getCurrentCell(Avatar avatar) {
+        var int currentX, currentY;
+        var Cell currentCell;
+
+        let currentX = avatar.getX() + (avatar.getWidth / 2);
+        let currentY = avatar.getY() + (avatar.getHeight / 2);
+        
+        let currentCell = getCellFromXY(currentX, currentY);
+
+        return currentCell;
+    }
+
+    method Cell getCellFromXY(int x, int y) {
+        var Cell cell;
+        var int row, col;
+
+        let row = x / grid.getCellWidth();
+        let col = y / grid.getCellHeight();
+
+        let cell = getCellFromRowCol(row, col);
+
+        return cell;
+    }
 }

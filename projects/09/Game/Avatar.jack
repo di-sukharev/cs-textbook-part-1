@@ -14,47 +14,6 @@ class Avatar {
         return this;
     }
 
-   method void move() {
-        var int direction;
-        var boolean isMoving;
-
-        let direction = defineDirection();
-
-        let isMoving = ~(direction = 0);
-
-        if (isMoving) {
-            
-            // do Output.printInt(direction);
-
-            if (direction = 1) { do moveLeft(); }
-            if (direction = 2) { do moveUp(); }
-            if (direction = 3) { do moveRight(); }
-            if (direction = 4) { do moveDown(); }
-
-        }
-
-        do Sys.wait(5);
-
-        return;
-    }
-
-     method int defineDirection() {
-        var int direction;
-
-        var char keyCode;
-
-        let keyCode = Keyboard.keyPressed();
-
-        let direction = 0; // no keyIs pressed
-
-        if (keyCode = 130) { let direction = 1; } // left arrow
-        if (keyCode = 131) { let direction = 2; } // up arrow
-        if (keyCode = 132) { let direction = 3; } // right arrow
-        if (keyCode = 133) { let direction = 4; } // down arrow
-
-        return direction;
-    }
-
    /** Moves the square up by 2 pixels. */
     method void moveUp() {
       if (y > 1) {
