@@ -1,0 +1,72 @@
+function Game.play 3
+push constant 0
+push constant 0
+call Avatar.new 2
+pop local 1
+call Labirinth.new 0
+pop local 2
+push local 2
+call Labirinth.render 1
+pop temp 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+not
+not
+if-goto WHILE_END0
+push local 1
+call Avatar.move 1
+pop temp 0
+call Game.checkIfUserWantsToExit 0
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+call Game.stop 0
+pop temp 0
+push constant 0
+return
+function Game.checkIfUserWantsToExit 1
+call Keyboard.keyPressed 0
+push constant 140
+eq
+pop local 0
+push local 0
+return
+function Game.stop 0
+push constant 15
+call String.new 1
+push constant 71
+call String.appendChar 2
+push constant 65
+call String.appendChar 2
+push constant 77
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 78
+call String.appendChar 2
+push constant 68
+call String.appendChar 2
+push constant 69
+call String.appendChar 2
+push constant 68
+call String.appendChar 2
+push constant 32
+call String.appendChar 2
+push constant 1048
+call String.appendChar 2
+push constant 1043
+call String.appendChar 2
+push constant 1056
+call String.appendChar 2
+push constant 1040
+call String.appendChar 2
+call Output.printString 1
+pop temp 0
+push constant 0
+return

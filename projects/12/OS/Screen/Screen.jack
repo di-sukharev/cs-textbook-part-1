@@ -1,0 +1,184 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Screen.jack
+
+/**
+ * A library of functions for displaying graphics on the screen.
+ * The Hack physical screen consists of 512 rows (indexed 0..511, top to bottom)
+ * of 256 pixels each (indexed 0..255, left to right). The top left pixel on 
+ * the screen is indexed (0,0).
+ */
+class Screen {
+
+    static Array screen;
+
+    static boolean color; // true is black, false is white
+
+    /** Initializes the Screen. */
+    function void init() {
+        let screen = 16384;
+
+        let color = true;
+
+        return;
+    }
+
+    /** Erases the entire screen. */
+    function void clearScreen() {
+        var int i;
+
+        let i = 0;
+        while(i < 8192) { let screen[i] = 0; } // 0 is white
+
+        return;
+    }
+
+    /** Sets the current color, to be used for all subsequent drawXXX commands.
+     *  Black is represented by true, white by false. */
+    function void setColor(boolean clr) {
+        let color = clr;
+
+        return;
+    }
+
+    /** Draws the (x,y) pixel, using the current color. */
+    function void drawPixel(int x, int y) {
+        var int address, value, bit;
+
+        let address = (32 * y) + (x / 16); // find the pixel row in RAM
+
+        let bit = Math.mod(x, 16); // find the remainder of x/16
+        let bit = Math.twoToThePowerOf(bit); // find the exact bit in the pixel row
+
+        let value = screen[address]; // 16384 is the SCREEN MEMORY MAP base address
+        
+        if (color) {
+            // seting value[bit] to black
+            let value = value | bit; 
+        } else {
+            // seting value[bit] to white
+            let value = value & ~bit;
+        }
+        
+        let screen[address] = value;
+
+        return;
+    }
+
+    /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
+    function void drawLine(int x1, int y1, int x2, int y2) {
+        var int x, y, dx, dy, temp;
+
+        // if line coordinates are: from 'right' to 'left'
+        if (x1 > x2) {
+            // swap the coordinates to: from 'left' to 'right'
+            let temp = x1; let x1 = x2; let x2 = temp;
+            let temp = y1; let y1 = y2; let y2 = temp;
+        }
+
+        let x = x1;
+        let y = y1;
+	    let dx = x2 - x1; // delta x
+	    let dy = y2 - y1; // delta y
+
+        if (dy = 0) { do Screen.drawHorizontalLine(x, y, x2); return; }
+        if (dx = 0) { do Screen.drawVerticalLine(x, y, y2); return; }
+        if (dy < 0) { do Screen.drawNorthEastLine(x, y, dx, dy); return; }
+        if (dy > 0) { do Screen.drawSouthEastLine(x, y, dx, dy); return; }
+
+        return;
+    }
+
+    function void drawHorizontalLine(int x, int y, int x2) {
+        while ((x < x2) | (x = x2)) {
+		    do Screen.drawPixel(x, y);
+
+            let x = x + 1;
+        }
+
+        return;
+    }
+    
+    function void drawVerticalLine(int x, int y, int y2) {
+        var int temp;
+
+        // if line coordinates are: from 'down' to 'up'
+        if (y > y2) {
+            // swap the coordinates to: from 'up' to 'down'
+            let temp = y; let y = y2; let y2 = temp;
+        }
+
+        while ((y < y2) | (y = y2)) {
+		    do Screen.drawPixel(x, y);
+
+            let y = y + 1;
+        }
+
+        return;
+    }
+
+    function void drawSouthEastLine(int x, int y, int dx, int dy) {
+        var int right, down, diff;
+
+        let right = 0; // pixels we went right
+	    let down = 0; // pixels we went down
+	    let diff = 0; // are we overshooting or undershooting the line coordinates
+
+    	while (((right < dx) | (right = dx)) & ((down < dy) | (down = dy))) {
+		    do Screen.drawPixel(x + right, y + down);
+
+            let diff = right*dy + -(down*dx);  // compiler bugs when using '(a*b) - (c*d)', fix with 'a + -(b)'
+
+            if (diff < 0) { let right=right+1; let diff=diff+dy; }
+            else { let down=down+1; let diff=diff-dx; }
+        }
+
+        return;
+    }
+
+    function void drawNorthEastLine(int x, int y, int dx, int dy) {
+        var int right, up, diff;
+
+        let right = 0; // pixels we went right
+	    let up = 0; // pixels we went up
+	    let diff = 0; // are we overshooting or undershooting the line coordinates
+
+    	while (((right < dx) | (right = dx)) & ((up > dy) | (up = dy))) {
+		    do Screen.drawPixel(x + right, y + up);
+
+            let diff = (right*dy) + -(up*dx); // compiler bugs when using '(a*b) - (c*d)', fix with 'a + -(b)'
+
+            if (diff < 0) { let up=up-1; let diff=diff-dx; }
+            else { let right=right+1; let diff=diff+dy; }
+        }
+
+        return;
+    }
+
+    /** Draws a filled rectangle whose top left corner is (x1, y1)
+     * and bottom right corner is (x2,y2), using the current color. */
+    function void drawRectangle(int x1, int y1, int x2, int y2) {
+        while(~(y1 > y2)) {
+            do Screen.drawHorizontalLine(x1, y1, x2);
+            let y1 = y1 + 1;
+        }
+        
+        return;
+    }
+
+    /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
+    function void drawCircle(int x, int y, int r) {
+        var int a, b, dy, dx;
+
+        let dy = -r;
+
+        while (dy < r) {
+            let dx = Math.sqrt((r * r) - (dy * dy));
+            do Screen.drawHorizontalLine(x - dx, y + dy, x + dx);
+            let dy = dy + 1;
+        }
+        
+        return;
+    }
+}
