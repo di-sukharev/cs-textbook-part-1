@@ -8,13 +8,13 @@
  * memory (RAM), and allocation and recycling of memory blocks. The Hack RAM
  * consists of 32,768 words, each holding a 16-bit binary number.
  */ 
+
 class Memory {
 
     static Array memory;
     static Array freeList;
 
-    static int SIZE;
-    static int NEXT; 
+    static int SIZE, NEXT;
 
     static int heapBase, heapEnd;
 
@@ -30,8 +30,8 @@ class Memory {
         let SIZE = 0;
         let NEXT = 1;
 
-        let freeList[NEXT] = null;
         let freeList[SIZE] = heapEnd - heapBase;
+        let freeList[NEXT] = null;
 
         return;
     }
@@ -106,22 +106,22 @@ class Memory {
 
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
-    function void deAlloc(Array object) {
+    function void deAlloc(Array block) {
         var int lastSegment;
 
-        // Step 1 register back, point to the object base, where [SIZE] is stored.
-        // So, now object[SIZE] is pointing to object[0] where size was stored during allocation.
-        let object = object - 1;
-        // reduce object[SIZE] by 1, because we will use this register for setting NEXT header
-        let object[SIZE] = object[SIZE] - 1;
-        let object[NEXT] = null; // set NEXT header
+        // Step 1 register back, point to the block base, where [SIZE] is stored.
+        // So, now block[SIZE] is pointing to block[0] where size was stored during allocation.
+        let block = block - 1;
+        // reduce block[SIZE] by 1, because we will use this register for setting NEXT header
+        let block[SIZE] = block[SIZE] - 1;
+        let block[NEXT] = null; // set NEXT header
 
         // find list segment
         let lastSegment = freeList;
         while (~(lastSegment[NEXT] = null)) { let lastSegment = lastSegment[NEXT]; }
 
-        // set NEXT header of the last segment to object
-        let lastSegment[NEXT] = object;
+        // set NEXT header of the last segment to block
+        let lastSegment[NEXT] = block;
 
         return;
     }    
