@@ -48,7 +48,7 @@ class Screen {
 
         let address = (32 * y) + (x / 16); // find the pixel row in RAM
 
-        let bit = Math.mod(x, 16); // find the remainder of x/16
+        let bit = Math.mod(x, 16); // find the remainder of x/16, also can be done as 'x & 15'
         let bit = Math.twoToThePowerOf(bit); // find the exact bit in the pixel row
 
         let value = screen[address]; // 16384 is the SCREEN MEMORY MAP base address
@@ -169,7 +169,7 @@ class Screen {
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
     function void drawCircle(int x, int y, int r) {
-        var int a, b, dy, dx;
+        var int dy, dx;
 
         let dy = -r;
 
