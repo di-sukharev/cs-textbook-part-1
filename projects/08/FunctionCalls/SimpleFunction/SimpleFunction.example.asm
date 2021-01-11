@@ -1,9 +1,4 @@
-// short initialization-start
-@256
-D=A
-@SP
-M=D
-// short initialization-end
+// this test needs no initialization of SP and segments
 
 // function SimpleFunction.test 2
 (SimpleFunction.test)

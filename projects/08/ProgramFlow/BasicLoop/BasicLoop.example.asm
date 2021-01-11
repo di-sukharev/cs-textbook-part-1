@@ -1,3 +1,5 @@
+// this test needs short initialization of only SP
+
 // short initialization-start
 @256
 D=A

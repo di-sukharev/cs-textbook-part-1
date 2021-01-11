@@ -1,10 +1,3 @@
-// short initialization-start
-@256
-D=A
-@SP
-M=D
-// short initialization-end
-
 // function SimpleFunction.test 2
 (SimpleFunction.test)
 @2

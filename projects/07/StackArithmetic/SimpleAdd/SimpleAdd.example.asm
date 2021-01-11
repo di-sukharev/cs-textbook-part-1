@@ -1,3 +1,5 @@
+// this test needs no initialization of SP and segments
+
 // push constant 7
 @7
 D=A
