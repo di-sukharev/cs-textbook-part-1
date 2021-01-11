@@ -1,84 +1,63 @@
-
+//initialization-start
 @256
 D=A
 @SP
 M=D
-
-@RETURN_LABEL0
+@noFile.noFunction$return.0
 D=A
 @SP
 A=M
 M=D
-
-@SP
-M=M+1
-
 @LCL
 D=M
 @SP
-A=M
+AM=M+1
 M=D
-
-@SP
-M=M+1
-
 @ARG
 D=M
 @SP
-A=M
+AM=M+1
 M=D
-
-@SP
-M=M+1
-
 @THIS
 D=M
 @SP
-A=M
+AM=M+1
 M=D
-
-@SP
-M=M+1
-
 @THAT
 D=M
 @SP
-A=M
+AM=M+1
 M=D
-
+@4
+D=A
 @SP
-M=M+1
-
-@SP
-D=M
-@5
-D=D-A
-@0
-D=D-A
+D=M-D
 @ARG
 M=D
-
 @SP
-D=M
+MD=M+1
 @LCL
 M=D
-
 @Sys.init
 0;JMP
+(noFile.noFunction$return.0)
+(endlessloop)
+@endlessloop
+0;JMP
+//initialization-end
 
-(RETURN_LABEL0)
-
+// push argument 1
 @ARG
 D=M
 @1
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// pop pointer 1
 @THAT
 D=A
 @R13
@@ -90,14 +69,15 @@ D=M
 A=M
 M=D
 
+// push constant 0
 @0
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// pop that 0
 @THAT
 D=M
 @0
@@ -111,14 +91,15 @@ D=M
 A=M
 M=D
 
+// push constant 1
 @1
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// pop that 1
 @THAT
 D=M
 @1
@@ -132,31 +113,33 @@ D=M
 A=M
 M=D
 
+// push argument 0
 @ARG
 D=M
 @0
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// push constant 2
 @2
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
 
+// pop argument 0
 @ARG
 D=M
 @0
@@ -170,59 +153,64 @@ D=M
 A=M
 M=D
 
-(MAIN_LOOP_START)
+// label MAIN_LOOP_START
+($noFile.noFunction$MAIN_LOOP_START)
 
+// push argument 0
 @ARG
 D=M
 @0
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// if-goto COMPUTE_ELEMENT
 @SP
 AM=M-1
 D=M
-A=A-1
-@COMPUTE_ELEMENT
+@$noFile.noFunction$COMPUTE_ELEMENT
 D;JNE
 
-@END_PROGRAM
+// goto END_PROGRAM
+@$noFile.noFunction$END_PROGRAM
 0;JMP
 
-(COMPUTE_ELEMENT)
+// label COMPUTE_ELEMENT
+($noFile.noFunction$COMPUTE_ELEMENT)
 
+// push that 0
 @THAT
 D=M
 @0
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// push that 1
 @THAT
 D=M
 @1
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// add
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
 
+// pop that 2
 @THAT
 D=M
 @2
@@ -236,27 +224,30 @@ D=M
 A=M
 M=D
 
+// push pointer 1
 @THAT
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// push constant 1
 @1
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// add
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M+D
+
+// pop pointer 1
 @THAT
 D=A
 @R13
@@ -267,32 +258,34 @@ D=M
 @R13
 A=M
 M=D
+
+// push argument 0
 @ARG
 D=M
-
 @0
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// push constant 1
 @1
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
+// sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
 
+// pop argument 0
 @ARG
 D=M
 @0
@@ -306,7 +299,9 @@ D=M
 A=M
 M=D
 
-@MAIN_LOOP_START
+// goto MAIN_LOOP_START
+@$noFile.noFunction$MAIN_LOOP_START
 0;JMP
 
-(END_PROGRAM)
+// label END_PROGRAM
+($noFile.noFunction$END_PROGRAM)
