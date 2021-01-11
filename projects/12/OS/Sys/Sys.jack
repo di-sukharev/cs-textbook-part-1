@@ -40,9 +40,9 @@ class Sys {
         return;
     }
 
-    /** Prints the given error code in the form "ERR<errorCode>", and halts. */
+    /** Prints the given error code in the form "Err:<errorCode>", and halts. */
     function void error(int errorCode) {
-        do Output.printString("Err");
+        do Output.printString("Err: ");
         do Output.printInt(errorCode);
         do Sys.halt();
         return;
