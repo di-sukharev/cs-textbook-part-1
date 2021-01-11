@@ -22,7 +22,7 @@ function translateDirectory(inputDirectoryName) {
         });
 
     fs.writeFileSync(
-        `${inputDirectoryName}/${targetDirectoryName}.asm`,
+        `${inputDirectoryName}/${targetDirectoryName}.node.asm`,
         assemblyFile
     );
 }
