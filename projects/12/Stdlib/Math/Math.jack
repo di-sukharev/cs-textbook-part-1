@@ -100,18 +100,18 @@ class Math {
     /** Returns the integer part of the square root of x. */
     function int sqrt(int x) {
         var int i, y;
-        var int yPlusTwoToTheI;
-        var int yPlusTwoToTheI_squared;
+        var int yPlusTwoToTheIth; // same as "y + 2^i"
+        var int yPlusTwoToTheIth_squared; // same as "(y + 2^i)^2"
         
         let y = 0;
         let i = 7; // bits / 2 - 1 = 7, bits = 16 because we have 16 bit system
 
         while( (i > 0) | (i = 0) ) {
-            let yPlusTwoToTheI = y + Math.twoToThePowerOf(i);
-            let yPlusTwoToTheI_squared = yPlusTwoToTheI * yPlusTwoToTheI;
+            let yPlusTwoToTheIth = y + Math.twoToThePowerOf(i);
+            let yPlusTwoToTheIth_squared = yPlusTwoToTheIth * yPlusTwoToTheIth;
 
             // in case of overflow
-            if( ~(yPlusTwoToTheI_squared > x) & (yPlusTwoToTheI_squared > 0) ) { let y = yPlusTwoToTheI; }
+            if( ~(yPlusTwoToTheIth_squared > x) & (yPlusTwoToTheIth_squared > 0) ) { let y = yPlusTwoToTheIth; }
 
             let i = i - 1;
         }
