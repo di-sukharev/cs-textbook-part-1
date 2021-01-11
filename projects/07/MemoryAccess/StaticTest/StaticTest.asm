@@ -2,31 +2,28 @@
 @111
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push constant 333
 @333
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push constant 888
 @888
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop static 8
-@24
+@noFile.8
 D=A
 @R13
 M=D
@@ -38,7 +35,7 @@ A=M
 M=D
 
 // pop static 3
-@19
+@noFile.3
 D=A
 @R13
 M=D
@@ -50,7 +47,7 @@ A=M
 M=D
 
 // pop static 1
-@17
+@noFile.1
 D=A
 @R13
 M=D
@@ -62,22 +59,20 @@ A=M
 M=D
 
 // push static 3
-@19
+@noFile.3
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push static 1
-@17
+@noFile.1
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // sub
 @SP
@@ -87,13 +82,12 @@ A=A-1
 M=M-D
 
 // push static 8
-@24
+@noFile.8
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // add
 @SP

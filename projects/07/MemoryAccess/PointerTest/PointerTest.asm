@@ -2,10 +2,9 @@
 @3030
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 0
 @THIS
@@ -23,10 +22,9 @@ M=D
 @3040
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop pointer 1
 @THAT
@@ -44,10 +42,9 @@ M=D
 @32
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop this 2
 @THIS
@@ -67,10 +64,9 @@ M=D
 @46
 D=A
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // pop that 6
 @THAT
@@ -90,19 +86,17 @@ M=D
 @THIS
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // push pointer 1
 @THAT
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // add
 @SP
@@ -118,10 +112,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // sub
 @SP
@@ -137,10 +130,9 @@ D=M
 A=D+A
 D=M
 @SP
-A=M
-M=D
-@SP
 M=M+1
+A=M-1
+M=D
 
 // add
 @SP
