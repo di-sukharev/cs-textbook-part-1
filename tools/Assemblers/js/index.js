@@ -10,15 +10,10 @@ const [
     outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
 ] = process.argv;
 
-console.info("args: ", {
-    inputFile,
-    outputFile:
-        outputFile ||
-        "is going to be generated automatically in the same folder",
-});
+console.info("args: ", { inputFile, outputFile });
 
 if (!inputFile.endsWith(".asm"))
-    throw Error("Only .asm file can be assembled into .hack");
+    throw new Error("Only .asm file can be assembled into .hack");
 
 const assembler = new Assembler();
 
