@@ -1,64 +1,22 @@
-//initialization-start
+// INIT @SP | write_init
 @256
 D=A
 @SP
 M=D
-@noFile.noFunction$return.0
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@4
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Sys.init
-0;JMP
-(noFile.noFunction$return.0)
-(endlessloop)
-@endlessloop
-0;JMP
-//initialization-end
-
-// push constant 0
+// push constant 0 | write_push
 @0
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// pop local 0
+// pop local 0 | write_pop
 @LCL
 D=M
 @0
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -67,44 +25,41 @@ D=M
 @R13
 A=M
 M=D
-
-// label LOOP_START
-($noFile.noFunction$LOOP_START)
-
-// push argument 0
+// write_label
+(BasicLoop.$nofunction$LOOP_START)
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push local 0
+// push local 0 | write_push
 @LCL
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// add
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M+D
-
-// pop local 0
+M=D+M
+// pop local 0 | write_pop
 @LCL
 D=M
 @0
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -113,38 +68,36 @@ D=M
 @R13
 A=M
 M=D
-
-// push argument 0
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push constant 1
+// push constant 1 | write_push
 @1
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
-
-// pop argument 0
+// pop argument 0 | write_pop
 @ARG
 D=M
 @0
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -153,32 +106,35 @@ D=M
 @R13
 A=M
 M=D
-
-// push argument 0
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// if-goto LOOP_START
+// if-goto BasicLoop.$nofunction$LOOP_START | write_if
 @SP
 AM=M-1
 D=M
-@$noFile.noFunction$LOOP_START
+@BasicLoop.$nofunction$LOOP_START
 D;JNE
-
-// push local 0
+// push local 0 | write_push
 @LCL
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
+// write_endless_loop
+(BasicLoop.$nofunction$genlabel$1)
+@BasicLoop.$nofunction$genlabel$1
+0;JMP

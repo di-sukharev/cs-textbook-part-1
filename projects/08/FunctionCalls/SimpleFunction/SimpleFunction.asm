@@ -1,98 +1,93 @@
-//initialization-start
+// INIT @SP | write_init
 @256
 D=A
 @SP
 M=D
-
-// function SimpleFunction.test 2
+// declaring function SimpleFunction.test 2 | write_function
 (SimpleFunction.test)
+// initialize LCL segment values
 @2
 D=A
 @SP
 AM=D+M
+// declaring local 0
 A=A-1
 M=0
+// declaring local 1
 A=A-1
 M=0
-
-// push local 0
+// push local 0 | write_push
 @LCL
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push local 1
+// push local 1 | write_push
 @LCL
 D=M
 @1
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// add
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M+D
-
-// not
+M=D+M
+// not | write_arith
 @SP
 A=M-1
 M=!M
-
-// push argument 0
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// add
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M+D
-
-// push argument 1
+M=D+M
+// push argument 1 | write_push
 @ARG
 D=M
 @1
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
-
-// return
+// save return address in R14 | write_return
 @5
 D=A
 @LCL
 A=M-D
 D=M
-@returnAddress
+@R14
 M=D
+// move return value on caller stack, reset SP
 @SP
 A=M-1
 D=M
@@ -102,6 +97,7 @@ M=D
 D=A+1
 @SP
 M=D
+// pop contexts of previous function
 @LCL
 D=M
 @R13
@@ -124,6 +120,11 @@ AM=M-1
 D=M
 @LCL
 M=D
-@returnAddress
+// jump to return address
+@R14
 A=M
+0;JMP
+// write_endless_loop
+(SimpleFunction.test$genlabel$1)
+@SimpleFunction.test$genlabel$1
 0;JMP

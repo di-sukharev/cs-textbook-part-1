@@ -1,65 +1,23 @@
-//initialization-start
+// INIT @SP | write_init
 @256
 D=A
 @SP
 M=D
-@noFile.noFunction$return.0
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
+// push argument 1 | write_push
 @ARG
 D=M
-@SP
-AM=M+1
-M=D
-@THIS
+@1
+A=D+A
 D=M
+// push D on stack
 @SP
-AM=M+1
+M=M+1
+A=M-1
 M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
+// pop pointer 1 | write_pop
 @4
 D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Sys.init
-0;JMP
-(noFile.noFunction$return.0)
-(endlessloop)
-@endlessloop
-0;JMP
-//initialization-end
-
-// push argument 1
-@ARG
-D=M
-@1
-A=D+A
-D=M
-@SP
-M=M+1
-A=M-1
-M=D
-
-// pop pointer 1
-@THAT
-D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -68,20 +26,20 @@ D=M
 @R13
 A=M
 M=D
-
-// push constant 0
+// push constant 0 | write_push
 @0
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// pop that 0
+// pop that 0 | write_pop
 @THAT
 D=M
 @0
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -90,20 +48,20 @@ D=M
 @R13
 A=M
 M=D
-
-// push constant 1
+// push constant 1 | write_push
 @1
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// pop that 1
+// pop that 1 | write_pop
 @THAT
 D=M
 @1
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -112,38 +70,36 @@ D=M
 @R13
 A=M
 M=D
-
-// push argument 0
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push constant 2
+// push constant 2 | write_push
 @2
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
-
-// pop argument 0
+// pop argument 0 | write_pop
 @ARG
 D=M
 @0
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -152,69 +108,63 @@ D=M
 @R13
 A=M
 M=D
-
-// label MAIN_LOOP_START
-($noFile.noFunction$MAIN_LOOP_START)
-
-// push argument 0
+// write_label
+(FibonacciSeries.$nofunction$MAIN_LOOP_START)
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// if-goto COMPUTE_ELEMENT
+// if-goto FibonacciSeries.$nofunction$COMPUTE_ELEMENT | write_if
 @SP
 AM=M-1
 D=M
-@$noFile.noFunction$COMPUTE_ELEMENT
+@FibonacciSeries.$nofunction$COMPUTE_ELEMENT
 D;JNE
-
-// goto END_PROGRAM
-@$noFile.noFunction$END_PROGRAM
+// goto FibonacciSeries.$nofunction$END_PROGRAM | write_goto
+@FibonacciSeries.$nofunction$END_PROGRAM
 0;JMP
-
-// label COMPUTE_ELEMENT
-($noFile.noFunction$COMPUTE_ELEMENT)
-
-// push that 0
+// write_label
+(FibonacciSeries.$nofunction$COMPUTE_ELEMENT)
+// push that 0 | write_push
 @THAT
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push that 1
+// push that 1 | write_push
 @THAT
 D=M
 @1
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// add
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M+D
-
-// pop that 2
+M=D+M
+// pop that 2 | write_pop
 @THAT
 D=M
 @2
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -223,33 +173,31 @@ D=M
 @R13
 A=M
 M=D
-
-// push pointer 1
-@THAT
+// push pointer 1 | write_push
+@4
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push constant 1
+// push constant 1 | write_push
 @1
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// add
 @SP
 AM=M-1
 D=M
 A=A-1
-M=M+D
-
-// pop pointer 1
-@THAT
+M=D+M
+// pop pointer 1 | write_pop
+@4
 D=A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -258,38 +206,36 @@ D=M
 @R13
 A=M
 M=D
-
-// push argument 0
+// push argument 0 | write_push
 @ARG
 D=M
 @0
 A=D+A
 D=M
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// push constant 1
+// push constant 1 | write_push
 @1
 D=A
+// push D on stack
 @SP
 M=M+1
 A=M-1
 M=D
-
-// sub
 @SP
 AM=M-1
 D=M
 A=A-1
 M=M-D
-
-// pop argument 0
+// pop argument 0 | write_pop
 @ARG
 D=M
 @0
 D=D+A
+// Write D to R13, pop from stack, write to *R13
 @R13
 M=D
 @SP
@@ -298,10 +244,12 @@ D=M
 @R13
 A=M
 M=D
-
-// goto MAIN_LOOP_START
-@$noFile.noFunction$MAIN_LOOP_START
+// goto FibonacciSeries.$nofunction$MAIN_LOOP_START | write_goto
+@FibonacciSeries.$nofunction$MAIN_LOOP_START
 0;JMP
-
-// label END_PROGRAM
-($noFile.noFunction$END_PROGRAM)
+// write_label
+(FibonacciSeries.$nofunction$END_PROGRAM)
+// write_endless_loop
+(FibonacciSeries.$nofunction$genlabel$1)
+@FibonacciSeries.$nofunction$genlabel$1
+0;JMP
