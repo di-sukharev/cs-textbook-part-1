@@ -1,8 +1,9 @@
-//initialization-start
+// short initialization-start
 @256
 D=A
 @SP
 M=D
+// short initialization-end
 
 // push argument 1
 @ARG

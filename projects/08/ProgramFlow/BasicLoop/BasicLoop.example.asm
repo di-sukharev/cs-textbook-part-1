@@ -1,50 +1,9 @@
-//initialization-start
+// short initialization-start
 @256
 D=A
 @SP
 M=D
-@noFile.noFunction$return.0
-D=A
-@SP
-A=M
-M=D
-@LCL
-D=M
-@SP
-AM=M+1
-M=D
-@ARG
-D=M
-@SP
-AM=M+1
-M=D
-@THIS
-D=M
-@SP
-AM=M+1
-M=D
-@THAT
-D=M
-@SP
-AM=M+1
-M=D
-@4
-D=A
-@SP
-D=M-D
-@ARG
-M=D
-@SP
-MD=M+1
-@LCL
-M=D
-@Sys.init
-0;JMP
-(noFile.noFunction$return.0)
-(endlessloop)
-@endlessloop
-0;JMP
-//initialization-end
+// short initialization-end
 
 // push constant 0
 @0
