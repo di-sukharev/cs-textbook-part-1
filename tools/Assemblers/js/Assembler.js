@@ -50,15 +50,11 @@ class Assembler {
     }
 
     assemble(inputFileName, outputFileName) {
-        const that = this;
-        fs.readFile(inputFileName, "utf8", function (err, file) {
-            const binary = that._translate(file);
+        const file = fs.readFileSync(inputFileName, "utf8");
 
-            fs.writeFile(outputFileName, binary, (err) => {
-                if (err) throw err;
-                console.log("The file has been saved!");
-            });
-        });
+        const binary = this._translate(file);
+
+        fs.writeFileSync(outputFileName, binary);
     }
 
     _translate(file) {
