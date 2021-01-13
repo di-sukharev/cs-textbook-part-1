@@ -198,19 +198,20 @@ class Output {
      *  and advances the cursor one column forward. */
     function void printChar(char c) {
         var Array map;
-        var int address, mask, bitmap,i;
+        var int address, bitmap,i;
+        var boolean isOdd;
         
         // Get the character bitmap
         let map = Output.getMap(c);
         let address = (cursorY*32*11) + (cursorX/2);
-        let mask = cursorX & 1;
+        let isOdd = ((cursorX & 1) = 1);
         
         // Print the character
         let i = 0;
         while( i < 11 ) {
             let bitmap = map[i];
             
-            if( mask = 1 ) { let bitmap = bitmap * 256; }
+            if( isOdd ) { let bitmap = bitmap * 256; }
             
             let screen[address] = screen[address] | bitmap; 
             
@@ -231,7 +232,6 @@ class Output {
         var int i;
 
         let i = 0;
-
         while( i < s.length() ) {
             do Output.printChar(s.charAt(i));
             let i = i + 1;

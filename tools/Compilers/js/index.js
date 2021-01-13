@@ -13,6 +13,6 @@ translateDirectory(inputDirectoryName);
 const finished = performance.now();
 
 console.info(
-    `Translated .vm to .asm 🌞 took ${(finished - started).toFixed(2)} ms`
+    `Translated .jack to .vm 🌞 took ${(finished - started).toFixed(2)} ms`
 );
 console.log(graffiti);

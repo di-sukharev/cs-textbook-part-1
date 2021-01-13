@@ -130,8 +130,8 @@ class Screen {
 
             let diff = right*dy + -(down*dx);  // compiler bugs when using '(a*b) - (c*d)', fix with 'a + -(b)'
 
-            if (diff < 0) { let right=right+1; let diff=diff+dy; }
-            else { let down=down+1; let diff=diff-dx; }
+            if (diff < 0) { let right=right+1; }
+            else { let down=down+1; }
         }
 
         return;
@@ -149,8 +149,8 @@ class Screen {
 
             let diff = (right*dy) + -(up*dx); // compiler bugs when using '(a*b) - (c*d)', fix with 'a + -(b)'
 
-            if (diff < 0) { let up=up-1; let diff=diff-dx; }
-            else { let right=right+1; let diff=diff+dy; }
+            if (diff < 0) { let up=up-1;  }
+            else { let right=right+1;  }
         }
 
         return;
@@ -161,7 +161,7 @@ class Screen {
     function void drawRectangle(int x1, int y1, int x2, int y2) {
         while(~(y1 > y2)) {
             do Screen.drawHorizontalLine(x1, y1, x2);
-            let y1 = y1 + 1;
+            let y1 = y1 + 10;
         }
         
         return;
