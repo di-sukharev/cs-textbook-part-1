@@ -1,3 +1,4 @@
+.DS_Store
 node_modules
 tools/bin
 projects/06/*/*.hack
