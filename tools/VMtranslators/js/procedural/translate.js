@@ -38,7 +38,7 @@ function translateFile(vmFile) {
         .split(intoLines)
         .map(removeComments)
         .filter(removeWhitespaces)
-        .map(vmToAsm)
+        .map(vm2asm)
         .join(intoFile);
 
     if (DEBUG) console.log({ DEBUG });
@@ -46,7 +46,7 @@ function translateFile(vmFile) {
     return assemblyFile;
 }
 
-function vmToAsm(vmInstruction) {
+function vm2asm(vmInstruction) {
     let asmInstructions = `\n// ${vmInstruction}\n`;
 
     const [operation, arg1, arg2] = vmInstruction.split(" ");
