@@ -22,4 +22,6 @@ const started = performance.now();
 assembler.assemble(inputFile, outputFile);
 const finished = performance.now();
 
-console.info(`Assembled 🌞 took ${(finished - started).toFixed(2)} ms`);
+console.info(
+    `Assembled .asm into .hack 🌞 took ${(finished - started).toFixed(2)} ms`
+);
