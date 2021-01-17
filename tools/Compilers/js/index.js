@@ -1,4 +1,4 @@
-const translateDirectory = require("./translate.js");
+const compileDirectory = require("./compile.js");
 const { performance } = require("perf_hooks");
 const graffiti = require("./graffiti.js");
 
@@ -9,7 +9,7 @@ console.log("args: ", { inputDirectoryName });
 
 console.info("Translating ⏳");
 const started = performance.now();
-translateDirectory(inputDirectoryName);
+compileDirectory(inputDirectoryName);
 const finished = performance.now();
 
 console.info(

@@ -3,47 +3,44 @@ const writer = require("./writer.js");
 
 const DEBUG = false;
 
-function translateDirectory(inputDirectoryName) {
-    const isJACKfile = (fileName) => fileName.endsWith(".jack");
-
-    let assemblyFile = writer.init() + "\n";
+function compileDirectory(inputDirectoryName) {
+    const isJackFile = (fileName) => fileName.endsWith(".jack");
 
     const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
     fs.readdirSync(inputDirectoryName)
-        .filter(isJACKfile)
+        .filter(isJackFile)
         .forEach((fileName) => {
             const jackFile = fs.readFileSync(
                 `${inputDirectoryName}/${fileName}`,
                 "utf8"
             );
 
-            assemblyFile += translateFile(jackFile);
-        });
+            let vmFile = writer.init() + "\n" + compileFile(jackFile);
 
-    fs.writeFileSync(
-        `${inputDirectoryName}/${targetDirectoryName}.asm`,
-        assemblyFile
-    );
+            fs.writeFileSync(
+                `${inputDirectoryName}/${targetDirectoryName}.vm`,
+                vmFile
+            );
+        });
 }
 
-function translateFile(jackFile) {
+function compileFile(jackFile) {
     const removeComments = (line) =>
         (line.includes("//") ? line.slice(0, line.indexOf("//")) : line).trim();
     const removeWhitespaces = (line) => !!line;
-    const intoLines = "\r\n";
-    const intoFile = "\n";
+    const intoTokens = " ";
 
-    const assemblyFile = jackFile
-        .split(intoLines)
+    const vmFile = jackFile
+        .split(intoTokens)
         .map(removeComments)
         .filter(removeWhitespaces)
         .map(jack2vm)
-        .join(intoFile);
+        .join(intoLines);
 
     if (DEBUG) console.log({ DEBUG });
 
-    return assemblyFile;
+    return vmFile;
 }
 
 function jack2vm(jackInstruction) {
@@ -56,4 +53,4 @@ function jack2vm(jackInstruction) {
     return asmInstructions;
 }
 
-module.exports = translateDirectory;
+module.exports = compileDirectory;
