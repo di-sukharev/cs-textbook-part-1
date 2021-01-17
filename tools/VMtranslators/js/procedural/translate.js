@@ -4,14 +4,14 @@ const writer = require("./writer.js");
 const DEBUG = false;
 
 function translateDirectory(inputDirectoryName) {
-    const isVMfile = (fileName) => fileName.endsWith(".vm");
+    const isVmFile = (fileName) => fileName.endsWith(".vm");
 
     let assemblyFile = writer.init() + "\n";
 
     const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
     fs.readdirSync(inputDirectoryName)
-        .filter(isVMfile)
+        .filter(isVmFile)
         .forEach((fileName) => {
             const vmFile = fs.readFileSync(
                 `${inputDirectoryName}/${fileName}`,
@@ -32,14 +32,13 @@ function translateFile(vmFile) {
         (line.includes("//") ? line.slice(0, line.indexOf("//")) : line).trim();
     const removeWhitespaces = (line) => !!line;
     const intoLines = "\r\n";
-    const intoFile = "\n";
 
     const assemblyFile = vmFile
         .split(intoLines)
         .map(removeComments)
         .filter(removeWhitespaces)
         .map(vm2asm)
-        .join(intoFile);
+        .join(intoLines);
 
     if (DEBUG) console.log({ DEBUG });
 

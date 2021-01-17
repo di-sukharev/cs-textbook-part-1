@@ -11,14 +11,14 @@ class VMtranslator {
     }
 
     translate(inputDirectoryName) {
-        const isVMfile = (fileName) => fileName.endsWith(".vm");
+        const isVmFile = (fileName) => fileName.endsWith(".vm");
 
         let assemblyFile = this.writer.init() + "\n";
 
         const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
         fs.readdirSync(inputDirectoryName)
-            .filter(isVMfile)
+            .filter(isVmFile)
             .forEach((fileName) => {
                 const vmFile = fs.readFileSync(
                     `${inputDirectoryName}/${fileName}`,
@@ -42,14 +42,13 @@ class VMtranslator {
             ).trim();
         const removeWhitespaces = (line) => !!line;
         const intoLines = "\r\n";
-        const intoFile = "\n";
 
         const assemblyFile = vmFile
             .split(intoLines)
             .map(removeComments)
             .filter(removeWhitespaces)
             .map(this._vmToAsm.bind(this))
-            .join(intoFile);
+            .join(intoLines);
 
         if (DEBUG) console.log({ DEBUG });
 
