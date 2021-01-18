@@ -1,7 +1,5 @@
 const fs = require("fs");
-const writer = require("./writer.js");
-
-const DEBUG = false;
+const writer = require("./parser.js");
 
 function compileDirectory(inputDirectoryName) {
     const isJackFile = (fileName) => fileName.endsWith(".jack");
@@ -16,7 +14,7 @@ function compileDirectory(inputDirectoryName) {
                 "utf8"
             );
 
-            let vmFile = writer.init() + "\n" + compileFile(jackFile);
+            let vmFile = compileFile(jackFile);
 
             fs.writeFileSync(
                 `${inputDirectoryName}/${targetDirectoryName}.vm`,
@@ -26,19 +24,9 @@ function compileDirectory(inputDirectoryName) {
 }
 
 function compileFile(jackFile) {
-    const removeComments = (line) =>
-        (line.includes("//") ? line.slice(0, line.indexOf("//")) : line).trim();
-    const removeWhitespaces = (line) => !!line;
-    const intoTokens = " ";
+    const vmFile = jackFile;
 
-    const vmFile = jackFile
-        .split(intoTokens)
-        .map(removeComments)
-        .filter(removeWhitespaces)
-        .map(jack2vm)
-        .join(intoLines);
-
-    if (DEBUG) console.log({ DEBUG });
+    vmFile = parser.compileClass(jackFile);
 
     return vmFile;
 }
