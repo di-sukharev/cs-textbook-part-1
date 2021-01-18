@@ -1,8 +1,6 @@
 const fs = require("fs");
 const writer = require("./writer.js");
 
-const DEBUG = false;
-
 function translateDirectory(inputDirectoryName) {
     const isVmFile = (fileName) => fileName.endsWith(".vm");
 
@@ -39,8 +37,6 @@ function translateFile(vmFile) {
         .filter(removeWhitespaces)
         .map(vm2asm)
         .join(intoLines);
-
-    if (DEBUG) console.log({ DEBUG });
 
     return assemblyFile;
 }

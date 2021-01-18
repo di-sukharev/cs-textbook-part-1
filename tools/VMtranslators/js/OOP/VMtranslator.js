@@ -1,8 +1,6 @@
 const fs = require("fs");
 const Writer = require("./Writer.js");
 
-const DEBUG = false;
-
 class VMtranslator {
     constructor() {
         this.writer = new Writer();
@@ -49,8 +47,6 @@ class VMtranslator {
             .filter(removeWhitespaces)
             .map(this._vmToAsm.bind(this))
             .join(intoLines);
-
-        if (DEBUG) console.log({ DEBUG });
 
         return assemblyFile;
     }
