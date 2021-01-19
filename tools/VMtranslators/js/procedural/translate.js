@@ -11,12 +11,12 @@ function translateDirectory(inputDirectoryName) {
     fs.readdirSync(inputDirectoryName)
         .filter(isVmFile)
         .forEach((fileName) => {
-            const vmFile = fs.readFileSync(
+            const vmCode = fs.readFileSync(
                 `${inputDirectoryName}/${fileName}`,
                 "utf8"
             );
 
-            assemblyFile += translateFile(vmFile);
+            assemblyFile += translateFile(vmCode);
         });
 
     fs.writeFileSync(
@@ -25,13 +25,13 @@ function translateDirectory(inputDirectoryName) {
     );
 }
 
-function translateFile(vmFile) {
+function translateFile(vmCode) {
     const removeComments = (line) =>
         (line.includes("//") ? line.slice(0, line.indexOf("//")) : line).trim();
     const removeWhitespaces = (line) => !!line;
     const intoLines = "\r\n";
 
-    const assemblyFile = vmFile
+    const assemblyFile = vmCode
         .split(intoLines)
         .map(removeComments)
         .filter(removeWhitespaces)
