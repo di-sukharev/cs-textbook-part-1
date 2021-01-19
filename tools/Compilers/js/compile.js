@@ -1,5 +1,6 @@
 const fs = require("fs");
-const writer = require("./parser.js");
+const Tokenizer = require("./tokenizer.js");
+const Parser = require("./parser.js");
 
 function compileDirectory(inputDirectoryName) {
     const isJackFile = (fileName) => fileName.endsWith(".jack");
@@ -9,36 +10,38 @@ function compileDirectory(inputDirectoryName) {
     fs.readdirSync(inputDirectoryName)
         .filter(isJackFile)
         .forEach((fileName) => {
-            const jackFile = fs.readFileSync(
+            const jackSourceCode = fs.readFileSync(
                 `${inputDirectoryName}/${fileName}`,
                 "utf8"
             );
 
-            let vmFile = compileFile(jackFile);
+            let xmlFile = compileFile(jackSourceCode);
 
             fs.writeFileSync(
-                `${inputDirectoryName}/${targetDirectoryName}.vm`,
-                vmFile
+                `${inputDirectoryName}/${targetDirectoryName}.xml`,
+                xmlFile
             );
         });
 }
 
-function compileFile(jackFile) {
-    const vmFile = jackFile;
+function compileFile(jackSourceCode) {
+    const tokenizer = new Tokenizer(jackSourceCode);
 
-    vmFile = parser.compileClass(jackFile);
+    const parser = new Parser(tokenizer);
+
+    const vmFile = parser.compileClass();
 
     return vmFile;
 }
 
-function jack2vm(jackInstruction) {
-    let asmInstructions = `\n// ${jackInstruction}\n`;
+// function jack2vm(jackInstruction) {
+//     let asmInstructions = `\n// ${jackInstruction}\n`;
 
-    const [operation, arg1, arg2] = jackInstruction.split(" ");
+//     const [operation, arg1, arg2] = jackInstruction.split(" ");
 
-    asmInstructions += writer[operation](arg1, arg2);
+//     asmInstructions += writer[operation](arg1, arg2);
 
-    return asmInstructions;
-}
+//     return asmInstructions;
+// }
 
 module.exports = compileDirectory;
