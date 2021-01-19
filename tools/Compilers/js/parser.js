@@ -1,20 +1,26 @@
-/* Parsing process
+/* 
+Parsing process
     1. start reading file with the first token
     2. run compile_class
     3. first token should be "class keyword"
-    
 */
 
-const parser = {
+class Parser {
+    constructor(tokenizer) {
+        this.tokenizer = tokenizer;
+
+        return this;
+    }
+
     eat(type, token) {
-        const { currentToken, currentTokenType } = tokenizer;
+        const { currentToken, currentTokenType, next } = this.tokenizer;
 
         if (currentToken != token || currentTokenType != type) {
             throw Error("Unexpected token: " + currentToken);
         } else {
-            tokenizer.next();
+            next();
         }
-    },
+    }
 
     compileClass(code) {
         try {
@@ -27,9 +33,11 @@ const parser = {
         } catch (e) {
             throw Error("Error in «compile class»: " + e);
         }
-    },
+    }
 
     compileClassVarDec() {
         // …
-    },
-};
+    }
+}
+
+module.exports = Parser;
