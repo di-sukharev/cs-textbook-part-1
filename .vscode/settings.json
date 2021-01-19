@@ -1,7 +1,7 @@
 {
     "prettier.tabWidth": 4,
-    // "editor.formatOnSave": false, // should be false only during the lecture
+    "editor.formatOnSave": false, // should be false only during the lecture
     "editor.codeActionsOnSave": {
-        // "source.fixAll.eslint": false // should be false only during the lecture
+        "source.fixAll.eslint": false // should be false only during the lecture
     }
 }

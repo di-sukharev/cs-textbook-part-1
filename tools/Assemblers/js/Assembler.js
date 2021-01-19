@@ -1,7 +1,3 @@
-const fs = require("fs");
-
-const DEBUG = false;
-
 const INSTRUCTIONS = {
     A: "ADDRESS",
     C: "COMPUTE",
@@ -49,15 +45,7 @@ class Assembler {
         return this;
     }
 
-    assemble(inputFileName, outputFileName) {
-        const file = fs.readFileSync(inputFileName, "utf8");
-
-        const binary = this._translate(file);
-
-        fs.writeFileSync(outputFileName, binary);
-    }
-
-    _translate(file) {
+    assemble(file) {
         const removeComments = (line) =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
@@ -74,9 +62,6 @@ class Assembler {
             .filter(this._initAndRemoveLabels.bind(this))
             .map(this._asmToBin.bind(this))
             .join(inFile);
-
-        if (DEBUG)
-            console.log({ LABELS: this.LABELS, VARIABLES: this.VARIABLES });
 
         return result;
     }

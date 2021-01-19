@@ -1,3 +1,4 @@
+const fs = require("fs");
 const Assembler = require("./Assembler.js");
 const { performance } = require("perf_hooks");
 
@@ -18,10 +19,14 @@ if (!inputFile.endsWith(".asm"))
 const assembler = new Assembler();
 
 console.info("Assembling ⏳");
+
 const started = performance.now();
-assembler.assemble(inputFile, outputFile);
+const file = fs.readFileSync(inputFile, "utf8");    
+const binary = assembler.assemble(file);
+fs.writeFileSync(outputFile, binary);
 const finished = performance.now();
 
 console.info(
     `Assembled .asm into .hack 🌞 took ${(finished - started).toFixed(2)} ms`
 );
+
