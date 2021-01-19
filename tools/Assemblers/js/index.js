@@ -18,15 +18,14 @@ if (!inputFile.endsWith(".asm"))
 
 const assembler = new Assembler();
 
-console.info("Assembling ⏳");
+console.info("Started assembling ⏳");
 
 const started = performance.now();
-const file = fs.readFileSync(inputFile, "utf8");    
-const binary = assembler.assemble(file);
+const assembly = fs.readFileSync(inputFile, "utf8");
+const binary = assembler.assemble(assembly);
 fs.writeFileSync(outputFile, binary);
 const finished = performance.now();
 
 console.info(
-    `Assembled .asm into .hack 🌞 took ${(finished - started).toFixed(2)} ms`
+    `Finished assembling 🌞 took ${(finished - started).toFixed(2)} ms`
 );
-
