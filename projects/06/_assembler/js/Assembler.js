@@ -1,7 +1,10 @@
+// Эти константы могут быть использованы, как строки
+// INSTRUCTIONS.A === "ADDRESS" и тд.
 const INSTRUCTIONS = {
   A: "ADDRESS",
   C: "COMPUTE",
   L: "LABEL",
+  X: "UNKNOWN",
 };
 
 class Assembler {
@@ -46,15 +49,41 @@ class Assembler {
     return this;
   }
 
-  // получаем содержимое .asm файла в аргументе asm
+  // получаем содержимое .asm файла в аргументе asm, как строку
   assemble(asm) {
-    // 1. Разбиваем asm на массив строк, так с кодом будет удобнее работать
-    // 2. Вырезаем из каждой строки комментарии
+    const noComments = (line) => {
+      // возвращает false, если в line есть символы "//"
+      // иначе возвращает true
+    };
+    const noEmptyLines = (line) => {
+      // возвращает false, если line равна пустой строке
+      // иначе возвращает true
+    };
+    const noLabels = (line) => {
+      // возвращает false, если line содержит символы "(" или ")"
+      // иначе возвращает true
+    };
+
+    // 1. Разбиваем asm на массив строк, так с asm кодом будет удобнее работать
+    let lines = asm.split("\r\n");
+
+    // 2. Фильтруем комментарии из asm кода
+    lines = lines.filter(noComments);
+
     // 3. Фильтруем пустые строки из asm кода
+    lines = отфильтруйте_пустые_строки_аналогично_комментариям_через_метод_noEmptyLines;
+
     // 4. В методе this.initLabels: записываем все лейблы в таблицу LABELS: {[название лейбла]: [номер строки]}
+    lines.forEach(this.initLabels);
+
     // 5. Фильтруем лейблы из asm кода
+    lines = отфильтруйте_лейблы_через_метод_noLabels;
+
     // 6. В методе this.asm2hack: переводим каждую строку из языка ассемблера (asm) в машинный код (hack)
+    lines = lines.map(this.asm2hack);
+
     // 7. Возвращаем hack код
+    return hack;
   }
 
   initLabels(instruction, lineNumber) {
@@ -62,8 +91,9 @@ class Assembler {
     if (this.getType(instruction) !== INSTRUCTIONS.L) return;
 
     // Вырезаем название лейбла из инструкции
+    // Документация регулярных выражений https://learn.javascript.ru/regexp-methods
     const [_, value] = instruction.match(
-      /напишите регулярное выражение для получения названия лейбла в скобочной группе /i
+      /напишите регулярное выражение для получения названия лейбла в скобочной группе/i
     );
 
     // Сохраняем в "LABELS[название лейбла]" = "номер строки на которую он ссылается"
@@ -82,10 +112,13 @@ class Assembler {
 
   getType(instruction) {
     // Определяем тип инструкции по ее содержанию, всего 4 варианта:
-    // 1. Инструкция А, если содержит символ "@"
-    // 2. Лейбл, если содержит символ "(" и символ ")"
-    // 3. Инструкция С, если содержит символы "=" или ";"
-    // 4. Неизвестная инструкция
+    // 1. Инструкция А, если содержит символ "@", type = INSTRUCTIONS.A
+    // 2. Лейбл, если содержит символ "(" и символ ")", type = INSTRUCTIONS.L
+    // 3. Инструкция С, если содержит символы "=" или ";", type = INSTRUCTIONS.C
+    // 4. Неизвестная инструкция, type = INSTRUCTIONS.X
+
+    // 5. Возвращаем тип инструкции
+    return type;
   }
 
   translateA(instruction) {
@@ -111,7 +144,7 @@ class Assembler {
       value =
         // Если существует такой лейбл
         // Присваиваем лейблу его номер строки
-        getLabel(value) ||
+        this.getLabel(value) ||
         // Если существует такая переменная
         // Присваиваем переменной ее адрес в памяти
         this.getVariable(value) ||
@@ -119,9 +152,8 @@ class Assembler {
         this.initVariable(value);
     }
 
-    const hack = `0${fillWith15EmptyBits(decToBin(value))}`;
-
-    return hack;
+    // Возвращаем переведенную в машинный код инструкцию А, как строку
+    return `0${fillWith15EmptyBits(decToBin(value))}`;
   }
 
   getLabel(labelName) {
@@ -148,7 +180,7 @@ class Assembler {
     // В методе translatePartsOfC: Переводим инструкцию в машинный код по частям, получаем три части { comp, dest, jump }
     const { comp, dest, jump } = this.translatePartsOfC(instruction);
 
-    // Возвращаем переведенную в машинный код инструкцию, как строку
+    // Возвращаем переведенную в машинный код инструкцию С, как строку
     return `111${comp}${dest}${jump}`;
   }
 
