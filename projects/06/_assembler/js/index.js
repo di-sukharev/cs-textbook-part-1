@@ -1,28 +1,28 @@
-// Импортируем File Storage "fs" модуль для работы с файловой системой
-const fs = require("укажите путь до модуля");
-// Импортируем класс Assembler из файла рядом Assembler.js
-const Assembler = require("укажите путь до файла");
+// Импортируем File System "fs" модуль для работы с файловой системой
+const fs = require("fs");
+// Импортируем класс Assembler из файла Assembler.js рядом
+const Assembler = require("./Assembler.js");
 
 // Получаем аргументы с которыми был запущен скрипт
-const inputFile = process.argv[укажите_номер_аргумента];
-const outputFile = process.argv[укажите_номер_аргумента];
+const inputFile = process.argv[2];
+const outputFile = process.argv[3];
 
 // Выводим аргументы в консоль, чтобы посмотреть на них в момент запуска скрипта
-console.log("args: ", { inputFile, outputFile });
+console.log({inputFile, outputFile})
 
 // Если аргумент inputFile не был передан или это не .asm файл, выбрасываем ошибку
-if (напишите_условие_для_этого_выражения)
-  throw new Error("Only .asm file can be assembled into .hack");
+if (!inputFile || !inputFile.endsWith(".asm")) {
+  throw new Error("инпут файл не .asm")
+}
 
 // Если аргумент outputFile не был передан или это не .hack файл, выбрасываем ошибку
-if (напишите_условие_для_этого_выражения)
-  throw new Error("Only .hack file can be served as output");
+
 
 // Создаем экземпляр класса Assembler
-const assembler = создайте_экземпляр_класса_Assembler;
+const assembler = new Assembler(inputFile)
 
 // Пишем в консоль о начале выполнения скрипта
-console.log("Started assembling ⏳");
+console.log("Начали скрипт")
 
 // Читаем файл по адресу [inputFile], сохраняем содержание файла в переменную assembly
 const assembly = fs.readFileSync(inputFile, "utf8");
@@ -34,4 +34,4 @@ const hack = assembler.assemble(assembly);
 fs.writeFileSync(outputFile, hack);
 
 // Пишем в консоль о завершении выполнения скрипта
-console.log(`Finished assembling 🌞`);
+console.log("Завершили скрипт");

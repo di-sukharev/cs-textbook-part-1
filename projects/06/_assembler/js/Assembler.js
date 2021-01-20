@@ -10,7 +10,7 @@ class Assembler {
 
   // Предустановленные переменные
   VARIABLES = {
-    R0: 0,
+    R0: 0, // RAM[0];
     R1: 1,
     R2: 2,
     R3: 3,
@@ -46,12 +46,22 @@ class Assembler {
     return this;
   }
 
-  // получаем содержимое .asm файла в аргументе asm
+  // получаем содержимое .asm файла в аргументе asm, как строку
   assemble(asm) {
-    // 1. Разбиваем asm на массив строк, так с кодом будет удобнее работать
+    const noComments = (line) => !line.includes("//");
+    const noEmptyLines = (lines) => Boolean(lines);
+    // 1. Разбиваем строку asm на массив строк, так с кодом будет удобнее работать
     // 2. Вырезаем из каждой строки комментарии
     // 3. Фильтруем пустые строки из asm кода
+    const lines = asm
+                  .split("\r\n")
+                  .filter(noComments)
+                  .filter(noEmptyLines);
+    
+    console.log(lines);
+
     // 4. В методе this.initLabels: записываем все лейблы в таблицу LABELS: {[название лейбла]: [номер строки]}
+    lines.forEach(this.initLabels);
     // 5. Фильтруем лейблы из asm кода
     // 6. В методе this.asm2hack: переводим каждую строку из языка ассемблера (asm) в машинный код (hack)
     // 7. Возвращаем hack код
@@ -59,11 +69,11 @@ class Assembler {
 
   initLabels(instruction, lineNumber) {
     // Если инструкция не LABEL, пропускаем ее
-    if (this.getType(instruction) !== INSTRUCTIONS.L) return;
+    if (this.getType(instruction) != INSTRUCTIONS.L) return;
 
-    // Вырезаем название лейбла из инструкции
+    // Вырезаем название лейбла из инструкции (SOME)
     const [_, value] = instruction.match(
-      /напишите регулярное выражение для получения названия лейбла в скобочной группе /i
+      /\((.+)\)/i
     );
 
     // Сохраняем в "LABELS[название лейбла]" = "номер строки на которую он ссылается"
@@ -86,6 +96,9 @@ class Assembler {
     // 2. Лейбл, если содержит символ "(" и символ ")"
     // 3. Инструкция С, если содержит символы "=" или ";"
     // 4. Неизвестная инструкция
+
+    // возвращаем тип инструкции
+    return type;
   }
 
   translateA(instruction) {
