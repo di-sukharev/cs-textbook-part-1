@@ -29,7 +29,7 @@ function compileFile(jackSourceCode) {
 
     const parser = new Parser(tokenizer);
 
-    const vmFile = parser.compileClass();
+    const vmFile = parser.compile();
 
     return vmFile;
 }
