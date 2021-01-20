@@ -2,9 +2,18 @@
 
 class Tokenizer {
     constructor(jackSourceCode) {
-        this.tokens = this._tokenize(jackSourceCode);
+        const tokens = this._tokenize(jackSourceCode);
+
+        this.iterator = 0;
+        this.tokens = tokens;
+        this.currentToken = tokens[this.iterator];
 
         return this;
+    }
+
+    next() {
+        this.iterator++;
+        this.token = this.tokens[this.iterator];
     }
 
     _tokenize(jackSourceCode) {
@@ -22,17 +31,21 @@ class Tokenizer {
 
         const matches = jackSourceCode.matchAll(regex);
 
-        // Array.from(tokens).forEach((t) => console.log(t.groups));
         const tokens = Array.from(matches).map((match) => {
             const { groups } = match;
+
             const keys = Object.keys(groups);
 
             const tokenType = keys.find((key) => Boolean(groups[key]));
 
-            return { type: tokenType, value: groups[tokenType] };
+            return {
+                type: tokenType,
+                value: groups[tokenType],
+                position: match.index,
+            };
         });
 
-        console.log(tokens);
+        return tokens;
     }
 }
 
