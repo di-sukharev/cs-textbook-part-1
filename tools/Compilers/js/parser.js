@@ -24,29 +24,49 @@ class Parser {
         return this;
     }
 
-    eat(type, token = null) {
+    eat(type = null, token = null) {
         const { currentToken, next } = this.tokenizer;
 
         if (
             (token != null && currentToken.value != token) ||
-            currentToken.type != type
-        ) {
-            throw Error("Unexpected token: " + currentToken);
-        } else {
-            this.result += createXmlTag({
-                tag: currentToken.type,
-                content: currentToken.value,
-            });
-            next();
-        }
+            (type != null && currentToken.type != type)
+        )
+            throw new Error("Unexpected token: " + currentToken);
 
-        return currentToken.value;
+        this.result += createXmlTag({
+            tag: currentToken.type,
+            content: currentToken.value,
+        });
+
+        next();
     }
 
-    isAtToken(...kws) {
+    tryEat(type, token) {
+        const { currentToken } = this.tokenizer;
+        if (currentToken.value != token || currentToken.type != type)
+            return false;
+
+        this.eat();
+        return true;
+    }
+
+    eatType() {
+        const { currentToken } = this.tokenizer;
+        const allowedTypes = ["int", "char", "boolean", "void"];
+
+        if (
+            this.isAtToken(...allowedTypes) ||
+            currentToken.type === "identifier"
+        )
+            this.eat();
+        else
+            throw new Error("Value type was expected, but got: ", currentToken);
+    }
+
+    isAtToken(...tokens) {
         const { currentToken } = this.tokenizer;
 
-        if (kws.includes(currentToken.value)) return true;
+        if (tokens.includes(currentToken.value)) return true;
         else return false;
     }
 
@@ -59,12 +79,11 @@ class Parser {
         try {
             createOpenXmlTag("class");
             this.eat("keyword", "class");
-            this.eat("identifier"); // className
+            this.eat("identifier");
             this.eat("symbol", "{");
             this.compileClassVarDec();
             this.compileSubroutineDec();
             this.eat("symbol", "}");
-
             createCloseXmlTag("class");
         } catch (e) {
             throw Error("Error in «compile class»: " + e);
@@ -75,7 +94,14 @@ class Parser {
         while (this.isAtToken("static", "field")) {
             createOpenXmlTag("classVarDec");
             this.eat("keyword"); // this should be "static" or "field"
-            this.eat("keyword"); // this should be "static" or "field"
+            this.eatType();
+            this.eat("identifier");
+
+            let hasMore = true;
+            while (hasMore) {
+                this.eat("identifier");
+                hasMore = this.tryEat("symbol", ",");
+            }
 
             this.eat("symbol", ";");
             createCloseXmlTag("classVarDec");
