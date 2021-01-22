@@ -1,4 +1,9 @@
-const { breakLines: br, getTHISorTHAT, getTempAddress } = require("./tools");
+const {
+    breakLines: br,
+    getTHISorTHAT,
+    getTempAddress,
+    increment,
+} = require("./tools");
 
 const SEGMENTS = {
     argument: "ARG",
@@ -6,11 +11,6 @@ const SEGMENTS = {
     this: "THIS",
     that: "THAT",
 };
-
-// todo: move somewhere, rewrite using callback
-let _i = 0;
-const _getI = () => _i++;
-// ---
 
 // todo: move this _genLabel somewhere
 let currentFile = "noFile";
@@ -90,7 +90,7 @@ const writer = {
     sub: () => br`${_SPtoDandGoBack} M=M-D`,
 
     _translateJump: (jmp) => {
-        const continueLabel = `${_genLabel("CONTINUE")}.${_getI()}`;
+        const continueLabel = `${_genLabel("CONTINUE")}.${increment()}`;
 
         const instruction = br`${_SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
 
@@ -111,7 +111,7 @@ const writer = {
     call: (funcName, argsCount) => {
         const segments = ["LCL", "ARG", "THIS", "THAT"];
 
-        const RIP = `${_getFileAndFunction()}$return.${_getI()}`;
+        const RIP = `${_getFileAndFunction()}$return.${increment()}`;
         // save return address to SP
         const pushRIP = br`@${RIP} D=A @SP A=M M=D`;
 
