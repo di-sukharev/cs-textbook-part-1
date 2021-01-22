@@ -5,11 +5,16 @@ const SEGMENTS = {
     that: "THAT",
 };
 
+const advanceSP = "@SP M=M+1 A=M-1 M=D";
+const SPtoD = "@SP AM=M-1 D=M";
+const goBack = "A=A-1";
+const SPtoDandGoBack = `${SPtoD} ${goBack}`;
+
 const INSTRUCTIONS = {
-    advanceSP: "@SP M=M+1 A=M-1 M=D",
-    SPtoD: "@SP AM=M-1 D=M",
-    goBack: "A=A-1",
-    SPtoDandGoBack: `${INSTRUCTIONS.SPtoD} ${INSTRUCTIONS.goBack}`,
+    advanceSP,
+    SPtoD,
+    goBack,
+    SPtoDandGoBack,
 };
 
 module.exports = {
