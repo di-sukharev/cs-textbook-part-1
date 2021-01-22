@@ -31,7 +31,9 @@ class Parser {
             (token != null && currentToken.value != token) ||
             (type != null && currentToken.type != type)
         )
-            throw new Error("Unexpected token: " + currentToken);
+            throw new Error(
+                `Unexpected token: ${currentToken}. Expected: ${type}, ${token}`
+            );
 
         this.result += createXmlTag({
             tag: currentToken.type,
@@ -63,10 +65,10 @@ class Parser {
             throw new Error("Value type was expected, but got: ", currentToken);
     }
 
-    isAtToken(...tokens) {
+    isAtToken(...values) {
         const { currentToken } = this.tokenizer;
 
-        if (tokens.includes(currentToken.value)) return true;
+        if (values.includes(currentToken.value)) return true;
         else return false;
     }
 
@@ -76,26 +78,21 @@ class Parser {
     }
 
     compileClass() {
-        try {
-            createOpenXmlTag("class");
-            this.eat("keyword", "class");
-            this.eat("identifier");
-            this.eat("symbol", "{");
-            this.compileClassVarDec();
-            this.compileSubroutineDec();
-            this.eat("symbol", "}");
-            createCloseXmlTag("class");
-        } catch (e) {
-            throw Error("Error in «compile class»: " + e);
-        }
+        createOpenXmlTag("class");
+        this.eat("keyword", "class");
+        this.eat("identifier");
+        this.eat("symbol", "{");
+        this.compileClassVarDec();
+        this.compileSubroutineDec();
+        this.eat("symbol", "}");
+        createCloseXmlTag("class");
     }
 
     compileClassVarDec() {
         while (this.isAtToken("static", "field")) {
             createOpenXmlTag("classVarDec");
-            this.eat("keyword"); // this should be "static" or "field"
+            this.eat("keyword");
             this.eatType();
-            this.eat("identifier");
 
             let hasMore = true;
             while (hasMore) {
@@ -109,10 +106,124 @@ class Parser {
     }
 
     compileSubroutineDec() {
-        createOpenXmlTag("subroutineDec");
-        // …
-        createCloseXmlTag("subroutineDec");
+        while (this.isAtToken("constructor", "method", "function")) {
+            createOpenXmlTag("subroutineDec");
+            this.eat("keyword");
+            this.eatType();
+            this.eat("identifier");
+            this.eat("symbol", "(");
+            this.compileParameterList();
+            this.eat("symbol", ")");
+            this.compileSubroutineBody();
+            createCloseXmlTag("subroutineDec");
+        }
     }
+
+    compileParameterList() {
+        createOpenXmlTag("parameterList");
+        let hasMore = !this.isAtToken(")");
+        while (hasMore) {
+            this.eatType();
+            this.eat("identifier");
+            hasMore = this.tryEat("symbol", ",");
+        }
+        createCloseXmlTag("parameterList");
+    }
+
+    compileSubroutineBody() {
+        createOpenXmlTag("subroutineBody");
+        this.eat("symbol", "{");
+        this.compileVarDec();
+        this.compileStatements();
+        this.eat("symbol", "}");
+        createCloseXmlTag("subroutineBody");
+    }
+
+    compileVarDec() {
+        while (this.isAtToken("var")) {
+            this.eat("keyword", "var");
+            this.eatType();
+
+            let hasMore = true;
+            while (hasMore) {
+                this.eat("identifier");
+                hasMore = this.tryEat("symbol", ",");
+            }
+        }
+    }
+
+    compileStatements() {
+        let hasMore = true;
+        while (hasMore) {
+            if (this.isAtToken("let")) this.compileLet();
+            else if (this.isAtToken("if")) this.compileIf();
+            else if (this.isAtToken("do")) this.compileDo();
+            else if (this.isAtToken("while")) this.compileWhile();
+            else if (this.isAtToken("return")) this.compileReturn();
+            else hasMore = false;
+        }
+    }
+
+    compileLet() {
+        this.eat("keyword", "let");
+        this.eat("identifier");
+        this.eat("symbol", "=");
+        this.compileExpression();
+        this.eat("symbol", ";");
+    }
+
+    compileIf() {
+        this.eat("keyword", "if");
+        this.eat("symbol", "(");
+        this.compileExpression();
+        this.eat("symbol", ")");
+        this.eat("symbol", "{");
+        this.compileStatements();
+        this.eat("symbol", "}");
+
+        if (this.tryEat("keyword", "else")) {
+            this.eat("symbol", "{");
+            this.compileStatements();
+            this.eat("symbol", "}");
+        }
+    }
+
+    compileDo() {
+        this.eat("keyword", "do");
+        this.eat("identifier");
+        if (this.tryEat("symbol", ".")) this.eat("identifier");
+        this.eat("symbol", "(");
+        this.compileExpressionList();
+        this.eat("symbol", ")");
+    }
+
+    compileWhile() {
+        this.eat("keyword", "while");
+        this.eat("symbol", "(");
+        this.compileExpression();
+        this.eat("symbol", ")");
+        this.eat("symbol", "{");
+        this.compileStatements();
+        this.eat("symbol", "}");
+    }
+
+    compileReturn() {
+        this.eat("keyword", "return");
+        if (!this.tryEat("symbol", ";")) {
+            this.compileExpression();
+            this.eat("symbol", ";");
+        }
+    }
+
+    compileExpressionList() {
+        let hasMore = !this.isAtToken(")");
+        while (hasMore) {
+            this.compileExpression();
+            hasMore = this.tryEat("symbol", ",");
+        }
+    }
+
+    compileExpression() {}
 }
 
 module.exports = Parser;
