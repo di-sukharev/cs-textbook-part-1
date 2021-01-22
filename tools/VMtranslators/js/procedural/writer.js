@@ -19,11 +19,11 @@ const _getFileAndFunction = () => `${currentFile}.${currentFunction}`;
 const _genLabel = (label) => `$${_getFileAndFunction()}$${label}`;
 // ---
 
-const instructions = {
+const INSTRUCTIONS = {
     advanceSP: "@SP M=M+1 A=M-1 M=D",
     SPtoD: "@SP AM=M-1 D=M",
     goBack: "A=A-1",
-    SPtoDandGoBack: `${instructions.SPtoD} ${instructions.goBack}`,
+    SPtoDandGoBack: `${INSTRUCTIONS.SPtoD} ${INSTRUCTIONS.goBack}`,
 };
 
 const increment = counter();
@@ -37,7 +37,7 @@ const writer = {
     },
 
     pop: (segment, value) => {
-        const _moveDtoSP = `@R13 M=D ${instructions.SPtoD} @R13 A=M M=D`;
+        const _moveDtoSP = `@R13 M=D ${INSTRUCTIONS.SPtoD} @R13 A=M M=D`;
 
         const popSegment = (seg, val) =>
             br`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
@@ -62,14 +62,14 @@ const writer = {
     },
 
     push: (segment, value) => {
-        const pushConstant = (val) => br`@${val} D=A ${instructions.advanceSP}`;
+        const pushConstant = (val) => br`@${val} D=A ${INSTRUCTIONS.advanceSP}`;
         const pushSegment = (seg, val) =>
-            br`@${seg} D=M @${val} A=D+A D=M ${instructions.advanceSP}`;
-        const pushTemp = (val) => br`@${val} A=A D=M ${instructions.advanceSP}`;
+            br`@${seg} D=M @${val} A=D+A D=M ${INSTRUCTIONS.advanceSP}`;
+        const pushTemp = (val) => br`@${val} A=A D=M ${INSTRUCTIONS.advanceSP}`;
 
-        const pushPointer = (seg) => br`@${seg} D=M ${instructions.advanceSP}`;
+        const pushPointer = (seg) => br`@${seg} D=M ${INSTRUCTIONS.advanceSP}`;
         const pushStatic = (val) =>
-            br`@${currentFile}.${val} D=M ${instructions.advanceSP}`;
+            br`@${currentFile}.${val} D=M ${INSTRUCTIONS.advanceSP}`;
 
         switch (segment) {
             case "constant":
@@ -88,13 +88,13 @@ const writer = {
         }
     },
 
-    add: () => br`${instructions.SPtoDandGoBack} M=M+D`,
-    sub: () => br`${instructions.SPtoDandGoBack} M=M-D`,
+    add: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=M+D`,
+    sub: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=M-D`,
 
     _translateJump: (jmp) => {
         const continueLabel = `${_genLabel("CONTINUE")}.${increment()}`;
 
-        const instruction = br`${instructions.SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
+        const instruction = br`${INSTRUCTIONS.SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
 
         return instruction;
     },
@@ -103,8 +103,8 @@ const writer = {
     gt: () => writer._translateJump("JGT"),
     neg: () => br`D=0 @SP A=M-1 M=D-M`,
     not: () => br`@SP A=M-1 M=!M`,
-    or: () => br`${instructions.SPtoDandGoBack} M=D|M`,
-    and: () => br`${instructions.SPtoDandGoBack} M=D&M`,
+    or: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=D|M`,
+    and: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=D&M`,
 
     label: (label) => br`(${_genLabel(label)})`,
     goto: (label) => br`@${_genLabel(label)} 0;JMP`,
