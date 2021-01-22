@@ -12,17 +12,17 @@ const getTHISorTHAT = (value) => (value === "0" ? "THIS" : "THAT");
 
 const getTempAddress = (addr) => +addr + 5;
 
-const increment = () => {
+const counter = () => {
     let i = 1;
 
-    const counter = () => i++;
+    const inc = () => i++;
 
-    return counter;
+    return inc;
 };
 
 module.exports = {
     breakLines,
     getTHISorTHAT,
     getTempAddress,
-    increment,
+    counter,
 };

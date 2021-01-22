@@ -2,7 +2,7 @@ const {
     breakLines: br,
     getTHISorTHAT,
     getTempAddress,
-    increment,
+    counter,
 } = require("./tools");
 
 const SEGMENTS = {
@@ -25,6 +25,8 @@ const _SPtoD = "@SP AM=M-1 D=M";
 const _goBack = "A=A-1";
 const _SPtoDandGoBack = `${_SPtoD} ${_goBack}`;
 // ---
+
+const increment = counter();
 
 const writer = {
     init: () => {
