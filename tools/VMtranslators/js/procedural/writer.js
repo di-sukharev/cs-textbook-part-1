@@ -1,30 +1,13 @@
-const {
-    breakLines: br,
-    getTHISorTHAT,
-    getTempAddress,
-    counter,
-} = require("./tools");
+const { INSTRUCTIONS, SEGMENTS } = require("./constants.js");
+const { breakLines: br, counter } = require("./tools.js");
 
-const SEGMENTS = {
-    argument: "ARG",
-    local: "LCL",
-    this: "THIS",
-    that: "THAT",
-};
-
-// todo: move this _genLabel somewhere
 let currentFile = "noFile";
 let currentFunction = "noFunction";
 const _getFileAndFunction = () => `${currentFile}.${currentFunction}`;
 const _genLabel = (label) => `$${_getFileAndFunction()}$${label}`;
-// ---
 
-const INSTRUCTIONS = {
-    advanceSP: "@SP M=M+1 A=M-1 M=D",
-    SPtoD: "@SP AM=M-1 D=M",
-    goBack: "A=A-1",
-    SPtoDandGoBack: `${INSTRUCTIONS.SPtoD} ${INSTRUCTIONS.goBack}`,
-};
+const _getTHISorTHAT = (value) => (value === "0" ? "THIS" : "THAT");
+const _getTempAddress = (addr) => +addr + 5;
 
 const increment = counter();
 
@@ -53,9 +36,9 @@ const writer = {
             case "that":
                 return popSegment(SEGMENTS[segment], value);
             case "temp":
-                return popTemp(getTempAddress(value));
+                return popTemp(_getTempAddress(value));
             case "pointer":
-                return popPointer(getTHISorTHAT(value));
+                return popPointer(_getTHISorTHAT(value));
             case "static":
                 return popStatic(value);
         }
@@ -80,9 +63,9 @@ const writer = {
             case "that":
                 return pushSegment(SEGMENTS[segment], value);
             case "temp":
-                return pushTemp(getTempAddress(value));
+                return pushTemp(_getTempAddress(value));
             case "pointer":
-                return pushPointer(getTHISorTHAT(value));
+                return pushPointer(_getTHISorTHAT(value));
             case "static":
                 return pushStatic(value);
         }
