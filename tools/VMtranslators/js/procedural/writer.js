@@ -1,30 +1,15 @@
-const { breakLines: br, getTHISorTHAT, getTempAddress } = require("./tools");
+const { INSTRUCTIONS, SEGMENTS } = require("./constants.js");
+const { breakLines: br, counter } = require("./tools.js");
 
-const SEGMENTS = {
-    argument: "ARG",
-    local: "LCL",
-    this: "THIS",
-    that: "THAT",
-};
-
-// todo: move somewhere, rewrite using callback
-let _i = 0;
-const _getI = () => _i++;
-// ---
-
-// todo: move this _genLabel somewhere
 let currentFile = "noFile";
 let currentFunction = "noFunction";
 const _getFileAndFunction = () => `${currentFile}.${currentFunction}`;
 const _genLabel = (label) => `$${_getFileAndFunction()}$${label}`;
-// ---
 
-// todo: move this instructions somewhere to tools or else?
-const _advanceSP = "@SP M=M+1 A=M-1 M=D";
-const _SPtoD = "@SP AM=M-1 D=M";
-const _goBack = "A=A-1";
-const _SPtoDandGoBack = `${_SPtoD} ${_goBack}`;
-// ---
+const _getTHISorTHAT = (value) => (value === "0" ? "THIS" : "THAT");
+const _getTempAddress = (addr) => +addr + 5;
+
+const increment = counter();
 
 const writer = {
     init: () => {
@@ -35,7 +20,7 @@ const writer = {
     },
 
     pop: (segment, value) => {
-        const _moveDtoSP = `@R13 M=D ${_SPtoD} @R13 A=M M=D`;
+        const _moveDtoSP = `@R13 M=D ${INSTRUCTIONS.SPtoD} @R13 A=M M=D`;
 
         const popSegment = (seg, val) =>
             br`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
@@ -51,23 +36,23 @@ const writer = {
             case "that":
                 return popSegment(SEGMENTS[segment], value);
             case "temp":
-                return popTemp(getTempAddress(value));
+                return popTemp(_getTempAddress(value));
             case "pointer":
-                return popPointer(getTHISorTHAT(value));
+                return popPointer(_getTHISorTHAT(value));
             case "static":
                 return popStatic(value);
         }
     },
 
     push: (segment, value) => {
-        const pushConstant = (val) => br`@${val} D=A ${_advanceSP}`;
+        const pushConstant = (val) => br`@${val} D=A ${INSTRUCTIONS.advanceSP}`;
         const pushSegment = (seg, val) =>
-            br`@${seg} D=M @${val} A=D+A D=M ${_advanceSP}`;
-        const pushTemp = (val) => br`@${val} A=A D=M ${_advanceSP}`;
+            br`@${seg} D=M @${val} A=D+A D=M ${INSTRUCTIONS.advanceSP}`;
+        const pushTemp = (val) => br`@${val} A=A D=M ${INSTRUCTIONS.advanceSP}`;
 
-        const pushPointer = (seg) => br`@${seg} D=M ${_advanceSP}`;
+        const pushPointer = (seg) => br`@${seg} D=M ${INSTRUCTIONS.advanceSP}`;
         const pushStatic = (val) =>
-            br`@${currentFile}.${val} D=M ${_advanceSP}`;
+            br`@${currentFile}.${val} D=M ${INSTRUCTIONS.advanceSP}`;
 
         switch (segment) {
             case "constant":
@@ -78,21 +63,21 @@ const writer = {
             case "that":
                 return pushSegment(SEGMENTS[segment], value);
             case "temp":
-                return pushTemp(getTempAddress(value));
+                return pushTemp(_getTempAddress(value));
             case "pointer":
-                return pushPointer(getTHISorTHAT(value));
+                return pushPointer(_getTHISorTHAT(value));
             case "static":
                 return pushStatic(value);
         }
     },
 
-    add: () => br`${_SPtoDandGoBack} M=M+D`,
-    sub: () => br`${_SPtoDandGoBack} M=M-D`,
+    add: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=M+D`,
+    sub: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=M-D`,
 
     _translateJump: (jmp) => {
-        const continueLabel = `${_genLabel("CONTINUE")}.${_getI()}`;
+        const continueLabel = `${_genLabel("CONTINUE")}.${increment()}`;
 
-        const instruction = br`${_SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
+        const instruction = br`${INSTRUCTIONS.SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
 
         return instruction;
     },
@@ -101,8 +86,8 @@ const writer = {
     gt: () => writer._translateJump("JGT"),
     neg: () => br`D=0 @SP A=M-1 M=D-M`,
     not: () => br`@SP A=M-1 M=!M`,
-    or: () => br`${_SPtoDandGoBack} M=D|M`,
-    and: () => br`${_SPtoDandGoBack} M=D&M`,
+    or: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=D|M`,
+    and: () => br`${INSTRUCTIONS.SPtoDandGoBack} M=D&M`,
 
     label: (label) => br`(${_genLabel(label)})`,
     goto: (label) => br`@${_genLabel(label)} 0;JMP`,
@@ -111,7 +96,7 @@ const writer = {
     call: (funcName, argsCount) => {
         const segments = ["LCL", "ARG", "THIS", "THAT"];
 
-        const RIP = `${_getFileAndFunction()}$return.${_getI()}`;
+        const RIP = `${_getFileAndFunction()}$return.${increment()}`;
         // save return address to SP
         const pushRIP = br`@${RIP} D=A @SP A=M M=D`;
 
