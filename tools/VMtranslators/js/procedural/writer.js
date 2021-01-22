@@ -19,12 +19,12 @@ const _getFileAndFunction = () => `${currentFile}.${currentFunction}`;
 const _genLabel = (label) => `$${_getFileAndFunction()}$${label}`;
 // ---
 
-// todo: move this instructions somewhere to tools or else?
-const _advanceSP = "@SP M=M+1 A=M-1 M=D";
-const _SPtoD = "@SP AM=M-1 D=M";
-const _goBack = "A=A-1";
-const _SPtoDandGoBack = `${_SPtoD} ${_goBack}`;
-// ---
+const instructions = {
+    advanceSP: "@SP M=M+1 A=M-1 M=D",
+    SPtoD: "@SP AM=M-1 D=M",
+    goBack: "A=A-1",
+    SPtoDandGoBack: `${instructions.SPtoD} ${instructions.goBack}`,
+};
 
 const increment = counter();
 
@@ -37,7 +37,7 @@ const writer = {
     },
 
     pop: (segment, value) => {
-        const _moveDtoSP = `@R13 M=D ${_SPtoD} @R13 A=M M=D`;
+        const _moveDtoSP = `@R13 M=D ${instructions.SPtoD} @R13 A=M M=D`;
 
         const popSegment = (seg, val) =>
             br`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
@@ -62,14 +62,14 @@ const writer = {
     },
 
     push: (segment, value) => {
-        const pushConstant = (val) => br`@${val} D=A ${_advanceSP}`;
+        const pushConstant = (val) => br`@${val} D=A ${instructions.advanceSP}`;
         const pushSegment = (seg, val) =>
-            br`@${seg} D=M @${val} A=D+A D=M ${_advanceSP}`;
-        const pushTemp = (val) => br`@${val} A=A D=M ${_advanceSP}`;
+            br`@${seg} D=M @${val} A=D+A D=M ${instructions.advanceSP}`;
+        const pushTemp = (val) => br`@${val} A=A D=M ${instructions.advanceSP}`;
 
-        const pushPointer = (seg) => br`@${seg} D=M ${_advanceSP}`;
+        const pushPointer = (seg) => br`@${seg} D=M ${instructions.advanceSP}`;
         const pushStatic = (val) =>
-            br`@${currentFile}.${val} D=M ${_advanceSP}`;
+            br`@${currentFile}.${val} D=M ${instructions.advanceSP}`;
 
         switch (segment) {
             case "constant":
@@ -88,13 +88,13 @@ const writer = {
         }
     },
 
-    add: () => br`${_SPtoDandGoBack} M=M+D`,
-    sub: () => br`${_SPtoDandGoBack} M=M-D`,
+    add: () => br`${instructions.SPtoDandGoBack} M=M+D`,
+    sub: () => br`${instructions.SPtoDandGoBack} M=M-D`,
 
     _translateJump: (jmp) => {
         const continueLabel = `${_genLabel("CONTINUE")}.${increment()}`;
 
-        const instruction = br`${_SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
+        const instruction = br`${instructions.SPtoDandGoBack} D=M-D M=-1 @${continueLabel} D;${jmp} @SP A=M-1 M=0 (${continueLabel})`;
 
         return instruction;
     },
@@ -103,8 +103,8 @@ const writer = {
     gt: () => writer._translateJump("JGT"),
     neg: () => br`D=0 @SP A=M-1 M=D-M`,
     not: () => br`@SP A=M-1 M=!M`,
-    or: () => br`${_SPtoDandGoBack} M=D|M`,
-    and: () => br`${_SPtoDandGoBack} M=D&M`,
+    or: () => br`${instructions.SPtoDandGoBack} M=D|M`,
+    and: () => br`${instructions.SPtoDandGoBack} M=D&M`,
 
     label: (label) => br`(${_genLabel(label)})`,
     goto: (label) => br`@${_genLabel(label)} 0;JMP`,
