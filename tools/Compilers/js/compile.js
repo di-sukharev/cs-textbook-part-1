@@ -5,7 +5,7 @@ const Parser = require("./parser.js");
 function compileDirectory(inputDirectoryName) {
     const isJackFile = (fileName) => fileName.endsWith(".jack");
 
-    const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
+    const [outputFileName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
     fs.readdirSync(inputDirectoryName)
         .filter(isJackFile)
@@ -18,7 +18,7 @@ function compileDirectory(inputDirectoryName) {
             let xmlFile = compileFile(jackSourceCode);
 
             fs.writeFileSync(
-                `${inputDirectoryName}/${targetDirectoryName}.xml`,
+                `${inputDirectoryName}/${outputFileName}.xml`,
                 xmlFile
             );
         });
@@ -29,19 +29,9 @@ function compileFile(jackSourceCode) {
 
     const parser = new Parser(tokenizer);
 
-    const vmFile = parser.compile();
+    const compiledCode = parser.compile();
 
-    return vmFile;
+    return compiledCode;
 }
-
-// function jack2vm(jackInstruction) {
-//     let asmInstructions = `\n// ${jackInstruction}\n`;
-
-//     const [operation, arg1, arg2] = jackInstruction.split(" ");
-
-//     asmInstructions += writer[operation](arg1, arg2);
-
-//     return asmInstructions;
-// }
 
 module.exports = compileDirectory;

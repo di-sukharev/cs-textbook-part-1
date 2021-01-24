@@ -1,30 +1,33 @@
 /* eslint-disable no-useless-escape */
 
 class Tokenizer {
+    iterator = 0;
+
     constructor(jackSourceCode) {
         const tokens = this._tokenize(jackSourceCode);
 
-        this.iterator = 0;
         this.tokens = tokens;
         this.currentToken = tokens[this.iterator];
+        this.nextToken = tokens[this.iterator + 1];
 
         return this;
     }
 
     next() {
         this.iterator++;
-        this.token = this.tokens[this.iterator];
+        this.currentToken = this.tokens[this.iterator];
+        this.nextToken = this.tokens[this.iterator + 1];
     }
 
     _tokenize(jackSourceCode) {
-        const comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
-            whitespace = "(?<whitespace>\\s+)",
-            keywords =
+        const keywords =
                 "(?<keyword>class|constructor|function|method|field|static|var|int|char|boolean|void|true|false|null|this|let|do|if|else|while|return)",
             symbols = "(?<symbol>[{}()\\[\\]\\.;,&\\+\\-\\*\\/|<>=~])",
-            integers = "(?<integer>\\d+)",
             identifiers = "(?<identifier>\\w+)",
+            integers = "(?<integerConstant>\\d+)",
             strings = '(?:\\"(?<stringConstant>[^\\"]*?)\\")',
+            comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
+            whitespace = "(?<whitespace>\\s+)",
             unknown = "(?<unknown>.)",
             pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${identifiers}|${strings}|${unknown}`,
             regex = new RegExp(pattern, "gys");
@@ -38,18 +41,22 @@ class Tokenizer {
 
             const tokenType = keys.find((key) => Boolean(groups[key]));
 
-            // TODO: if any unknown symbol in code -> throw Error("Unknown symbol: ", symbol)
-
-            return {
+            const token = {
                 type: tokenType,
                 value: groups[tokenType],
                 position: match.index,
             };
+
+            if (token.type === "unknown")
+                throw new Error("Unknown token:", token);
+
+            return token;
         });
 
-        // TODO: filter comments and empty lines
+        const noWhitespaceOrComments = (tkn) =>
+            tkn.type != "whitespace" && tkn.type != "comment";
 
-        return tokens;
+        return tokens.filter(noWhitespaceOrComments);
     }
 }
 
