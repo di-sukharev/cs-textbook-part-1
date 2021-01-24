@@ -6,7 +6,7 @@ function translateDirectory(inputDirectoryName) {
 
     let assemblyFile = writer.init() + "\n";
 
-    const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
+    const [outputFileName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
     fs.readdirSync(inputDirectoryName)
         .filter(isVmFile)
@@ -20,7 +20,7 @@ function translateDirectory(inputDirectoryName) {
         });
 
     fs.writeFileSync(
-        `${inputDirectoryName}/${targetDirectoryName}.asm`,
+        `${inputDirectoryName}/${outputFileName}.asm`,
         assemblyFile
     );
 }
