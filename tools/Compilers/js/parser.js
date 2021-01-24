@@ -68,7 +68,7 @@ class Parser {
     isAtToken(...values) {
         const { currentToken } = this.tokenizer;
 
-        if (values.includes(currentToken.value)) return true;
+        if (values.includes(currentToken.value || currentToken.type)) return true;
         else return false;
     }
 
@@ -223,7 +223,20 @@ class Parser {
         }
     }
 
-    compileExpression() {}
+    compileExpression() {
+        let hasMore = true;
+        if (hasMore) {
+            this.compileTerm();
+            if (this.isAtToken("+","-","*","/","&","|","<",">","=")) 
+                this.eat() 
+            else hasMore=false;
+        }
+    }
+
+    compileTerm() {
+        
+
+    }
 }
 
 module.exports = Parser;
