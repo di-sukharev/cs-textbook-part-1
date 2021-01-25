@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const writer = require("./writer.js");
 
 function translateDirectory(inputDirectoryName) {
@@ -6,7 +7,7 @@ function translateDirectory(inputDirectoryName) {
 
     let assemblyFile = writer.init() + "\n";
 
-    const [outputFileName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
+    const outputFileName = path.basename(inputDirectoryName);
 
     fs.readdirSync(inputDirectoryName)
         .filter(isVmFile)
