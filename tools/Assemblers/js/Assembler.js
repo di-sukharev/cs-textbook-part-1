@@ -92,7 +92,7 @@ class Assembler {
         if (instruction.includes("@")) return INSTRUCTIONS.A;
         else if (instruction.startsWith("(") && instruction.endsWith(")"))
             return INSTRUCTIONS.L;
-        else return INSTRUCTIONS.C;
+        else return INSTRUCTIONS.C; // todo: add if statement predicate
     }
 
     _translateA(instruction) {
