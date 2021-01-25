@@ -317,8 +317,6 @@ class Parser {
     compileTerm() {
         this.openXmlTag("term");
 
-        console.log(this.tokenizer.currentToken, "compileTerm");
-
         if (this.isAtToken("integerConstant")) {
             this.eat("integerConstant");
         } else if (this.isAtToken("stringConstant")) {

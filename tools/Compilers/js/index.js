@@ -13,6 +13,7 @@ compileDirectory(inputDirectoryName);
 const finished = performance.now();
 
 console.log(
-    `Translated .jack to .vm 🌞 took ${(finished - started).toFixed(2)} ms`
+    `Compiled .jack to .vm 🌞 took ${(finished - started).toFixed(2)} ms`
 );
+
 console.log(graffiti);
