@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const Assembler = require("./Assembler.js");
 const { performance } = require("perf_hooks");
 
@@ -8,7 +9,7 @@ const [
     // eslint-disable-next-line no-unused-vars
     thisFilePath,
     inputFile,
-    outputFile = `${/.*(?=\.asm)/i.exec(inputFile)}.hack`,
+    outputFile = path.basename(inputFile, path.extname(inputFile)) + ".hack",
 ] = process.argv;
 
 console.info("args: ", { inputFile, outputFile });
@@ -23,7 +24,7 @@ console.info("Started assembling ⏳");
 const started = performance.now();
 const assembly = fs.readFileSync(inputFile, "utf8");
 const binary = assembler.assemble(assembly);
-fs.writeFileSync(outputFile, binary);
+fs.writeFileSync(`${path.dirname(inputFile)}/${outputFile}`, binary);
 const finished = performance.now();
 
 console.info(
