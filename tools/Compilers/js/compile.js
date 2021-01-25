@@ -1,11 +1,10 @@
 const fs = require("fs");
+const path = require("path");
 const Tokenizer = require("./tokenizer.js");
 const Parser = require("./parser.js");
 
 function compileDirectory(inputDirectoryName) {
     const isJackFile = (fileName) => fileName.endsWith(".jack");
-
-    const [outputFileName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
     fs.readdirSync(inputDirectoryName)
         .filter(isJackFile)
@@ -17,8 +16,11 @@ function compileDirectory(inputDirectoryName) {
 
             let xmlFile = compileFile(jackSourceCode);
 
+            const extension = path.extname(fileName);
+            const file = path.basename(fileName, extension);
+
             fs.writeFileSync(
-                `${inputDirectoryName}/${outputFileName}.xml`,
+                `${inputDirectoryName}/${file}.example.xml`,
                 xmlFile
             );
         });
