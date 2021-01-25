@@ -7,12 +7,12 @@ const [nodeExecPath, thisFilePath, inputDirectoryName] = process.argv;
 
 console.log("args: ", { inputDirectoryName });
 
-console.info("Translating ⏳");
+console.log("Translating ⏳");
 const started = performance.now();
 compileDirectory(inputDirectoryName);
 const finished = performance.now();
 
-console.info(
+console.log(
     `Translated .jack to .vm 🌞 took ${(finished - started).toFixed(2)} ms`
 );
 console.log(graffiti);

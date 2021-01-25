@@ -9,10 +9,10 @@ console.log("args: ", { inputDirectoryName });
 
 const translator = new VMtranslator();
 
-console.info("Translating ⏳");
+console.log("Translating ⏳");
 const started = performance.now();
 translator.translate(inputDirectoryName);
 const finished = performance.now();
 
-console.info(`Translated 🌞 took ${(finished - started).toFixed(2)} ms`);
+console.log(`Translated 🌞 took ${(finished - started).toFixed(2)} ms`);
 console.log(graffiti);
