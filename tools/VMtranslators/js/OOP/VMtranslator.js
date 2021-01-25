@@ -13,7 +13,7 @@ class VMtranslator {
 
         let assemblyFile = this.writer.init() + "\n";
 
-        const [targetDirectoryName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
+        const [outputFileName] = inputDirectoryName.match(/[^/]+(?=\/$)/);
 
         fs.readdirSync(inputDirectoryName)
             .filter(isVmFile)
@@ -27,7 +27,7 @@ class VMtranslator {
             });
 
         fs.writeFileSync(
-            `${inputDirectoryName}/${targetDirectoryName}.asm`,
+            `${inputDirectoryName}/${outputFileName}.asm`,
             assemblyFile
         );
     }

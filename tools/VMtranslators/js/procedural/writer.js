@@ -24,9 +24,11 @@ const writer = {
 
         const popSegment = (seg, val) =>
             br`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
+
         const popTemp = (val) => br`@${val} D=A ${_moveDtoSP}`;
 
         const popPointer = (seg) => br`@${seg} D=A ${_moveDtoSP}`;
+
         const popStatic = (val) => br`@${currentFile}.${val} D=A ${_moveDtoSP}`;
 
         switch (segment) {

@@ -90,8 +90,9 @@ class Assembler {
 
     getType(instruction) {
         if (instruction.includes("@")) return INSTRUCTIONS.A;
-        else if (instruction.includes("(")) return INSTRUCTIONS.L;
-        else return INSTRUCTIONS.C;
+        else if (instruction.startsWith("(") && instruction.endsWith(")"))
+            return INSTRUCTIONS.L;
+        else return INSTRUCTIONS.C; // todo: add if statement predicate
     }
 
     _translateA(instruction) {
