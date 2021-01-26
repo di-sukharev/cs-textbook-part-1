@@ -37,8 +37,6 @@ class Assembler {
         THAT: 4,
     };
 
-    LABELS = {};
-
     constructor() {
         return this;
     }
@@ -49,36 +47,41 @@ class Assembler {
                 ? line.slice(0, line.indexOf("//"))
                 : line
             ).trim();
-        const noWhitespaces = (line) => !!line;
+        const noWhitespaces = (line) => Boolean(line);
+        const noLabels = (line) => this._getType(line) !== INSTRUCTIONS.L;
         const inLines = "\r\n";
 
-        const asmCode = asmFile.split(inLines);
+        const asmCode = asmFile
+            .split(inLines)
+            .map(noComments)
+            .filter(noWhitespaces);
 
-        asmCode.forEach(this._initAndRemoveLabels);
+        asmCode.forEach(this._initLabels.bind(this));
 
-        const asmCodeFiltered = asmCode.map(noComments).filter(noWhitespaces);
-
-        const hackCode = asmCodeFiltered.map(this._asmToBin).join(inLines);
+        const hackCode = asmCode
+            .filter(noLabels)
+            .map(this._asm2bin.bind(this))
+            .join(inLines);
 
         return hackCode;
     }
 
-    _initAndRemoveLabels(instruction) {
-        let lineNumber = 0;
+    LABELS = {};
+    labelLineNumber = 0;
+    _initLabels(instruction) {
         if (
             this._getType(instruction) === INSTRUCTIONS.A ||
             this._getType(instruction) === INSTRUCTIONS.C
         )
-            lineNumber++;
-        else {
+            this.labelLineNumber++;
+        else if (this._getType(instruction) === INSTRUCTIONS.L) {
             // eslint-disable-next-line no-unused-vars
             const [_, value] = instruction.match(/\((.*)\)/i); // todo: don't use regexp
-
-            this.LABELS[value] = lineNumber;
+            if (!this.LABELS[value]) this.LABELS[value] = this.labelLineNumber;
         }
     }
 
-    _asmToBin(instruction) {
+    _asm2bin(instruction) {
         switch (this._getType(instruction)) {
             case INSTRUCTIONS.A:
                 return this._translateA(instruction);
@@ -91,7 +94,8 @@ class Assembler {
         if (instruction.includes("@")) return INSTRUCTIONS.A;
         else if (instruction.startsWith("(") && instruction.endsWith(")"))
             return INSTRUCTIONS.L;
-        else return INSTRUCTIONS.C; // todo: add if statement predicate
+        else if (instruction.match(/A?M?D?=/) || instruction.match(/;J/))
+            return INSTRUCTIONS.C; // todo: add strong if statement predicate
     }
 
     _translateA(instruction) {
@@ -116,17 +120,19 @@ class Assembler {
     }
 
     _getLabel(value) {
-        return this.LABELS[value] !== undefined && this.LABELS[value];
+        return this.LABELS[value] !== undefined && String(this.LABELS[value]);
     }
 
     _getVariable(value) {
-        return this.VARIABLES[value] !== undefined && this.VARIABLES[value];
+        return (
+            this.VARIABLES[value] !== undefined && String(this.VARIABLES[value])
+        );
     }
 
     _initVariable(value) {
         this.VARIABLES[value] = this.freeVariableAddress;
         this.freeVariableAddress++;
-        return this.VARIABLES[value];
+        return String(this.VARIABLES[value]);
     }
 
     _translateC(instruction) {
