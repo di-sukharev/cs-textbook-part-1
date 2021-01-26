@@ -1,7 +1,7 @@
 /* 
 Parsing process
     1. start reading file with the first token
-    2. run compile_class
+    2. run compileClass as a first method and entry point
     3. first token should be "class keyword"
 */
 
@@ -97,16 +97,7 @@ class Parser {
             currentToken.type === "identifier"
         )
             this.eat();
-        else
-            throw new Error("Value type was expected, but got: ", currentToken);
-    }
-
-    isNextToken(...values) {
-        const { nextToken } = this.tokenizer;
-
-        if (values.includes(nextToken.type) || values.includes(nextToken.value))
-            return true;
-        else return false;
+        else throw new Error("Type was expected, but got: ", ...currentToken);
     }
 
     compileClass() {
@@ -317,8 +308,6 @@ class Parser {
     compileTerm() {
         this.openXmlTag("term");
 
-        console.log(this.tokenizer.currentToken, "compileTerm");
-
         if (this.isAtToken("integerConstant")) {
             this.eat("integerConstant");
         } else if (this.isAtToken("stringConstant")) {
@@ -327,7 +316,6 @@ class Parser {
             this.eat("keyword");
         } else if (this.isAtToken("identifier")) {
             this.eat("identifier");
-
             if (this.isAtToken(".")) {
                 this.eat("symbol", ".");
                 this.eat("identifier");
@@ -342,8 +330,6 @@ class Parser {
                 this.eat("symbol", "[");
                 this.compileExpression();
                 this.eat("symbol", "]");
-            } else {
-                // wrong identifier can be written, need to handle this
             }
         } else if (this.isAtToken("symbol")) {
             if (this.isAtToken("(")) {
@@ -353,8 +339,9 @@ class Parser {
             } else if (this.isAtToken("-", "~")) {
                 this.eat("symbol");
                 this.compileTerm();
-            } else throw new Error("Error in compileTerm: wrong symbol");
-        } else throw new Error("Error in compileTerm: wrong everything");
+            } else
+                throw new Error("Error in term compilation. Unexpected symbol");
+        } else throw new Error("Error in term compilation. Unexpected term");
 
         this.closeXmlTag("term");
     }
