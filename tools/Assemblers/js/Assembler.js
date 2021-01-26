@@ -37,8 +37,6 @@ class Assembler {
         THAT: 4,
     };
 
-    labelsCount = 0;
-
     LABELS = {};
 
     constructor() {
@@ -104,18 +102,24 @@ class Assembler {
         let value = getValueOfInstructionA(instruction);
 
         const isLabelOrVariable = value.match(/\D+/i);
-        //todo: refactor this scary ternary ???
+
         if (isLabelOrVariable)
             value =
-                this.LABELS[value] !== undefined
-                    ? this.LABELS[value]
-                    : this.VARIABLES[value] !== undefined
-                    ? this.VARIABLES[value]
-                    : this._initVariable(value);
+                this._getLabel(value) ||
+                this._getVariable(value) ||
+                this._initVariable(value);
 
         const hack = `0${fillWith15Bits(decToBin(value))}`;
 
         return hack;
+    }
+
+    _getLabel(value) {
+        return this.LABELS[value] != undefined && this.LABELS[value];
+    }
+
+    _getVariable(value) {
+        return this.VARIABLES[value] != undefined && this.VARIABLES[value];
     }
 
     _initVariable(value) {
