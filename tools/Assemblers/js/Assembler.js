@@ -43,42 +43,39 @@ class Assembler {
         return this;
     }
 
-    assemble(file) {
-        const removeComments = (line) =>
+    assemble(asmFile) {
+        const noComments = (line) =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
                 : line
             ).trim();
-        const removeWhitespaces = (line) => !!line;
-        const intoLines = "\r\n";
-        const inFile = "\n";
+        const noWhitespaces = (line) => !!line;
+        const inLines = "\r\n";
 
-        const result = file
-            .split(intoLines)
-            .map(removeComments)
-            .filter(removeWhitespaces)
-            .filter(this._initAndRemoveLabels.bind(this))
-            .map(this._asmToBin.bind(this))
-            .join(inFile);
+        const asmCode = asmFile.split(inLines);
 
-        return result;
+        asmCode.forEach(this._initAndRemoveLabels);
+
+        const asmCodeFiltered = asmCode.map(noComments).filter(noWhitespaces);
+
+        const hackCode = asmCodeFiltered.map(this._asmToBin).join(inLines);
+
+        return hackCode;
     }
 
-    _initAndRemoveLabels(instruction, lineNumber) {
-        if (this.getType(instruction) !== INSTRUCTIONS.L) return true;
+    _initAndRemoveLabels(instruction) {
+        let lineNumber = 0;
+        if (this._getType(instruction) !== INSTRUCTIONS.L) lineNumber++;
+        else {
+            // eslint-disable-next-line no-unused-vars
+            const [_, value] = instruction.match(/\((.*)\)/i); // todo: don't use regexp
 
-        // eslint-disable-next-line no-unused-vars
-        const [_, value] = instruction.match(/\((.*)\)/i);
-
-        this.LABELS[value] = lineNumber - this.labelsCount;
-
-        this.labelsCount++;
-
-        return false;
+            this.LABELS[value] = lineNumber;
+        }
     }
 
     _asmToBin(instruction) {
-        switch (this.getType(instruction)) {
+        switch (this._getType(instruction)) {
             case INSTRUCTIONS.A:
                 return this._translateA(instruction);
             case INSTRUCTIONS.C:
@@ -86,7 +83,7 @@ class Assembler {
         }
     }
 
-    getType(instruction) {
+    _getType(instruction) {
         if (instruction.includes("@")) return INSTRUCTIONS.A;
         else if (instruction.startsWith("(") && instruction.endsWith(")"))
             return INSTRUCTIONS.L;
@@ -115,11 +112,11 @@ class Assembler {
     }
 
     _getLabel(value) {
-        return this.LABELS[value] != undefined && this.LABELS[value];
+        return this.LABELS[value] !== undefined && this.LABELS[value];
     }
 
     _getVariable(value) {
-        return this.VARIABLES[value] != undefined && this.VARIABLES[value];
+        return this.VARIABLES[value] !== undefined && this.VARIABLES[value];
     }
 
     _initVariable(value) {
