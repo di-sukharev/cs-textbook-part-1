@@ -65,7 +65,11 @@ class Assembler {
 
     _initAndRemoveLabels(instruction) {
         let lineNumber = 0;
-        if (this._getType(instruction) !== INSTRUCTIONS.L) lineNumber++;
+        if (
+            this._getType(instruction) === INSTRUCTIONS.A ||
+            this._getType(instruction) === INSTRUCTIONS.C
+        )
+            lineNumber++;
         else {
             // eslint-disable-next-line no-unused-vars
             const [_, value] = instruction.match(/\((.*)\)/i); // todo: don't use regexp

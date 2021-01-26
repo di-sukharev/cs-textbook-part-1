@@ -17,12 +17,11 @@ console.log("args: ", { inputFile, outputFile });
 if (!inputFile.endsWith(".asm"))
     throw new Error("Only .asm file can be assembled into .hack");
 
-const assembler = new Assembler();
-
 console.log("Started assembling ⏳");
 
 const started = performance.now();
 
+const assembler = new Assembler();
 const assembly = fs.readFileSync(inputFile, "utf8");
 const binary = assembler.assemble(assembly);
 fs.writeFileSync(`${path.dirname(inputFile)}/${outputFile}`, binary);
