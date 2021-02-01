@@ -1,8 +1,11 @@
-//initialization-start
+// initialization-start
+
+// init @SP
 @256
 D=A
 @SP
 M=D
+// call Sys.init 0
 @noFunction$return.0
 D=A
 @SP
@@ -41,10 +44,11 @@ M=D
 @Sys.init
 0;JMP
 (noFunction$return.0)
+// endless loop
 (endlessloop)
 @endlessloop
 0;JMP
-//initialization-end
+// initialization-end
 
 // function Sys.init 0
 (Sys.init)
