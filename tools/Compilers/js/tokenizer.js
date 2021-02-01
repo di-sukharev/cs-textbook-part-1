@@ -27,7 +27,7 @@ class Tokenizer {
             comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
             whitespace = "(?<whitespace>\\s+)",
             unknown = "(?<unknown>.)",
-            pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${identifiers}|${strings}|${unknown}`,
+            pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${strings}|${identifiers}|${unknown}`,
             regex = new RegExp(pattern, "gys");
 
         const matches = jackSourceCode.matchAll(regex);
