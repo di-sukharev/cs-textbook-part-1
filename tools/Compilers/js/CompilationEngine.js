@@ -48,6 +48,8 @@ class CompilationEngine {
         });
 
         this.tokenizer.next();
+
+        return currentToken.value;
     }
 
     tryEat(type = null, token = null) {
@@ -83,7 +85,7 @@ class CompilationEngine {
             this.isAtToken(...allowedTypes) ||
             currentToken.type === "identifier"
         )
-            this.eat();
+            return this.eat();
         else throw new Error("Type was expected, but got: ", ...currentToken);
     }
 
@@ -101,16 +103,17 @@ class CompilationEngine {
     }
 
     compileClassVarDec() {
-        // todo: create here new "class level SymbolTable"
         while (this.isAtToken("static", "field")) {
             this.syntaxAnalyzer.openXmlTag("classVarDec");
 
-            this.eat("keyword");
-            this.eatType();
+            const kind = this.eat("keyword");
+            const type = this.eatType();
             let hasMore = true;
             while (hasMore) {
-                this.eat("identifier");
+                const name = this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
+
+                this.symbolTable.define({ kind, type, name });
             }
             this.eat("symbol", ";");
 
@@ -120,8 +123,9 @@ class CompilationEngine {
 
     compileSubroutineDec() {
         while (this.isAtToken("constructor", "method", "function")) {
-            // todo: create here new "subroutine level SymbolTable"
             this.syntaxAnalyzer.openXmlTag("subroutineDec");
+
+            this.symbolTable.clearSubroutine();
 
             this.eat("keyword");
             this.eatType();
@@ -140,9 +144,11 @@ class CompilationEngine {
 
         let hasMore = !this.isAtToken(")");
         while (hasMore) {
-            this.eatType();
-            this.eat("identifier");
+            const type = this.eatType();
+            const name = this.eat("identifier");
             hasMore = this.tryEat("symbol", ",");
+
+            this.symbolTable.define({ kind: "arg", type, name });
         }
 
         this.syntaxAnalyzer.closeXmlTag("parameterList");
@@ -164,11 +170,13 @@ class CompilationEngine {
             this.syntaxAnalyzer.openXmlTag("varDec");
 
             this.eat("keyword", "var");
-            this.eatType();
+            const type = this.eatType();
             let hasMore = true;
             while (hasMore) {
-                this.eat("identifier");
+                const name = this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
+
+                this.symbolTable.define({ kind: "var", type, name });
             }
             this.eat("symbol", ";");
 

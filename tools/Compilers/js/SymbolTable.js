@@ -8,7 +8,9 @@ class SymbolTable {
 
     define({ kind, type, name }) {
         if (this.classScope[name] || this.subroutineScope[name])
-            throw new Error("Variable already exists:", kind, type, name);
+            throw new Error(
+                `Duplicated variable — kind: ${kind}, type: ${type}, name: ${name}`
+            );
 
         switch (kind) {
             case "static":
@@ -28,7 +30,9 @@ class SymbolTable {
                 };
                 break;
             default:
-                throw Error("Unknown identifier kind:", kind, type, name);
+                throw Error(
+                    `Unknown identifier — kind: ${kind}, type: ${type}, name: ${name}`
+                );
         }
     }
 
