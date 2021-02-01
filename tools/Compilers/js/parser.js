@@ -5,39 +5,25 @@ Parsing process
     3. first token should be "class keyword"
 */
 
-const createOpenXmlTag = (tag) => `<${tag}>`;
-
-const createCloseXmlTag = (tag) => `</${tag}>`;
-
-function createXmlTag({ tag, content }) {
-    if (content === "<") content = "&lt;";
-    if (content === ">") content = "&gt;";
-
-    return (
-        `${createOpenXmlTag(tag)} ${content} ${createCloseXmlTag(tag)}` + "\n"
-    );
-}
+const SymbolTable = require("./SymbolTable");
+const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 
 class Parser {
-    xml = "";
-
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
+        this.syntaxAnalyzer = new SyntaxAnalyzer();
+        this.symbolTable = new SymbolTable();
 
         return this;
     }
 
-    openXmlTag(tag) {
-        this.xml += createOpenXmlTag(tag);
-    }
-
-    closeXmlTag(tag) {
-        this.xml += createCloseXmlTag(tag);
-    }
-
     compile() {
         this.compileClass();
-        return this.xml;
+
+        return {
+            xmlCode: this.syntaxAnalyzer.XML,
+            // vmCode: this.writer.VM,
+        };
     }
 
     eat(type = null, token = null) {
@@ -53,13 +39,15 @@ class Parser {
                 Position: «${currentToken.position}»
                 Expected: «${token || ""}» of type «${type || ""}»
                 XML:
-                ${this.xml}`
+                ${this.syntaxAnalyzer.XML}`
             );
 
-        this.xml += createXmlTag({
+        this.syntaxAnalyzer.createXmlTag({
             tag: currentToken.type,
             content: currentToken.value,
         });
+
+        // this.vmCode += writer[currentToken.type][currentToken.value];
 
         this.tokenizer.next();
     }
@@ -101,7 +89,7 @@ class Parser {
     }
 
     compileClass() {
-        this.openXmlTag("class");
+        this.syntaxAnalyzer.openXmlTag("class");
 
         this.eat("keyword", "class");
         this.eat("identifier");
@@ -110,31 +98,31 @@ class Parser {
         this.compileSubroutineDec();
         this.eat("symbol", "}");
 
-        this.closeXmlTag("class");
+        this.syntaxAnalyzer.closeXmlTag("class");
     }
 
     compileClassVarDec() {
+        // todo: create here new "class level SymbolTable"
         while (this.isAtToken("static", "field")) {
-            this.openXmlTag("classVarDec");
+            this.syntaxAnalyzer.openXmlTag("classVarDec");
 
             this.eat("keyword");
             this.eatType();
-
             let hasMore = true;
             while (hasMore) {
                 this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
             }
-
             this.eat("symbol", ";");
 
-            this.closeXmlTag("classVarDec");
+            this.syntaxAnalyzer.closeXmlTag("classVarDec");
         }
     }
 
     compileSubroutineDec() {
         while (this.isAtToken("constructor", "method", "function")) {
-            this.openXmlTag("subroutineDec");
+            // todo: create here new "subroutine level SymbolTable"
+            this.syntaxAnalyzer.openXmlTag("subroutineDec");
 
             this.eat("keyword");
             this.eatType();
@@ -144,12 +132,12 @@ class Parser {
             this.eat("symbol", ")");
             this.compileSubroutineBody();
 
-            this.closeXmlTag("subroutineDec");
+            this.syntaxAnalyzer.closeXmlTag("subroutineDec");
         }
     }
 
     compileParameterList() {
-        this.openXmlTag("parameterList");
+        this.syntaxAnalyzer.openXmlTag("parameterList");
 
         let hasMore = !this.isAtToken(")");
         while (hasMore) {
@@ -158,41 +146,40 @@ class Parser {
             hasMore = this.tryEat("symbol", ",");
         }
 
-        this.closeXmlTag("parameterList");
+        this.syntaxAnalyzer.closeXmlTag("parameterList");
     }
 
     compileSubroutineBody() {
-        this.openXmlTag("subroutineBody");
+        this.syntaxAnalyzer.openXmlTag("subroutineBody");
 
         this.eat("symbol", "{");
         this.compileVarDec();
         this.compileStatements();
         this.eat("symbol", "}");
 
-        this.closeXmlTag("subroutineBody");
+        this.syntaxAnalyzer.closeXmlTag("subroutineBody");
     }
 
     compileVarDec() {
         while (this.isAtToken("var")) {
-            this.openXmlTag("varDec");
+            this.syntaxAnalyzer.openXmlTag("varDec");
 
             this.eat("keyword", "var");
             this.eatType();
-
             let hasMore = true;
             while (hasMore) {
                 this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
             }
-
             this.eat("symbol", ";");
 
-            this.closeXmlTag("varDec");
+            this.syntaxAnalyzer.closeXmlTag("varDec");
         }
     }
 
     compileStatements() {
-        this.openXmlTag("statements");
+        this.syntaxAnalyzer.openXmlTag("statements");
+
         let hasMore = true;
         while (hasMore) {
             if (this.isAtToken("let")) this.compileLet();
@@ -202,11 +189,12 @@ class Parser {
             else if (this.isAtToken("return")) this.compileReturn();
             else hasMore = false;
         }
-        this.closeXmlTag("statements");
+
+        this.syntaxAnalyzer.closeXmlTag("statements");
     }
 
     compileLet() {
-        this.openXmlTag("letStatement");
+        this.syntaxAnalyzer.openXmlTag("letStatement");
 
         this.eat("keyword", "let");
         this.eat("identifier");
@@ -218,11 +206,11 @@ class Parser {
         this.compileExpression();
         this.eat("symbol", ";");
 
-        this.closeXmlTag("letStatement");
+        this.syntaxAnalyzer.closeXmlTag("letStatement");
     }
 
     compileIf() {
-        this.openXmlTag("ifStatement");
+        this.syntaxAnalyzer.openXmlTag("ifStatement");
 
         this.eat("keyword", "if");
         this.eat("symbol", "(");
@@ -238,11 +226,11 @@ class Parser {
             this.eat("symbol", "}");
         }
 
-        this.closeXmlTag("ifStatement");
+        this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
 
     compileDo() {
-        this.openXmlTag("doStatement");
+        this.syntaxAnalyzer.openXmlTag("doStatement");
 
         this.eat("keyword", "do");
         this.eat("identifier");
@@ -252,11 +240,11 @@ class Parser {
         this.eat("symbol", ")");
         this.eat("symbol", ";");
 
-        this.closeXmlTag("doStatement");
+        this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
 
     compileWhile() {
-        this.openXmlTag("whileStatement");
+        this.syntaxAnalyzer.openXmlTag("whileStatement");
 
         this.eat("keyword", "while");
         this.eat("symbol", "(");
@@ -266,23 +254,21 @@ class Parser {
         this.compileStatements();
         this.eat("symbol", "}");
 
-        this.closeXmlTag("whileStatement");
+        this.syntaxAnalyzer.closeXmlTag("whileStatement");
     }
 
     compileReturn() {
-        this.openXmlTag("returnStatement");
+        this.syntaxAnalyzer.openXmlTag("returnStatement");
 
         this.eat("keyword", "return");
-        if (!this.isAtToken("symbol", ";")) {
-            this.compileExpression();
-        }
+        if (!this.isAtToken("symbol", ";")) this.compileExpression();
         this.eat("symbol", ";");
 
-        this.closeXmlTag("returnStatement");
+        this.syntaxAnalyzer.closeXmlTag("returnStatement");
     }
 
     compileExpressionList() {
-        this.openXmlTag("expressionList");
+        this.syntaxAnalyzer.openXmlTag("expressionList");
 
         let hasMore = !this.isAtToken(")");
         while (hasMore) {
@@ -290,11 +276,12 @@ class Parser {
             hasMore = this.tryEat("symbol", ",");
         }
 
-        this.closeXmlTag("expressionList");
+        this.syntaxAnalyzer.closeXmlTag("expressionList");
     }
 
     compileExpression() {
-        this.openXmlTag("expression");
+        this.syntaxAnalyzer.openXmlTag("expression");
+
         let hasMore = true;
         while (hasMore) {
             this.compileTerm();
@@ -302,11 +289,12 @@ class Parser {
                 this.eat();
             else hasMore = false;
         }
-        this.closeXmlTag("expression");
+
+        this.syntaxAnalyzer.closeXmlTag("expression");
     }
 
     compileTerm() {
-        this.openXmlTag("term");
+        this.syntaxAnalyzer.openXmlTag("term");
 
         if (this.isAtToken("integerConstant")) {
             this.eat("integerConstant");
@@ -343,7 +331,7 @@ class Parser {
                 throw new Error("Error in term compilation. Unexpected symbol");
         } else throw new Error("Error in term compilation. Unexpected term");
 
-        this.closeXmlTag("term");
+        this.syntaxAnalyzer.closeXmlTag("term");
     }
 }
 

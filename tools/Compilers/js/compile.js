@@ -14,15 +14,17 @@ function compileDirectory(inputDirectoryName) {
                 "utf8"
             );
 
-            let xmlFile = compileFile(jackSourceCode);
+            let { xmlCode, vmCode } = compileFile(jackSourceCode);
 
             const extension = path.extname(fileName);
             const file = path.basename(fileName, extension);
 
             fs.writeFileSync(
-                `${inputDirectoryName}/${file}.example.xml`,
-                xmlFile
+                `${inputDirectoryName}/${file}.syntax-tree.xml`,
+                xmlCode
             );
+
+            fs.writeFileSync(`${inputDirectoryName}/${file}.test.vm`, vmCode);
         });
 }
 
@@ -31,9 +33,7 @@ function compileFile(jackSourceCode) {
 
     const parser = new Parser(tokenizer);
 
-    const compiledCode = parser.compile();
-
-    return compiledCode;
+    return parser.compile();
 }
 
 module.exports = compileDirectory;
