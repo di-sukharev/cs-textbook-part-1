@@ -14,19 +14,39 @@ class SymbolTable {
 
         switch (kind) {
             case "static":
+                this.classScope[name] = {
+                    kind,
+                    type,
+                    index: Object.keys(this.classScope).filter(
+                        (k) => k.kind === "static"
+                    ).length,
+                };
+                break;
             case "field":
                 this.classScope[name] = {
                     kind,
                     type,
-                    index: Object.keys(this.classScope).length,
+                    index: Object.keys(this.classScope).filter(
+                        (k) => k.kind === "field"
+                    ).length,
                 };
                 break;
             case "arg":
+                this.subroutineScope[name] = {
+                    kind,
+                    type,
+                    index: Object.keys(this.subroutineScope).filter(
+                        (k) => k.kind === "arg"
+                    ).length,
+                };
+                break;
             case "var":
                 this.subroutineScope[name] = {
                     kind,
                     type,
-                    index: Object.keys(this.subroutineScope).length,
+                    index: Object.keys(this.subroutineScope).filter(
+                        (k) => k.kind === "var"
+                    ).length,
                 };
                 break;
             default:
