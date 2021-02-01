@@ -1,4 +1,4 @@
-/* 
+/* TODO: proper JSdoc comments
 Parsing process
     1. start reading file with the first token
     2. run compileClass as a first method and entry point
@@ -8,7 +8,7 @@ Parsing process
 const SymbolTable = require("./SymbolTable");
 const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 
-class Parser {
+class CompilationEngine {
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
         this.syntaxAnalyzer = new SyntaxAnalyzer();
@@ -47,8 +47,6 @@ class Parser {
             content: currentToken.value,
         });
 
-        // this.vmCode += writer[currentToken.type][currentToken.value];
-
         this.tokenizer.next();
     }
 
@@ -62,6 +60,7 @@ class Parser {
             return false;
 
         this.eat();
+
         return true;
     }
 
@@ -335,4 +334,4 @@ class Parser {
     }
 }
 
-module.exports = Parser;
+module.exports = CompilationEngine;
