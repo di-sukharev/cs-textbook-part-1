@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const Tokenizer = require("./tokenizer.js");
-const Parser = require("./parser.js");
+const Tokenizer = require("./Tokenizer.js");
+const Parser = require("./Parser.js");
 
 function compileDirectory(inputDirectoryName) {
     const isJackFile = (fileName) => fileName.endsWith(".jack");
