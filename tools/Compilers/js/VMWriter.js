@@ -25,10 +25,22 @@ class VMWriter {
         this.write("return");
     }
 
-    operation = {
-        "+": this.write("add"),
-        "*": this.call("Math.mult", 2),
-    };
+    function(subroutineName, args) {
+        this.write(`function ${subroutineName} ${args}`);
+    }
+
+    operation(op) {
+        // if (op === "+") this.write("add");
+        // if (op === "*") this.call("Math.mult", 2);
+        switch (op) {
+            case "+":
+                this.write("add");
+                break;
+            case "*":
+                this.call("Math.multiply", 2);
+                break;
+        }
+    }
 }
 
 module.exports = VMWriter;

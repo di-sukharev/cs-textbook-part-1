@@ -137,9 +137,9 @@ class CompilationEngine {
 
             this.symbolTable.clearSubroutine();
 
-            this.subroutine.name = this.eat("keyword");
+            this.eat("keyword");
             this.subroutine.type = this.eatType();
-            this.eat("identifier");
+            this.subroutine.name = this.eat("identifier");
             this.eat("symbol", "(");
             this.compileParameterList();
             this.eat("symbol", ")");
@@ -361,7 +361,8 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("term");
 
         if (this.isAtToken("integerConstant")) {
-            this.eat("integerConstant");
+            let int = this.eat("integerConstant");
+            this.vmWriter.push("constant", int);
         } else if (this.isAtToken("stringConstant")) {
             this.eat("stringConstant");
         } else if (this.isAtToken("true", "false", "null", "this")) {
