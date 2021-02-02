@@ -275,23 +275,6 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
 
-    compileDo() {
-        this.syntaxAnalyzer.openXmlTag("doStatement");
-
-        this.eat("keyword", "do");
-        let name = this.eat("identifier");
-        if (this.tryEat("symbol", ".")) name += "." + this.eat("identifier");
-        this.eat("symbol", "(");
-        const argumentsCount = this.compileExpressionList();
-        this.eat("symbol", ")");
-        this.eat("symbol", ";");
-
-        this.vmWriter.call(name, argumentsCount);
-        this.vmWriter.pop("temp", 0); // we don't need return value in raw "do statement()"
-
-        this.syntaxAnalyzer.closeXmlTag("doStatement");
-    }
-
     compileWhile() {
         this.syntaxAnalyzer.openXmlTag("whileStatement");
 
@@ -317,6 +300,23 @@ class CompilationEngine {
         this.vmWriter.return();
 
         this.syntaxAnalyzer.closeXmlTag("returnStatement");
+    }
+
+    compileDo() {
+        this.syntaxAnalyzer.openXmlTag("doStatement");
+
+        this.eat("keyword", "do");
+        let name = this.eat("identifier");
+        if (this.tryEat("symbol", ".")) name += "." + this.eat("identifier");
+        this.eat("symbol", "(");
+        const argumentsCount = this.compileExpressionList();
+        this.eat("symbol", ")");
+        this.eat("symbol", ";");
+
+        this.vmWriter.call(name, argumentsCount);
+        this.vmWriter.pop("temp", 0); // we don't need return value in raw "do statement()"
+
+        this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
 
     compileExpressionList() {
