@@ -17,8 +17,8 @@ class SymbolTable {
                 this.classScope[name] = {
                     kind,
                     type,
-                    index: Object.keys(this.classScope).filter(
-                        (k) => k.kind === "static"
+                    index: Object.values(this.classScope).filter(
+                        (v) => v.kind === "static"
                     ).length,
                 };
                 break;
@@ -26,8 +26,8 @@ class SymbolTable {
                 this.classScope[name] = {
                     kind,
                     type,
-                    index: Object.keys(this.classScope).filter(
-                        (k) => k.kind === "field"
+                    index: Object.values(this.classScope).filter(
+                        (v) => v.kind === "field"
                     ).length,
                 };
                 break;
@@ -35,8 +35,8 @@ class SymbolTable {
                 this.subroutineScope[name] = {
                     kind,
                     type,
-                    index: Object.keys(this.subroutineScope).filter(
-                        (k) => k.kind === "arg"
+                    index: Object.values(this.subroutineScope).filter(
+                        (v) => v.kind === "arg"
                     ).length,
                 };
                 break;
@@ -44,8 +44,8 @@ class SymbolTable {
                 this.subroutineScope[name] = {
                     kind,
                     type,
-                    index: Object.keys(this.subroutineScope).filter(
-                        (k) => k.kind === "var"
+                    index: Object.values(this.subroutineScope).filter(
+                        (v) => v.kind === "var"
                     ).length,
                 };
                 break;

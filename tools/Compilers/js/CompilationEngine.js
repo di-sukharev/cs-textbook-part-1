@@ -257,8 +257,8 @@ class CompilationEngine {
         this.eat("symbol", "(");
         this.compileExpression();
 
-        this.vmWriter.not();
-        this.vmWriter.ifGoto(this.createLabel("ALTERNATIVE"));
+        this.vmWriter.operation("not");
+        this.vmWriter.if(this.createLabel("ALTERNATIVE"));
 
         this.eat("symbol", ")");
         this.eat("symbol", "{");
@@ -277,18 +277,34 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
 
+    WHILE_COUNTER = 0;
     compileWhile() {
         this.syntaxAnalyzer.openXmlTag("whileStatement");
+
+        const counter = this.WHILE_COUNTER;
+        const startLabel = `WHILE-START-${counter}`;
+        const endLabel = `WHILE-END-${counter}`;
+        console.log(this.symbolTable);
+        this.vmWriter.label(startLabel);
 
         this.eat("keyword", "while");
         this.eat("symbol", "(");
         this.compileExpression();
         this.eat("symbol", ")");
+
+        this.vmWriter.operation("not");
+        this.vmWriter.if(endLabel);
+
         this.eat("symbol", "{");
         this.compileStatements();
         this.eat("symbol", "}");
 
+        this.vmWriter.goto(startLabel);
+        this.vmWriter.label(endLabel);
+
         this.syntaxAnalyzer.closeXmlTag("whileStatement");
+
+        this.WHILE_COUNTER++;
     }
 
     compileReturn() {
@@ -311,11 +327,11 @@ class CompilationEngine {
         let name = this.eat("identifier");
         if (this.tryEat("symbol", ".")) name += "." + this.eat("identifier");
         this.eat("symbol", "(");
-        const argumentsCount = this.compileExpressionList();
+        const argsCount = this.compileExpressionList();
         this.eat("symbol", ")");
         this.eat("symbol", ";");
 
-        this.vmWriter.call(name, argumentsCount);
+        this.vmWriter.call(name, argsCount);
         this.vmWriter.pop("temp", 0); // we don't need return value in raw "do statement()"
 
         this.syntaxAnalyzer.closeXmlTag("doStatement");
@@ -361,28 +377,54 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("term");
 
         if (this.isAtToken("integerConstant")) {
-            let int = this.eat("integerConstant");
+            const int = this.eat("integerConstant");
             this.vmWriter.push("constant", int);
         } else if (this.isAtToken("stringConstant")) {
             this.eat("stringConstant");
         } else if (this.isAtToken("true", "false", "null", "this")) {
-            this.eat("keyword");
+            const keyword = this.eat("keyword");
+            this.vmWriter.keywordConstant(keyword);
         } else if (this.isAtToken("identifier")) {
-            this.eat("identifier");
+            let name = this.eat("identifier");
             if (this.isAtToken(".")) {
-                this.eat("symbol", ".");
-                this.eat("identifier");
+                name += this.eat("symbol", ".");
+                name += this.eat("identifier");
                 this.eat("symbol", "(");
-                this.compileExpressionList();
+                const argsCount = this.compileExpressionList();
                 this.eat("symbol", ")");
+                this.vmWriter.call(name, argsCount);
             } else if (this.isAtToken("(")) {
                 this.eat("symbol", "(");
-                this.compileExpressionList();
+                const argsCount = this.compileExpressionList();
                 this.eat("symbol", ")");
+                this.vmWriter.call(name, argsCount);
             } else if (this.isAtToken("[")) {
                 this.eat("symbol", "[");
                 this.compileExpression();
                 this.eat("symbol", "]");
+            } else {
+                // just a variable, not a function or array
+                const variable =
+                    this.symbolTable.subroutineScope[name] ||
+                    this.symbolTable.classScope[name];
+
+                if (!variable) throw new Error("Unknown var: " + name);
+
+                switch (variable.kind) {
+                    case "static":
+                        break;
+                    case "field":
+                        break;
+                    case "arg":
+                        this.vmWriter.push("argument", variable.index);
+                        break;
+                    case "var":
+                        this.vmWriter.push("local", variable.index);
+                        break;
+
+                    default:
+                        throw new Error("Unknown var kind: " + variable.kind);
+                }
             }
         } else if (this.isAtToken("symbol")) {
             if (this.isAtToken("(")) {
@@ -390,8 +432,9 @@ class CompilationEngine {
                 this.compileExpression();
                 this.eat("symbol", ")");
             } else if (this.isAtToken("-", "~")) {
-                this.eat("symbol");
+                const op = this.eat("symbol");
                 this.compileTerm();
+                this.vmWriter.operation(op === "-" ? "neg" : "not");
             } else throw new Error("Unexpected symbol");
         } else throw new Error("Unexpected term");
 
