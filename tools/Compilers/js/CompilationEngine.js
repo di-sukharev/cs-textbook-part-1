@@ -7,6 +7,7 @@ Parsing process
 
 const SymbolTable = require("./SymbolTable");
 const SyntaxAnalyzer = require("./SyntaxAnalyzer");
+const VMWriter = require("./VMWriter");
 
 class CompilationEngine {
     // todo: move this to SymbolTable
@@ -20,6 +21,7 @@ class CompilationEngine {
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
         this.syntaxAnalyzer = new SyntaxAnalyzer();
+        this.vmWriter = new VMWriter();
         this.symbolTable = new SymbolTable();
 
         return this;
@@ -30,7 +32,7 @@ class CompilationEngine {
 
         return {
             xmlCode: this.syntaxAnalyzer.XML,
-            // vmCode: this.vmWriter.VM,
+            vmCode: this.vmWriter.VM,
         };
     }
 
@@ -346,7 +348,10 @@ class CompilationEngine {
             if (this.isAtToken("+", "-", "*", "/", "&", "|", "<", ">", "=")) {
                 if (op) this.vmWriter.operation(op);
                 op = this.eat();
-            } else hasMore = false;
+            } else {
+                if (op) this.vmWriter.operation(op);
+                hasMore = false;
+            }
         }
 
         this.syntaxAnalyzer.closeXmlTag("expression");
@@ -386,9 +391,8 @@ class CompilationEngine {
             } else if (this.isAtToken("-", "~")) {
                 this.eat("symbol");
                 this.compileTerm();
-            } else
-                throw new Error("Error in term compilation. Unexpected symbol");
-        } else throw new Error("Error in term compilation. Unexpected term");
+            } else throw new Error("Unexpected symbol");
+        } else throw new Error("Unexpected term");
 
         this.syntaxAnalyzer.closeXmlTag("term");
     }
