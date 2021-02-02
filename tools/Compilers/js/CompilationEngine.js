@@ -11,10 +11,10 @@ const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 class CompilationEngine {
     // todo: move this to SymbolTable
     className = null;
-    subroutineName = null;
+    subroutine = { name: null, type: null };
 
     createLabel(label) {
-        return `${this.className}.${this.subroutineName}.${label}`;
+        return `${this.className}.${this.subroutine.name}.${label}`;
     }
 
     constructor(tokenizer) {
@@ -30,7 +30,7 @@ class CompilationEngine {
 
         return {
             xmlCode: this.syntaxAnalyzer.XML,
-            // vmCode: this.writer.VM,
+            // vmCode: this.vmWriter.VM,
         };
     }
 
@@ -135,8 +135,8 @@ class CompilationEngine {
 
             this.symbolTable.clearSubroutine();
 
-            this.subroutineName = this.eat("keyword");
-            this.eatType();
+            this.subroutine.name = this.eat("keyword");
+            this.subroutine.type = this.eatType();
             this.eat("identifier");
             this.eat("symbol", "(");
             this.compileParameterList();
@@ -168,8 +168,8 @@ class CompilationEngine {
         this.eat("symbol", "{");
 
         this.compileVarDec();
-        this.writer.function(
-            `${this.className}.${this.subroutineName}`,
+        this.vmWriter.function(
+            `${this.className}.${this.subroutine.name}`,
             this.symbolTable.getVarCount("var")
         );
 
@@ -222,9 +222,12 @@ class CompilationEngine {
         this.eat("keyword", "let");
         const identifier = this.eat("identifier");
         if (this.tryEat("symbol", "[")) {
-            this.writer.push("local", this.symbolTable.getIndexOf(identifier));
+            this.vmWriter.push(
+                "local",
+                this.symbolTable.getIndexOf(identifier)
+            );
             this.compileExpression();
-            this.writer.add();
+            this.vmWriter.add();
 
             this.eat("symbol", "]");
             isArray = true;
@@ -234,12 +237,12 @@ class CompilationEngine {
         this.eat("symbol", ";");
 
         if (isArray) {
-            this.writer.pop("temp", 0);
-            this.writer.pop("pointer", 1);
-            this.writer.push("temp", 0);
-            this.writer.pop("that", 0);
+            this.vmWriter.pop("temp", 0);
+            this.vmWriter.pop("pointer", 1);
+            this.vmWriter.push("temp", 0);
+            this.vmWriter.pop("that", 0);
         } else {
-            this.writer.pop("local", this.symbolTable.getIndexOf(identifier));
+            this.vmWriter.pop("local", this.symbolTable.getIndexOf(identifier));
         }
 
         this.syntaxAnalyzer.closeXmlTag("letStatement");
@@ -252,22 +255,22 @@ class CompilationEngine {
         this.eat("symbol", "(");
         this.compileExpression();
 
-        this.writer.not();
-        this.writer.ifGoto(this.createLabel("ALTERNATIVE"));
+        this.vmWriter.not();
+        this.vmWriter.ifGoto(this.createLabel("ALTERNATIVE"));
 
         this.eat("symbol", ")");
         this.eat("symbol", "{");
         this.compileStatements();
         this.eat("symbol", "}");
-        this.writer.goto(this.createLabel("CONSEQUENT"));
+        this.vmWriter.goto(this.createLabel("CONSEQUENT"));
 
-        this.writer.label(this.createLabel("ALTERNATIVE"));
+        this.vmWriter.label(this.createLabel("ALTERNATIVE"));
         if (this.tryEat("keyword", "else")) {
             this.eat("symbol", "{");
             this.compileStatements();
             this.eat("symbol", "}");
         }
-        this.writer.label(this.createLabel("CONSEQUENT"));
+        this.vmWriter.label(this.createLabel("CONSEQUENT"));
 
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
@@ -283,7 +286,9 @@ class CompilationEngine {
         this.eat("symbol", ")");
         this.eat("symbol", ";");
 
-        this.writer.call(name, argumentsCount);
+        this.vmWriter.call(name, argumentsCount);
+        this.vmWriter.pop("temp", 0); // we don't need return value in raw "do statement()"
+
         this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
 
@@ -307,6 +312,9 @@ class CompilationEngine {
         this.eat("keyword", "return");
         if (!this.isAtToken("symbol", ";")) this.compileExpression();
         this.eat("symbol", ";");
+
+        if (this.subroutine.type === "void") this.vmWriter.push("constant", 0);
+        this.vmWriter.return();
 
         this.syntaxAnalyzer.closeXmlTag("returnStatement");
     }
@@ -336,7 +344,7 @@ class CompilationEngine {
             this.compileTerm();
 
             if (this.isAtToken("+", "-", "*", "/", "&", "|", "<", ">", "=")) {
-                if (op) this.writer.operation(op);
+                if (op) this.vmWriter.operation(op);
                 op = this.eat();
             } else hasMore = false;
         }
