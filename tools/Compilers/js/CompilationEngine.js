@@ -9,8 +9,13 @@ const SymbolTable = require("./SymbolTable");
 const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 
 class CompilationEngine {
+    // todo: move this to SymbolTable
     className = null;
     subroutineName = null;
+
+    createLabel(label) {
+        return `${this.className}.${this.subroutineName}.${label}`;
+    }
 
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
@@ -246,16 +251,23 @@ class CompilationEngine {
         this.eat("keyword", "if");
         this.eat("symbol", "(");
         this.compileExpression();
+
+        this.writer.not();
+        this.writer.ifGoto(this.createLabel("ALTERNATIVE"));
+
         this.eat("symbol", ")");
         this.eat("symbol", "{");
         this.compileStatements();
         this.eat("symbol", "}");
+        this.writer.goto(this.createLabel("CONSEQUENT"));
 
+        this.writer.label(this.createLabel("ALTERNATIVE"));
         if (this.tryEat("keyword", "else")) {
             this.eat("symbol", "{");
             this.compileStatements();
             this.eat("symbol", "}");
         }
+        this.writer.label(this.createLabel("CONSEQUENT"));
 
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
