@@ -9,6 +9,9 @@ const SymbolTable = require("./SymbolTable");
 const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 
 class CompilationEngine {
+    className = null;
+    subroutineName = null;
+
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
         this.syntaxAnalyzer = new SyntaxAnalyzer();
@@ -93,7 +96,7 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("class");
 
         this.eat("keyword", "class");
-        this.eat("identifier");
+        this.className = this.eat("identifier");
         this.eat("symbol", "{");
         this.compileClassVarDec();
         this.compileSubroutineDec();
@@ -127,7 +130,7 @@ class CompilationEngine {
 
             this.symbolTable.clearSubroutine();
 
-            this.eat("keyword");
+            this.subroutineName = this.eat("keyword");
             this.eatType();
             this.eat("identifier");
             this.eat("symbol", "(");
@@ -158,7 +161,13 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("subroutineBody");
 
         this.eat("symbol", "{");
+
         this.compileVarDec();
+        this.writer.function(
+            `${this.className}.${this.subroutineName}`,
+            this.symbolTable.getVarCount("var")
+        );
+
         this.compileStatements();
         this.eat("symbol", "}");
 
@@ -203,15 +212,30 @@ class CompilationEngine {
     compileLet() {
         this.syntaxAnalyzer.openXmlTag("letStatement");
 
+        let isArray = false;
+
         this.eat("keyword", "let");
-        this.eat("identifier");
+        const identifier = this.eat("identifier");
         if (this.tryEat("symbol", "[")) {
+            this.writer.push("local", this.symbolTable.getIndexOf(identifier));
             this.compileExpression();
+            this.writer.add();
+
             this.eat("symbol", "]");
+            isArray = true;
         }
         this.eat("symbol", "=");
         this.compileExpression();
         this.eat("symbol", ";");
+
+        if (isArray) {
+            this.writer.pop("temp", 0);
+            this.writer.pop("pointer", 1);
+            this.writer.push("temp", 0);
+            this.writer.pop("that", 0);
+        } else {
+            this.writer.pop("local", this.symbolTable.getIndexOf(identifier));
+        }
 
         this.syntaxAnalyzer.closeXmlTag("letStatement");
     }
