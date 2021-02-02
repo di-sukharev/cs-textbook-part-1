@@ -276,13 +276,14 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("doStatement");
 
         this.eat("keyword", "do");
-        this.eat("identifier");
-        if (this.tryEat("symbol", ".")) this.eat("identifier");
+        let name = this.eat("identifier");
+        if (this.tryEat("symbol", ".")) name += "." + this.eat("identifier");
         this.eat("symbol", "(");
-        this.compileExpressionList();
+        const argumentsCount = this.compileExpressionList();
         this.eat("symbol", ")");
         this.eat("symbol", ";");
 
+        this.writer.call(name, argumentsCount);
         this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
 
@@ -314,23 +315,30 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("expressionList");
 
         let hasMore = !this.isAtToken(")");
+        let argumentsCount = 0;
         while (hasMore) {
             this.compileExpression();
             hasMore = this.tryEat("symbol", ",");
+            argumentsCount++;
         }
 
         this.syntaxAnalyzer.closeXmlTag("expressionList");
+
+        return argumentsCount;
     }
 
     compileExpression() {
         this.syntaxAnalyzer.openXmlTag("expression");
 
+        let op = null;
         let hasMore = true;
         while (hasMore) {
             this.compileTerm();
-            if (this.isAtToken("+", "-", "*", "/", "&", "|", "<", ">", "="))
-                this.eat();
-            else hasMore = false;
+
+            if (this.isAtToken("+", "-", "*", "/", "&", "|", "<", ">", "=")) {
+                if (op) this.writer.operation(op);
+                op = this.eat();
+            } else hasMore = false;
         }
 
         this.syntaxAnalyzer.closeXmlTag("expression");
