@@ -14,10 +14,6 @@ class CompilationEngine {
     className = null;
     subroutine = { name: null, type: null };
 
-    createLabel(label) {
-        return `${this.className}.${this.subroutine.name}.${label}`;
-    }
-
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
         this.syntaxAnalyzer = new SyntaxAnalyzer();
@@ -158,7 +154,7 @@ class CompilationEngine {
             const name = this.eat("identifier");
             hasMore = this.tryEat("symbol", ",");
 
-            this.symbolTable.define({ kind: "arg", type, name });
+            this.symbolTable.define({ kind: "argument", type, name });
         }
 
         this.syntaxAnalyzer.closeXmlTag("parameterList");
@@ -172,7 +168,7 @@ class CompilationEngine {
         this.compileVarDec();
         this.vmWriter.function(
             `${this.className}.${this.subroutine.name}`,
-            this.symbolTable.getVarCount("var")
+            this.symbolTable.getVarCount("local")
         );
 
         this.compileStatements();
@@ -192,7 +188,7 @@ class CompilationEngine {
                 const name = this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
 
-                this.symbolTable.define({ kind: "var", type, name });
+                this.symbolTable.define({ kind: "local", type, name });
             }
             this.eat("symbol", ";");
 
@@ -244,37 +240,49 @@ class CompilationEngine {
             this.vmWriter.push("temp", 0);
             this.vmWriter.pop("that", 0);
         } else {
-            this.vmWriter.pop("local", this.symbolTable.getIndexOf(identifier));
+            this.vmWriter.pop(
+                this.symbolTable.getKindOf(identifier),
+                this.symbolTable.getIndexOf(identifier)
+            );
         }
 
         this.syntaxAnalyzer.closeXmlTag("letStatement");
     }
 
+    IF_COUNTER = 0;
     compileIf() {
+        const counter = this.IF_COUNTER;
+        const IF_TRUE = `IF_TRUE_${counter}`;
+        const IF_FALSE = `IF_FALSE_${counter}`;
+        const IF_END = `IF_END_${counter}`;
+
         this.syntaxAnalyzer.openXmlTag("ifStatement");
 
         this.eat("keyword", "if");
+
         this.eat("symbol", "(");
         this.compileExpression();
-
-        this.vmWriter.operation("not");
-        this.vmWriter.if(this.createLabel("ALTERNATIVE"));
-
+        this.vmWriter.ifgoto(IF_TRUE);
+        this.vmWriter.goto(IF_FALSE);
         this.eat("symbol", ")");
-        this.eat("symbol", "{");
-        this.compileStatements();
-        this.eat("symbol", "}");
-        this.vmWriter.goto(this.createLabel("CONSEQUENT"));
 
-        this.vmWriter.label(this.createLabel("ALTERNATIVE"));
+        this.eat("symbol", "{");
+        this.vmWriter.label(IF_TRUE);
+        this.compileStatements();
+        this.vmWriter.goto(IF_END);
+        this.eat("symbol", "}");
+
+        this.vmWriter.label(IF_FALSE);
         if (this.tryEat("keyword", "else")) {
             this.eat("symbol", "{");
             this.compileStatements();
             this.eat("symbol", "}");
         }
-        this.vmWriter.label(this.createLabel("CONSEQUENT"));
+        this.vmWriter.label(IF_END);
 
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
+
+        this.IF_COUNTER++;
     }
 
     WHILE_COUNTER = 0;
@@ -282,9 +290,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("whileStatement");
 
         const counter = this.WHILE_COUNTER;
-        const startLabel = `WHILE-START-${counter}`;
-        const endLabel = `WHILE-END-${counter}`;
-        console.log(this.symbolTable);
+        const startLabel = `WHILE_START_${counter}`;
+        const endLabel = `WHILE_END_${counter}`;
+
         this.vmWriter.label(startLabel);
 
         this.eat("keyword", "while");
@@ -293,7 +301,7 @@ class CompilationEngine {
         this.eat("symbol", ")");
 
         this.vmWriter.operation("not");
-        this.vmWriter.if(endLabel);
+        this.vmWriter.ifgoto(endLabel);
 
         this.eat("symbol", "{");
         this.compileStatements();
@@ -415,10 +423,10 @@ class CompilationEngine {
                         break;
                     case "field":
                         break;
-                    case "arg":
+                    case "argument":
                         this.vmWriter.push("argument", variable.index);
                         break;
-                    case "var":
+                    case "local":
                         this.vmWriter.push("local", variable.index);
                         break;
 

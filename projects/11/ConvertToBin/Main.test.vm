@@ -17,10 +17,10 @@ function Main.convert 3
 push constant 0
 not
 pop local 2
-label WHILE-START-0
+label WHILE_START_0
 push local 2
 not
-if-goto WHILE-END-0
+if-goto WHILE_END_0
 push local 1
 push constant 1
 add
@@ -32,64 +32,65 @@ push local 1
 push constant 16
 gt
 not
-not
-if-goto Main.convert.ALTERNATIVE
+if-goto IF_TRUE_0
+goto IF_FALSE_0
+label IF_TRUE_0
 push argument 0
 push local 0
 and
 push constant 0
 eq
 not
-not
-if-goto Main.convert.ALTERNATIVE
+if-goto IF_TRUE_0
+goto IF_FALSE_0
+label IF_TRUE_0
 push constant 8000
 push local 1
 add
 push constant 1
 call Memory.poke 2
 pop temp 0
-goto Main.convert.CONSEQUENT
-label Main.convert.ALTERNATIVE
+goto IF_END_0
+label IF_FALSE_0
 push constant 8000
 push local 1
 add
 push constant 0
 call Memory.poke 2
 pop temp 0
-label Main.convert.CONSEQUENT
-goto Main.convert.CONSEQUENT
-label Main.convert.ALTERNATIVE
+label IF_END_0
+goto IF_END_0
+label IF_FALSE_0
 push constant 0
-not
-not
 pop local 2
-label Main.convert.CONSEQUENT
-goto WHILE-START-0
-label WHILE-END-0
+label IF_END_0
+goto WHILE_START_0
+label WHILE_END_0
 push constant 0
 return
 function Main.nextMask 0
 push argument 0
 push constant 0
 eq
-not
-if-goto Main.nextMask.ALTERNATIVE
+if-goto IF_TRUE_2
+goto IF_FALSE_2
+label IF_TRUE_2
 push constant 1
 return
-goto Main.nextMask.CONSEQUENT
-label Main.nextMask.ALTERNATIVE
+goto IF_END_2
+label IF_FALSE_2
 push argument 0
 push constant 2
 call Math.multiply 2
 return
-label Main.nextMask.CONSEQUENT
+label IF_END_2
 function Main.fillMemory 0
-label WHILE-START-1
+label WHILE_START_1
 push argument 1
 push constant 0
 gt
 not
-if-goto WHILE-END-1
+if-goto WHILE_END_1
 push argument 0
 push argument 2
 call Memory.poke 2
@@ -97,12 +98,12 @@ pop temp 0
 push argument 1
 push constant 1
 sub
-pop local 1
+pop argument 1
 push argument 0
 push constant 1
 add
-pop local 0
-goto WHILE-START-1
-label WHILE-END-1
+pop argument 0
+goto WHILE_START_1
+label WHILE_END_1
 push constant 0
 return

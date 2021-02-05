@@ -31,21 +31,21 @@ class SymbolTable {
                     ).length,
                 };
                 break;
-            case "arg":
+            case "argument":
                 this.subroutineScope[name] = {
                     kind,
                     type,
                     index: Object.values(this.subroutineScope).filter(
-                        (v) => v.kind === "arg"
+                        (v) => v.kind === "argument"
                     ).length,
                 };
                 break;
-            case "var":
+            case "local":
                 this.subroutineScope[name] = {
                     kind,
                     type,
                     index: Object.values(this.subroutineScope).filter(
-                        (v) => v.kind === "var"
+                        (v) => v.kind === "local"
                     ).length,
                 };
                 break;
