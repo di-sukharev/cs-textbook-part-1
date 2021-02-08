@@ -1,73 +1,73 @@
 function SquareGame.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
 push constant 0
 push constant 0
 push constant 30
 call Square.new 3
-pop field undefined
+pop this 0
 push constant 0
-pop field 1
+pop this 1
 return
 function SquareGame.dispose 0
-push field undefined
-call Square.dispose 1
+call square.dispose 0
 pop temp 0
-push undefined undefined
-call undefined.deAlloc 2
+call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
 function SquareGame.moveSquare 0
+push this 1
 push constant 1
 eq
 if-goto IF_TRUE_0
 goto IF_FALSE_0
 label IF_TRUE_0
-push field undefined
-call Square.moveUp 1
+call square.moveUp 0
 pop temp 0
 goto IF_END_0
 label IF_FALSE_0
 label IF_END_0
+push this 1
 push constant 2
 eq
 if-goto IF_TRUE_1
 goto IF_FALSE_1
 label IF_TRUE_1
-push field undefined
-call Square.moveDown 1
+call square.moveDown 0
 pop temp 0
 goto IF_END_1
 label IF_FALSE_1
 label IF_END_1
+push this 1
 push constant 3
 eq
 if-goto IF_TRUE_2
 goto IF_FALSE_2
 label IF_TRUE_2
-push field undefined
-call Square.moveLeft 1
+call square.moveLeft 0
 pop temp 0
 goto IF_END_2
 label IF_FALSE_2
 label IF_END_2
+push this 1
 push constant 4
 eq
 if-goto IF_TRUE_3
 goto IF_FALSE_3
 label IF_TRUE_3
-push field undefined
-call Square.moveRight 1
+call square.moveRight 0
 pop temp 0
 goto IF_END_3
 label IF_FALSE_3
 label IF_END_3
 push constant 5
-push undefined undefined
-call undefined.wait 2
+call Sys.wait 1
 pop temp 0
 push constant 0
 return
-function SquareGame.run 2
+function SquareGame.run 0
 push constant 0
 pop local 1
 label WHILE_START_0
@@ -83,8 +83,7 @@ not
 if-goto WHILE_END_0
 call Keyboard.keyPressed 0
 pop local 0
-push undefined undefined
-call undefined 1
+call moveSquare 0
 pop temp 0
 goto WHILE_START_0
 label WHILE_END_0
@@ -106,8 +105,7 @@ eq
 if-goto IF_TRUE_5
 goto IF_FALSE_5
 label IF_TRUE_5
-push field undefined
-call Square.decSize 1
+call square.decSize 0
 pop temp 0
 goto IF_END_5
 label IF_FALSE_5
@@ -118,8 +116,7 @@ eq
 if-goto IF_TRUE_6
 goto IF_FALSE_6
 label IF_TRUE_6
-push field undefined
-call Square.incSize 1
+call square.incSize 0
 pop temp 0
 goto IF_END_6
 label IF_FALSE_6
@@ -131,7 +128,7 @@ if-goto IF_TRUE_7
 goto IF_FALSE_7
 label IF_TRUE_7
 push constant 1
-pop field 1
+pop this 1
 goto IF_END_7
 label IF_FALSE_7
 label IF_END_7
@@ -142,7 +139,7 @@ if-goto IF_TRUE_8
 goto IF_FALSE_8
 label IF_TRUE_8
 push constant 2
-pop field 1
+pop this 1
 goto IF_END_8
 label IF_FALSE_8
 label IF_END_8
@@ -153,7 +150,7 @@ if-goto IF_TRUE_9
 goto IF_FALSE_9
 label IF_TRUE_9
 push constant 3
-pop field 1
+pop this 1
 goto IF_END_9
 label IF_FALSE_9
 label IF_END_9
@@ -164,7 +161,7 @@ if-goto IF_TRUE_10
 goto IF_FALSE_10
 label IF_TRUE_10
 push constant 4
-pop field 1
+pop this 1
 goto IF_END_10
 label IF_FALSE_10
 label IF_END_10
@@ -177,8 +174,7 @@ not
 if-goto WHILE_END_1
 call Keyboard.keyPressed 0
 pop local 0
-push undefined undefined
-call undefined 1
+call moveSquare 0
 pop temp 0
 goto WHILE_START_1
 label WHILE_END_1

@@ -31,21 +31,21 @@ class SymbolTable {
                     ).length,
                 };
                 break;
-            case "argument":
+            case "arg":
                 this.subroutineScope[name] = {
                     kind,
                     type,
                     index: Object.values(this.subroutineScope).filter(
-                        (v) => v.kind === "argument"
+                        (v) => v.kind === "arg"
                     ).length,
                 };
                 break;
-            case "local":
+            case "var":
                 this.subroutineScope[name] = {
                     kind,
                     type,
                     index: Object.values(this.subroutineScope).filter(
-                        (v) => v.kind === "local"
+                        (v) => v.kind === "var"
                     ).length,
                 };
                 break;
@@ -54,6 +54,13 @@ class SymbolTable {
                     `Unknown identifier — kind: ${kind}, type: ${type}, name: ${name}`
                 );
         }
+    }
+
+    getVar(name) {
+        const variable = this.subroutineScope[name] || this.classScope[name];
+        if (!variable) throw new Error("Variable is not defined: " + name);
+
+        return variable;
     }
 
     getVarCount(kind) {
@@ -65,17 +72,15 @@ class SymbolTable {
     }
 
     getTypeOf(name) {
-        return this.classScope[name]?.type || this.subroutineScope[name]?.type;
+        return this.getVar(name).type;
     }
 
     getKindOf(name) {
-        return this.classScope[name]?.kind || this.subroutineScope[name]?.kind;
+        return this.getVar(name).kind;
     }
 
     getIndexOf(name) {
-        return (
-            this.classScope[name]?.index || this.subroutineScope[name]?.index
-        );
+        return this.getVar(name).index;
     }
 
     clearSubroutine() {

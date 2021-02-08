@@ -9,10 +9,26 @@ const SymbolTable = require("./SymbolTable");
 const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 const VMWriter = require("./VMWriter");
 
+function getSegmentFromKind(kind) {
+    switch (kind) {
+        case "static":
+            return "static";
+        case "field":
+            return "this";
+        case "arg":
+            return "argument";
+        case "var":
+            return "local";
+
+        default:
+            throw new Error("Unknown var kind: " + kind);
+    }
+}
+
 class CompilationEngine {
     // todo: move this to SymbolTable
     className = null;
-    subroutine = { name: null, type: null };
+    subroutine = { name: null, type: null, kind: null };
 
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
@@ -133,7 +149,7 @@ class CompilationEngine {
 
             this.symbolTable.clearSubroutine();
 
-            this.eat("keyword");
+            this.subroutine.kind = this.eat("keyword");
             this.subroutine.type = this.eatType();
             this.subroutine.name = this.eat("identifier");
             this.eat("symbol", "(");
@@ -154,7 +170,7 @@ class CompilationEngine {
             const name = this.eat("identifier");
             hasMore = this.tryEat("symbol", ",");
 
-            this.symbolTable.define({ kind: "argument", type, name });
+            this.symbolTable.define({ kind: "arg", type, name });
         }
 
         this.syntaxAnalyzer.closeXmlTag("parameterList");
@@ -170,6 +186,15 @@ class CompilationEngine {
             `${this.className}.${this.subroutine.name}`,
             this.symbolTable.getVarCount("local")
         );
+
+        if (this.subroutine.kind === "constructor") {
+            this.vmWriter.push(
+                "constant",
+                this.symbolTable.getVarCount("field")
+            );
+            this.vmWriter.call("Memory.alloc", 1);
+            this.vmWriter.pop("pointer", 0);
+        }
 
         this.compileStatements();
         this.eat("symbol", "}");
@@ -188,7 +213,7 @@ class CompilationEngine {
                 const name = this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
 
-                this.symbolTable.define({ kind: "local", type, name });
+                this.symbolTable.define({ kind: "var", type, name });
             }
             this.eat("symbol", ";");
 
@@ -240,8 +265,12 @@ class CompilationEngine {
             this.vmWriter.push("temp", 0);
             this.vmWriter.pop("that", 0);
         } else {
+            console.log(
+                this.symbolTable,
+                this.symbolTable.getIndexOf(identifier)
+            );
             this.vmWriter.pop(
-                this.symbolTable.getKindOf(identifier),
+                getSegmentFromKind(this.symbolTable.getKindOf(identifier)),
                 this.symbolTable.getIndexOf(identifier)
             );
         }
@@ -342,21 +371,10 @@ class CompilationEngine {
 
         this.eat("symbol", ";");
 
-        let [routine, subroutine] = name.split(".");
+        this.vmWriter.call(name, argsCount);
 
-        const type = this.symbolTable.getTypeOf(routine);
-        const isClassType = !["char", "int", "boolean"].includes(type);
-        if (isClassType) {
-            this.vmWriter.push(
-                this.symbolTable.getKindOf(routine),
-                this.symbolTable.getIndexOf(routine)
-            );
-            this.vmWriter.call(
-                type + (subroutine ? `.${subroutine}` : ""),
-                argsCount + 1
-            );
-        } else this.vmWriter.call(name, argsCount);
-        this.vmWriter.pop("temp", 0); // we don't need return value in raw "do statement()"
+        // we don't need return value in raw "do statement()", so we throw it away
+        this.vmWriter.pop("temp", 0);
 
         this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
@@ -442,27 +460,14 @@ class CompilationEngine {
                 this.eat("symbol", "]");
             } else {
                 // just a variable, not a function or array
-                const variable =
-                    this.symbolTable.subroutineScope[name] ||
-                    this.symbolTable.classScope[name];
+                const variable = this.symbolTable.getVar(name);
 
                 if (!variable) throw new Error("Unknown var: " + name);
 
-                switch (variable.kind) {
-                    case "static":
-                        break;
-                    case "field":
-                        break;
-                    case "argument":
-                        this.vmWriter.push("argument", variable.index);
-                        break;
-                    case "local":
-                        this.vmWriter.push("local", variable.index);
-                        break;
-
-                    default:
-                        throw new Error("Unknown var kind: " + variable.kind);
-                }
+                this.vmWriter.push(
+                    getSegmentFromKind(variable.kind),
+                    variable.index
+                );
             }
         } else if (this.isAtToken("symbol")) {
             if (this.isAtToken("(")) {
