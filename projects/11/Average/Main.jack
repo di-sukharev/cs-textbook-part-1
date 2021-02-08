@@ -8,7 +8,7 @@
 // Inputs some numbers and computes their average
 class Main {
    function void main() {
-     var Array a; 
+     var Array a;
      var int length;
      var int i, sum;
 

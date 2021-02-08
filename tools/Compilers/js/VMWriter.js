@@ -17,6 +17,10 @@ class VMWriter {
         this.write(`pop ${segment} ${value}`);
     }
 
+    add() {
+        this.write("add");
+    }
+
     call(functionName, args) {
         this.write(`call ${functionName} ${args}`);
     }
@@ -46,7 +50,7 @@ class VMWriter {
         // if (op === "*") this.call("Math.mult", 2);
         switch (op) {
             case "+":
-                this.write("add");
+                this.add();
                 break;
             case "-":
                 this.write("sub");

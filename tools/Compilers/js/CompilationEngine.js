@@ -388,7 +388,14 @@ class CompilationEngine {
             const int = this.eat("integerConstant");
             this.vmWriter.push("constant", int);
         } else if (this.isAtToken("stringConstant")) {
-            this.eat("stringConstant");
+            const str = this.eat("stringConstant");
+            this.vmWriter.push("constant", str.length);
+            this.vmWriter.call("String.new", 1);
+
+            for (let i = 0; i < str.length; i++) {
+                this.vmWriter.push("constant", str.charCodeAt(i));
+                this.vmWriter.call("String.appendChar", 2);
+            }
         } else if (this.isAtToken("true", "false", "null", "this")) {
             const keyword = this.eat("keyword");
             this.vmWriter.keywordConstant(keyword);
@@ -409,6 +416,13 @@ class CompilationEngine {
             } else if (this.isAtToken("[")) {
                 this.eat("symbol", "[");
                 this.compileExpression();
+                this.vmWriter.push(
+                    this.symbolTable.getKindOf(name),
+                    this.symbolTable.getIndexOf(name)
+                );
+                this.vmWriter.add();
+                this.vmWriter.pop("pointer", 1);
+                this.vmWriter.push("that", 0);
                 this.eat("symbol", "]");
             } else {
                 // just a variable, not a function or array
