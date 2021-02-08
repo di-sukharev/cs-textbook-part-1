@@ -371,7 +371,23 @@ class CompilationEngine {
 
         this.eat("symbol", ";");
 
-        this.vmWriter.call(name, argsCount);
+        let [routine, subroutine] = name.split(".");
+        const isMethodCall = !subroutine;
+        const type = isMethodCall
+            ? this.className
+            : this.symbolTable.getTypeOf(routine);
+
+        const isClassType = !["char", "int", "boolean"].includes(type);
+        if (isClassType) {
+            this.vmWriter.push(
+                this.symbolTable.getKindOf(routine),
+                this.symbolTable.getIndexOf(routine)
+            );
+            this.vmWriter.call(
+                isMethodCall ? type + `.${routine}` : name,
+                argsCount + 1
+            );
+        } else this.vmWriter.call(name, argsCount);
 
         // we don't need return value in raw "do statement()", so we throw it away
         this.vmWriter.pop("temp", 0);
