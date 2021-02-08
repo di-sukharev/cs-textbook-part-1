@@ -58,9 +58,19 @@ class SymbolTable {
 
     getVar(name) {
         const variable = this.subroutineScope[name] || this.classScope[name];
+
+        return variable;
+    }
+
+    getDefinedVar(name) {
+        const variable = this.getVar(name);
         if (!variable) throw new Error("Variable is not defined: " + name);
 
         return variable;
+    }
+
+    doesVarExist(variable) {
+        return Boolean(this.getVar(variable));
     }
 
     getVarCount(kind) {
@@ -72,15 +82,15 @@ class SymbolTable {
     }
 
     getTypeOf(name) {
-        return this.getVar(name).type;
+        return this.getDefinedVar(name).type;
     }
 
     getKindOf(name) {
-        return this.getVar(name).kind;
+        return this.getDefinedVar(name).kind;
     }
 
     getIndexOf(name) {
-        return this.getVar(name).index;
+        return this.getDefinedVar(name).index;
     }
 
     clearSubroutine() {

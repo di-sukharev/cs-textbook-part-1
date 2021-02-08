@@ -184,7 +184,7 @@ class CompilationEngine {
         this.compileVarDec();
         this.vmWriter.function(
             `${this.className}.${this.subroutine.name}`,
-            this.symbolTable.getVarCount("local")
+            this.symbolTable.getVarCount("var")
         );
 
         if (this.subroutine.kind === "constructor") {
@@ -193,6 +193,9 @@ class CompilationEngine {
                 this.symbolTable.getVarCount("field")
             );
             this.vmWriter.call("Memory.alloc", 1);
+            this.vmWriter.pop("pointer", 0);
+        } else if (this.subroutine.kind === "method") {
+            this.vmWriter.push("argument", 0);
             this.vmWriter.pop("pointer", 0);
         }
 
@@ -352,6 +355,7 @@ class CompilationEngine {
         this.eat("symbol", ";");
 
         if (this.subroutine.type === "void") this.vmWriter.push("constant", 0);
+
         this.vmWriter.return();
 
         this.syntaxAnalyzer.closeXmlTag("returnStatement");
@@ -366,28 +370,26 @@ class CompilationEngine {
         if (this.tryEat("symbol", ".")) name += `.${this.eat("identifier")}`;
 
         this.eat("symbol", "(");
-        const argsCount = this.compileExpressionList();
+        let argsCount = this.compileExpressionList();
         this.eat("symbol", ")");
 
         this.eat("symbol", ";");
 
         let [routine, subroutine] = name.split(".");
-        const isMethodCall = !subroutine;
-        const type = isMethodCall
-            ? this.className
-            : this.symbolTable.getTypeOf(routine);
+        const isClassMethodCall = !subroutine;
+        const isObjMethodCall =
+            !isClassMethodCall && this.symbolTable.doesVarExist(routine);
 
-        const isClassType = !["char", "int", "boolean"].includes(type);
-        if (isClassType) {
-            this.vmWriter.push(
-                this.symbolTable.getKindOf(routine),
-                this.symbolTable.getIndexOf(routine)
-            );
-            this.vmWriter.call(
-                isMethodCall ? type + `.${routine}` : name,
-                argsCount + 1
-            );
-        } else this.vmWriter.call(name, argsCount);
+        if (isClassMethodCall || isObjMethodCall) {
+            this.vmWriter.push("pointer", 0);
+            argsCount++;
+        }
+
+        if (isClassMethodCall) name = this.className + `.${name}`;
+        else if (isObjMethodCall)
+            name = this.symbolTable.getTypeOf(routine) + `.${subroutine}`;
+
+        this.vmWriter.call(name, argsCount);
 
         // we don't need return value in raw "do statement()", so we throw it away
         this.vmWriter.pop("temp", 0);
@@ -467,7 +469,7 @@ class CompilationEngine {
                 this.eat("symbol", "[");
                 this.compileExpression();
                 this.vmWriter.push(
-                    this.symbolTable.getKindOf(name),
+                    getSegmentFromKind(this.symbolTable.getKindOf(name)),
                     this.symbolTable.getIndexOf(name)
                 );
                 this.vmWriter.add();

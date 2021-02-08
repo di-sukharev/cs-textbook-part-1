@@ -100,7 +100,7 @@ class VMWriter {
                 this.push("constant", 0);
                 break;
             case "this":
-                // todo: call Memory.alloc
+                this.push("pointer", 0);
                 break;
 
             default:
