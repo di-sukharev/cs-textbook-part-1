@@ -1,0 +1,237 @@
+function Square.new 0
+push argument 0
+pop field undefined
+push argument 1
+pop field 1
+push argument 2
+pop field 2
+push undefined undefined
+call undefined 1
+pop temp 0
+return
+function Square.dispose 0
+push undefined undefined
+call undefined.deAlloc 2
+pop temp 0
+push constant 0
+return
+function Square.draw 0
+push constant 0
+not
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+push constant 0
+return
+function Square.erase 0
+push constant 0
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+push constant 0
+return
+function Square.incSize 0
+add
+push constant 254
+lt
+add
+push constant 510
+lt
+and
+if-goto IF_TRUE_0
+goto IF_FALSE_0
+label IF_TRUE_0
+push undefined undefined
+call undefined 1
+pop temp 0
+push constant 2
+add
+pop field 2
+push undefined undefined
+call undefined 1
+pop temp 0
+goto IF_END_0
+label IF_FALSE_0
+label IF_END_0
+push constant 0
+return
+function Square.decSize 0
+push constant 2
+gt
+if-goto IF_TRUE_1
+goto IF_FALSE_1
+label IF_TRUE_1
+push undefined undefined
+call undefined 1
+pop temp 0
+push constant 2
+sub
+pop field 2
+push undefined undefined
+call undefined 1
+pop temp 0
+goto IF_END_1
+label IF_FALSE_1
+label IF_END_1
+push constant 0
+return
+function Square.moveUp 0
+push constant 1
+gt
+if-goto IF_TRUE_2
+goto IF_FALSE_2
+label IF_TRUE_2
+push constant 0
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+push constant 1
+sub
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+push constant 2
+sub
+pop field 1
+push constant 0
+not
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+push constant 1
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+goto IF_END_2
+label IF_FALSE_2
+label IF_END_2
+push constant 0
+return
+function Square.moveDown 0
+add
+push constant 254
+lt
+if-goto IF_TRUE_3
+goto IF_FALSE_3
+label IF_TRUE_3
+push constant 0
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+push constant 1
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+push constant 2
+add
+pop field 1
+push constant 0
+not
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+push constant 1
+sub
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+goto IF_END_3
+label IF_FALSE_3
+label IF_END_3
+push constant 0
+return
+function Square.moveLeft 0
+push constant 1
+gt
+if-goto IF_TRUE_4
+goto IF_FALSE_4
+label IF_TRUE_4
+push constant 0
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+push constant 1
+sub
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+push constant 2
+sub
+pop field undefined
+push constant 0
+not
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+push constant 1
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+goto IF_END_4
+label IF_FALSE_4
+label IF_END_4
+push constant 0
+return
+function Square.moveRight 0
+add
+push constant 510
+lt
+if-goto IF_TRUE_5
+goto IF_FALSE_5
+label IF_TRUE_5
+push constant 0
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+push constant 1
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+push constant 2
+add
+pop field undefined
+push constant 0
+not
+push undefined undefined
+call undefined.setColor 2
+pop temp 0
+add
+push constant 1
+sub
+add
+add
+push undefined undefined
+call undefined.drawRectangle 5
+pop temp 0
+goto IF_END_5
+label IF_FALSE_5
+label IF_END_5
+push constant 0
+return
