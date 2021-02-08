@@ -12,21 +12,23 @@ const [
     outputFile = path.basename(inputFile, path.extname(inputFile)) + ".hack",
 ] = process.argv;
 
-console.info("args: ", { inputFile, outputFile });
+console.log("args: ", { inputFile, outputFile });
 
 if (!inputFile.endsWith(".asm"))
     throw new Error("Only .asm file can be assembled into .hack");
 
 const assembler = new Assembler();
 
-console.info("Started assembling ⏳");
+console.log("Started assembling ⏳");
 
 const started = performance.now();
+
 const assembly = fs.readFileSync(inputFile, "utf8");
 const binary = assembler.assemble(assembly);
 fs.writeFileSync(`${path.dirname(inputFile)}/${outputFile}`, binary);
+
 const finished = performance.now();
 
-console.info(
+console.log(
     `Finished assembling 🌞 took ${(finished - started).toFixed(2)} ms`
 );

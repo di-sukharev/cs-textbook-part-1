@@ -8,7 +8,6 @@ class Tokenizer {
 
         this.tokens = tokens;
         this.currentToken = tokens[this.iterator];
-        this.nextToken = tokens[this.iterator + 1];
 
         return this;
     }
@@ -16,7 +15,6 @@ class Tokenizer {
     next() {
         this.iterator++;
         this.currentToken = this.tokens[this.iterator];
-        this.nextToken = this.tokens[this.iterator + 1];
     }
 
     _tokenize(jackSourceCode) {
