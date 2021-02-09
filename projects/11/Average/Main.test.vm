@@ -50,8 +50,8 @@ push local 1
 lt
 not
 if-goto WHILE_END_0
-push local 0
 push local 2
+push local 0
 add
 push constant 16
 call String.new 1
