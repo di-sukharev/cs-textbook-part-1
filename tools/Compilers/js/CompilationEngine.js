@@ -111,6 +111,34 @@ class CompilationEngine {
         else throw new Error("Type was expected, but got: ", ...currentToken);
     }
 
+    // TODO: move to VMwriter
+    methodCall(name) {
+        let [routine, subroutine] = name.split(".");
+
+        const isClassMethodCall = !subroutine;
+        const isObjMethodCall =
+            !isClassMethodCall && this.symbolTable.doesVarExist(routine);
+
+        let argsCount = 0;
+
+        if (isClassMethodCall) {
+            name = this.className + `.${name}`;
+
+            this.vmWriter.push("pointer", 0);
+            argsCount++;
+        } else if (isObjMethodCall) {
+            name = this.symbolTable.getTypeOf(routine) + `.${subroutine}`;
+
+            this.vmWriter.push(
+                getSegmentFromKind(this.symbolTable.getKindOf(routine)),
+                this.symbolTable.getIndexOf(routine)
+            );
+            argsCount++;
+        }
+
+        return { argsCount, transformedName: name };
+    }
+
     compileClass() {
         this.syntaxAnalyzer.openXmlTag("class");
 
@@ -283,6 +311,7 @@ class CompilationEngine {
         const IF_TRUE = `IF_TRUE_${counter}`;
         const IF_FALSE = `IF_FALSE_${counter}`;
         const IF_END = `IF_END_${counter}`;
+        this.IF_COUNTER++;
 
         this.syntaxAnalyzer.openXmlTag("ifStatement");
 
@@ -309,8 +338,6 @@ class CompilationEngine {
         this.vmWriter.label(IF_END);
 
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
-
-        this.IF_COUNTER++;
     }
 
     WHILE_COUNTER = 0;
@@ -320,6 +347,7 @@ class CompilationEngine {
         const counter = this.WHILE_COUNTER;
         const startLabel = `WHILE_START_${counter}`;
         const endLabel = `WHILE_END_${counter}`;
+        this.WHILE_COUNTER++;
 
         this.vmWriter.label(startLabel);
 
@@ -339,8 +367,6 @@ class CompilationEngine {
         this.vmWriter.label(endLabel);
 
         this.syntaxAnalyzer.closeXmlTag("whileStatement");
-
-        this.WHILE_COUNTER++;
     }
 
     compileReturn() {
@@ -366,32 +392,17 @@ class CompilationEngine {
         if (this.tryEat("symbol", ".")) name += `.${this.eat("identifier")}`;
 
         this.eat("symbol", "(");
-        let argsCount = this.compileExpressionList();
+
+        // todo: move to VMwriter
+        // todo: return values are bad, this procedure shouldn't return any values
+        let { argsCount, transformedName } = this.methodCall(name);
+
+        argsCount += this.compileExpressionList();
         this.eat("symbol", ")");
 
         this.eat("symbol", ";");
 
-        let [routine, subroutine] = name.split(".");
-        const isClassMethodCall = !subroutine;
-        const isObjMethodCall =
-            !isClassMethodCall && this.symbolTable.doesVarExist(routine);
-
-        if (isClassMethodCall) {
-            name = this.className + `.${name}`;
-
-            this.vmWriter.push("pointer", 0);
-            argsCount++;
-        } else if (isObjMethodCall) {
-            name = this.symbolTable.getTypeOf(routine) + `.${subroutine}`;
-
-            this.vmWriter.push(
-                getSegmentFromKind(this.symbolTable.getKindOf(routine)),
-                this.symbolTable.getIndexOf(routine)
-            );
-            argsCount++;
-        }
-
-        this.vmWriter.call(name, argsCount);
+        this.vmWriter.call(transformedName, argsCount);
         // we don't need return value in raw "do statement()", so we throw it away
         this.vmWriter.pop("temp", 0);
 
@@ -458,9 +469,12 @@ class CompilationEngine {
                 name += this.eat("symbol", ".");
                 name += this.eat("identifier");
                 this.eat("symbol", "(");
-                const argsCount = this.compileExpressionList();
+                let { argsCount, transformedName } = this.methodCall(name);
+
+                argsCount += this.compileExpressionList();
                 this.eat("symbol", ")");
-                this.vmWriter.call(name, argsCount);
+
+                this.vmWriter.call(transformedName, argsCount);
             } else if (this.isAtToken("(")) {
                 this.eat("symbol", "(");
                 const argsCount = this.compileExpressionList();
