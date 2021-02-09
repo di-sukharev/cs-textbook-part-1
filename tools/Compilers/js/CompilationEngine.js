@@ -507,8 +507,6 @@ class CompilationEngine {
                 // just a variable, not a function or array
                 const variable = this.symbolTable.getVar(name);
 
-                if (!variable) throw new Error("Unknown var: " + name);
-
                 this.vmWriter.push(
                     getSegmentFromKind(variable.kind),
                     variable.index
