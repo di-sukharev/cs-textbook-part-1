@@ -268,10 +268,6 @@ class CompilationEngine {
             this.vmWriter.push("temp", 0);
             this.vmWriter.pop("that", 0);
         } else {
-            console.log(
-                this.symbolTable,
-                this.symbolTable.getIndexOf(identifier)
-            );
             this.vmWriter.pop(
                 getSegmentFromKind(this.symbolTable.getKindOf(identifier)),
                 this.symbolTable.getIndexOf(identifier)
@@ -380,17 +376,19 @@ class CompilationEngine {
         const isObjMethodCall =
             !isClassMethodCall && this.symbolTable.doesVarExist(routine);
 
-        if (isClassMethodCall || isObjMethodCall) {
+        if (isClassMethodCall) {
+            name = this.className + `.${name}`;
+
             this.vmWriter.push("pointer", 0);
+            argsCount++;
+        } else if (isObjMethodCall) {
+            name = this.symbolTable.getTypeOf(routine) + `.${subroutine}`;
+
+            this.vmWriter.push("this", this.symbolTable.getIndexOf(routine));
             argsCount++;
         }
 
-        if (isClassMethodCall) name = this.className + `.${name}`;
-        else if (isObjMethodCall)
-            name = this.symbolTable.getTypeOf(routine) + `.${subroutine}`;
-
         this.vmWriter.call(name, argsCount);
-
         // we don't need return value in raw "do statement()", so we throw it away
         this.vmWriter.pop("temp", 0);
 
