@@ -384,7 +384,10 @@ class CompilationEngine {
         } else if (isObjMethodCall) {
             name = this.symbolTable.getTypeOf(routine) + `.${subroutine}`;
 
-            this.vmWriter.push("this", this.symbolTable.getIndexOf(routine));
+            this.vmWriter.push(
+                getSegmentFromKind(this.symbolTable.getKindOf(routine)),
+                this.symbolTable.getIndexOf(routine)
+            );
             argsCount++;
         }
 
