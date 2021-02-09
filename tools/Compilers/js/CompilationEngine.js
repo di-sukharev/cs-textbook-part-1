@@ -193,6 +193,14 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("parameterList");
 
         let hasMore = !this.isAtToken(")");
+
+        if (this.subroutine.kind === "method")
+            this.symbolTable.define({
+                kind: "arg",
+                name: "this",
+                type: this.className,
+            });
+
         while (hasMore) {
             const type = this.eatType();
             const name = this.eat("identifier");
@@ -307,11 +315,13 @@ class CompilationEngine {
 
     IF_COUNTER = 0;
     compileIf() {
+        // todo: move this to "new Counter()"
         const counter = this.IF_COUNTER;
         const IF_TRUE = `IF_TRUE_${counter}`;
         const IF_FALSE = `IF_FALSE_${counter}`;
         const IF_END = `IF_END_${counter}`;
         this.IF_COUNTER++;
+        // ---
 
         this.syntaxAnalyzer.openXmlTag("ifStatement");
 
@@ -342,12 +352,14 @@ class CompilationEngine {
 
     WHILE_COUNTER = 0;
     compileWhile() {
-        this.syntaxAnalyzer.openXmlTag("whileStatement");
-
+        // todo: move this to "new Counter()"
         const counter = this.WHILE_COUNTER;
         const startLabel = `WHILE_START_${counter}`;
         const endLabel = `WHILE_END_${counter}`;
         this.WHILE_COUNTER++;
+        // ---
+
+        this.syntaxAnalyzer.openXmlTag("whileStatement");
 
         this.vmWriter.label(startLabel);
 
