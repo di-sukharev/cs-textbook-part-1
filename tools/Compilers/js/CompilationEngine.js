@@ -284,11 +284,11 @@ class CompilationEngine {
         this.eat("keyword", "let");
         const identifier = this.eat("identifier");
         if (this.tryEat("symbol", "[")) {
+            this.compileExpression();
             this.vmWriter.push(
-                "local",
+                getSegmentFromKind(this.symbolTable.getKindOf(identifier)),
                 this.symbolTable.getIndexOf(identifier)
             );
-            this.compileExpression();
             this.vmWriter.add();
 
             this.eat("symbol", "]");
