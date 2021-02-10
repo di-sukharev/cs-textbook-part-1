@@ -18,5 +18,5 @@ const counter = () => {
 
 module.exports = {
     breakLines,
-    counter,
+    counter
 };

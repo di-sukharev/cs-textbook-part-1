@@ -1,7 +1,7 @@
 const INSTRUCTIONS = {
     A: "ADDRESS",
     C: "COMPUTE",
-    L: "LABEL",
+    L: "LABEL"
 };
 
 class Assembler {
@@ -34,7 +34,7 @@ class Assembler {
         LCL: 1,
         ARG: 2,
         THIS: 3,
-        THAT: 4,
+        THAT: 4
     };
 
     constructor() {
@@ -42,13 +42,13 @@ class Assembler {
     }
 
     assemble(asmFile) {
-        const noComments = (line) =>
+        const noComments = line =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
                 : line
             ).trim();
-        const noWhitespaces = (line) => Boolean(line);
-        const noLabels = (line) => this._getType(line) !== INSTRUCTIONS.L;
+        const noWhitespaces = line => Boolean(line);
+        const noLabels = line => this._getType(line) !== INSTRUCTIONS.L;
         const inLines = "\r\n";
 
         const asmCode = asmFile
@@ -99,10 +99,10 @@ class Assembler {
     }
 
     _translateA(instruction) {
-        const decToBin = (dec) => (+dec).toString(2);
-        const fillWith15Bits = (bin) =>
+        const decToBin = dec => (+dec).toString(2);
+        const fillWith15Bits = bin =>
             "000000000000000".slice(bin.length) + bin;
-        const getValueOfInstructionA = (instruction) => instruction.slice(1);
+        const getValueOfInstructionA = instruction => instruction.slice(1);
 
         let value = getValueOfInstructionA(instruction);
 
@@ -169,14 +169,14 @@ class Assembler {
         // if (symbols && symbols.length >= 2) console.log({ symbols });
         // prettier-ignore
         switch (symbols) {
-            case "M":   return '001';
-            case "D":   return '010';
-            case "MD":  return '011';
-            case "A":   return '100';
-            case "AM":  return '101';
-            case "AD":  return '110';
-            case "AMD": return '111';
-            case null:  return '000';
+            case "M":   return "001";
+            case "D":   return "010";
+            case "MD":  return "011";
+            case "A":   return "100";
+            case "AM":  return "101";
+            case "AD":  return "110";
+            case "AMD": return "111";
+            case null:  return "000";
             default:    return null;
         }
     }
@@ -185,36 +185,36 @@ class Assembler {
         // prettier-ignore
         switch (symbols) {
             // a = 0
-            case "0":   return '0101010';
-            case "1":   return '0111111';
-            case "-1":  return '0111010';
-            case "D":   return '0001100';
-            case "A":   return '0110000';
-            case "!D":  return '0001101';
-            case "!A":  return '0110001';
-            case "-D":  return '0001111';
-            case "-A":  return '0110011';
-            case "D+1": return '0011111';
-            case "A+1": return '0110111';
-            case "D-1": return '0001110';
-            case "A-1": return '0110010';
-            case "D+A": return '0000010';
-            case "D-A": return '0010011';
-            case "A-D": return '0000111';
-            case "D&A": return '0000000';
-            case "D|A": return '0010101';
+            case "0":   return "0101010";
+            case "1":   return "0111111";
+            case "-1":  return "0111010";
+            case "D":   return "0001100";
+            case "A":   return "0110000";
+            case "!D":  return "0001101";
+            case "!A":  return "0110001";
+            case "-D":  return "0001111";
+            case "-A":  return "0110011";
+            case "D+1": return "0011111";
+            case "A+1": return "0110111";
+            case "D-1": return "0001110";
+            case "A-1": return "0110010";
+            case "D+A": return "0000010";
+            case "D-A": return "0010011";
+            case "A-D": return "0000111";
+            case "D&A": return "0000000";
+            case "D|A": return "0010101";
             // a = 1
-            case "M":   return '1110000';
-            case "!M":  return '1110001';
-            case "-M":  return '1110011';
-            case "M+1": return '1110111';
-            case "M-1": return '1110010';
-            case "D+M": return '1000010';
-            case "D-M": return '1000010';
-            case "M-D": return '1000111';
-            case "D&M": return '1000000';
-            case "D|M": return '1010101';
-            case null:  return '';
+            case "M":   return "1110000";
+            case "!M":  return "1110001";
+            case "-M":  return "1110011";
+            case "M+1": return "1110111";
+            case "M-1": return "1110010";
+            case "D+M": return "1000010";
+            case "D-M": return "1000010";
+            case "M-D": return "1000111";
+            case "D&M": return "1000000";
+            case "D|M": return "1010101";
+            case null:  return "";
             default:    return null;
         }
     }
@@ -222,14 +222,14 @@ class Assembler {
     _jump(symbols) {
         // prettier-ignore
         switch (symbols) {
-            case "JGT":     return '001';
-            case "JEQ":     return '010';
-            case "JGE":     return '011';
-            case "JLT":     return '100';
-            case "JNE":     return '101';
-            case "JLE":     return '110';
-            case "JMP":     return '111';
-            case null:      return '000';
+            case "JGT":     return "001";
+            case "JEQ":     return "010";
+            case "JGE":     return "011";
+            case "JLT":     return "100";
+            case "JNE":     return "101";
+            case "JLE":     return "110";
+            case "JMP":     return "111";
+            case null:      return "000";
             default:        return null;
         }
     }

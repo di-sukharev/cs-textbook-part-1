@@ -47,61 +47,61 @@ class VMWriter {
 
     operation(op) {
         switch (op) {
-        case "+":
-            this.add();
-            break;
-        case "-":
-            this.write("sub");
-            break;
-        case ">":
-            this.write("gt");
-            break;
-        case "<":
-            this.write("lt");
-            break;
-        case "&":
-            this.write("and");
-            break;
-        case "|":
-            this.write("or");
-            break;
-        case "=":
-            this.write("eq");
-            break;
-        case "*":
-            this.call("Math.multiply", 2);
-            break;
-        case "/":
-            this.call("Math.divide", 2);
-            break;
-        case "neg":
-            this.write("neg");
-            break;
-        case "not":
-            this.write("not");
-            break;
-        default:
-            throw new Error("Unknown op: " + op);
+            case "+":
+                this.add();
+                break;
+            case "-":
+                this.write("sub");
+                break;
+            case ">":
+                this.write("gt");
+                break;
+            case "<":
+                this.write("lt");
+                break;
+            case "&":
+                this.write("and");
+                break;
+            case "|":
+                this.write("or");
+                break;
+            case "=":
+                this.write("eq");
+                break;
+            case "*":
+                this.call("Math.multiply", 2);
+                break;
+            case "/":
+                this.call("Math.divide", 2);
+                break;
+            case "neg":
+                this.write("neg");
+                break;
+            case "not":
+                this.write("not");
+                break;
+            default:
+                throw new Error("Unknown op: " + op);
         }
     }
 
     keywordConstant(keyword) {
         switch (keyword) {
-        case "true":
-            this.push("constant", 0);
-            this.operation("not");
-            break;
-        case "false":
-            this.push("constant", 0);
-            break;
-        case "null":
-            this.push("constant", 0);
-            break;
-        case "this":
-            this.push("pointer", 0);
-            break;
-        default:
-            throw new Error("Unknown keyword constant: " + keyword);
+            case "true":
+                this.push("constant", 0);
+                this.operation("not");
+                break;
+            case "false":
+                this.push("constant", 0);
+                break;
+            case "null":
+                this.push("constant", 0);
+                break;
+            case "this":
+                this.push("pointer", 0);
+                break;
+            default:
+                throw new Error("Unknown keyword constant: " + keyword);
         }
     }
 }

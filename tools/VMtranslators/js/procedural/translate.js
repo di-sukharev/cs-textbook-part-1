@@ -3,7 +3,7 @@ const path = require("path");
 const writer = require("./writer.js");
 
 function translateDirectory(inputDirectoryName) {
-    const isVmFile = (fileName) => fileName.endsWith(".vm");
+    const isVmFile = fileName => fileName.endsWith(".vm");
 
     let assemblyFile = writer.init() + "\n";
 
@@ -11,7 +11,7 @@ function translateDirectory(inputDirectoryName) {
 
     fs.readdirSync(inputDirectoryName)
         .filter(isVmFile)
-        .forEach((fileName) => {
+        .forEach(fileName => {
             const vmCode = fs.readFileSync(
                 `${inputDirectoryName}/${fileName}`,
                 "utf8"
@@ -27,9 +27,9 @@ function translateDirectory(inputDirectoryName) {
 }
 
 function translateFile(vmCode) {
-    const removeComments = (line) =>
+    const removeComments = line =>
         (line.includes("//") ? line.slice(0, line.indexOf("//")) : line).trim();
-    const removeWhitespaces = (line) => !!line;
+    const removeWhitespaces = line => !!line;
     const intoLines = "\r\n";
 
     const assemblyFile = vmCode

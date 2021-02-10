@@ -2,7 +2,7 @@ const SEGMENTS = {
     argument: "ARG",
     local: "LCL",
     this: "THIS",
-    that: "THAT",
+    that: "THAT"
 };
 
 const advanceSP = "@SP M=M+1 A=M-1 M=D";
@@ -14,10 +14,10 @@ const INSTRUCTIONS = {
     advanceSP,
     SPtoD,
     goBack,
-    SPtoDandGoBack,
+    SPtoDandGoBack
 };
 
 module.exports = {
     SEGMENTS,
-    INSTRUCTIONS,
+    INSTRUCTIONS
 };

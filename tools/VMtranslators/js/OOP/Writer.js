@@ -4,7 +4,7 @@ const SEGMENTS = {
     argument: "ARG",
     local: "LCL",
     this: "THIS",
-    that: "THAT",
+    that: "THAT"
 };
 
 class Writer {
@@ -34,7 +34,7 @@ class Writer {
     _SPtoDandGoBack = `${this._SPtoD} ${this._goBack}`;
 
     init() {
-        const initSP = `@256 D=A @SP M=D`;
+        const initSP = "@256 D=A @SP M=D";
         const SysInit = this.call("Sys.init", 0);
         const endlessLoop = "(endlessloop) @endlessloop 0;JMP";
         return breakLines`//initialization-start ${initSP} ${SysInit} ${endlessLoop} //initialization-end`;
@@ -45,10 +45,10 @@ class Writer {
 
         const popSegment = (seg, val) =>
             breakLines`@${seg} D=M @${val} D=D+A ${_moveDtoSP}`;
-        const popTemp = (val) => breakLines`@${val} D=A ${_moveDtoSP}`;
+        const popTemp = val => breakLines`@${val} D=A ${_moveDtoSP}`;
 
-        const popPointer = (seg) => breakLines`@${seg} D=A ${_moveDtoSP}`;
-        const popStatic = (val) =>
+        const popPointer = seg => breakLines`@${seg} D=A ${_moveDtoSP}`;
+        const popStatic = val =>
             breakLines`@${this.currentFile}.${val} D=A ${_moveDtoSP}`;
 
         switch (segment) {
@@ -67,15 +67,15 @@ class Writer {
     }
 
     push(segment, value) {
-        const pushConstant = (val) =>
+        const pushConstant = val =>
             breakLines`@${val} D=A ${this._advanceSP}`;
         const pushSegment = (seg, val) =>
             breakLines`@${seg} D=M @${val} A=D+A D=M ${this._advanceSP}`;
-        const pushTemp = (val) =>
+        const pushTemp = val =>
             breakLines`@${val} A=A D=M ${this._advanceSP}`;
 
-        const pushPointer = (seg) => breakLines`@${seg} D=M ${this._advanceSP}`;
-        const pushStatic = (val) =>
+        const pushPointer = seg => breakLines`@${seg} D=M ${this._advanceSP}`;
+        const pushStatic = val =>
             breakLines`@${this.currentFile}.${val} D=M ${this._advanceSP}`;
 
         switch (segment) {

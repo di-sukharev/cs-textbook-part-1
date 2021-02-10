@@ -20,15 +20,15 @@ class Tokenizer {
     _tokenize(jackSourceCode) {
         const keywords =
                 "(?<keyword>class|constructor|function|method|field|static|var|int|char|boolean|void|true|false|null|this|let|do|if|else|while|return)\\b",
-            symbols = "(?<symbol>[{}()\\[\\]\\.;,&\\+\\-\\*\\/|<>=~])",
-            identifiers = "(?<identifier>\\w+)",
-            integers = "(?<integerConstant>\\d+)",
-            strings = "(?:\\\"(?<stringConstant>[^\\\"]*?)\\\")",
-            comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
-            whitespace = "(?<whitespace>\\s+)",
-            unknown = "(?<unknown>.)",
-            pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${strings}|${identifiers}|${unknown}`,
-            regex = new RegExp(pattern, "gys");
+              symbols = "(?<symbol>[{}()\\[\\]\\.;,&\\+\\-\\*\\/|<>=~])",
+              identifiers = "(?<identifier>\\w+)",
+              integers = "(?<integerConstant>\\d+)",
+              strings = "(?:\\\"(?<stringConstant>[^\\\"]*?)\\\")",
+              comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
+              whitespace = "(?<whitespace>\\s+)",
+              unknown = "(?<unknown>.)",
+              pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${strings}|${identifiers}|${unknown}`,
+              regex = new RegExp(pattern, "gys");
 
         const matches = jackSourceCode.matchAll(regex);
 
