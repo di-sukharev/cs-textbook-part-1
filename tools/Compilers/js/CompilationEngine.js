@@ -9,22 +9,25 @@ const SymbolTable = require("./SymbolTable");
 const SyntaxAnalyzer = require("./SyntaxAnalyzer");
 const VMWriter = require("./VMWriter");
 
-function getSegmentFromKind(kind) {
-    switch (kind) {
-        case "static":
-            return "static";
-        case "field":
-            return "this";
-        case "arg":
-            return "argument";
-        case "var":
-            return "local";
-
-        default:
-            throw new Error("Unknown var kind: " + kind);
-    }
-}
-
+/**
+ * CompilationEngine takes Tokenizer as input and goes through every token one by one.
+ * Recursively going through tokens, CompilationEngine verifies if tokens stick to the grammar.
+ * If some tokens are out of the grammar order — error is thrown in `eat()` method.
+ * Otherwise programm is compiled to XML and VM code successfully.
+ * ---
+ * CompilationEngine uses:
+ * 1. SymbolTable to store current class and subroutine scope variables.
+ * 2. SyntaxAnalyzer to create XML tree.
+ * 3. VMWriter to create VM code.
+ * ---
+ * Compilation process:
+ * 1. Starts compilation with the first token, running compileClass as a first method and entry point. First token should be "class keyword".
+ * 2. Recursively goes through `[compileClass -> compileClassVarDec, [compileSubroutineDec -> compileParameterList, [compileSubroutineBody -> … ]]]`
+ * 3. In the end `syntaxAnalyzer.XML` has XML tree and `vmWriter.VM` has VM code.
+ * ---
+ * @constructor (tokenizer: Tokenizer) — an object containing `next()` method and currentToken field.
+ * The `next()` method is used to iterate over tokens. Current token is available via currentToken field.
+ */
 class CompilationEngine {
     // todo: move this to SymbolTable
     className = null;
@@ -525,6 +528,22 @@ class CompilationEngine {
         } else throw new Error("Unexpected term");
 
         this.syntaxAnalyzer.closeXmlTag("term");
+    }
+}
+
+function getSegmentFromKind(kind) {
+    switch (kind) {
+        case "static":
+            return "static";
+        case "field":
+            return "this";
+        case "arg":
+            return "argument";
+        case "var":
+            return "local";
+
+        default:
+            throw new Error("Unknown var kind: " + kind);
     }
 }
 
