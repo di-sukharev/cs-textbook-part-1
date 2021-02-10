@@ -317,6 +317,7 @@ class CompilationEngine {
 
         this.eat("keyword", "let");
         const identifier = this.eat("identifier");
+        
         if (this.tryEat("symbol", "[")) {
             this.compileExpression();
 
@@ -329,6 +330,7 @@ class CompilationEngine {
             this.eat("symbol", "]");
             isArray = true;
         }
+
         this.eat("symbol", "=");
         this.compileExpression();
         this.eat("symbol", ";");
@@ -491,8 +493,7 @@ class CompilationEngine {
         let op = null;
         let hasMore = true;
         
-        while (hasMore) {
-            
+        while (hasMore) {         
             this.compileTerm();
 
             if (this.isAtToken("+", "-", "*", "/", "&", "|", "<", ">", "=")) {
@@ -502,7 +503,6 @@ class CompilationEngine {
                 if (op) this.vmWriter.operation(op);
                 hasMore = false;
             }
-
         }
 
         this.syntaxAnalyzer.closeXmlTag("expression");
@@ -513,14 +513,16 @@ class CompilationEngine {
      * keywordConstant | varName '[' expression ']' |
      * subroutineCall | '(' expression ')' | unaryOp term`
      */
-    compileTerm() {
+    compileTerm() { // TODO: rewrite to switch!!!
         this.syntaxAnalyzer.openXmlTag("term");
-
-        if (this.isAtToken("integerConstant")) {
+      
+        /* eslint-disable padded-blocks */
         
+        if (this.isAtToken("integerConstant")) {
+            
             const int = this.eat("integerConstant");
             this.vmWriter.push("constant", int);
-        
+
         } else if (this.isAtToken("stringConstant")) {
             
             const str = this.eat("stringConstant");
@@ -533,31 +535,28 @@ class CompilationEngine {
             }
 
         } else if (this.isAtToken("true", "false", "null", "this")) {
-        
+            
             const keyword = this.eat("keyword");
             this.vmWriter.keywordConstant(keyword);
 
         } else if (this.isAtToken("identifier")) {
-            
             let name = this.eat("identifier");
 
             if (this.isAtToken(".")) {
-            
+                // is subrotine call
                 name += this.eat("symbol", ".");
                 name += this.eat("identifier");
                 this.eat("symbol", "(");
                 this.compileMethodCall(name);
                 this.eat("symbol", ")");
-            
             } else if (this.isAtToken("(")) {
-                
+                // is method call
                 this.eat("symbol", "(");
                 const argsCount = this.compileExpressionList();
                 this.eat("symbol", ")");
                 this.vmWriter.call(name, argsCount);
-
             } else if (this.isAtToken("[")) {
-
+                // is array element read
                 this.eat("symbol", "[");
                 this.compileExpression();
                 this.eat("symbol", "]");
@@ -570,8 +569,8 @@ class CompilationEngine {
                 this.vmWriter.add();
                 this.vmWriter.pop("pointer", 1);
                 this.vmWriter.push("that", 0);
-
-            } else { // just a variable, not a function or array
+            } else {
+                // just a variable, not a function or array
                 const variable = this.symbolTable.getDefinedVar(name);
                 this.vmWriter.push(
                     getSegmentFromKind(variable.kind),
@@ -579,19 +578,14 @@ class CompilationEngine {
                 );
             }
         } else if (this.isAtToken("symbol")) {
-          
             if (this.isAtToken("(")) {
-
                 this.eat("symbol", "(");
                 this.compileExpression();
                 this.eat("symbol", ")");
-          
             } else if (this.isAtToken("-", "~")) {
-          
                 const op = this.eat("symbol");
                 this.compileTerm();
                 this.vmWriter.operation(op === "-" ? "neg" : "not");
-          
             } else throw new Error("Unexpected symbol");
         } else throw new Error("Unexpected term");
 
