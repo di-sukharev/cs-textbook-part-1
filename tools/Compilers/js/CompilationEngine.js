@@ -541,19 +541,24 @@ class CompilationEngine {
 
             if (this.isAtToken(".")) {
                 // is subrotine call
+                
                 name += this.eat("symbol", ".");
                 name += this.eat("identifier");
                 this.eat("symbol", "(");
                 this.compileMethodCall(name);
                 this.eat("symbol", ")");
+
             } else if (this.isAtToken("(")) {
                 // is method call
+
                 this.eat("symbol", "(");
                 const argsCount = this.compileExpressionList();
                 this.eat("symbol", ")");
                 this.vmWriter.call(name, argsCount);
+
             } else if (this.isAtToken("[")) {
                 // is array element read
+
                 this.eat("symbol", "[");
                 this.compileExpression();
                 this.eat("symbol", "]");
@@ -566,23 +571,31 @@ class CompilationEngine {
                 this.vmWriter.add();
                 this.vmWriter.pop("pointer", 1);
                 this.vmWriter.push("that", 0);
+                
             } else {
+
                 // just a variable, not a function or array
                 const variable = this.symbolTable.getDefinedVar(name);
                 this.vmWriter.push(
                     getSegmentFromKind(variable.kind),
                     variable.index
                 );
+
             }
+
         } else if (this.isAtToken("symbol")) {
+
             if (this.isAtToken("(")) {
                 this.eat("symbol", "(");
                 this.compileExpression();
                 this.eat("symbol", ")");
+
             } else if (this.isAtToken("-", "~")) {
+                
                 const op = this.eat("symbol");
                 this.compileTerm();
                 this.vmWriter.operation(op === "-" ? "neg" : "not");
+            
             } else throw new Error("Unexpected symbol");
         } else throw new Error("Unexpected term");
 

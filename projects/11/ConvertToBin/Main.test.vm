@@ -32,38 +32,38 @@ push local 1
 push constant 16
 gt
 not
-if-goto IF_TRUE_0
-goto IF_FALSE_0
-label IF_TRUE_0
+if-goto IF_TRUE_1
+goto IF_FALSE_1
+label IF_TRUE_1
 push argument 0
 push local 0
 and
 push constant 0
 eq
 not
-if-goto IF_TRUE_1
-goto IF_FALSE_1
-label IF_TRUE_1
+if-goto IF_TRUE_2
+goto IF_FALSE_2
+label IF_TRUE_2
 push constant 8000
 push local 1
 add
 push constant 1
 call Memory.poke 2
 pop temp 0
-goto IF_END_1
-label IF_FALSE_1
+goto IF_END_2
+label IF_FALSE_2
 push constant 8000
 push local 1
 add
 push constant 0
 call Memory.poke 2
 pop temp 0
-label IF_END_1
-goto IF_END_0
-label IF_FALSE_0
+label IF_END_2
+goto IF_END_1
+label IF_FALSE_1
 push constant 0
 pop local 2
-label IF_END_0
+label IF_END_1
 goto WHILE_START_0
 label WHILE_END_0
 push constant 0
@@ -72,25 +72,25 @@ function Main.nextMask 0
 push argument 0
 push constant 0
 eq
-if-goto IF_TRUE_2
-goto IF_FALSE_2
-label IF_TRUE_2
+if-goto IF_TRUE_3
+goto IF_FALSE_3
+label IF_TRUE_3
 push constant 1
 return
-goto IF_END_2
-label IF_FALSE_2
+goto IF_END_3
+label IF_FALSE_3
 push argument 0
 push constant 2
 call Math.multiply 2
 return
-label IF_END_2
+label IF_END_3
 function Main.fillMemory 0
-label WHILE_START_1
+label WHILE_START_4
 push argument 1
 push constant 0
 gt
 not
-if-goto WHILE_END_1
+if-goto WHILE_END_4
 push argument 0
 push argument 2
 call Memory.poke 2
@@ -103,7 +103,7 @@ push argument 0
 push constant 1
 add
 pop argument 0
-goto WHILE_START_1
-label WHILE_END_1
+goto WHILE_START_4
+label WHILE_END_4
 push constant 0
 return
