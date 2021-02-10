@@ -46,8 +46,6 @@ class VMWriter {
     }
 
     operation(op) {
-        // if (op === "+") this.write("add");
-        // if (op === "*") this.call("Math.mult", 2);
         switch (op) {
             case "+":
                 this.add();
@@ -102,7 +100,6 @@ class VMWriter {
             case "this":
                 this.push("pointer", 0);
                 break;
-
             default:
                 throw new Error("Unknown keyword constant: " + keyword);
         }
