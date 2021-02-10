@@ -519,7 +519,6 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("term");
       
         /* eslint-disable padded-blocks */
-        
         if (this.isAtToken("integerConstant")) {
             
             const int = this.eat("integerConstant");
