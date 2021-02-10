@@ -1,9 +1,20 @@
 class SymbolTable {
+    classname = null;
+    subroutine = { name: null, type: null, kind: null };
+
     classScope = {};
     subroutineScope = {};
 
     constructor() {
         return this;
+    }
+
+    setClassname(name) {
+        this.classname = name;
+    }
+
+    setSubroutine(subroutine) {
+        this.subroutine = subroutine;
     }
 
     define({ kind, type, name }) {

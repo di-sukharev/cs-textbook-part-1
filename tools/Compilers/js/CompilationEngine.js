@@ -20,12 +20,9 @@ const VMWriter = require("./VMWriter");
  * ---
  * @constructor (tokenizer: Tokenizer) — an object containing `next()` method and currentToken field.
  * The `next()` method is used to iterate over tokens. Current token is available via currentToken field.
+ * @public `compileClass()` is the entry point. Just call it right after the contructor.
  */
 class CompilationEngine {
-    // todo: move this to SymbolTable
-    className = null;
-    subroutine = { name: null, type: null, kind: null };
-
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
         this.syntaxAnalyzer = new SyntaxAnalyzer();
@@ -118,7 +115,7 @@ class CompilationEngine {
         let argsCount = 0;
 
         if (isClassMethodCall) {
-            name = this.className + `.${name}`;
+            name = this.symbolTable.classname + `.${name}`;
 
             this.vmWriter.push("pointer", 0);
             argsCount++;
@@ -139,7 +136,7 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("class");
 
         this.eat("keyword", "class");
-        this.className = this.eat("identifier");
+        this.symbolTable.setClassname(this.eat("identifier"));
         this.eat("symbol", "{");
         this.compileClassVarDec();
         this.compileSubroutineDec();
@@ -173,16 +170,18 @@ class CompilationEngine {
 
             this.symbolTable.clearSubroutine();
 
-            this.subroutine.kind = this.eat("keyword");
-            this.subroutine.type = this.eatType();
-            this.subroutine.name = this.eat("identifier");
+            const kind = this.eat("keyword");
+            const type = this.eatType();
+            const name = this.eat("identifier");
+
+            this.symbolTable.setSubroutine({ kind, type, name });
 
             // VM
-            if (this.subroutine.kind === "method")
+            if (kind === "method")
                 this.symbolTable.define({
                     kind: "arg",
                     name: "this",
-                    type: this.className,
+                    type: this.symbolTable.classname,
                 });
             // VM
 
@@ -220,18 +219,18 @@ class CompilationEngine {
 
         // VM
         this.vmWriter.function(
-            `${this.className}.${this.subroutine.name}`,
+            `${this.symbolTable.classname}.${this.symbolTable.subroutine.name}`,
             this.symbolTable.getVarCount("var")
         );
 
-        if (this.subroutine.kind === "constructor") {
+        if (this.symbolTable.subroutine.kind === "constructor") {
             this.vmWriter.push(
                 "constant",
                 this.symbolTable.getVarCount("field")
             );
             this.vmWriter.call("Memory.alloc", 1);
             this.vmWriter.pop("pointer", 0);
-        } else if (this.subroutine.kind === "method") {
+        } else if (this.symbolTable.subroutine.kind === "method") {
             this.vmWriter.push("argument", 0);
             this.vmWriter.pop("pointer", 0);
         }
@@ -402,7 +401,8 @@ class CompilationEngine {
         this.eat("symbol", ";");
 
         // VM
-        if (this.subroutine.type === "void") this.vmWriter.push("constant", 0);
+        if (this.symbolTable.subroutine.type === "void")
+            this.vmWriter.push("constant", 0);
 
         this.vmWriter.return();
         // VM
