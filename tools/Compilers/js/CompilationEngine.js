@@ -166,7 +166,7 @@ class CompilationEngine {
                 const name = this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
 
-                this.symbolTable.define({ kind, type, name }); // VM
+                this.symbolTable.define({ kind, type, name });
             }
             this.eat("symbol", ";");
 
@@ -189,14 +189,12 @@ class CompilationEngine {
 
             this.symbolTable.setSubroutine({ kind, type, name });
 
-            // VM
             if (kind === "method")
                 this.symbolTable.define({
                     kind: "arg",
                     name: "this",
                     type: this.symbolTable.classname,
                 });
-            // VM
 
             this.eat("symbol", "(");
             this.compileParameterList();
@@ -220,7 +218,7 @@ class CompilationEngine {
             const name = this.eat("identifier");
             hasMore = this.tryEat("symbol", ",");
 
-            this.symbolTable.define({ kind: "arg", type, name }); // VM
+            this.symbolTable.define({ kind: "arg", type, name });
         }
 
         this.syntaxAnalyzer.closeXmlTag("parameterList");
@@ -236,7 +234,6 @@ class CompilationEngine {
 
         this.compileVarDec();
 
-        // VM
         this.vmWriter.function(
             `${this.symbolTable.classname}.${this.symbolTable.subroutine.name}`,
             this.symbolTable.getVarCount("var")
@@ -253,7 +250,6 @@ class CompilationEngine {
             this.vmWriter.push("argument", 0);
             this.vmWriter.pop("pointer", 0);
         }
-        // VM
 
         this.compileStatements();
         this.eat("symbol", "}");
@@ -275,7 +271,7 @@ class CompilationEngine {
                 const name = this.eat("identifier");
                 hasMore = this.tryEat("symbol", ",");
 
-                this.symbolTable.define({ kind: "var", type, name }); // VM
+                this.symbolTable.define({ kind: "var", type, name });
             }
             this.eat("symbol", ";");
 
@@ -315,13 +311,11 @@ class CompilationEngine {
         if (this.tryEat("symbol", "[")) {
             this.compileExpression();
 
-            // VM
             this.vmWriter.push(
                 getSegmentFromKind(this.symbolTable.getKindOf(identifier)),
                 this.symbolTable.getIndexOf(identifier)
             );
             this.vmWriter.add();
-            // VM
 
             this.eat("symbol", "]");
             isArray = true;
@@ -330,7 +324,6 @@ class CompilationEngine {
         this.compileExpression();
         this.eat("symbol", ";");
 
-        // VM
         if (isArray) {
             this.vmWriter.pop("temp", 0);
             this.vmWriter.pop("pointer", 1);
@@ -342,7 +335,6 @@ class CompilationEngine {
                 this.symbolTable.getIndexOf(identifier)
             );
         }
-        // VM
 
         this.syntaxAnalyzer.closeXmlTag("letStatement");
     }
@@ -366,23 +358,23 @@ class CompilationEngine {
 
         this.eat("symbol", "(");
         this.compileExpression();
-        this.vmWriter.ifgoto(IF_TRUE); // VM
-        this.vmWriter.goto(IF_FALSE); // VM
+        this.vmWriter.ifgoto(IF_TRUE);
+        this.vmWriter.goto(IF_FALSE);
         this.eat("symbol", ")");
 
         this.eat("symbol", "{");
-        this.vmWriter.label(IF_TRUE); // VM
+        this.vmWriter.label(IF_TRUE);
         this.compileStatements();
-        this.vmWriter.goto(IF_END); // VM
+        this.vmWriter.goto(IF_END);
         this.eat("symbol", "}");
 
-        this.vmWriter.label(IF_FALSE); // VM
+        this.vmWriter.label(IF_FALSE);
         if (this.tryEat("keyword", "else")) {
             this.eat("symbol", "{");
             this.compileStatements();
             this.eat("symbol", "}");
         }
-        this.vmWriter.label(IF_END); // VM
+        this.vmWriter.label(IF_END);
 
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
@@ -401,28 +393,22 @@ class CompilationEngine {
 
         this.syntaxAnalyzer.openXmlTag("whileStatement");
 
-        // VM
         this.vmWriter.label(startLabel);
-        // VM
 
         this.eat("keyword", "while");
         this.eat("symbol", "(");
         this.compileExpression();
         this.eat("symbol", ")");
 
-        // VM
         this.vmWriter.operation("not");
         this.vmWriter.ifgoto(endLabel);
-        // VM
 
         this.eat("symbol", "{");
         this.compileStatements();
         this.eat("symbol", "}");
 
-        // VM
         this.vmWriter.goto(startLabel);
         this.vmWriter.label(endLabel);
-        // VM
 
         this.syntaxAnalyzer.closeXmlTag("whileStatement");
     }
@@ -437,12 +423,10 @@ class CompilationEngine {
         if (!this.isAtToken("symbol", ";")) this.compileExpression();
         this.eat("symbol", ";");
 
-        // VM
         if (this.symbolTable.subroutine.type === "void")
             this.vmWriter.push("constant", 0);
 
         this.vmWriter.return();
-        // VM
 
         this.syntaxAnalyzer.closeXmlTag("returnStatement");
     }
@@ -476,16 +460,16 @@ class CompilationEngine {
         this.syntaxAnalyzer.openXmlTag("expressionList");
 
         let hasMore = !this.isAtToken(")");
-        let argumentsCount = 0; // VM
+        let argumentsCount = 0;
         while (hasMore) {
             this.compileExpression();
             hasMore = this.tryEat("symbol", ",");
-            argumentsCount++; // VM
+            argumentsCount++;
         }
 
         this.syntaxAnalyzer.closeXmlTag("expressionList");
 
-        return argumentsCount; // VM
+        return argumentsCount;
     }
 
     /**
@@ -500,14 +484,12 @@ class CompilationEngine {
             this.compileTerm();
 
             if (this.isAtToken("+", "-", "*", "/", "&", "|", "<", ">", "=")) {
-                // VM
                 if (op) this.vmWriter.operation(op);
-                // VM
+
                 op = this.eat();
             } else {
-                // VM
                 if (op) this.vmWriter.operation(op);
-                // VM
+
                 hasMore = false;
             }
         }
@@ -523,12 +505,11 @@ class CompilationEngine {
 
         if (this.isAtToken("integerConstant")) {
             const int = this.eat("integerConstant");
-            // VM
+
             this.vmWriter.push("constant", int);
-            // VM
         } else if (this.isAtToken("stringConstant")) {
             const str = this.eat("stringConstant");
-            // VM
+
             this.vmWriter.push("constant", str.length);
             this.vmWriter.call("String.new", 1);
 
@@ -536,7 +517,6 @@ class CompilationEngine {
                 this.vmWriter.push("constant", str.charCodeAt(i));
                 this.vmWriter.call("String.appendChar", 2);
             }
-            // VM
         } else if (this.isAtToken("true", "false", "null", "this")) {
             const keyword = this.eat("keyword");
             this.vmWriter.keywordConstant(keyword);
@@ -555,14 +535,12 @@ class CompilationEngine {
                 this.eat("symbol", "(");
                 const argsCount = this.compileExpressionList();
                 this.eat("symbol", ")");
-                // VM
+
                 this.vmWriter.call(name, argsCount);
-                // VM
             } else if (this.isAtToken("[")) {
                 this.eat("symbol", "[");
                 this.compileExpression();
 
-                // VM
                 this.vmWriter.push(
                     getSegmentFromKind(this.symbolTable.getKindOf(name)),
                     this.symbolTable.getIndexOf(name)
@@ -570,20 +548,17 @@ class CompilationEngine {
                 this.vmWriter.add();
                 this.vmWriter.pop("pointer", 1);
                 this.vmWriter.push("that", 0);
-                // VM
 
                 this.eat("symbol", "]");
             } else {
                 // just a variable, not a function or array
 
-                // VM
                 const variable = this.symbolTable.getDefinedVar(name);
 
                 this.vmWriter.push(
                     getSegmentFromKind(variable.kind),
                     variable.index
                 );
-                // VM
             }
         } else if (this.isAtToken("symbol")) {
             if (this.isAtToken("(")) {
@@ -593,9 +568,8 @@ class CompilationEngine {
             } else if (this.isAtToken("-", "~")) {
                 const op = this.eat("symbol");
                 this.compileTerm();
-                // VM
+
                 this.vmWriter.operation(op === "-" ? "neg" : "not");
-                // VM
             } else throw new Error("Unexpected symbol");
         } else throw new Error("Unexpected term");
 
