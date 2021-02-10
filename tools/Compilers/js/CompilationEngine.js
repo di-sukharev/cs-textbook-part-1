@@ -17,10 +17,12 @@ const VMWriter = require("./VMWriter");
  * 1. Starts compilation with the first token.
  * Running compileClass as a first method and entry point.
  * First token should be "class keyword".
+ * 
  * 2. Recursively goes through:
  * `[compileClass -> compileClassVarDec,
  * [compileSubroutineDec -> compileParameterList,
  * [compileSubroutineBody -> … ]]]`
+ * 
  * 3. In the end `syntaxAnalyzer.XML` has XML tree and `vmWriter.VM` has VM code.
  * ---
  * @constructor (tokenizer: Tokenizer)
