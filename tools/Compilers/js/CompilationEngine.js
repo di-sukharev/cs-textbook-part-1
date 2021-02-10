@@ -32,6 +32,8 @@ const VMWriter = require("./VMWriter");
  * @public `compileClass()` is the entry point. Just call it right after the contructor.
  */
 class CompilationEngine {
+    COUNTER = 0;
+
     constructor(tokenizer) {
         this.tokenizer = tokenizer;
         this.syntaxAnalyzer = new SyntaxAnalyzer();
@@ -352,18 +354,15 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("letStatement");
     }
 
-    IF_COUNTER = 0;
     /**
      * @grammar `'if' '(' expression ')’ '{' statements '}’`
      */
     compileIf() {
-        // todo: move this to "new Counter()"
-        const counter = this.IF_COUNTER;
+        const counter = this.COUNTER;
         const IF_TRUE = `IF_TRUE_${counter}`;
         const IF_FALSE = `IF_FALSE_${counter}`;
         const IF_END = `IF_END_${counter}`;
-        this.IF_COUNTER++;
-        // ---
+        this.COUNTER++;
 
         this.syntaxAnalyzer.openXmlTag("ifStatement");
 
@@ -392,17 +391,14 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("ifStatement");
     }
 
-    WHILE_COUNTER = 0;
     /**
      * @grammar `'while' '(' expression ')’ '{' statements '}’`
      */
     compileWhile() {
-        // todo: move this to "new Counter()"
-        const counter = this.WHILE_COUNTER;
+        const counter = this.COUNTER;
         const startLabel = `WHILE_START_${counter}`;
         const endLabel = `WHILE_END_${counter}`;
-        this.WHILE_COUNTER++;
-        // ---
+        this.COUNTER++;
 
         this.syntaxAnalyzer.openXmlTag("whileStatement");
 
