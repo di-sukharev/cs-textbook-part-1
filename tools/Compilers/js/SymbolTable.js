@@ -7,9 +7,9 @@ class SymbolTable {
     }
 
     define({ kind, type, name }) {
-        if (this.classScope[name] || this.subroutineScope[name])
+        if (this.doesVarExist(name))
             throw new Error(
-                `Duplicated variable — kind: ${kind}, type: ${type}, name: ${name}`
+                `Variable already exists — kind: ${kind}, type: ${type}, name: ${name}`
             );
 
         switch (kind) {
