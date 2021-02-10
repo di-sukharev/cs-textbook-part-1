@@ -4,11 +4,11 @@ const Tokenizer = require("./Tokenizer.js");
 const CompilationEngine = require("./CompilationEngine.js");
 
 function compileDirectory(inputDirectoryName) {
-    const isJackFile = (fileName) => fileName.endsWith(".jack");
+    const isJackFile = fileName => fileName.endsWith(".jack");
 
     fs.readdirSync(inputDirectoryName)
         .filter(isJackFile)
-        .forEach((fileName) => {
+        .forEach(fileName => {
             const jackSourceCode = fs.readFileSync(
                 `${inputDirectoryName}/${fileName}`,
                 "utf8"

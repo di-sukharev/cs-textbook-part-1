@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape */
+/* eslint-disable max-len */
 
 class Tokenizer {
     iterator = 0;
@@ -23,7 +23,7 @@ class Tokenizer {
             symbols = "(?<symbol>[{}()\\[\\]\\.;,&\\+\\-\\*\\/|<>=~])",
             identifiers = "(?<identifier>\\w+)",
             integers = "(?<integerConstant>\\d+)",
-            strings = '(?:\\"(?<stringConstant>[^\\"]*?)\\")',
+            strings = "(?:\\\"(?<stringConstant>[^\\\"]*?)\\\")",
             comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
             whitespace = "(?<whitespace>\\s+)",
             unknown = "(?<unknown>.)",
@@ -32,17 +32,17 @@ class Tokenizer {
 
         const matches = jackSourceCode.matchAll(regex);
 
-        const tokens = Array.from(matches).map((match) => {
+        const tokens = Array.from(matches).map(match => {
             const { groups } = match;
 
             const keys = Object.keys(groups);
 
-            const tokenType = keys.find((key) => Boolean(groups[key]));
+            const tokenType = keys.find(key => Boolean(groups[key]));
 
             const token = {
                 type: tokenType,
                 value: groups[tokenType],
-                position: match.index,
+                position: match.index
             };
 
             if (token.type === "unknown")
@@ -51,7 +51,7 @@ class Tokenizer {
             return token;
         });
 
-        const noWhitespaceOrComments = (tkn) =>
+        const noWhitespaceOrComments = tkn =>
             tkn.type != "whitespace" && tkn.type != "comment";
 
         return tokens.filter(noWhitespaceOrComments);

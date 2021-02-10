@@ -14,12 +14,19 @@ const VMWriter = require("./VMWriter");
  * 3. VMWriter to create VM code.
  * ---
  * Compilation process:
- * 1. Starts compilation with the first token, running compileClass as a first method and entry point. First token should be "class keyword".
- * 2. Recursively goes through `[compileClass -> compileClassVarDec, [compileSubroutineDec -> compileParameterList, [compileSubroutineBody -> … ]]]`
+ * 1. Starts compilation with the first token.
+ * Running compileClass as a first method and entry point.
+ * First token should be "class keyword".
+ * 2. Recursively goes through:
+ * `[compileClass -> compileClassVarDec,
+ * [compileSubroutineDec -> compileParameterList,
+ * [compileSubroutineBody -> … ]]]`
  * 3. In the end `syntaxAnalyzer.XML` has XML tree and `vmWriter.VM` has VM code.
  * ---
- * @constructor (tokenizer: Tokenizer) — an object containing `next()` method and currentToken field.
- * The `next()` method is used to iterate over tokens. Current token is available via currentToken field.
+ * @constructor (tokenizer: Tokenizer)
+ * An object containing `next()` method and currentToken field.
+ * The `next()` method is used to iterate over tokens.
+ * Current token is available via currentToken field.
  * @public `compileClass()` is the entry point. Just call it right after the contructor.
  */
 class CompilationEngine {
@@ -37,7 +44,7 @@ class CompilationEngine {
 
         return {
             xmlCode: this.syntaxAnalyzer.XML,
-            vmCode: this.vmWriter.VM,
+            vmCode: this.vmWriter.VM
         };
     }
 
@@ -59,7 +66,7 @@ class CompilationEngine {
 
         this.syntaxAnalyzer.createXmlTag({
             tag: currentToken.type,
-            content: currentToken.value,
+            content: currentToken.value
         });
 
         this.tokenizer.next();
@@ -193,7 +200,7 @@ class CompilationEngine {
                 this.symbolTable.define({
                     kind: "arg",
                     name: "this",
-                    type: this.symbolTable.classname,
+                    type: this.symbolTable.classname
                 });
 
             this.eat("symbol", "(");
@@ -498,18 +505,18 @@ class CompilationEngine {
     }
 
     /**
-     * @grammar `varName | intConstant | stringConstant | keywordConstant | varName '[' expression ']' | subroutineCall | '(' expression ')' | unaryOp term`
+     * @grammar `varName | intConstant | stringConstant |
+     * keywordConstant | varName '[' expression ']' |
+     * subroutineCall | '(' expression ')' | unaryOp term`
      */
     compileTerm() {
         this.syntaxAnalyzer.openXmlTag("term");
 
         if (this.isAtToken("integerConstant")) {
             const int = this.eat("integerConstant");
-
             this.vmWriter.push("constant", int);
         } else if (this.isAtToken("stringConstant")) {
             const str = this.eat("stringConstant");
-
             this.vmWriter.push("constant", str.length);
             this.vmWriter.call("String.new", 1);
 
@@ -518,8 +525,10 @@ class CompilationEngine {
                 this.vmWriter.call("String.appendChar", 2);
             }
         } else if (this.isAtToken("true", "false", "null", "this")) {
+        
             const keyword = this.eat("keyword");
             this.vmWriter.keywordConstant(keyword);
+
         } else if (this.isAtToken("identifier")) {
             let name = this.eat("identifier");
 
@@ -527,29 +536,26 @@ class CompilationEngine {
                 name += this.eat("symbol", ".");
                 name += this.eat("identifier");
                 this.eat("symbol", "(");
-
                 this.compileMethodCall(name);
-
                 this.eat("symbol", ")");
             } else if (this.isAtToken("(")) {
                 this.eat("symbol", "(");
                 const argsCount = this.compileExpressionList();
                 this.eat("symbol", ")");
-
                 this.vmWriter.call(name, argsCount);
             } else if (this.isAtToken("[")) {
                 this.eat("symbol", "[");
                 this.compileExpression();
+                this.eat("symbol", "]");
 
                 this.vmWriter.push(
                     getSegmentFromKind(this.symbolTable.getKindOf(name)),
                     this.symbolTable.getIndexOf(name)
                 );
+
                 this.vmWriter.add();
                 this.vmWriter.pop("pointer", 1);
                 this.vmWriter.push("that", 0);
-
-                this.eat("symbol", "]");
             } else {
                 // just a variable, not a function or array
 
@@ -568,7 +574,6 @@ class CompilationEngine {
             } else if (this.isAtToken("-", "~")) {
                 const op = this.eat("symbol");
                 this.compileTerm();
-
                 this.vmWriter.operation(op === "-" ? "neg" : "not");
             } else throw new Error("Unexpected symbol");
         } else throw new Error("Unexpected term");
@@ -579,17 +584,17 @@ class CompilationEngine {
 
 function getSegmentFromKind(kind) {
     switch (kind) {
-        case "static":
-            return "static";
-        case "field":
-            return "this";
-        case "arg":
-            return "argument";
-        case "var":
-            return "local";
+    case "static":
+        return "static";
+    case "field":
+        return "this";
+    case "arg":
+        return "argument";
+    case "var":
+        return "local";
 
-        default:
-            throw new Error("Unknown var kind: " + kind);
+    default:
+        throw new Error("Unknown var kind: " + kind);
     }
 }
 

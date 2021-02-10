@@ -24,46 +24,46 @@ class SymbolTable {
             );
 
         switch (kind) {
-            case "static":
-                this.classScope[name] = {
-                    kind,
-                    type,
-                    index: Object.values(this.classScope).filter(
-                        (v) => v.kind === "static"
-                    ).length,
-                };
-                break;
-            case "field":
-                this.classScope[name] = {
-                    kind,
-                    type,
-                    index: Object.values(this.classScope).filter(
-                        (v) => v.kind === "field"
-                    ).length,
-                };
-                break;
-            case "arg":
-                this.subroutineScope[name] = {
-                    kind,
-                    type,
-                    index: Object.values(this.subroutineScope).filter(
-                        (v) => v.kind === "arg"
-                    ).length,
-                };
-                break;
-            case "var":
-                this.subroutineScope[name] = {
-                    kind,
-                    type,
-                    index: Object.values(this.subroutineScope).filter(
-                        (v) => v.kind === "var"
-                    ).length,
-                };
-                break;
-            default:
-                throw Error(
-                    `Unknown identifier — kind: ${kind}, type: ${type}, name: ${name}`
-                );
+        case "static":
+            this.classScope[name] = {
+                kind,
+                type,
+                index: Object.values(this.classScope).filter(
+                    v => v.kind === "static"
+                ).length
+            };
+            break;
+        case "field":
+            this.classScope[name] = {
+                kind,
+                type,
+                index: Object.values(this.classScope).filter(
+                    v => v.kind === "field"
+                ).length
+            };
+            break;
+        case "arg":
+            this.subroutineScope[name] = {
+                kind,
+                type,
+                index: Object.values(this.subroutineScope).filter(
+                    v => v.kind === "arg"
+                ).length
+            };
+            break;
+        case "var":
+            this.subroutineScope[name] = {
+                kind,
+                type,
+                index: Object.values(this.subroutineScope).filter(
+                    v => v.kind === "var"
+                ).length
+            };
+            break;
+        default:
+            throw Error(
+                `Unknown identifier — kind: ${kind}, type: ${type}, name: ${name}`
+            );
         }
     }
 
@@ -85,8 +85,8 @@ class SymbolTable {
     }
 
     getVarCount(kind) {
-        const filterByKind = (v) => v.kind === kind;
-        const getCount = (obj) =>
+        const filterByKind = v => v.kind === kind;
+        const getCount = obj =>
             Object.values(obj).filter(filterByKind).length;
 
         return getCount(this.classScope) + getCount(this.subroutineScope);
