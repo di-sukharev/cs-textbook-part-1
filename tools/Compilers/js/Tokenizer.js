@@ -46,7 +46,7 @@ class Tokenizer {
             };
 
             if (token.type === "unknown")
-                throw new Error("Unknown token:", token);
+                throw new Error("Unknown token: " + token);
 
             return token;
         });
