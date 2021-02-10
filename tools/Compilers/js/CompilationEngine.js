@@ -513,7 +513,7 @@ class CompilationEngine {
      * keywordConstant | varName '[' expression ']' |
      * subroutineCall | '(' expression ')' | unaryOp term`
      */
-    compileTerm() { // TODO: rewrite to switch!!!
+    compileTerm() {
         this.syntaxAnalyzer.openXmlTag("term");
       
         /* eslint-disable padded-blocks */
@@ -595,17 +595,17 @@ class CompilationEngine {
 
 function getSegmentFromKind(kind) {
     switch (kind) {
-    case "static":
-        return "static";
-    case "field":
-        return "this";
-    case "arg":
-        return "argument";
-    case "var":
-        return "local";
+        case "static":
+            return "static";
+        case "field":
+            return "this";
+        case "arg":
+            return "argument";
+        case "var":
+            return "local";
 
-    default:
-        throw new Error("Unknown var kind: " + kind);
+        default:
+            throw new Error("Unknown var kind: " + kind);
     }
 }
 
