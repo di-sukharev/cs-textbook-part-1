@@ -90,7 +90,10 @@ class CompilationEngine {
             currentToken.type === "identifier"
         )
             return this.eat();
-        else throw new Error("Type was expected, but got: ", ...currentToken);
+        else
+            throw new Error(
+                `Type was expected, but got ${currentToken.type}: ${currentToken.value}`
+            );
     }
 
     isAtToken(...values) {
@@ -132,6 +135,9 @@ class CompilationEngine {
         return { argsCount, transformedName: name };
     }
 
+    /**
+     * @grammar  `'class' className '{' classVarDec* subroutineDec* '}'`
+     */
     compileClass() {
         this.syntaxAnalyzer.openXmlTag("class");
 
@@ -145,6 +151,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("class");
     }
 
+    /**
+     * @grammar `('static' | 'field') type varName (',' varName)* ';'`
+     */
     compileClassVarDec() {
         while (this.isAtToken("static", "field")) {
             this.syntaxAnalyzer.openXmlTag("classVarDec");
@@ -164,6 +173,9 @@ class CompilationEngine {
         }
     }
 
+    /**
+     * @grammar `('constructor' | function' | 'method') ('void' | type) subroutineName`
+     */
     compileSubroutineDec() {
         while (this.isAtToken("constructor", "method", "function")) {
             this.syntaxAnalyzer.openXmlTag("subroutineDec");
@@ -194,6 +206,9 @@ class CompilationEngine {
         }
     }
 
+    /**
+     * @grammar `(type varName (',' type varName)*)?`
+     */
     compileParameterList() {
         this.syntaxAnalyzer.openXmlTag("parameterList");
 
@@ -210,6 +225,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("parameterList");
     }
 
+    /**
+     * @grammar `'{' varDec* statements '}'`
+     */
     compileSubroutineBody() {
         this.syntaxAnalyzer.openXmlTag("subroutineBody");
 
@@ -242,6 +260,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("subroutineBody");
     }
 
+    /**
+     * @grammar `'var' type varName (',' varName)* ';'`
+     */
     compileVarDec() {
         while (this.isAtToken("var")) {
             this.syntaxAnalyzer.openXmlTag("varDec");
@@ -261,6 +282,9 @@ class CompilationEngine {
         }
     }
 
+    /**
+     * @grammar `statement*`
+     */
     compileStatements() {
         this.syntaxAnalyzer.openXmlTag("statements");
 
@@ -277,6 +301,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("statements");
     }
 
+    /**
+     * @grammar `'let' varName '=' expression ';'`
+     */
     compileLet() {
         this.syntaxAnalyzer.openXmlTag("letStatement");
 
@@ -320,6 +347,9 @@ class CompilationEngine {
     }
 
     IF_COUNTER = 0;
+    /**
+     * @grammar `'if' '(' expression ')’ '{' statements '}’`
+     */
     compileIf() {
         // todo: move this to "new Counter()"
         const counter = this.IF_COUNTER;
@@ -357,6 +387,9 @@ class CompilationEngine {
     }
 
     WHILE_COUNTER = 0;
+    /**
+     * @grammar `'while' '(' expression ')’ '{' statements '}’`
+     */
     compileWhile() {
         // todo: move this to "new Counter()"
         const counter = this.WHILE_COUNTER;
@@ -393,6 +426,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("whileStatement");
     }
 
+    /**
+     * @grammar `'return' expression? ';'`
+     */
     compileReturn() {
         this.syntaxAnalyzer.openXmlTag("returnStatement");
 
@@ -410,6 +446,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("returnStatement");
     }
 
+    /**
+     * @grammar `'do' subroutineCall ';'`
+     */
     compileDo() {
         this.syntaxAnalyzer.openXmlTag("doStatement");
 
@@ -440,6 +479,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
 
+    /**
+     * @grammar `(expression (',' expression)* )?`
+     */
     compileExpressionList() {
         this.syntaxAnalyzer.openXmlTag("expressionList");
 
@@ -456,6 +498,9 @@ class CompilationEngine {
         return argumentsCount; // VM
     }
 
+    /**
+     * @grammar `term (op term)?`
+     */
     compileExpression() {
         this.syntaxAnalyzer.openXmlTag("expression");
 
@@ -480,6 +525,9 @@ class CompilationEngine {
         this.syntaxAnalyzer.closeXmlTag("expression");
     }
 
+    /**
+     * @grammar `varName | intConstant | stringConstant | keywordConstant | varName '[' expression ']' | subroutineCall | '(' expression ')' | unaryOp term`
+     */
     compileTerm() {
         this.syntaxAnalyzer.openXmlTag("term");
 
