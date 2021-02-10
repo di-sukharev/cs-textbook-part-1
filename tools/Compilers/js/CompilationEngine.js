@@ -107,8 +107,7 @@ class CompilationEngine {
         else return false;
     }
 
-    // TODO: move to VMwriter
-    methodCall(name) {
+    compileMethodCall(name) {
         let [routine, subroutine] = name.split(".");
 
         const isClassMethodCall = !subroutine;
@@ -132,7 +131,9 @@ class CompilationEngine {
             argsCount++;
         }
 
-        return { argsCount, transformedName: name };
+        argsCount += this.compileExpressionList();
+
+        this.vmWriter.call(name, argsCount);
     }
 
     /**
@@ -458,23 +459,12 @@ class CompilationEngine {
         if (this.tryEat("symbol", ".")) name += `.${this.eat("identifier")}`;
 
         this.eat("symbol", "(");
-
-        // VM
-        // todo: move to VMwriter
-        // todo: return values are bad, this procedure shouldn't return any values
-        let { argsCount, transformedName } = this.methodCall(name);
-        // VM
-
-        argsCount += this.compileExpressionList();
+        this.compileMethodCall(name);
         this.eat("symbol", ")");
-
         this.eat("symbol", ";");
 
-        // VM
-        this.vmWriter.call(transformedName, argsCount);
         // we don't need return value in raw "do statement()", so we throw it away
         this.vmWriter.pop("temp", 0);
-        // VM
 
         this.syntaxAnalyzer.closeXmlTag("doStatement");
     }
@@ -558,16 +548,9 @@ class CompilationEngine {
                 name += this.eat("identifier");
                 this.eat("symbol", "(");
 
-                // TODO: REFACTOR
-                let { argsCount, transformedName } = this.methodCall(name);
-                // VM
+                this.compileMethodCall(name);
 
-                argsCount += this.compileExpressionList();
                 this.eat("symbol", ")");
-
-                // VM
-                this.vmWriter.call(transformedName, argsCount);
-                // VM
             } else if (this.isAtToken("(")) {
                 this.eat("symbol", "(");
                 const argsCount = this.compileExpressionList();
