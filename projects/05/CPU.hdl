@@ -70,8 +70,8 @@ CHIP CPU {
     And(a=instruction[15], b=instruction[3], out=writeM);
 
     // PC bits
-    Not(in=zr, out=notZR);
-    Not(in=ng, out=notNG);
+    Not(in=zero, out=notZR);
+    Not(in=negative, out=notNG);
     And(a=notZR, b=notNG, out=positive);
 
     And(a=instruction[0], b=instruction[15], out=jump1);
@@ -79,13 +79,11 @@ CHIP CPU {
     And(a=instruction[2], b=instruction[15], out=jump3);
 
     And(a=jump1, b=positive, out=JGT);
-    And(a=jump2, b=zr, out=JEQ);
-    And(a=jump3, b=ng, out=JLT);
+    And(a=jump2, b=zero, out=JEQ);
+    And(a=jump3, b=negative, out=JLT);
 
     Or(a=JGT, b=JEQ, out=JGE);
     Or(a=JGE, b=JLT, out=PCload);
-
-    PC(in=outAreg, load=PCload, inc=true, reset=reset, out[0..14]=pc);
 
     // load = f(jump bits, ALU control outputs)
     // 1. no jump: PC++ <-> jjj=000 --- 2. goto: PC=a <-> jjj=111 --- 3. conditional goto: PC = cond === true ? A : PC++
