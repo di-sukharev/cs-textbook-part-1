@@ -9,7 +9,7 @@ const [
     // eslint-disable-next-line no-unused-vars
     thisFilePath,
     inputFile,
-    outputFile = path.basename(inputFile, path.extname(inputFile)) + ".hack",
+    outputFile = path.basename(inputFile, path.extname(inputFile)) + ".hack"
 ] = process.argv;
 
 console.log("args: ", { inputFile, outputFile });

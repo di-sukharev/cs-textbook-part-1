@@ -17,19 +17,23 @@ class VMWriter {
         this.write(`pop ${segment} ${value}`);
     }
 
-    call(subroutineName, args) {
-        this.write(`call ${subroutineName} ${args}`);
+    add() {
+        this.write("add");
+    }
+
+    call(functionName, args) {
+        this.write(`call ${functionName} ${args}`);
     }
 
     return() {
         this.write("return");
     }
 
-    function(subroutineName, args) {
-        this.write(`function ${subroutineName} ${args}`);
+    function(functionName, args) {
+        this.write(`function ${functionName} ${args}`);
     }
 
-    if(label) {
+    ifgoto(label) {
         this.write(`if-goto ${label}`);
     }
 
@@ -42,11 +46,9 @@ class VMWriter {
     }
 
     operation(op) {
-        // if (op === "+") this.write("add");
-        // if (op === "*") this.call("Math.mult", 2);
         switch (op) {
             case "+":
-                this.write("add");
+                this.add();
                 break;
             case "-":
                 this.write("sub");
@@ -91,16 +93,13 @@ class VMWriter {
                 break;
             case "false":
                 this.push("constant", 0);
-                this.operation("not");
-                this.operation("not");
                 break;
             case "null":
                 this.push("constant", 0);
                 break;
             case "this":
-                // todo: call Memory.alloc
+                this.push("pointer", 0);
                 break;
-
             default:
                 throw new Error("Unknown keyword constant: " + keyword);
         }

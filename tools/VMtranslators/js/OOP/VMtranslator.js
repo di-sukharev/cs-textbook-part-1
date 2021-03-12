@@ -9,7 +9,7 @@ class VMtranslator {
     }
 
     translate(inputDirectoryName) {
-        const isVmFile = (fileName) => fileName.endsWith(".vm");
+        const isVmFile = fileName => fileName.endsWith(".vm");
 
         let assemblyFile = this.writer.init() + "\n";
 
@@ -17,7 +17,7 @@ class VMtranslator {
 
         fs.readdirSync(inputDirectoryName)
             .filter(isVmFile)
-            .forEach((fileName) => {
+            .forEach(fileName => {
                 const vmCode = fs.readFileSync(
                     `${inputDirectoryName}/${fileName}`,
                     "utf8"
@@ -33,12 +33,12 @@ class VMtranslator {
     }
 
     _translate(vmCode) {
-        const removeComments = (line) =>
+        const removeComments = line =>
             (line.includes("//")
                 ? line.slice(0, line.indexOf("//"))
                 : line
             ).trim();
-        const removeWhitespaces = (line) => !!line;
+        const removeWhitespaces = line => !!line;
         const intoLines = "\r\n";
 
         const assemblyFile = vmCode

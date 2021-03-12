@@ -8,12 +8,12 @@ const breakLines = (strings, ...placeholders) => {
     return withLinebreaks;
 };
 
-const getTHISorTHAT = (value) => (value === "0" ? "THIS" : "THAT");
+const getTHISorTHAT = value => (value === "0" ? "THIS" : "THAT");
 
-const getTempAddress = (addr) => +addr + 5;
+const getTempAddress = addr => +addr + 5;
 
 module.exports = {
     breakLines,
     getTHISorTHAT,
-    getTempAddress,
+    getTempAddress
 };

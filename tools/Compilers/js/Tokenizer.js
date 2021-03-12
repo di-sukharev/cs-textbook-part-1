@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape */
+/* eslint-disable max-len */
 
 class Tokenizer {
     iterator = 0;
@@ -19,39 +19,39 @@ class Tokenizer {
 
     _tokenize(jackSourceCode) {
         const keywords =
-                "(?<keyword>class|constructor|function|method|field|static|var|int|char|boolean|void|true|false|null|this|let|do|if|else|while|return)",
-            symbols = "(?<symbol>[{}()\\[\\]\\.;,&\\+\\-\\*\\/|<>=~])",
-            identifiers = "(?<identifier>\\w+)",
-            integers = "(?<integerConstant>\\d+)",
-            strings = '(?:\\"(?<stringConstant>[^\\"]*?)\\")',
-            comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
-            whitespace = "(?<whitespace>\\s+)",
-            unknown = "(?<unknown>.)",
-            pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${strings}|${identifiers}|${unknown}`,
-            regex = new RegExp(pattern, "gys");
+                "(?<keyword>class|constructor|function|method|field|static|var|int|char|boolean|void|true|false|null|this|let|do|if|else|while|return)\\b",
+              symbols = "(?<symbol>[{}()\\[\\]\\.;,&\\+\\-\\*\\/|<>=~])",
+              identifiers = "(?<identifier>\\w+)",
+              integers = "(?<integerConstant>\\d+)",
+              strings = "(?:\\\"(?<stringConstant>[^\\\"]*?)\\\")",
+              comment = "(?<comment>(?://).*?\\n|/\\*.*?\\*/)",
+              whitespace = "(?<whitespace>\\s+)",
+              unknown = "(?<unknown>.)",
+              pattern = `${comment}|${whitespace}|${keywords}|${symbols}|${integers}|${strings}|${identifiers}|${unknown}`,
+              regex = new RegExp(pattern, "gys");
 
         const matches = jackSourceCode.matchAll(regex);
 
-        const tokens = Array.from(matches).map((match) => {
+        const tokens = Array.from(matches).map(match => {
             const { groups } = match;
 
             const keys = Object.keys(groups);
 
-            const tokenType = keys.find((key) => Boolean(groups[key]));
+            const tokenType = keys.find(key => Boolean(groups[key]));
 
             const token = {
                 type: tokenType,
                 value: groups[tokenType],
-                position: match.index,
+                position: match.index
             };
 
             if (token.type === "unknown")
-                throw new Error("Unknown token:", token);
+                throw new Error("Unknown token: " + token);
 
             return token;
         });
 
-        const noWhitespaceOrComments = (tkn) =>
+        const noWhitespaceOrComments = tkn =>
             tkn.type != "whitespace" && tkn.type != "comment";
 
         return tokens.filter(noWhitespaceOrComments);
