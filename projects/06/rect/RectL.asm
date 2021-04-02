@@ -1,7 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// Modified by Dmitriy Sukharev, www.sukharev.io
+// Modified by Sukharev, www.sukharev.io
 // File name: projects/06/rect/RectL.asm
 
 // Symbol-less version of the Rect.asm program.
