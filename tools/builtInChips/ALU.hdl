@@ -1,11 +1,12 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
+// Modified by Dmitriy Sukharev, www.sukharev.io
 // File name: tools/builtIn/ALU.hdl
 
 /**
  * The ALU. Computes one of the following functions:
- * x+y, x-y, y–x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+y, x-y, yï¿½x, 0, 1, -1, x, y, -x, -y, !x, !y,
  * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs.
  * Which function to compute is determined by 6 input bits 
  * denoted zx, nx, zy, ny, f, no.

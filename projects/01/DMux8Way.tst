@@ -1,6 +1,7 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
+// Modified by Dmitriy Sukharev, www.sukharev.io
 // File name: projects/01/DMux8Way.tst
 
 load DMux8Way.hdl,

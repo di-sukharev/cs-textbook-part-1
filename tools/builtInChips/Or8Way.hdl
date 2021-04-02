@@ -1,8 +1,10 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
+// Modified by Dmitriy Sukharev, www.sukharev.io
 // File name: tools/builtIn/Or8Way.hdl
-
+
+
 /**
  * 8-way Or gate: out = in[0] or in[1] or ... or in[7].
  */
