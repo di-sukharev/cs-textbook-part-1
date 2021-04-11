@@ -25,7 +25,7 @@ _Настройка состоит из двух шагов:_
 4. В Системных переменных (System Variables) добавьте две новые переменные JRE_HOME и JAVA_HOME.
 5. В каждую переменную запишите адрес до папки `bin` из JDK которую вы только что установили. Обычно JDK устанавливается по адресу `C:\Program Files\Java\jdk-9\bin`.
 
-Если у вас Windows и в результате выполнения задач вы столкнетесь с ошибкой `You need to install [Java Runtime Environment] First. [Done] Comparison Failure with code=2` — значит вы неправильно установили PATH переменную. Перечитайте этот раздел. Если ничего не помогает — читайте [подробную инструкцию](https://docs.oracle.com/javase/9/install/installation-jdk-and-jre-microsoft-windows-platforms.htm#JSJIG-GUID-96EB3876-8C7A-4A25-9F3A-A2983FEC016A).
+Если у вас Windows и в результате выполнения задач вы столкнетесь с ошибкой `You need to install [Java Runtime Environment] First. [Done] Comparison Failure with code=2` — значит вы неправильно установили переменные. Перечитайте этот раздел и выполните шаги еще раз. Если ничего не помогает — пишите в телеграм группу [t.me/sukharev_qa](https://www.t.me/sukharev_qa).
 
 ## Редактор кода
 
