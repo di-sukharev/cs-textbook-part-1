@@ -43,9 +43,13 @@ _Настройка состоит из двух шагов:_
 
 Ниже картинка, как скачать архив.
 
-![Instruction how to download repo manually](./img/instruction.png)
+![Instruction how to download repo manually](./img/how2download-zip.png)
 
 Все вопросы задавайте в телеграм группе [t.me/sukharev_qa](https://www.t.me/sukharev_qa) 🌞
+
+## Далее
+
+Перед тем как начать выполнять практические задачи — почитайте, [что такое HDL](https://github.com/di-sukharev/computer/blob/11530507c882a47b87e6d08196b28d9d15a92c27/projects/01-gates/README.md).
 
 ## Лицензия
 
