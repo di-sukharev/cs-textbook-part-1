@@ -1,4 +1,4 @@
-/**
+/*
  * The complete address space of the Hack computer's memory,
  * including RAM and memory-mapped I/O. 
  * The chip facilitates read and write operations, as follows:

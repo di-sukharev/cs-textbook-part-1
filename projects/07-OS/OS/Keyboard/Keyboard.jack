@@ -4,16 +4,16 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/Keyboard.jack
 
-/**
+/*
  * A library for handling user input from the keyboard.
  */
 class Keyboard {
 
-    /** Initializes the keyboard. */
+    /*Initializes the keyboard. */
     function void init() {
     } 
 
-    /**
+    /*
      * Returns the character of the currently pressed key on the keyboard;
      * if no key is currently pressed, returns 0.
      *
@@ -36,7 +36,7 @@ class Keyboard {
     function char keyPressed() {
     }
 
-    /**								
+    /*							
      * Waits until a key is pressed on the keyboard and released,
      * then echoes the key to the screen, and returns the character 
      * of the pressed key.
@@ -44,7 +44,7 @@ class Keyboard {
     function char readChar() {
     }
 
-    /**								
+    /*							
      * Displays the message on the screen, reads from the keyboard the entered
      * text until a newline character is detected, echoes the text to the screen,
      * and returns its value. Also handles user backspaces.
@@ -52,7 +52,7 @@ class Keyboard {
     function String readLine(String message) {
     }   
 
-    /**								
+    /*							
      * Displays the message on the screen, reads from the keyboard the entered
      * text until a newline character is detected, echoes the text to the screen,
      * and returns its integer value (until the first non-digit character in the

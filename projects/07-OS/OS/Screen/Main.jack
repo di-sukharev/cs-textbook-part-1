@@ -4,10 +4,10 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/ScreenTest/Main.jack
 
-/** Test program for the OS Screen class. */
+/* Test program for the OS Screen class. */
 class Main {
 
-    /** Draws a sample pictue on the screen using lines and circles. */
+    /*Draws a sample pictue on the screen using lines and circles. */
     function void main() {
     
         do Screen.drawLine(0,220,511,220);        // base line

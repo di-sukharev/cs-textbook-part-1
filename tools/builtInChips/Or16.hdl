@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/Or16.hdl
 
-/**
+/*
  * 16-bit bitwise Or gate: for i = 0..15 out[i] = a[i] or b[i].
  */
 

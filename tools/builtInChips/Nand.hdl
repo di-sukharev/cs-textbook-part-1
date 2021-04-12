@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/Nand.hdl
 
-/**
+/*
  * Nand gate: out = a Nand b.
  */
 

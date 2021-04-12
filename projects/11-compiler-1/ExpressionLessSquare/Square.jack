@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 /// File name: projects/10/ExpressionLessSquare/Square.jack
 
-/** Expressionless version of projects/10/Square/Square.jack. */
+/* Expressionless version of projects/10/Square/Square.jack. */
 
 class Square {
 

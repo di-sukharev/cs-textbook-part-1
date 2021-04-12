@@ -4,24 +4,24 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/Sys.jack
 
-/**
+/*
  * A library that supports various program execution services.
  */
 class Sys {
 
-    /** Performs all the initializations required by the OS. */
+    /*Performs all the initializations required by the OS. */
     function void init() {
     }
 
-    /** Halts the program execution. */
+    /*Halts the program execution. */
     function void halt() {
     }
 
-    /** Waits approximately duration milliseconds and returns.  */
+    /*Waits approximately duration milliseconds and returns.  */
     function void wait(int duration) {
     }
 
-    /** Displays the given error code in the form "ERR<errorCode>",
+    /*Displays the given error code in the form "ERR<errorCode>",
      *  and halts the program's execution. */
     function void error(int errorCode) {
     }

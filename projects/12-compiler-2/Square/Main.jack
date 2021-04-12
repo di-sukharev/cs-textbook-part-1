@@ -6,7 +6,7 @@
 
 // (same as projects/09/Square/Main.jack)
 
-/** Initializes a new Square Dance game and starts running it. */
+/* Initializes a new Square Dance game and starts running it. */
 class Main {
     function void main() {
         var SquareGame game;

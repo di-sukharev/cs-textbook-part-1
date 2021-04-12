@@ -4,10 +4,10 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/OutputTest/Main.jack
 
-/** Test program for the OS Output class. */
+/* Test program for the OS Output class. */
 class Main {
 
-    /** Outputs the entire character set to the screen using all the
+    /*Outputs the entire character set to the screen using all the
      *  methods of the Output class. */
     function void main() {
         var String s;

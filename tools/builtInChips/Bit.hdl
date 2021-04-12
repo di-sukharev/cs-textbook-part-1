@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/Bit.hdl
 
-/**
+/*
  * 1-bit register.
  * If load[t] == 1 then out[t+1] = in[t]
  *                 else out[t+1] = out[t] (no change)

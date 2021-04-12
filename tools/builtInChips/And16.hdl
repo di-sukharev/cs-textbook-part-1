@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/And16.hdl
 
-/**
+/*
  * 16-bit-wise And gate: for i = 0..15: out[i] = a[i] and b[i]
  */
 

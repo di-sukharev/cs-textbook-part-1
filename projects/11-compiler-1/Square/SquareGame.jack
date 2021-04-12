@@ -6,7 +6,7 @@
 
 // (same as projects/09/Square/SquareGame.jack)
 
-/**
+/*
  * Implements the Square Dance game.
  * This simple game allows the user to move a black square around
  * the screen, and change the square's size during the movement.
@@ -22,7 +22,7 @@ class SquareGame {
    field int direction; // the square's current direction: 
                         // 0=none, 1=up, 2=down, 3=left, 4=right
 
-   /** Constructs a new Square Game. */
+   /*Constructs a new Square Game. */
    constructor SquareGame new() {
       // Creates a 30 by 30 pixels square and positions it at the top-left
       // of the screen.
@@ -31,14 +31,14 @@ class SquareGame {
       return this;
    }
 
-   /** Disposes this game. */
+   /*Disposes this game. */
    method void dispose() {
       do square.dispose();
       do Memory.deAlloc(this);
       return;
    }
 
-   /** Moves the square in the current direction. */
+   /*Moves the square in the current direction. */
    method void moveSquare() {
       if (direction = 1) { do square.moveUp(); }
       if (direction = 2) { do square.moveDown(); }
@@ -48,7 +48,7 @@ class SquareGame {
       return;
    }
 
-   /** Runs the game: handles the user's inputs and moves the square accordingly */
+   /*Runs the game: handles the user's inputs and moves the square accordingly */
    method void run() {
       var char key;  // the key currently pressed by the user
       var boolean exit;

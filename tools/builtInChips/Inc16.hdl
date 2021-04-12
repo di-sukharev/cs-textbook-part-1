@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/Inc16.hdl
 
-/**
+/*
  * 16-bit incrementer.  out = in + 1 (16-bit addition).
  * Overflow is neither detected nor handled.
  */

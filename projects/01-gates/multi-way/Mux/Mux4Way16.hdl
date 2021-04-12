@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/01/Mux4Way16.hdl
 
-/**
+/*
  * 4-way 16-bit multiplexor:
  * out = a if sel == 00
  *       b if sel == 01

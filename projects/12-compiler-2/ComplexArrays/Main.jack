@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/11/ComplexArrays/Main.jack
 
-/**
+/*
  * Performs several complex array processing tests.
  * For each test, the expected result is printed, along with the
  * actual result. In each test, the two results should be equal.

@@ -1,4 +1,4 @@
-/**
+/*
  * The Hack CPU (Central Processing unit), consisting of an ALU,
  * two registers named A and D, and a program counter named PC.
  * The CPU is designed to fetch and execute instructions written in 

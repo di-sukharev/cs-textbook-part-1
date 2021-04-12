@@ -4,12 +4,12 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/11/Pong/Main.jack
 
-/**
+/*
  * The main class of the Pong game.
  */
 class Main {
 
-    /** Initializes a Pong game and starts running it. */
+    /*Initializes a Pong game and starts running it. */
     function void main() {
         var PongGame game;
         do PongGame.newInstance();

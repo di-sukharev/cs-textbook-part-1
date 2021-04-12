@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/ARegister.hdl
 
-/**
+/*
  * A 16-Bit register called "A Register". 
  * If load[t-1]=1 then out[t] = in[t-1]
  * else out does not change (out[t] = out[t-1])

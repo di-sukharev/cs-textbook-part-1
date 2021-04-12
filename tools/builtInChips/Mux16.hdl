@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/Mux16.hdl
 
-/**
+/*
  * 16 bit multiplexor. If sel == 1 then out = b else out = a.
  */
 

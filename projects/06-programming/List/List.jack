@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/09/List/List.jack
 
-/** Represents a linked list of integers. */
+/* Represents a linked list of integers. */
 class List {
     field int data;          // a list consists of a data field,
     field List next;         // followed by a list
@@ -16,11 +16,11 @@ class List {
         return this;
     }
 
-    /** Accessors. */
+    /*Accessors. */
     method int getData() { return data; }
     method int getNext() { return next; }
 
-    /** Prints this list. */
+    /*Prints this list. */
     method void print() {
         var List current;    // initializes current to the first item
         let current = this;  // of this list
@@ -32,7 +32,7 @@ class List {
         return;
     }
 
-    /** Disposes this List by recursively disposing its tail. */
+    /*Disposes this List by recursively disposing its tail. */
     method void dispose() {
         if (~(next = null)) {
             do next.dispose();

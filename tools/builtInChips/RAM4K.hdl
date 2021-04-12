@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/RAM4K.hdl
 
-/**
+/*
  * Memory of 4K registers, each 16-bit wide.  
  * The chip facilitates read and write operations, as follows:
  *     Read:  out(t) = RAM4K[address(t)](t)

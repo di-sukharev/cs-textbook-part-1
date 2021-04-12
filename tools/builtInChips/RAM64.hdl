@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/RAM64.hdl
 
-/**
+/*
  * Memory of 64 registers, each 16-bit wide.  
  * The chip facilitates read and write operations, as follows:
  *     Read:  out(t) = RAM64[address(t)](t)

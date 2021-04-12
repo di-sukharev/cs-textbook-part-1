@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/ROM32K.hdl
 
-/**
+/*
  * Read-Only memory (ROM) of 16K registers, each 16-bit wide.
  * The chip is designed to facilitate data read, as follows:
  *     out(t) = ROM32K[address(t)](t)

@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/11/Pong/PongGame.jack
 
-/**
+/*
  * Represents a Pong game.
  */
 class PongGame {
@@ -20,7 +20,7 @@ class PongGame {
     // The current width of the bat
     field int batWidth;
 
-    /** Constructs a new Pong game. */
+    /*Constructs a new Pong game. */
     constructor PongGame new() {
 	    do Screen.clearScreen();
         let batWidth = 50;  // initial bat size
@@ -39,7 +39,7 @@ class PongGame {
         return this;
     }
 
-    /** Deallocates the object's memory. */
+    /*Deallocates the object's memory. */
     method void dispose() {
         do bat.dispose();
 	    do ball.dispose();
@@ -47,18 +47,18 @@ class PongGame {
         return;
     }
 
-    /** Creates an instance of Pong game, and stores it. */
+    /*Creates an instance of Pong game, and stores it. */
     function void newInstance() {
         let instance = PongGame.new();
         return;
     }
     
-    /** Returns the single instance of this Pong game. */
+    /*Returns the single instance of this Pong game. */
     function PongGame getInstance() {
         return instance;
     }
 
-    /** Starts the game, and andles inputs from the user that control
+    /*Starts the game, and andles inputs from the user that control
      *  the bat's movement direction. */
     method void run() {
         var char key;
@@ -97,7 +97,7 @@ class PongGame {
         return;
     }
 
-    /**
+    /*
      * Handles ball movement, including bouncing.
      * If the ball bounces off a wall, finds its new direction.
      * If the ball bounces off the bat, increases the score by one

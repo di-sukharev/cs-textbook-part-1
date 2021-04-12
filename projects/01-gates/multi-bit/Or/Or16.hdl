@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/01/Or16.hdl
 
-/**
+/*
  * 16-bit bitwise Or:
  * for i = 0..15 out[i] = (a[i] or b[i])
  */

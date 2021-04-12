@@ -4,10 +4,10 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/ArrayTest/Main.jack
 
-/** Test program for the OS Array class. */
+/* Test program for the OS Array class. */
 class Main {
 
-    /** Performs several Array manipulations. */
+    /*Performs several Array manipulations. */
     function void main() {
         var Array r;                  // stores test results
         var Array a, b, c;

@@ -4,10 +4,10 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/KeyboardTest/Main.jack
 
-/** Test program for the OS Keyboard class. */
+/* Test program for the OS Keyboard class. */
 class Main {
 
-    /** Gets input from the user and verifies its contents. */
+    /*Gets input from the user and verifies its contents. */
     function void main() {
     	var char c, key;
     	var String s;

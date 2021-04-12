@@ -4,10 +4,10 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/MathTest/Main.jack
 
-/** Test program for the OS Math class. */
+/* Test program for the OS Math class. */
 class Main {
 
-    /** Performs various mathematical operations, using calls to the Math class methods. */
+    /*Performs various mathematical operations, using calls to the Math class methods. */
     function void main() {
         var Array r;          // stores the test results;
         

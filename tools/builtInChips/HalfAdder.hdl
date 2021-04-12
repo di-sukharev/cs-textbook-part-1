@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: tools/builtIn/HalfAdder.hdl
 
-/**
+/*
  * Half adder. Computes sum, the least significnat bit of a + b,
  * and carry, the most significnat bit of a + b.
  */

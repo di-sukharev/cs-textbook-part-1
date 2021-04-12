@@ -4,10 +4,10 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/MemoryTest/Main.jack
 
-/** Test program for the OS Memory class. */
+/* Test program for the OS Memory class. */
 class Main {
 
-    /** Performs various memory manipulations. */
+    /*Performs various memory manipulations. */
     function void main() {
         var int temp;
         var Array a, b, c;

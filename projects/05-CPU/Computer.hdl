@@ -1,4 +1,4 @@
-/**
+/*
  * The HACK computer, including CPU, ROM and RAM.
  * When reset is 0, the program stored in the computer's ROM executes.
  * When reset is 1, the execution of the program restarts. 

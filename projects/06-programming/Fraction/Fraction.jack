@@ -4,11 +4,11 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/09/Fraction/Fraction.jack
 
-/** Represents the Fraction type and related operations. */
+/* Represents the Fraction type and related operations. */
 class Fraction {
    field int numerator, denominator;  // field = property = member variable.
   
-   /** Constructs a (reduced) fraction from the given numerator and denominator. */
+   /*Constructs a (reduced) fraction from the given numerator and denominator. */
    constructor Fraction new(int x, int y) {
       let numerator = x;
       let denominator = y;
@@ -27,11 +27,11 @@ class Fraction {
       return;
    }
 
-   /** Accessors. */
+   /*Accessors. */
    method int getNumerator() { return numerator; }
    method int getDenominator() { return denominator; }  
 
-   /** Returns the sum of this fraction and the other one. */
+   /*Returns the sum of this fraction and the other one. */
    method Fraction plus(Fraction other) {
       var int sum;
       let sum = (numerator * other.getDenominator()) + (other.getNumerator() * denominator);
@@ -40,13 +40,13 @@ class Fraction {
 
    // More fraction-related methods (minus, times, div, etc.) can be added here.
   
-   /** Disposes this fraction. */
+   /*Disposes this fraction. */
    method void dispose() {
       do Memory.deAlloc(this);  // uses an OS routine to recycle the memory held by the object
       return;
    }
    
-   /** Prints this fraction in the format x/y. */
+   /*Prints this fraction in the format x/y. */
    method void print() {
       do Output.printInt(numerator);
       do Output.printString("/");

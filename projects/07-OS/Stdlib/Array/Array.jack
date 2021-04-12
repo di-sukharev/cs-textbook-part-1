@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/12/Array.jack
 
-/**
+/*
  * Represents an array.
  * In the Jack language, arrays are instances of the Array class.
  * Once declared, the array entries can be accessed using the usual
@@ -14,11 +14,11 @@
  */
 class Array {
 
-    /** Constructs a new Array of the given size. */
+    /*Constructs a new Array of the given size. */
     function Array new(int size) {
     }
 
-    /** Disposes this array. */
+    /*Disposes this array. */
     method void dispose() {
     }
 }

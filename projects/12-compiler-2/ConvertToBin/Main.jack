@@ -4,7 +4,7 @@
 // Modified by Sukharev, www.sukharev.io
 // File name: projects/11/ConvertToBin/Main.jack
 
-/**
+/*
  * Unpacks a 16-bit number into its binary representation:
  * Takes the 16-bit number stored in RAM[8000] and stores its individual 
  * bits in RAM[8001..8016] (each location will contain 0 or 1).
@@ -21,7 +21,7 @@
  */
 class Main {
     
-    /**
+    /*
      * Initializes RAM[8001]..RAM[8016] to -1,
      * and converts the value in RAM[8000] to binary.
      */
@@ -33,7 +33,7 @@ class Main {
         return;
     }
     
-    /** Converts the given decimal value to binary, and puts 
+    /*Converts the given decimal value to binary, and puts 
      *  the resulting bits in RAM[8001]..RAM[8016]. */
     function void convert(int value) {
     	var int mask, position;
@@ -60,7 +60,7 @@ class Main {
     	return;
     }
  
-    /** Returns the next mask (the mask that should follow the given mask). */
+    /*Returns the next mask (the mask that should follow the given mask). */
     function int nextMask(int mask) {
     	if (mask = 0) {
     	    return 1;
@@ -70,7 +70,7 @@ class Main {
     	}
     }
     
-    /** Fills 'length' consecutive memory locations with 'value',
+    /*Fills 'length' consecutive memory locations with 'value',
       * starting at 'startAddress'. */
     function void fillMemory(int startAddress, int length, int value) {
         while (length > 0) {
