@@ -2,8 +2,11 @@
 
 ## Бекграунд
 
-- Настройка окружения — ссылка
-- Что такое HDL — ссылка
+- [Что такое логический гейт](https://www.notion.so/sukharev/combinational-logic-58c4719db1904258ab5c220721e0226a)
+- [Булева алгебра](https://www.notion.so/sukharev/f2460f106c314219b7d6ba25cb2054fc)
+- [Бинарные числа](https://www.notion.so/sukharev/8f1fedf8967846db8840fa968d72f6e4)
+- [Что такое HDL](https://github.com/di-sukharev/computer/tree/master/projects/01-gates/)
+- [Настройка окружения](https://github.com/di-sukharev/computer/tree/master/)
 
 ---
 

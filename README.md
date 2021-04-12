@@ -49,7 +49,7 @@ _Настройка состоит из двух шагов:_
 
 ## Далее
 
-Перед тем как начать выполнять практические задачи — почитайте [что такое HDL](https://github.com/di-sukharev/computer/tree/master/projects/01-gates/README.md).
+Перед тем как начать выполнять практические задачи — почитайте [что такое HDL](https://github.com/di-sukharev/computer/tree/master/projects/01-gates/).
 
 ## Лицензия
 
