@@ -6,7 +6,7 @@
 
 /*
  * 8-way Or: 
- * out = (in[0] or in[1] or ... or in[7])
+ * out = (in[0] or in[1] or in[2] ... or in[7])
  */
 
 CHIP Or8Way {
