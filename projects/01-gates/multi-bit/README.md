@@ -25,4 +25,4 @@
 
 ## Учебник
 
-Читайте учебник https://www.sukharev.io/textbook
+[Читайте главу учебника про мульти-битные схемы](https://www.notion.so/sukharev/b24b8b98ac864e83aad548c557ca2e1f)
