@@ -5,8 +5,8 @@
 // File name: projects/02/Add16.hdl
 
 /*
- * Adds two 16-bit values.
- * The most significant carry bit is ignored.
+ * Складывает два 16-битных числа.
+ * Наиболее значимый carry бит игнорируется.
  */
 
 CHIP Add16 {
