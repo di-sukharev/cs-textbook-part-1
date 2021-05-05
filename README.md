@@ -15,7 +15,7 @@
 
 - Установите JDK (предпочтительно 14 версию) — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html). Сайт официальный. Скриншот-инструкция ниже:
 
-![Instruction how to download JDK](/img/how2download-jdk.png)
+![Инструкция — как установить JDK (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-jdk.png)
 
 ### Установка переменных окружения (обязательно для Windows)
 
@@ -33,7 +33,7 @@
 
 Далее, откройте VSCode и установите расширения Nand2Tetris. Скриншот-инструкция ниже.
 
-![Instruction how to download vscode extensions for nand2tetris](/img/how2download-vscode_extensions.png)
+![Инструкция — как скачать расширения для VSCode (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-vscode_extensions.png)
 
 ## Задачи
 
@@ -43,7 +43,7 @@
 
 Ниже картинка, как скачать архив.
 
-![Instruction how to download repo manually](/img/how2download-zip.png)
+![Инструкция — как скачать проекты (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-zip.png)
 
 Все вопросы задавайте в телеграм группе [t.me/sukharev_qa](https://www.t.me/sukharev_qa) 🌞
 
