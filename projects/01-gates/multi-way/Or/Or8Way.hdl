@@ -5,7 +5,7 @@
 // File name: projects/01/Or8Way.hdl
 
 /*
- * 8-way Or: 
+ * 8-инпут Or: 
  * out = (in[0] or in[1] or in[2] ... or in[7])
  */
 
@@ -18,3 +18,9 @@ CHIP Or8Way {
         // Вы можете использовать все чипы, которые уже собрали
         // Внимательно читайте условие, out должен быть 1-битным
 }
+
+/*
+    Если у вас возникли вопросы — почитайте инструкции:
+    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
+    - Про мульти-инпут гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-way/README.md
+*/

@@ -29,5 +29,5 @@ CHIP Not {
 /*
     Если у вас возникли вопросы — почитайте инструкции:
     - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
-    - Про чипы: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/README.md
+    - Про элементарные гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/elementary/README.md
 */

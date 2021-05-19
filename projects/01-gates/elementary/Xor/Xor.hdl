@@ -34,4 +34,9 @@ CHIP Xor {
     о способах перевода таблицы истинности в логическое выражение:
     https://www.notion.so/sukharev/f2460f106c314219b7d6ba25cb2054fc#2556c6a02b264ff9844bcc314e5c705b
     Так собрать гейт проще, чем подбирать его вслепую.
+
+
+    Еще можно почитать инструкции:
+    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
+    - Про элементарные гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/elementary/README.md
 */

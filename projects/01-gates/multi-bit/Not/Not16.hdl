@@ -23,3 +23,9 @@ CHIP Not16 {
         // …
         // …
 }
+
+/*
+    Если у вас возникли вопросы — почитайте инструкции:
+    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
+    - Про мульти-битные гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-bit/README.md
+*/
