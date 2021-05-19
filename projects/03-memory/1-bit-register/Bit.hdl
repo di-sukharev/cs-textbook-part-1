@@ -1,7 +1,13 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// Modified by Sukharev, www.sukharev.io
+// File name: projects/02/ALU.hdl
+
 /*
- * 1-bit register:
- * If load[t] == 1 then out[t+1] = in[t]
- *                 else out does not change (out[t+1] = out[t])
+ * 1-битный регистр:
+ * Если load[t] == 1, тогда out[t+1] = in[t]
+ *                    иначе out не меняется out[t+1] = out[t]
  */
 
 CHIP Bit {

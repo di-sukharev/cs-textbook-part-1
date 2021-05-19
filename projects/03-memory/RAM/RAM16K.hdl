@@ -1,8 +1,8 @@
 /*
- * Memory of 16K registers, each 16 bit-wide. Out holds the value
- * stored at the memory location specified by address. If load==1, then 
- * the in value is loaded into the memory location specified by address 
- * (the loaded value will be emitted to out from the next time step onward).
+ * Память из 16384 регистров, каждый хранит 16 бит. Аутпут out возвращает значение
+ * регистра выбранного инпутом address. Если load==1, тогда 
+ * значение записывается в память по выбранному адресу 
+ * (записанное значение возвращается в аутпуте со следующего такта).
  */
 
 CHIP RAM16K {
