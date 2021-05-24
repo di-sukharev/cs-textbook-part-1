@@ -5,7 +5,7 @@
 // File name: projects/01/Mux16.hdl
 
 /*
- * 16-bit multiplexor: 
+ * 16-битный мультиплексор: 
  * for i = 0..15 out[i] = a[i] if sel == 0 
  *                        b[i] if sel == 1
  */

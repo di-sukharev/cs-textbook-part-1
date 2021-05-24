@@ -5,7 +5,7 @@
 // File name: projects/01/Or16.hdl
 
 /*
- * 16-bit bitwise Or:
+ * 16-битный OR:
  * for i = 0..15 out[i] = (a[i] or b[i])
  */
 
