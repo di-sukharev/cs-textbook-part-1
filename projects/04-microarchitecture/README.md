@@ -14,4 +14,12 @@ N-битный счетчик состоит из N-битного регист�
 
 ## Память (Memory)
 
+RAM16K(in=in, load=rr, address=address[0..13], out=r);
+
+// 16384 -> 24575
+Screen(in=in, load=scrn, address=address[0..12], out=sc);
+
+// 24576
+Keyboard(out=k);
+
 ## Компьютер
