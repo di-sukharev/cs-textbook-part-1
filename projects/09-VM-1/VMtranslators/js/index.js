@@ -8,6 +8,6 @@ console.log("args: ", { inputDirectoryName });
 
 console.log("Translating ⏳");
 translateDirectory(inputDirectoryName);
-console.log("Translated .vm to .asm 🌞");
+console.log("Translated .vm to .asm ");
 
 console.log(graffiti);
