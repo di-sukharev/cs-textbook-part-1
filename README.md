@@ -13,7 +13,7 @@
 
 ## JDK
 
-- Установите JDK (предпочтительно 14 версию) — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html). Сайт официальный. Скриншот-инструкция ниже:
+- Установите JDK — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html). Сайт официальный. Скриншот-инструкция ниже:
 
 ![Инструкция — как установить JDK (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-jdk.png)
 
@@ -49,8 +49,8 @@
 
 ## Далее
 
-Перед тем как выполнять проекты — почитайте [что такое HDL](/projects/README.md). На HDL проектируется железо компьютера.
+Перед тем как выполнять проекты почитайте — [что такое HDL](/projects/README.md). HDL — это язык на котором проектируется железо компьютера.
 
 ## Лицензия
 
-Задачи доступны по лицензии [Creative Common Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) в рамках книги «The Elements of Computing Systems» и проекта Nand2Tetris. Спасибо авторам — Ноаму Нисану (Noam Nisan) и Шимону Шокену (Shimon Schocken) ❤️
+Практические задачи доступны по лицензии [Creative Common Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) в рамках книги «The Elements of Computing Systems» и проекта Nand2Tetris. Спасибо авторам — Ноаму Нисану (Noam Nisan) и Шимону Шокену (Shimon Schocken) ❤️
