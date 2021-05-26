@@ -6,7 +6,7 @@
 2. [Полный сумматор (full adder)](FullAdder/FullAdder.hdl)
 3. [Сумматор (adder)](Adder/Add16.hdl)
 4. [ALU](ALU/ALU.hdl)
-5. [Incrementor](Incrementor/Inc16.hdl)
+5. [Инкрементор](Incrementor/Inc16.hdl)
 
 Соблюдайте последовательность выше. Собрав чип, вы можете использовать его в реализации следующих чипов в последовательности.
 
