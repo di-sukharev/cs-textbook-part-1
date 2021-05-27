@@ -1,22 +1,16 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/01/Or8Way.hdl
-
 /*
- * 8-инпут Or: 
- * out = (in[0] or in[1] or in[2] ... or in[7])
- */
+    8-инпут OR
+    
+    out = (in[0] OR in[1] OR in[2] ... OR in[7])
+*/
 
 CHIP Or8Way {
     IN in[8];
-    OUT out;
+    OUT out; // out должен быть 1-битным
 
     PARTS:
         // Напишите HDL код, который реализует таблицу истинности этого чипа
         // Используйте чипы, которые уже собрали
-        // Внимательно читайте условие, out должен быть 1-битным
 }
 
 /*
