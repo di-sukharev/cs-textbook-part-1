@@ -1,13 +1,7 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/02/Add16.hdl
-
 /*
- * Складывает два 16-битных числа.
- * Наиболее значимый carry бит игнорируется.
- */
+    Соберите сумматор:
+    складывает два 16-битных числа в дополнительном коде.
+*/
 
 CHIP Add16 {
     IN a[16], b[16];
@@ -15,5 +9,6 @@ CHIP Add16 {
 
     PARTS:
         // Напишите HDL код, который реализует таблицу истинности этого чипа.
-        // Используйте чипы, которые уже собрали
+        // Используйте полусумматор и 15-ть полный сумматоров.
+        // Наиболее значимый (msb) carry бит игнорируется.
 }

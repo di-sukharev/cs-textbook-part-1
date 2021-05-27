@@ -1,13 +1,7 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/02/Inc16.hdl
-
 /*
- * 16-битный инкрементор:
- * out = in + 1 (арифметическое сложение)
- */
+    Соберите 16-битный инкрементор:
+    out = in + 1
+*/
 
 CHIP Inc16 {
     IN in[16];
@@ -15,10 +9,15 @@ CHIP Inc16 {
 
     PARTS:
         // Напишите HDL код, который реализует таблицу истинности этого чипа.
-        // Используйте чипы, которые уже собрали
+        // Используйте сумматор.
+        // Чтобы передать в инпут сумматора 1 — используйте ключевое слово `true`.
+        // Пример, передаем 1 в lsb: Not16(in[0]=true, out=output);
 }
 
 /*
-    Чтобы передать в инпут единицу — используйте ключевое слово `true`.
-    Пример, передаем единицу в lsb: Not16(in[0]=true, out=output);
+    Читайте главу учебника про компьютерную арифметику:
+    https://www.notion.so/sukharev/II-d8cc63bcb9074f9b8470067b1b3d1a37
+
+    Вопросы задавайте в телеграм группе:
+    https://t.me/sukharev_qa
 */
