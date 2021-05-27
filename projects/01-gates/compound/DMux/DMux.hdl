@@ -1,8 +1,8 @@
 /*
     Демультиплексор (DMUX)
 
-    (a = in, b = 0) если sel == 0
-    (a = 0, b = in) если sel == 1
+    (a = in, b = 0) если sel == 0,
+    (a = 0, b = in) если sel == 1.
 */
 
 CHIP DMux {

@@ -1,8 +1,8 @@
 /* 
     Мультиплексор (MUX)
 
-    out = a, если sel == 0
-    out = b, если sel == 1
+    out = a, если sel == 0,
+    out = b, если sel == 1.
 */
 
 CHIP Mux {
