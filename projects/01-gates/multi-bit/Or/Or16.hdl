@@ -1,25 +1,21 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/01/Or16.hdl
-
 /*
- * 16-битный OR:
- * for i = 0..15 out[i] = (a[i] or b[i])
- */
+    16-битный OR
+
+    для i от 0 до 15: out[i] = a[i] OR b[i]
+*/
 
 CHIP Or16 {
-    IN a[16], b[16];
-    OUT out[16];
+    IN a[16], b[16]; // гейт принимает два 16-битных инпута: a, b;
+    OUT out[16]; // и возвращает один 16-битный аутпут: out;
 
     PARTS:
         // Напишите HDL код, который реализует таблицу истинности этого чипа
-        // Используйте чипы, которые уже собрали
 }
 
 /*
-    Если у вас возникли вопросы — почитайте инструкции:
-    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
-    - Про мульти-битные гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-bit/README.md
+    Если не знаете, что такое мульти-битный гейт — читайте учебник:
+    https://www.notion.so/sukharev/b24b8b98ac864e83aad548c557ca2e1f
+
+    Вопросы задавайте в телеграм группе:
+    https://t.me/sukharev_qa
 */

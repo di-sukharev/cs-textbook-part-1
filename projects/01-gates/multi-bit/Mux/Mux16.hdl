@@ -11,16 +11,17 @@
  */
 
 CHIP Mux16 {
-    IN a[16], b[16], sel; // два 16-битных инпута a, b и 1-битный инпут sel
-    OUT out[16]; // 16-битный аутпут out
+    IN a[16], b[16], sel;
+    OUT out[16];
 
     PARTS:
         // Напишите HDL код, который реализует таблицу истинности этого чипа
-        // Используйте чипы, которые уже собрали
 }
 
 /*
-    Если у вас возникли вопросы — почитайте инструкции:
-    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
-    - Про мульти-битные гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-bit/README.md
+    Если не знаете, что такое мульти-битный гейт — читайте учебник:
+    https://www.notion.so/sukharev/b24b8b98ac864e83aad548c557ca2e1f
+
+    Вопросы задавайте в телеграм группе:
+    https://t.me/sukharev_qa
 */
