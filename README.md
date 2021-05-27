@@ -47,7 +47,7 @@
 
 ## Вопросы
 
-Все вопросы задавайте в телеграм группе [t.me/sukharev_qa](https://www.t.me/sukharev_qa)
+Задавайте вопросы в телеграм группе [t.me/sukharev_qa](https://www.t.me/sukharev_qa)
 
 ## Далее
 
