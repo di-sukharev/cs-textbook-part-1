@@ -1,0 +1,28 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// Modified by Sukharev, www.sukharev.io
+// File name: projects/01/DMux4Way.hdl
+
+/*
+ * 4-инпут демультиплексор:
+ * {a, b, c, d} = {in, 0, 0, 0} если sel == 00
+ *                {0, in, 0, 0} если sel == 01
+ *                {0, 0, in, 0} если sel == 10
+ *                {0, 0, 0, in} если sel == 11
+ */
+
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+
+    PARTS:
+        // Напишите HDL код, который реализует таблицу истинности этого чипа
+        // Используйте чипы, которые уже собрали
+}
+
+/*
+    Если у вас возникли вопросы — почитайте инструкции:
+    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
+    - Про мульти-инпут гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-way/README.md
+*/
