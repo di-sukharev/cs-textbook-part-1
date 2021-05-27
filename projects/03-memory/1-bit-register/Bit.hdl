@@ -1,14 +1,11 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/02/ALU.hdl
-
 /*
- * 1-битный регистр:
- * Если load[t] == 1, тогда out[t+1] = in[t]
- *                    иначе out не меняется out[t+1] = out[t]
- */
+    1-битный регистр
+
+    Логика работы:
+    если load[t] == 1, тогда: out[t+1] = in[t]
+                       иначе out не меняется: out[t+1] = out[t]
+    где t — текущий такт, а t+1 — следущий такт.
+*/
 
 CHIP Bit {
     IN in, load;
@@ -16,11 +13,23 @@ CHIP Bit {
 
     PARTS:
         // Напишите HDL код, который реализует таблицу истинности этого чипа.
-        // Используйте чипы, которые уже собрали. и предустановленный чип DFF(in=input, out=output);
+        // Используйте DFF и мультиплесор.
+        // DFF — это предустановленный чип: DFF(in=input, out=output);
 }
 
 /*
-    Если у вас возникли вопросы — почитайте инструкции:
-    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
-    - Про чипы памяти: https://github.com/di-sukharev/computer/tree/master/projects/03-memory/README.md
+    Подсказка
+
+    Чтобы раздвоить аутпут, добавьте в чип еще один out пин:
+    DFF(in=input, out=еще_один_аутпут, out=output)
+
+    Затем этот аутпут можно вставить в мультиплексор
+*/
+
+/*
+    Читайте главу учебника про последовательные чипы:
+    https://www.notion.so/sukharev/III-sequential-logic-e2f1d301c11b4df7ada329b2afd4478c
+
+    Задавайте вопросы в телеграм группе:
+    https://t.me/sukharev_qa
 */
