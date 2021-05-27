@@ -1,25 +1,19 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/01/Mux16.hdl
-
 /*
- * 16-битный мультиплексор: 
- * for i = 0..15 out[i] = a[i] if sel == 0 
- *                        b[i] if sel == 1
- */
+    Соберите 16-битный мультиплексор:
+    для i от 0 до 15: out[i] = a[i] если sel == 0 
+                               b[i] если sel == 1
+*/
 
 CHIP Mux16 {
     IN a[16], b[16], sel;
     OUT out[16];
 
     PARTS:
-        // Напишите HDL код, который реализует таблицу истинности этого чипа
+        // Напишите HDL код, который реализует таблицу истинности этого чипа.
 }
 
 /*
-    Если не знаете, что такое мульти-битный гейт — читайте учебник:
+    Читайте главу учебника про мульти-битные гейты:
     https://www.notion.so/sukharev/b24b8b98ac864e83aad548c557ca2e1f
 
     Вопросы задавайте в телеграм группе:

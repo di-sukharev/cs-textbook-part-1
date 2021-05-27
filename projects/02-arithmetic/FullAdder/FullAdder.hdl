@@ -1,19 +1,15 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/02/FullAdder.hdl
-
 /*
- * Складывает три бита.
- */
+    Полный сумматор
+
+    Складывает три бита.
+*/
 
 CHIP FullAdder {
-    IN a, b, c;  // 1-битные инпуты
-    OUT sum,     // Правый бит суммы: a + b + c
-        carry;   // Левый бит суммы: a + b + c
+    IN a, b, c;
+    OUT sum,
+        carry;
 
     PARTS:
-        // Напишите HDL код, который реализует таблицу истинности этого чипа
-        // Используйте чипы, которые уже собрали
+        // Напишите HDL код, который реализует таблицу истинности этого чипа.
+        // Используйте два полусумматора и гейт OR.
 }
