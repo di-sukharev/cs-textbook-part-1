@@ -1,20 +1,15 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/01/DMux8Way.hdl
-
 /*
- * 8-инпут демультиплексор:
- * {a, b, c, d, e, f, g, h} = {in, 0, 0, 0, 0, 0, 0, 0} если sel == 000
- *                            {0, in, 0, 0, 0, 0, 0, 0} если sel == 001
- *                            {0, 0, in, 0, 0, 0, 0, 0} если sel == 010
- *                            {0, 0, 0, in, 0, 0, 0, 0} если sel == 011
- *                            {0, 0, 0, 0, in, 0, 0, 0} если sel == 100
- *                            {0, 0, 0, 0, 0, in, 0, 0} если sel == 101
- *                            etc...
- *                            {0, 0, 0, 0, 0, 0, 0, in} если sel == 111
- */
+    8-инпут демультиплексор
+
+    {a, b, c, d, e, f, g, h} = {in, 0, 0, 0, 0, 0, 0, 0} если sel == 000,
+                               {0, in, 0, 0, 0, 0, 0, 0} если sel == 001,
+                               {0, 0, in, 0, 0, 0, 0, 0} если sel == 010,
+                               {0, 0, 0, in, 0, 0, 0, 0} если sel == 011,
+                               {0, 0, 0, 0, in, 0, 0, 0} если sel == 100,
+                               {0, 0, 0, 0, 0, in, 0, 0} если sel == 101,
+                               …,
+                               {0, 0, 0, 0, 0, 0, 0, in} если sel == 111.
+*/
 
 CHIP DMux8Way {
     IN in, sel[3];
@@ -26,7 +21,9 @@ CHIP DMux8Way {
 }
 
 /*
-    Если у вас возникли вопросы — почитайте инструкции:
-    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
-    - Про мульти-инпут гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-way/README.md
+    Если не знаете, что такое мульти-инпут гейт — читайте учебник:
+    https://www.notion.so/sukharev/7c57c5226eb64435a4ce4cd4b1a71b6f
+
+    Вопросы задавайте в телеграм группе:
+    https://t.me/sukharev_qa
 */

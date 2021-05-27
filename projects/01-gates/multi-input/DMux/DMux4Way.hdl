@@ -1,16 +1,11 @@
-// This file is part of www.nand2tetris.org
-// and the book "The Elements of Computing Systems"
-// by Nisan and Schocken, MIT Press.
-// Modified by Sukharev, www.sukharev.io
-// File name: projects/01/DMux4Way.hdl
-
 /*
- * 4-инпут демультиплексор:
- * {a, b, c, d} = {in, 0, 0, 0} если sel == 00
- *                {0, in, 0, 0} если sel == 01
- *                {0, 0, in, 0} если sel == 10
- *                {0, 0, 0, in} если sel == 11
- */
+    4-инпут демультиплексор
+
+    {a, b, c, d} = {in, 0, 0, 0} если sel == 00,
+                   {0, in, 0, 0} если sel == 01,
+                   {0, 0, in, 0} если sel == 10,
+                   {0, 0, 0, in} если sel == 11.
+*/
 
 CHIP DMux4Way {
     IN in, sel[2];
@@ -22,7 +17,9 @@ CHIP DMux4Way {
 }
 
 /*
-    Если у вас возникли вопросы — почитайте инструкции:
-    - Про язык программирования чипов — HDL: https://github.com/di-sukharev/computer/tree/master/projects/README.md
-    - Про мульти-инпут гейты: https://github.com/di-sukharev/computer/tree/master/projects/01-gates/multi-way/README.md
+    Если не знаете, что такое мульти-инпут гейт — читайте учебник:
+    https://www.notion.so/sukharev/7c57c5226eb64435a4ce4cd4b1a71b6f
+
+    Вопросы задавайте в телеграм группе:
+    https://t.me/sukharev_qa
 */
