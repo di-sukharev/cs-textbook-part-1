@@ -1,19 +1,23 @@
 /*
- * The HACK computer, including CPU, ROM and RAM.
- * When reset is 0, the program stored in the computer's ROM executes.
- * When reset is 1, the execution of the program restarts. 
- * Thus, to start a program's execution, reset must be pushed "up" (1)
- * and "down" (0). From this point onward the user is at the mercy of 
- * the software. In particular, depending on the program's code, the 
- * screen may show some output and the user may be able to interact 
- * with the computer via the keyboard.
- */
+    Компьютер
+    
+    Компьютер = память + процессор.
+    
+    Наш компьютер собирается по гарвардской архитектуре.
+    У него два чипа памяти: память данных (Memory) и память инструкций (ROM).
+    Память данных содержит не только данные, но и MMIO сегменты экрана и клавиатуры.
+
+    Когда reset==0, программа сохраненная в ROM начинает выполняться.
+    Когда reset==1, выполнение программы начинается сначала. 
+*/
 
 CHIP Computer {
 
     IN reset;
 
     PARTS:
-        // Напишите HDL код, который реализует таблицу истинности этого чипа.
-        // Используйте чипы, которые уже собрали.
+        // Допишите HDL код, который реализует таблицу истинности этого чипа.
+        Memory(in=_, load=_, address=_, out=_);
+        CPU(inM=_, instruction=_, reset=_, outM=_, writeM=_, addressM=_, pc=_);
+        ROM32K(address=_, out=_);
 }

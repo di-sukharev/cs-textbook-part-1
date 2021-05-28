@@ -1,20 +1,22 @@
 /*
-    The complete address space of the Hack computer's memory,
-    including RAM and memory-mapped I/O. 
-    The chip facilitates read and write operations, as follows:
-        Read:  out(t) = Memory[address(t)](t)
-        Write: if load(t-1) then Memory[address(t-1)](t) = in(t-1)
-    In words: the chip always outputs the value stored at the memory 
-    location specified by address. If load==1, the in value is loaded 
-    into the memory location specified by address. This value becomes 
-    available through the out output from the next time step onward.
-    Address space rules:
-    Only the upper 16K+8K+1 words of the Memory chip are used. 
-    Access to address>0x6000 is invalid. Access to any address in 
-    the range 0x4000-0x5FFF results in accessing the screen memory 
-    map. Access to address 0x6000 results in accessing the keyboard 
-    memory map. The behavior in these addresses is described in the 
-    Screen and Keyboard chip specifications given in the book.
+    Память (Memory)
+
+    Память состоит из трех чипов: RAM16K, Screen, Keyboard.
+    Каждому чипу отведем сегмент регистров.
+
+    Сегмент RAM16K занимает регистры с 0 по 16383 включительно.
+    Когда обращаешься в память по адресу, например, 832 — попадаешь в RAM16K чип.
+    
+    Сегмент Screen (экран) занимает регистры с 16384 по 24575 включительно.
+    Когда обращаешься в память по адресу, например, 22123 — попадаешь в Screen чип.
+    
+    Сегмент Keyboard (клавиатура) занимает 24576 регистр.
+    Когда обращаешься в память по адресу 24576 — попадаешь в Keyboard чип.
+    У чипа клавиатуры нет инпутов, только аутпут.
+    В аутпуте передается скан-код нажатой клавиши.
+
+    Доступ к адресам вне сегментов, например к 24577 регистру,
+    считается невалидным и никак не обрабатывается.
 */
 
 CHIP Memory {
@@ -22,10 +24,8 @@ CHIP Memory {
     OUT out[16];
 
     PARTS:
-        // Напишите HDL код, который реализует таблицу истинности этого чипа.
-        // Используйте чипы, которые уже собрали.
-        // и предустановленные чипы:
-        //      RAM16K(in=_, load=_, address=_, out=_);
-        //      Screen(in=_, load=_, address=_, out=_);
-        //      Keyboard(out=_);
+        // Допишите HDL код, который реализует таблицу истинности этого чипа.
+        RAM16K(in=_, load=_, address=_, out=_);
+        Screen(in=_, load=_, address=_, out=_);
+        Keyboard(out=_);
 }

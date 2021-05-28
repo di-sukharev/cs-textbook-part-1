@@ -7,36 +7,28 @@
 3. [Память](memory/Memory.hdl)
 4. [Компьютер](computer/Computer.hdl)
 
-## Счетчик (program counter)
+## Программный счетчик (program counter — PC)
 
 N-битный счетчик состоит из N-битного регистра, инкрементора и комбинационной логики.
 
 ## Процессор (CPU)
 
-[Читайте в отдельной инструкции про процессор](CPU/README.md)
+[Читайте подробности в отдельной инструкции](CPU/README.md)
 
 ## Память (Memory)
 
-```c
-DMux4Way(in=load, sel=address[13..14], a=ram, b=rram, c=scrn, d=keybd);
+Память состоит из трех чипов: RAM16K, Screen, Keyboard. Каждому чипу отведем сегмент регистров.
 
-Or(a=ram, b=rram, out=rr);
-RAM16K(in=in, load=rr, address=address[0..13], out=r);
-// 16384 -> 24575
-Screen(in=in, load=scrn, address=address[0..12], out=sc);
+Сегмент RAM16K занимает регистры с 0 по 16383 включительно. Когда обращаешься в память по адресу, например, 832 — попадаешь в RAM16K чип. Пример использования RAM чипа: `RAM16K(in=in, load=load, address=address, out=out);`.
 
-// 24576
-Keyboard(out=k);
+Сегмент Screen (экран) занимает регистры с 16384 по 24575 включительно. Когда обращаешься в память по адресу, например, 22123 — попадаешь в Screen чип. Пример использования чипа Screen: `Screen(in=in, load=load, address=address, out=out);`.
 
-Mux4Way16(a=r, b=r, c=sc, d=k, sel=address[13..14], out=out);
-```
+Сегмент Keyboard (клавиатура) занимает 24576 регистр. Когда обращаешься в память по адресу 24576 — попадаешь в Keyboard чип. Пример использования чипа Keyboard: `Keyboard(out=output);`. У чипа клавиатуры нет инпутов, только аутпут. В аутпуте передается скан-код нажатой клавиши.
+
+Доступ к адресам вне сегментов, например к 24577 регистру, считается невалидным и никак не обрабатывается.
 
 ## Компьютер
 
-```c
-Memory(in=outM, load=writeM, address=addressM, out=inM);
+Компьютер = память + процессор.
 
-CPU(inM=inM, instruction=instruction, reset=reset, outM=outM, writeM=writeM, addressM=addressM, pc=PCout);
-
-ROM32K(address=PCout, out=instruction);
-```
+Наш компьютер собирается по гарвардской архитектуре. У него два чипа памяти: память данных (Memory) и память инструкций (ROM). Память данных содержит не только данные, но и MMIO сегменты экрана и клавиатуры.

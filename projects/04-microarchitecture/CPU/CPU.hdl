@@ -20,6 +20,8 @@
     than to the address resulting from executing the current instruction. 
 */
 
+// Прочитайте инструкцию в файле README.md, она лежит рядом с этим файлом.
+
 CHIP CPU {
 
     IN  inM[16],         // M value input  (M = contents of RAM[A])
