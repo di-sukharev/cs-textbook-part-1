@@ -3,21 +3,6 @@
 
     Прочитайте спецификацию процессора в файле README.md,
     он лежит в одной папке с этим файлом.
-
-    The Hack Central Processing Unit consists of an ALU, two registers named A and D,
-    and a program counter named PC (these internal chip-parts are not shown in the diagram).
-    The inM input and outM output hold the values referred to as “M” in the Hack instruction syntax.
-    The addressM output holds the memory address to which outM should be written.
-    The CPU is designed to fetch and execute instructions written in the Hack machine language.
-    If instruction is an A-instruction, the CPU loads the 16-bit constant that the instruction represents into the A register.
-    If instruction is a C-instruction, then (i) the CPU causes the ALU to perform the computation specified by the instruction,
-    and (ii) the CPU causes this value to be stored in the subset of {A,D,M} registers specified by the instruction.
-    If one of these registers is M, the CPU asserts the writeM control bit output (when writeM is 0, any value may appear in outM).
-    When the reset input is 0, the CPU uses the ALU output and the jump directive specified by the instruction to compute the address of the next instruction,
-    and emits this address to the pc output. If the reset input is 1, the CPU sets pc to 0.
-    The outM and writeM outputs are combinational, and are affected instantaneously by the instruction’s execution.
-    The addressM and pc outputs are clocked: although they are affected by the instruction’s execution,
-    they commit to their new values only in the next time step.
 */
 
 CHIP CPU {

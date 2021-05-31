@@ -18,7 +18,7 @@ CHIP RAM8 {
 
 /*
     Читайте главу учебника про последовательные чипы:
-    https://www.notion.so/sukharev/III-sequential-logic-e2f1d301c11b4df7ada329b2afd4478c
+    https://www.notion.so/sukharev/III-sequential-logic-5eeee97056a14f1e8d2fa3c8c51740ee
 
     Задавайте вопросы в телеграм группе:
     https://t.me/sukharev_qa
