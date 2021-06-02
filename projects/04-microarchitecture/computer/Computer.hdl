@@ -23,3 +23,11 @@ CHIP Computer {
         CPU(inM=_, instruction=_, reset=_, outM=_, writeM=_, addressM=_, pc=_);
         ROM32K(address=_, out=_);
 }
+
+/*
+    Читайте главу учебника про микроархитектуру компьютера:
+    https://www.notion.so/sukharev/c69fe0be0cbf4172aa8db486e371e6ac
+
+    Задавайте вопросы в телеграм группе:
+    https://t.me/sukharev_qa
+*/

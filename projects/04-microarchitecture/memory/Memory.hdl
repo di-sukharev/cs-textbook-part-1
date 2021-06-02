@@ -35,3 +35,11 @@ CHIP Memory {
         Screen(in=_, load=_, address=_, out=_);
         Keyboard(out=_);
 }
+
+/*
+    Читайте главу учебника про микроархитектуру компьютера:
+    https://www.notion.so/sukharev/input-output-I-O-b092b77ed1f9473198a24b07530bc34d
+
+    Задавайте вопросы в телеграм группе:
+    https://t.me/sukharev_qa
+*/
