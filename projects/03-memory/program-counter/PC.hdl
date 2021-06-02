@@ -14,7 +14,7 @@ CHIP PC {
         // incrementing is the least important operation in if/else statement, so it goes first
         // incrementing input, if inc bit is 1
         Inc16(in=saved, out=incremented);
-        Mux16(a=in, b=incremented, sel=inc, out=incORin);
+        Mux16(a=saved, b=incremented, sel=inc, out=incORin);
 
         // handling load value is the middle operation in if/else statement, so it goes in the middle
         // handling load bit behaviour        
