@@ -25,7 +25,7 @@
     которую вы применяли при сборке семейства RAM чипов.
 
     Чтобы протестировать код — откройте симулятор в меню запуска кода:
-    ctrl + shift + p > Nand2Tetris: Open Hardware Simulator
+    ctrl + shift + p > Nand2Tetris: Open Hardware Simulator. Сmd для macOS.
     Далее загрузите в симулятор Memory.tst файл через кнопку свитка
     Выберите настройки: Animation — no animation; View — Screen.
     И нажмите на две синие стрелки (play).
