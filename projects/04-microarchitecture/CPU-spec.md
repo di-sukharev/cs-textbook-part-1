@@ -2,7 +2,9 @@
 
 # Процессор
 
-![схема процессора (кликните на ссылку с зажатым ctrl или cmd для macOS)](img/CPU-scheme.png)
+![реализация процессора (кликните на ссылку с зажатым ctrl или cmd для macOS)](img/CPU-implementation.png)
+
+![интерфейс процессора (кликните на ссылку с зажатым ctrl или cmd для macOS)](img/CPU-interface.png)
 
 **Инпуты:**
 
