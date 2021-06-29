@@ -7,3 +7,5 @@
 
 // Чтобы запустить программу — откройте Mult.tst файл в симуляторе CPU
 // ctrl+shift+p или cmd+shift+p — Nand2Tetris: Open CPU Simulator
+
+// Пишите код ниже:
