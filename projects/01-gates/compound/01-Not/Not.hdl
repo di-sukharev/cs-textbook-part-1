@@ -12,6 +12,7 @@ CHIP Not {
 
     PARTS:
         // Допишите HDL код, чтобы реализовать таблицу истинности NOT.
+        // Не забудьте сохранить файл после редактирования: cmd+s для mac и ctrl+s для windows
         // Используйте встроенный в симулятор гейт Nand:
         Nand(a=вставьте_инпут, b=вставьте_инпут, out=вставьте_аутпут);
 }
@@ -24,5 +25,5 @@ CHIP Not {
     https://github.com/di-sukharev/computer/tree/master/projects/README.md
 
     Задавайте вопросы в телеграм группе:
-    https://t.me/sukharev_qa
+    https://t.me/sukharev_community
 */

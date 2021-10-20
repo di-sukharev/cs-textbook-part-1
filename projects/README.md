@@ -141,8 +141,8 @@ CHIP Nand {
 
 ## Учебник
 
-[Читайте мой учебник компьютерных наук](https://www.sukharev.io/textbook). В нем дается теория помогающая выполнять практические задания.
+[Читайте мой учебник компьютерных наук](https://www.sukharev.io/textbook). В нем дается теория для выполнения практических заданий.
 
 ## Вопросы
 
-Задавайте вопросы в телеграм группе [t.me/sukharev_qa](https://www.t.me/sukharev_qa)
+Задавайте вопросы в телеграм группе [@sukharev_community](https://www.t.me/sukharev_community)

@@ -10,8 +10,8 @@
 
 Настройка состоит из двух шагов:
 
-1. Установите **Java Development Kit** (JDK), чтобы запустить симулятор железа компьютера. Симулятор в котором собирается компьютер написан на языке программирования Java. JDK — это программа, которая выполняет Java код.
-2. Установите **редактор кода**, чтобы писать в нем программы. Редактор кода — это такая же программа, как ворд. **Ворд** редактирует **текст**. **Редактор** кода редактирует **код**. Мы будем устанавливать VSCode, это обязательно, потому что для него написаны расширения, позволяющие в 1000 раз проще выполнять практические задания.
+1. Установка **Java Development Kit** (JDK), чтобы запустить симулятор железа компьютера. Симулятор в котором собирается компьютер написан на Java. JDK — это программа, которая позволяет выполнять Java код.
+2. Установка **редактора кода**, чтобы писать в нем программы. Редактор кода — это такая же программа, как ворд. **Ворд** редактирует **текст**. **Редактор** кода редактирует **код**. Мы будем устанавливать VSCode, это обязательно, потому что для него написаны расширения, позволяющие выполнять практические задания.
 
 ## JDK
 
@@ -27,13 +27,13 @@
 4. В Системных переменных (System Variables) добавьте две новые переменные JRE_HOME и JAVA_HOME.
 5. В каждую переменную запишите адрес до папки `bin` из JDK, которую вы только что установили. Обычно `bin` папка в JDK устанавливается по адресу `C:\Program Files\Java\jdk-9\bin`.
 
-Если у вас Windows и в процессе выполнения задач вы столкнетесь с ошибкой `You need to install [Java Runtime Environment] First. [Done] Comparison Failure with code=2` — значит вы неправильно установили переменные. Перечитайте этот раздел и выполните шаги еще раз. Если ничего не помогает — пишите в телеграм группу [t.me/sukharev_qa](https://www.t.me/sukharev_qa).
+Если у вас Windows и в процессе выполнения задач вы столкнетесь с ошибкой `You need to install [Java Runtime Environment] First. [Done] Comparison Failure with code=2` — значит вы неправильно установили переменные. Перечитайте этот раздел и выполните шаги еще раз. Если ничего не помогает — пишите в на почту [help@sukharev.io](mailto:help@sukharev.io).
 
 ## Редактор кода
 
 [Установите редактор кода — VSCode](https://code.visualstudio.com/download)
 
-Далее, откройте VSCode и установите расширения Nand2Tetris. Скриншот-инструкция ниже.
+Далее, откройте VSCode и установите расширения Nand2Tetris авторов roblourens и leafvmaple. Скриншот-инструкция ниже.
 
 ![Инструкция — как скачать расширения для VSCode (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-vscode_extensions.png)
 
@@ -49,7 +49,7 @@
 
 ## Вопросы
 
-Все вопросы задавайте в телеграм группе [t.me/sukharev_qa](https://www.t.me/sukharev_qa)
+Все вопросы задавайте в телеграм группе [@sukharev_community](https://www.t.me/sukharev_community) или отправляйте на почту [help@sukharev.io](mailto:help@sukharev.io).
 
 ## Далее
 
@@ -57,4 +57,4 @@
 
 ## Лицензия
 
-Практические задачи доступны по лицензии [Creative Common Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) в рамках книги «The Elements of Computing Systems» и проекта Nand2Tetris. Спасибо авторам — Ноаму Нисану (Noam Nisan) и Шимону Шокену (Shimon Schocken) ❤️
+Практические задачи доступны по лицензии [Creative Common Attribution-NonCommercial-ShareAlike 3.0 Unported License](https://creativecommons.org/licenses/by-nc-sa/3.0/) в рамках книги «The Elements of Computing Systems». Спасибо авторам — Ноаму Нисану (Noam Nisan) и Шимону Шокену (Shimon Schocken) ❤️
