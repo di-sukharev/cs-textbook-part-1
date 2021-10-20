@@ -8,7 +8,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про логические гейты](https://www.notion.so/sukharev/I-combinational-logic-66d968f298d84bde97604bd41ea7d1a2)
+[Читайте главу учебника про логические гейты](https://www.sukharev.io/app/courses/cs-part-1/gates/intro)
 
 ## Вопросы
 

@@ -19,10 +19,10 @@ CHIP Xor {
 
 /*
     Если не знаете, что такое гейт — читайте учебник:
-    https://www.notion.so/sukharev/996899ea44e5417fb6ae56c085f3c0ac
+    https://www.sukharev.io/app/courses/cs-part-1/gates/intro
     
     Если не знаете, как писать HDL код — читайте инструкцию:
-    https://github.com/di-sukharev/computer/tree/master/projects/README.md
+    /projects/README.md
 
     Если не получается подобрать решение:
     https://www.notion.so/sukharev/f2460f106c314219b7d6ba25cb2054fc#2556c6a02b264ff9844bcc314e5c705b
