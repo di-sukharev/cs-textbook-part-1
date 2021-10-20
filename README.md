@@ -15,9 +15,9 @@
 
 ## JDK
 
-Установите JDK c официального сайта — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html).
+Установите JDK (Java Development Kit) c официального сайта — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html).
 
-Для MacOS скачивайте [x64 DMG Installer](https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.dmg), а для windows [x64 Installer](https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.exe)
+Для мака скачивайте [x64 DMG Installer](https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.dmg), если у вас мак на АРМ процессоре — скачивайте [Arm 64 DMG Installer](https://download.oracle.com/java/17/latest/jdk-17_macos-aarch64_bin.dmg). Для виндоус скачивайте [x64 Installer](https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.exe)
 
 Скриншот-инструкция ниже:
 
