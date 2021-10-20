@@ -15,11 +15,19 @@
 
 ## JDK
 
-- Установите JDK — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html). Сайт официальный. Скриншот-инструкция ниже:
+Установите JDK c официального сайта — [https://www.oracle.com/java/technologies/javase-downloads.html](https://www.oracle.com/java/technologies/javase-downloads.html).
+
+Для MacOS скачивайте [x64 DMG Installer](https://download.oracle.com/java/17/latest/jdk-17_macos-x64_bin.dmg), а для windows [x64 Installer](https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.exe)
+
+Скриншот-инструкция ниже:
 
 ![Инструкция — как установить JDK (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-jdk.png)
 
-### Установка переменных окружения (обязательно для Windows)
+### Установка переменных окружения (только для Windows)
+
+Если у вас Windows и в процессе выполнения задач вы столкнетесь с ошибкой `You need to install [Java Runtime Environment] First. [Done] Comparison Failure with code=2` — выполните установку переменных окружения, а пока можете пропустить этот раздел.
+
+#### Инструкция по установке переменных окружения
 
 1. Откройте «Панель управления» (Control Panel), затем «Система» (System).
 2. Кликните в «Расширенные настройки» (Advanced), а потом «Переменные окружения» (Environment Variables).
