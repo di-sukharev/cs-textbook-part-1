@@ -2,11 +2,11 @@
 
 Соберите арифметические чипы в следующей последовательности:
 
-1. [Полусумматор (half adder)](HalfAdder/HalfAdder.hdl)
-2. [Полный сумматор (full adder)](FullAdder/FullAdder.hdl)
-3. [Сумматор (adder)](Adder/Add16.hdl)
-4. [ALU](ALU/ALU.hdl)
-5. [Инкрементор](Incrementor/Inc16.hdl)
+1. [Полусумматор (half adder)](01-HalfAdder/HalfAdder.hdl)
+2. [Полный сумматор (full adder)](02-FullAdder/FullAdder.hdl)
+3. [Сумматор (adder)](03-Adder/Add16.hdl)
+4. [ALU](04-ALU/ALU.hdl)
+5. [Инкрементор](05-Incrementor/Inc16.hdl)
 
 ## Учебник
 

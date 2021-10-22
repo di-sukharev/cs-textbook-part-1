@@ -2,12 +2,12 @@
 
 Соберите составные гейты в следующей последовательности:
 
-1. [NOT](Not/Not.hdl)
-2. [AND](And/And.hdl)
-3. [OR](Or/Or.hdl)
-4. [XOR](Xor/Xor.hdl)
-5. [MUX](Mux/Mux.hdl)
-6. [DMUX](DMux/DMux.hdl)
+1. [NOT](01-Not/Not.hdl)
+2. [AND](02-And/And.hdl)
+3. [OR](03-Or/Or.hdl)
+4. [XOR](04-Xor/Xor.hdl)
+5. [MUX](05-Mux/Mux.hdl)
+6. [DMUX](06-DMux/DMux.hdl)
 
 ## Учебник
 
