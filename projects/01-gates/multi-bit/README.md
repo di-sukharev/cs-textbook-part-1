@@ -9,7 +9,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про мульти-битные гейты](https://www.notion.so/sukharev/a4ab1eaed0c94c64913c3c94049bf2f2)
+[Читайте главу учебника про мульти-битные гейты](https://www.sukharev.io/app/courses/cs-part-1/gates/multi-bit)
 
 ## Вопросы
 

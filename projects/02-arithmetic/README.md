@@ -10,7 +10,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про компьютерную арифметику](https://www.notion.so/sukharev/II-0664476fce34450fb887f7f7305fe845)
+[Читайте главу учебника про компьютерную арифметику](https://www.sukharev.io/app/courses/cs-part-1/arithmetic/intro)
 
 ## Вопросы
 

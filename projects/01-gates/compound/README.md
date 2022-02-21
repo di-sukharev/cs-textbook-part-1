@@ -11,7 +11,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про составные гейты](https://www.notion.so/sukharev/996899ea44e5417fb6ae56c085f3c0ac)
+[Читайте главу учебника про составные гейты](https://www.sukharev.io/app/courses/cs-part-1/gates/compound)
 
 ## Вопросы
 

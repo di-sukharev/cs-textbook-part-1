@@ -11,7 +11,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про процессор](https://www.notion.so/sukharev/IV-bf46f600740f4ba6b5161a3f9ebc1a94)
+[Читайте главу учебника про процессор](https://www.sukharev.io/app/courses/cs-part-1/microarchitecture/cpu)
 
 ## Вопросы
 

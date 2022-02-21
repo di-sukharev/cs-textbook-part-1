@@ -18,7 +18,7 @@ CHIP RAM64 {
 
 /*
     Читайте главу учебника про последовательные чипы:
-    https://www.notion.so/sukharev/III-sequential-logic-5eeee97056a14f1e8d2fa3c8c51740ee
+    https://www.sukharev.io/app/courses/cs-part-1/memory/intro
 
     Задавайте вопросы в телеграм группе: https://t.me/sukharev_community 
     или пишите на почту: help@sukharev.io

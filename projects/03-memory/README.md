@@ -8,7 +8,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про последовательную логику](https://www.notion.so/sukharev/III-sequential-logic-5eeee97056a14f1e8d2fa3c8c51740ee)
+[Читайте главу учебника про последовательную логику](https://www.sukharev.io/app/courses/cs-part-1/memory/intro)
 
 ## Вопросы
 

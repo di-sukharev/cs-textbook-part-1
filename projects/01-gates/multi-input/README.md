@@ -10,7 +10,7 @@
 
 ## Учебник
 
-[Читайте главу учебника про мульти-инпут гейты](https://www.notion.so/sukharev/2439a853dd324e13a165c2dd4e98a1c8)
+[Читайте главу учебника про мульти-инпут гейты](https://www.sukharev.io/app/courses/cs-part-1/gates/multi-input)
 
 ## Вопросы
 
