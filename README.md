@@ -33,7 +33,7 @@
 
 [Установите редактор кода — VSCode](https://code.visualstudio.com/download)
 
-Далее, откройте VSCode и установите расширения «Sukharev Nand2Tetris» автора di.sukharev. Скриншот-инструкция ниже.
+Далее, откройте VSCode и установите расширения «Sukharev Nand2Tetris» автора di.sukharev. Скриншот ниже.
 
 ![Инструкция — как скачать расширения для VSCode (кликните на ссылку с зажатым ctrl или cmd для macOS)](/img/how2download-vscode-extensions.png)
 
